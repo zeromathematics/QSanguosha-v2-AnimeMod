@@ -30,7 +30,7 @@ QString Scenario::getRoles() const
         roles.append('C');
     for (int i = 0; i < rebels.length(); i++)
         roles.append('N');
-    for (int i = 0; i < rebels.length(); i++)
+    for (int i = 0; i < renegades.length(); i++)
         roles.append('F');
     return roles;
 }
@@ -50,6 +50,12 @@ void Scenario::assign(QStringList &generals, QStringList &roles) const
         else
             roles << "renegade";
     }
+}
+
+void Scenario::assign(QStringList &generals, QStringList &general2s, QStringList &roles, Room *) const
+{
+    general2s.clear();
+    assign(generals,roles);
 }
 
 bool Scenario::generalSelection() const

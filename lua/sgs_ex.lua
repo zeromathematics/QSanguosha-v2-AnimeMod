@@ -631,3 +631,29 @@ function sgs.LoadTranslationTable(t)
 		sgs.AddTranslationEntry(key, value)
 	end
 end
+
+function sgs.CreateLuaScenario(spec)
+	assert(type(spec.name) == "string")
+	assert(type(spec.role_map) == "table")
+	assert(type(spec.rule == "userdata") and spec.rule:inherits("LuaTriggerSkill"))
+	assert(type(spec.random_seat) == "boolean")
+	assert(role_map.lord+role_map.loyalist+role_map.rebel+role_map.renegade <= 10)
+	local role_pattern = string.format("%d+%d+%d+%d",role_map.lord,role_map.loyalist,role_map.rebel,role_map.renegade)
+	local scenario = sgs.LuaScenario(spec.name,role_pattern)
+	scenario:setRule(spec.rule)
+	if type(spec.expose_role) == "boolean" then
+		scenario.expose_role = spec.expose_role
+	end
+	if type(spec.on_assign) == "function" then
+		scenario.general_selection = false
+		scenario.on_assign = function(self,room,role_map)
+			local general1,general2,kingdom = spec.on_assign(self,room)
+			return table.concat(general1,"+"),table.concat(general2,"+"),table.concat(kingdom,"+")
+		end
+	else
+		scenario.general_selection = true
+	end
+	scenario.relation = spec.relation or 0
+	scenario.on_tag_set = spec.on_tag_set or 0
+	return scenario
+end

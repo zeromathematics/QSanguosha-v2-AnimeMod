@@ -3,6 +3,7 @@
 
 //#include "skill.h"
 #include "standard.h"
+#include "scenario.h"
 
 struct lua_State;
 typedef int LuaFunction;
@@ -476,6 +477,53 @@ public:
 
 private:
     QString class_name;
+};
+
+
+class LuaScenario : public Scenario
+{
+    Q_OBJECT
+
+public:
+    LuaScenario(const char *name,const char *role_pattern);
+
+    virtual bool exposeRoles() const
+    {
+        return expose_role;
+    }
+    virtual QString getRoles() const;
+    void setRule(LuaTriggerSkill *rule);
+    virtual void assign(QStringList &generals, QStringList &general2s, QStringList &roles, Room *room) const;
+    virtual AI::Relation relationTo(const ServerPlayer *a, const ServerPlayer *b) const;
+    virtual void onTagSet(Room *room, const char *key) const;
+    virtual bool generalSelection() const
+    {
+        return general_selection;
+    }
+
+    bool expose_role;
+    bool general_selection;
+
+    LuaFunction on_assign;
+    LuaFunction relation;
+    LuaFunction on_tag_set;
+protected:
+    QString role_flag;
+};
+
+class LuaSceneRule : public ScenarioRule
+{
+public:
+    LuaSceneRule(LuaScenario *parent, TriggerSkill *t);
+
+    virtual int getPriority(TriggerEvent e) const
+    {
+        return origin->getPriority(e);
+    }
+
+    virtual bool trigger(TriggerEvent event, Room* room, ServerPlayer *player, QVariant &data) const;
+protected:
+    TriggerSkill *origin;
 };
 
 #endif

@@ -316,3 +316,42 @@ LuaTreasure *LuaTreasure::clone(Card::Suit suit, int number) const
 
     return new_card;
 }
+
+
+LuaScenario::LuaScenario(const char *name, const char *role_pattern)
+    :Scenario(name),role_flag(role_pattern)
+{
+
+}
+
+QString LuaScenario::getRoles() const
+{
+    QStringList list = role_flag.split("+");
+    QString roles = "Z";
+    for (int i = 0; i < list[2].toInt(); i++)
+        roles.append('C');
+    for (int i = 0; i < list[3].toInt(); i++)
+        roles.append('N');
+    for (int i = 0; i < list[4].toInt(); i++)
+        roles.append('F');
+    return roles;
+}
+
+void LuaScenario::setRule(LuaTriggerSkill *rule)
+{
+    this->rule = new LuaSceneRule(this, rule);
+}
+
+
+LuaSceneRule::LuaSceneRule(LuaScenario *parent, TriggerSkill *t)
+    :ScenarioRule(parent)
+{
+    this->origin = t;
+    events.append(origin->getTriggerEvents());
+}
+
+bool LuaSceneRule::trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+{
+    return origin->trigger(event,room,player,data);
+}
+

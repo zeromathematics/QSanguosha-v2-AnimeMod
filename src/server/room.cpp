@@ -2111,8 +2111,8 @@ int Room::drawCard()
 void Room::prepareForStart()
 {
     if (scenario) {
-        QStringList generals, roles;
-        scenario->assign(generals, roles);
+        QStringList generals, general2s, roles;
+        scenario->assign(generals, general2s, roles, this);
 
         bool expose_roles = scenario->exposeRoles();
         for (int i = 0; i < m_players.length(); i++) {
@@ -2120,6 +2120,10 @@ void Room::prepareForStart()
             if (generals.size() > i && !generals[i].isNull()) {
                 player->setGeneralName(generals[i]);
                 broadcastProperty(player, "general");
+            }
+            if(!general2s[i].isNull()) {
+                player->setGeneral2Name(generals[i]);
+                broadcastProperty(player, "general2");
             }
 
             player->setRole(roles.at(i));

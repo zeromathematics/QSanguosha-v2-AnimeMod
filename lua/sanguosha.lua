@@ -39,16 +39,28 @@ function load_extensions()
 					for _, extension in ipairs(loaded) do
 						if type(extension) == "userdata" and extension:inherits("Package") then
 							table.insert(package_names, extension:objectName())
-							sgs.Sanguosha:addPackage(extension)
+							if extension:inherits("LuaScenario") then
+								sgs.Sanguosha:addScenario(extension)
+							elseif extension:inherits("Package") then
+								sgs.Sanguosha:addPackage(extension)
+							end
 						end
 					end
 				else
 					table.insert(package_names, loaded.extension:objectName())
-					sgs.Sanguosha:addPackage(loaded.extension)
+					if extension:inherits("LuaScenario") then
+						sgs.Sanguosha:addScenario(extension)
+					elseif extension:inherits("Package") then
+						sgs.Sanguosha:addPackage(extension)
+					end
 				end
 			elseif type(loaded) == "userdata" and loaded:inherits("Package") then
 				table.insert(package_names, loaded:objectName())
-				sgs.Sanguosha:addPackage(loaded)
+				if extension:inherits("LuaScenario") then
+					sgs.Sanguosha:addScenario(extension)
+				elseif extension:inherits("Package") then
+					sgs.Sanguosha:addPackage(extension)
+				end
 			end
 		end
 	end
