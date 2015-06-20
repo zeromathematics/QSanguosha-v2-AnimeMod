@@ -21,7 +21,7 @@ public:
     virtual void assign(QStringList &generals, QStringList &roles) const;
     virtual void assign(QStringList &generals, QStringList &general2s, QStringList &roles, Room *room) const;
     virtual AI::Relation relationTo(const ServerPlayer *a, const ServerPlayer *b) const;
-    virtual void onTagSet(Room *room, const QString &key) const = 0;
+    virtual void onTagSet(Room *room, const QString &key) const;
     virtual bool generalSelection() const;
 
 protected:

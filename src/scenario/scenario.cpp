@@ -68,3 +68,8 @@ AI::Relation Scenario::relationTo(const ServerPlayer *a, const ServerPlayer *b) 
     return AI::GetRelation(a, b);
 }
 
+void Scenario::onTagSet(Room *, const QString &) const
+{
+
+}
+

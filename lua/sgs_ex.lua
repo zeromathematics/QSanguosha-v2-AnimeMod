@@ -636,7 +636,7 @@ function sgs.CreateLuaScenario(spec)
 	assert(type(spec.name) == "string")
 	assert(type(spec.role_map) == "table")
 	assert(type(spec.rule == "userdata") and spec.rule:inherits("LuaTriggerSkill"))
-	assert(type(spec.random_seat) == "boolean")
+	local role_map = spec.role_map
 	assert(role_map.lord+role_map.loyalist+role_map.rebel+role_map.renegade <= 10)
 	local role_pattern = string.format("%d+%d+%d+%d",role_map.lord,role_map.loyalist,role_map.rebel,role_map.renegade)
 	local scenario = sgs.LuaScenario(spec.name,role_pattern)
