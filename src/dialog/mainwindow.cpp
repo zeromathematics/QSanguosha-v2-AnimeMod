@@ -66,7 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    setWindowTitle(tr("Sanguosha") + " " + Sanguosha->getVersionNumber());
+
+    setWindowTitle(tr("Anime Mod") + " " + Sanguosha->getVersionNumber());
 
     scene = NULL;
 
@@ -82,6 +83,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAcknowledgement_2, SIGNAL(triggered()), this, SLOT(on_actionAcknowledgement_triggered()));
 
     StartScene *start_scene = new StartScene;
+    int r = rand() % 3;
+    start_scene->addBGM("audio/system/startsceneBGM" + QString::number(r) + ".ogg");
 
     QList<QAction *> actions;
     actions << ui->actionStart_Game

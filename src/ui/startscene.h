@@ -5,7 +5,7 @@
 //#include "qsan-selectable-item.h"
 //#include "server.h"
 
-class Button;
+class SuperButton;
 class QSanSelectableItem;
 class Server;
 
@@ -19,13 +19,13 @@ public:
     void addButton(QAction *action);
     void setServerLogBackground();
     void switchToServer(Server *server);
-
+    void addBGM(QString path);
 private:
     void printServerInfo();
 
-    QSanSelectableItem *logo;
+    //QSanSelectableItem *logo;
     QTextEdit *server_log;
-    QList<Button *> buttons;
+    QList<SuperButton *> buttons;
 };
 
 #endif

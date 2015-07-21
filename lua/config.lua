@@ -5,13 +5,17 @@ config = {
 	big_font = 56,
 	small_font = 27,
 	tiny_font = 18,
-	kingdoms = { "wei", "shu", "wu", "qun", "god" },
+	kingdoms = { "wei", "shu", "wu", "qun", "god", "touhou", "kancolle", "diva", "science", "magic", "real" },
 	kingdom_colors = {
 		wei = "#547998",
 		shu = "#D0796C",
 		wu = "#4DB873",
 		qun = "#8A807A",
 		god = "#96943D",
+		kancolle = "#9AC0CD",
+		diva = "#EEB422",
+		touhou = "#7CCD7C",
+		real = "#FF77FF",
 	},
 
 	skill_type_colors = {

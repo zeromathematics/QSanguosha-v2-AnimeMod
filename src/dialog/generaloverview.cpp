@@ -327,6 +327,23 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
             nickname_item->setToolTip(tr("This general is hidden"));
         }
 
+        QString anime = Sanguosha->translate("@" + general_name);
+        if (anime.startsWith("@") && general_name.contains("_"))
+            anime = Sanguosha->translate("@" + general_name.split("_").last());
+        QTableWidgetItem *anime_item = new QTableWidgetItem(anime);
+        if (!anime.startsWith("@"))
+            anime_item = new QTableWidgetItem(anime);
+        if (general->getKingdom() == "wei" || general->getKingdom() == "shu" || general->getKingdom() == "wu" || general->getKingdom() == "qun" || general->getKingdom() == "god")
+            anime_item = new QTableWidgetItem(Sanguosha->translate("@Sanguo"));
+
+        anime_item->setData(Qt::UserRole, general_name);
+        anime_item->setTextAlignment(Qt::AlignCenter);
+        if (Sanguosha->isGeneralHidden(general_name)) {
+            anime_item->setBackgroundColor(Qt::gray);
+            anime_item->setToolTip(tr("This general is hidden"));
+        }
+
+
         QTableWidgetItem *name_item = new QTableWidgetItem(name);
         name_item->setTextAlignment(Qt::AlignCenter);
         name_item->setData(Qt::UserRole, general_name);
@@ -356,20 +373,21 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
             package_item->setToolTip(tr("This is an Lua extension"));
         }
 
-        ui->tableWidget->setItem(i, 0, nickname_item);
-        ui->tableWidget->setItem(i, 1, name_item);
-        ui->tableWidget->setItem(i, 2, kingdom_item);
-        ui->tableWidget->setItem(i, 3, gender_item);
-        ui->tableWidget->setItem(i, 4, max_hp_item);
-        ui->tableWidget->setItem(i, 5, package_item);
+        ui->tableWidget->setItem(i, 0, anime_item);
+        ui->tableWidget->setItem(i, 1, nickname_item);
+        ui->tableWidget->setItem(i, 2, name_item);
+        ui->tableWidget->setItem(i, 3, kingdom_item);
+        ui->tableWidget->setItem(i, 4, gender_item);
+        ui->tableWidget->setItem(i, 5, max_hp_item);
+        ui->tableWidget->setItem(i, 6, package_item);
     }
-
-    ui->tableWidget->setColumnWidth(0, 80);
-    ui->tableWidget->setColumnWidth(1, 95);
-    ui->tableWidget->setColumnWidth(2, 40);
-    ui->tableWidget->setColumnWidth(3, 50);
-    ui->tableWidget->setColumnWidth(4, 60);
-    ui->tableWidget->setColumnWidth(5, 85);
+    ui->tableWidget->setColumnWidth(0, 100);
+    ui->tableWidget->setColumnWidth(1, 80);
+    ui->tableWidget->setColumnWidth(2, 95);
+    ui->tableWidget->setColumnWidth(3, 40);
+    ui->tableWidget->setColumnWidth(4, 30);
+    ui->tableWidget->setColumnWidth(5, 50);
+    ui->tableWidget->setColumnWidth(6, 50);
 
     ui->tableWidget->setCurrentItem(ui->tableWidget->item(0, 0));
 }

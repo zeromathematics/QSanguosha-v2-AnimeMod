@@ -2,52 +2,72 @@
 #include "engine.h"
 #include "audio.h"
 #include "settings.h"
-#include "button.h"
+#include "super-button.h"
 #include "qsan-selectable-item.h"
 #include "server.h"
 
 StartScene::StartScene()
 {
     // game logo
-    logo = new QSanSelectableItem("image/logo/logo.png", true);
-    logo->moveBy(0, -Config.Rect.height() / 4.8);
-    addItem(logo);
+    //logo = new QSanSelectableItem("image/logo/logo.png", true);
+    //logo->moveBy(0, -Config.Rect.height() / 4.8);
+    //addItem(logo);
 
     //the website URL
+    /*
     QFont website_font(Config.SmallFont);
     website_font.setStyle(QFont::StyleItalic);
     QGraphicsSimpleTextItem *website_text = addSimpleText("http://mogara.org", website_font);
     website_text->setBrush(Qt::white);
     website_text->setPos(Config.Rect.width() / 2 - website_text->boundingRect().width(),
-        Config.Rect.height() / 2 - website_text->boundingRect().height());
+    Config.Rect.height() / 2 - website_text->boundingRect().height());
+    */
     server_log = NULL;
 }
 
 StartScene::~StartScene()
 {
-    delete logo;
-    logo = NULL;
+    //delete logo;
+    //logo = NULL;
 
-    foreach (Button *b, buttons) {
+    foreach(SuperButton *b, buttons) {
         delete b;
         b = NULL;
     }
 }
 
+void StartScene::addBGM(QString path)
+{
+#ifdef AUDIO_SUPPORT
+    Audio::stopBGM();
+    Audio::playBGM(path);
+    Audio::setBGMVolume(Config.BGMVolume);
+#endif
+}
+
 void StartScene::addButton(QAction *action)
 {
-    Button *button = new Button(action->text());
+    int n = buttons.length();
+
+    QSizeF *size = new QSizeF(225, 150);
+    SuperButton *button;
+    if (n > 3)
+        button = new SuperButton(action->text(), *size, action->objectName(), Qt::AlignLeft);
+    else
+        button = new SuperButton(action->text(), *size, action->objectName());
+
+    QString icon = action->objectName();
+    icon.remove(0, 6);
     button->setMute(false);
 
     connect(button, SIGNAL(clicked()), action, SLOT(trigger()));
     addItem(button);
 
-    QRectF rect = button->boundingRect();
-    int n = buttons.length();
+    int height_left = (Config.Rect.height() / 0.8 - 150 * 4) / 5;
     if (n < 4)
-        button->setPos(-rect.width() - 4, (n - 0.5) * (rect.height() * 1.2));
+        button->setPos(-Config.Rect.width() / 0.8 / 2 + 20, -Config.Rect.height() / 0.8 / 2 + height_left * (n + 1) + 150 * n);
     else
-        button->setPos(4, (n - 4.5) * (rect.height() * 1.2));
+        button->setPos(Config.Rect.width() / 0.8 / 2 - 225 -20, -Config.Rect.height() / 0.8 / 2 + height_left * (n - 3) + 150 * (n - 4));
 
     buttons << button;
 }
@@ -68,18 +88,18 @@ void StartScene::switchToServer(Server *server)
     Audio::quit();
 #endif
     // performs leaving animation
-    QPropertyAnimation *logo_shift = new QPropertyAnimation(logo, "pos");
-    logo_shift->setEndValue(QPointF(Config.Rect.center().rx() - 200, Config.Rect.center().ry() - 175));
+    //QPropertyAnimation *logo_shift = new QPropertyAnimation(logo, "pos");
+    //logo_shift->setEndValue(QPointF(Config.Rect.center().rx() - 200, Config.Rect.center().ry() - 175));
 
-    QPropertyAnimation *logo_shrink = new QPropertyAnimation(logo, "scale");
-    logo_shrink->setEndValue(0.5);
+    //QPropertyAnimation *logo_shrink = new QPropertyAnimation(logo, "scale");
+    //logo_shrink->setEndValue(0.5);
 
-    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
-    group->addAnimation(logo_shift);
-    group->addAnimation(logo_shrink);
-    group->start(QAbstractAnimation::DeleteWhenStopped);
+    //QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+    //group->addAnimation(logo_shift);
+    //group->addAnimation(logo_shrink);
+    //group->start(QAbstractAnimation::DeleteWhenStopped);
 
-    foreach(Button *button, buttons)
+    foreach(SuperButton *button, buttons)
         delete button;
     buttons.clear();
 

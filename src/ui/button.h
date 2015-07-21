@@ -11,6 +11,7 @@ class Button : public QGraphicsObject
 public:
     explicit Button(const QString &label, qreal scale = 1.0);
     explicit Button(const QString &label, const QSizeF &size);
+    explicit Button(const QString &label, const QSizeF &size, const QString file_name);
     ~Button();
     void setMute(bool mute);
     void setFont(const QFont &font);
@@ -39,7 +40,7 @@ private:
     QGraphicsDropShadowEffect *de;
     QGraphicsDropShadowEffect *effect;
 
-    void init();
+    void init(QString file_name = "");
 
 signals:
     void clicked();

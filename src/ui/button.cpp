@@ -21,7 +21,15 @@ Button::Button(const QString &label, const QSizeF &size)
     init();
 }
 
-void Button::init()
+Button::Button(const QString &label, const QSizeF &size, const QString file_name)
+    : label(label), size(size), mute(true), font(Config.SmallFont)
+{
+    title = QPixmap(size.toSize());
+    outimg = QImage(size.toSize(), QImage::Format_ARGB32);
+    init(file_name);
+}
+
+void Button::init(QString file_name)
 {
     setFlags(ItemIsFocusable);
 
@@ -46,7 +54,20 @@ void Button::init()
 
     title_item->setGraphicsEffect(de);
 
-    QImage bgimg("image/system/button/button.png");
+    QImage bgimg;
+    if (file_name == "")
+    {
+        bgimg = QImage("image/system/button/button.png");
+    }
+    else
+    {
+        file_name.remove(0, 6);
+        if (QFile::exists("image/system/button/" + file_name + ".png"))
+            bgimg = QImage("image/system/button/" + file_name + ".png");
+        else
+            bgimg = QImage("image/system/button/button.png");
+    }
+    
 
     qreal pad = 10;
 

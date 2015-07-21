@@ -7,7 +7,7 @@
 #include "playercarddialog.h"
 #include "choosegeneraldialog.h"
 #include "window.h"
-#include "button.h"
+#include "super-button.h"
 #include "cardcontainer.h"
 #include "recorder.h"
 #include "indicatoritem.h"
@@ -319,14 +319,15 @@ RoomScene::RoomScene(QMainWindow *main_window)
     add_robot = NULL;
     start_game = NULL;
     return_to_main_menu = NULL;
+    QSizeF *size = new QSizeF(150, 150);
     if (ServerInfo.EnableAI) {
-        add_robot = new Button(tr("Add robots"));
+        add_robot = new SuperButton(tr("Add robots"), *size, "ActionbuttonA",Qt::AlignCenter);
         add_robot->setParentItem(control_panel);
         add_robot->setTransform(QTransform::fromTranslate(-add_robot->boundingRect().width() / 2, -add_robot->boundingRect().height() / 2), true);
-        add_robot->setPos(0, -add_robot->boundingRect().height() - 10);
+        add_robot->setPos(-add_robot->boundingRect().height() - 10, 0);
         add_robot->hide();
 
-        start_game = new Button(tr("Start new game"));
+        start_game = new SuperButton(tr("Start new game"), *size, "ActionbuttonA", Qt::AlignCenter);
         start_game->setParentItem(control_panel);
         start_game->setToolTip(tr("Fill robots and start a new game"));
         start_game->setTransform(QTransform::fromTranslate(-start_game->boundingRect().width() / 2, -start_game->boundingRect().height() / 2), true);
@@ -338,10 +339,10 @@ RoomScene::RoomScene(QMainWindow *main_window)
         connect(Self, SIGNAL(owner_changed(bool)), this, SLOT(showOwnerButtons(bool)));
     }
 
-    return_to_main_menu = new Button(tr("Return to main menu"));
+    return_to_main_menu = new SuperButton(tr("Return to main menu"), *size, "ActionbuttonA", Qt::AlignCenter);
     return_to_main_menu->setParentItem(control_panel);
     return_to_main_menu->setTransform(QTransform::fromTranslate(-return_to_main_menu->boundingRect().width() / 2, -return_to_main_menu->boundingRect().height() / 2), true);
-    return_to_main_menu->setPos(0, return_to_main_menu->boundingRect().height() + 10);
+    return_to_main_menu->setPos(return_to_main_menu->boundingRect().height() + 10, 0);
     return_to_main_menu->show();
 
     connect(return_to_main_menu, SIGNAL(clicked()), this, SIGNAL(return_to_start()));
@@ -3829,6 +3830,7 @@ void RoomScene::onGameStart()
         // start playing background music
         _m_bgMusicPath = Config.value("BackgroundMusic", "audio/system/background.ogg").toString();
 #ifdef AUDIO_SUPPORT
+        Audio::stopBGM();
         Audio::playBGM(_m_bgMusicPath);
         Audio::setBGMVolume(Config.BGMVolume);
 #endif
@@ -4511,7 +4513,7 @@ void RoomScene::startArrange(const QString &to_arrange)
         arrange_rects << rect_item;
     }
 
-    arrange_button = new Button(tr("Complete"), 0.8);
+    arrange_button = new SuperButton(tr("Complete"), 0.8);
     arrange_button->setParentItem(selector_box);
     arrange_button->setPos(600, 330);
     connect(arrange_button, SIGNAL(clicked()), this, SLOT(finishArrange()));
