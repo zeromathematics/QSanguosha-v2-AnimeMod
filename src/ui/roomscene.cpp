@@ -517,6 +517,16 @@ void RoomScene::handleGameEvent(const QVariant &args)
         container->updateAvatar(); // For Lu Boyan
         break;
     }
+    case S_GAME_EVENT_CHANGE_SKIN: {
+        QString player_name = arg[1].toString();
+        QString name = arg[2].toString();
+
+        ClientPlayer *player = ClientInstance->getPlayer(player_name);
+
+        PlayerCardContainer *container = (PlayerCardContainer*)_getGenericCardContainer(Player::PlaceHand, player);
+        container->updateAvatar(name);
+        break;
+    }
     case S_GAME_EVENT_CHANGE_HERO: {
         QString playerName = arg[1].toString();
         QString newHeroName = arg[2].toString();
@@ -632,12 +642,17 @@ QGraphicsPixmapItem *RoomScene::createDashboardButtons()
     trust_button->setRect(G_DASHBOARD_LAYOUT.m_trustButtonArea);
     connect(trust_button, SIGNAL(clicked()), this, SLOT(trust()));
     connect(Self, SIGNAL(state_changed()), this, SLOT(updateTrustButton()));
+    
+    skin_button = new QSanButton("platter", "skin", widget);
+    skin_button->setRect(G_DASHBOARD_LAYOUT.m_skinButtonArea);
+    connect(skin_button, SIGNAL(clicked()), this, SLOT(doSkinChangeButton()));
 
     // set them all disabled
     ok_button->setEnabled(false);
     cancel_button->setEnabled(false);
     discard_button->setEnabled(false);
     trust_button->setEnabled(false);
+    skin_button->setEnabled(false);
     return widget;
 }
 
@@ -2840,6 +2855,20 @@ void RoomScene::doOkButton()
     useSelectedCard();
 }
 
+void RoomScene::doSkinChangeButton()
+{
+    if (!skin_button->isEnabled()) return;
+    //TODO
+    int num = Self->getMark("avator_num");
+    if (num == 2)
+        Self->setMark("avator_num", 0);
+    else
+        Self->setMark("avator_num", num + 1);
+
+    PlayerCardContainer *container = (PlayerCardContainer*)_getGenericCardContainer(Player::PlaceHand, Self);
+    container->updateAvatar(Self->getAvatarGeneral()->objectName() + QString(num));
+}
+
 void RoomScene::doCancelButton()
 {
     if (card_container->retained()) card_container->clear();
@@ -3826,9 +3855,35 @@ void RoomScene::onGameStart()
         log_box->append(QString(tr("<font color='%1'>---------- Game Start ----------</font>").arg(Config.TextEditColor.name())));
 
     trust_button->setEnabled(true);
+    skin_button->setEnabled(true);
+
+    const Player *the_player = NULL;
+    if (isNormalGameMode(ServerInfo.GameMode)) {
+        QList<const Player *> sib = Self->getSiblings();
+        sib << Self;
+        foreach(const Player *p, sib) {
+            if (p->isLord()) {
+                the_player = p;
+                break;
+            }
+        }
+    }
+
+    if (the_player == NULL)
+        the_player = Self;
+
+    QString kingdom = the_player->getKingdom();
+
     if (Config.EnableBgMusic) {
         // start playing background music
         _m_bgMusicPath = Config.value("BackgroundMusic", "audio/system/background.ogg").toString();
+        if (_m_bgMusicPath == "audio/system/background.ogg"){
+            _m_bgMusicPath = "audio/kingdom/" + kingdom + ".ogg";
+            QFile *file = new QFile(_m_bgMusicPath);
+            if (!file->exists()){
+                _m_bgMusicPath = "audio/system/background.ogg";
+            }
+        }
 #ifdef AUDIO_SUPPORT
         Audio::stopBGM();
         Audio::playBGM(_m_bgMusicPath);
@@ -3842,22 +3897,6 @@ void RoomScene::onGameStart()
 
     // for tablebg change
     if (Config.EnableAutoBackgroundChange && Self != NULL) {
-        const Player *the_player = NULL;
-        if (isNormalGameMode(ServerInfo.GameMode)) {
-            QList<const Player *> sib = Self->getSiblings();
-            sib << Self;
-            foreach (const Player *p, sib) {
-                if (p->isLord()) {
-                    the_player = p;
-                    break;
-                }
-            }
-        }
-
-        if (the_player == NULL)
-            the_player = Self;
-
-        QString kingdom = the_player->getKingdom();
         if (Sanguosha->getKingdoms().contains(kingdom)) {
             QPixmap pixmap = G_ROOM_SKIN.getPixmap("tableBg" + kingdom);
             if (pixmap.width() == 1 || pixmap.height() == 1) {
@@ -4834,6 +4873,9 @@ void RoomScene::redrawDashboardButtons()
 
     trust_button->redraw();
     trust_button->setRect(G_DASHBOARD_LAYOUT.m_trustButtonArea);
+
+    skin_button->redraw();
+    skin_button->setRect(G_DASHBOARD_LAYOUT.m_skinButtonArea);
 }
 
 void RoomScene::recorderAutoSave()

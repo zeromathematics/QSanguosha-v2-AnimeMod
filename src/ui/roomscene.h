@@ -203,6 +203,7 @@ public slots:
     void doOkButton();
     void doCancelButton();
     void doDiscardButton();
+    void doSkinChangeButton();
 
     void setChatBoxVisibleSlot();
     void pause();
@@ -243,6 +244,7 @@ private:
     QMainWindow *main_window;
     QSanButton *ok_button, *cancel_button, *discard_button;
     QSanButton *trust_button;
+    QSanButton *skin_button;
     QMenu *miscellaneous_menu, *change_general_menu;
     Window *prompt_box;
     Window *pindian_box;

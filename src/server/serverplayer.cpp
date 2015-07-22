@@ -888,6 +888,15 @@ void ServerPlayer::setGender(General::Gender gender)
     room->doBroadcastNotify(QSanProtocol::S_COMMAND_LOG_EVENT, args);
 }
 
+void ServerPlayer::setSkin(QString skinName)
+{
+    JsonArray args;
+    args << (int)QSanProtocol::S_GAME_EVENT_CHANGE_SKIN;
+    args << objectName();
+    args << skinName;
+    room->doBroadcastNotify(QSanProtocol::S_COMMAND_LOG_EVENT, args);
+}
+
 bool ServerPlayer::isOnline() const
 {
     return getState() == "online";

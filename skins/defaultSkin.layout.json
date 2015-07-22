@@ -208,6 +208,7 @@
     "cancelButtonArea": [4, 92, 61, 75],
     "discardButtonArea": [70, 45, 33, 81],
     "trustButtonArea": [68, 132, 36, 35],
+    "skinButtonArea": [0, 0, 36, 35],
     "trustEffectColor": [38, 26, 66]
 },
 "skillButton":

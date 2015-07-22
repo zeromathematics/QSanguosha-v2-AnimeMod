@@ -384,10 +384,10 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
     ui->tableWidget->setColumnWidth(0, 100);
     ui->tableWidget->setColumnWidth(1, 80);
     ui->tableWidget->setColumnWidth(2, 95);
-    ui->tableWidget->setColumnWidth(3, 40);
-    ui->tableWidget->setColumnWidth(4, 30);
-    ui->tableWidget->setColumnWidth(5, 50);
-    ui->tableWidget->setColumnWidth(6, 50);
+    ui->tableWidget->setColumnWidth(3, 60);
+    ui->tableWidget->setColumnWidth(4, 40);
+    ui->tableWidget->setColumnWidth(5, 30);
+    ui->tableWidget->setColumnWidth(6, 95);
 
     ui->tableWidget->setCurrentItem(ui->tableWidget->item(0, 0));
 }

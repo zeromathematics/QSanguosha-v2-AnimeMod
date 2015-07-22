@@ -55,7 +55,7 @@
     <message>
         <location filename="../src/server/server.cpp" line="494"/>
         <source>Select generals that are excluded</source>
-        <translation>选择排除的武将或卡牌</translation>
+        <translation>选择排除的人物或卡牌</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="529"/>
@@ -412,7 +412,7 @@
     <message>
         <location filename="../src/dialog/cardeditor.cpp" line="878"/>
         <source>Reset photo</source>
-        <translation>重置武将图</translation>
+        <translation>重置人物图片</translation>
     </message>
     <message>
         <location filename="../src/dialog/cardeditor.cpp" line="883"/>
@@ -646,7 +646,7 @@
     <message>
         <location filename="../src/dialog/choosegeneraldialog.cpp" line="43"/>
         <source>Choose general</source>
-        <translation>选择武将</translation>
+        <translation>选择人物</translation>
     </message>
     <message>
         <location filename="../src/dialog/choosegeneraldialog.cpp" line="178"/>
@@ -676,7 +676,7 @@
         <source>
  wait for the lord player choosing general, please</source>
         <translation>
-请等待主公选择武将</translation>
+请等待主公选择人物</translation>
     </message>
     <message>
         <location filename="../src/client/client.cpp" line="817"/>
@@ -978,7 +978,7 @@
     <message>
         <location filename="../src/dialog/configdialog.ui" line="126"/>
         <source>Enable effects</source>
-        <translation>启用武将技能及卡牌声效</translation>
+        <translation>启用人物技能及卡牌声效</translation>
     </message>
     <message>
         <location filename="../src/dialog/configdialog.ui" line="51"/>
@@ -1347,12 +1347,12 @@
     <message>
         <location filename="../src/dialog/customassigndialog.cpp" line="167"/>
         <source>Player Turned</source>
-        <translation>武将翻面</translation>
+        <translation>人物翻面</translation>
     </message>
     <message>
         <location filename="../src/dialog/customassigndialog.cpp" line="168"/>
         <source>Player Chained</source>
-        <translation>武将横置</translation>
+        <translation>人物横置</translation>
     </message>
     <message>
         <location filename="../src/dialog/customassigndialog.cpp" line="170"/>
@@ -1921,7 +1921,7 @@
     <message>
         <location filename="../src/dialog/choosegeneraldialog.cpp" line="244"/>
         <source>Free choose generals</source>
-        <translation>自由选择武将</translation>
+        <translation>自由选择人物</translation>
     </message>
     <message>
         <location filename="../src/dialog/choosegeneraldialog.cpp" line="273"/>
@@ -1939,7 +1939,7 @@
     <message>
         <location filename="../src/core/general.cpp" line="78"/>
         <source>Invalid skill added to general %1</source>
-        <translation>武将 %1 试图添加不合法技能</translation>
+        <translation>人物 %1 试图添加不合法技能</translation>
     </message>
 </context>
 <context>
@@ -1970,7 +1970,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.ui" line="29"/>
         <source>General Overview</source>
-        <translation>武将一览</translation>
+        <translation>人物一览</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.ui" line="48"/>
@@ -1985,7 +1985,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.ui" line="58"/>
         <source>General</source>
-        <translation>武将</translation>
+        <translation>人物</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.ui" line="63"/>
@@ -2020,7 +2020,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.ui" line="128"/>
         <source>changeHeroSkin</source>
-        <translation>更换武将皮肤</translation>
+        <translation>更换人物皮肤</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.ui" line="135"/>
@@ -2079,7 +2079,7 @@
         <location filename="../src/dialog/generaloverview.cpp" line="342"/>
         <location filename="../src/dialog/generaloverview.cpp" line="356"/>
         <source>This general is hidden</source>
-        <translation>该武将被隐藏， 不会出现在选将列表中</translation>
+        <translation>该人物被隐藏， 不会出现在选将列表中</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="372"/>
@@ -2130,7 +2130,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="687"/>
         <source>No generals are found</source>
-        <translation>未找到符合要求的武将</translation>
+        <translation>未找到符合要求的人物</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.ui" line="269"/>
@@ -2148,7 +2148,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="38"/>
         <source>Include hidden generals</source>
-        <translation>包含隐藏武将</translation>
+        <translation>包含隐藏人物</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="42"/>
@@ -2158,7 +2158,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="43"/>
         <source>Input characters included by the nickname. &apos;?&apos; and &apos;*&apos; is available. Every nickname meets the condition if the line is empty.</source>
-        <translation>输入武将称号，可以使用&apos;?&apos;与&apos;*&apos;通配符</translation>
+        <translation>输入人物称号，可以使用&apos;?&apos;与&apos;*&apos;通配符</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="48"/>
@@ -2168,7 +2168,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="49"/>
         <source>Input characters included by the name. &apos;?&apos; and &apos;*&apos; is available. Every name meets the condition if the line is empty.</source>
-        <translation>输入武将名称，可以使用&apos;?&apos;与&apos;*&apos;通配符</translation>
+        <translation>输入人物名称，可以使用&apos;?&apos;与&apos;*&apos;通配符</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="54"/>
@@ -2188,7 +2188,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="73"/>
         <source>Select genders. Every gender meets the condition if none is selected.</source>
-        <translation>选择武将性别，若未选择任何性别则所有性别均符合条件</translation>
+        <translation>选择人物性别，若未选择任何性别则所有性别均符合条件</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="79"/>
@@ -2213,13 +2213,13 @@
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="108"/>
         <source>Select kingdoms. Every kingdom meets the condition if none is selected.</source>
-        <translation>选择武将势力，若未选择任何势力则所有势力均符合条件</translation>
+        <translation>选择人物势力，若未选择任何势力则所有势力均符合条件</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="55"/>
         <location filename="../src/dialog/generaloverview.cpp" line="57"/>
         <source>Set lowerlimit and upperlimit of max HP. 0 ~ 0 meets all conditions.</source>
-        <translation>设置武将体力上限范围，若最小值与最大值均为0则所有武将符合条件（若最大值小于最小值，则按最小值计算）</translation>
+        <translation>设置人物体力上限范围，若最小值与最大值均为0则所有人物符合条件（若最大值小于最小值，则按最小值计算）</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="134"/>
@@ -2229,7 +2229,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="135"/>
         <source>Select packages. Every package meets the condition if none is selected.</source>
-        <translation>选择武将包，若未选择任何包则所有包均符合条件</translation>
+        <translation>选择人物包，若未选择任何包则所有包均符合条件</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="140"/>
@@ -2333,7 +2333,7 @@
     <message>
         <location filename="../src/dialog/mainwindow.ui" line="146"/>
         <source>General overview</source>
-        <translation>武将一览</translation>
+        <translation>人物一览</translation>
     </message>
     <message>
         <location filename="../src/dialog/mainwindow.ui" line="159"/>
@@ -2710,7 +2710,7 @@
     <message>
         <location filename="../src/dialog/mainwindow.cpp" line="758"/>
         <source>General</source>
-        <translation>武将</translation>
+        <translation>人物</translation>
     </message>
     <message>
         <location filename="../src/dialog/mainwindow.cpp" line="758"/>
@@ -2780,7 +2780,7 @@
     <message>
         <location filename="../src/dialog/mainwindow.cpp" line="824"/>
         <source>Packages:</source>
-        <translation>武将包：</translation>
+        <translation>人物包：</translation>
     </message>
     <message>
         <location filename="../src/dialog/mainwindow.cpp" line="831"/>
@@ -3482,7 +3482,7 @@
     <message>
         <location filename="../src/ui/roomscene.cpp" line="118"/>
         <source>Change general ...</source>
-        <translation>修改武将 ...</translation>
+        <translation>修改人物 ...</translation>
     </message>
     <message>
         <location filename="../src/ui/roomscene.cpp" line="270"/>
@@ -3504,7 +3504,7 @@
         <location filename="../src/ui/roomscene.cpp" line="354"/>
         <location filename="../src/ui/roomscene.cpp" line="592"/>
         <source>Paused ...</source>
-        <translation>已暂停 ...</translation>
+        <translation>少女祈祷中 ...</translation>
     </message>
     <message>
         <location filename="../src/ui/roomscene.cpp" line="370"/>
@@ -3566,7 +3566,7 @@
     <message>
         <location filename="../src/ui/roomscene.cpp" line="1766"/>
         <source>The order who first choose general</source>
-        <translation>选择武将的顺序</translation>
+        <translation>选择人物的顺序</translation>
     </message>
     <message>
         <location filename="../src/ui/roomscene.cpp" line="1768"/>
@@ -3760,7 +3760,7 @@
     <message>
         <location filename="../src/ui/roomscene.cpp" line="3358"/>
         <source>General</source>
-        <translation>武将</translation>
+        <translation>人物</translation>
     </message>
     <message>
         <location filename="../src/ui/roomscene.cpp" line="3358"/>
@@ -3928,7 +3928,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/server/server.cpp" line="998"/>
         <source>Select generals in extend 3v3 mode</source>
-        <translation>选择在扩展 3v3 模式中启用的武将</translation>
+        <translation>选择在扩展 3v3 模式中启用的人物</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="1004"/>
@@ -4033,7 +4033,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/server/server.cpp" line="92"/>
         <source>General package</source>
-        <translation>武将包</translation>
+        <translation>人物包</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="93"/>
@@ -4241,7 +4241,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/server/server.cpp" line="751"/>
         <source>General selection ...</source>
-        <translation>武将选择 ...</translation>
+        <translation>人物选择 ...</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="756"/>
@@ -4366,7 +4366,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/server/server.cpp" line="707"/>
         <source>General extensions</source>
-        <translation>武将</translation>
+        <translation>人物</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="710"/>
@@ -4418,7 +4418,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/server/server.cpp" line="210"/>
         <source>Choose generals and cards freely</source>
-        <translation>自由选择武将与卡牌</translation>
+        <translation>自由选择人物与卡牌</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="254"/>
@@ -4655,7 +4655,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/dialog/customassigndialog.cpp" line="1785"/>
         <source>Select Skill from Generals</source>
-        <translation>从武将中选择技能</translation>
+        <translation>从人物中选择技能</translation>
     </message>
     <message>
         <location filename="../src/dialog/customassigndialog.cpp" line="1786"/>

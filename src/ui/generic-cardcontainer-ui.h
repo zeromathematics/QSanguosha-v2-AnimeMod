@@ -104,7 +104,7 @@ public:
     bool canBeSelected();
 
 public slots:
-    virtual void updateAvatar();
+    virtual void updateAvatar(QString skin_name = "");
     void updateSmallAvatar();
     void updatePhase();
     void updateHp();

@@ -197,7 +197,7 @@ QPixmap PlayerCardContainer::_getAvatarIcon(QString heroName)
     return G_ROOM_SKIN.getGeneralPixmap(heroName, (QSanRoomSkin::GeneralIconSize)avatarSize);
 }
 
-void PlayerCardContainer::updateAvatar()
+void PlayerCardContainer::updateAvatar(QString skin_name)
 {
     const General *general = NULL;
     if (m_player) {
@@ -213,6 +213,8 @@ void PlayerCardContainer::updateAvatar()
         // for luboyan
         if (name == "luboyan" && m_player->isFemale())
             name = "luboyanf";
+        if (skin_name != "")
+            name = skin_name;
         QPixmap avatarIcon = _getAvatarIcon(name);
         _paintPixmap(_m_avatarIcon, _m_layout->m_avatarArea, avatarIcon, _getAvatarParent());
         // this is just avatar general, perhaps game has not started yet.
