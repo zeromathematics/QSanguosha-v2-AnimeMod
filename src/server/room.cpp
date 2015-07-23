@@ -79,6 +79,7 @@ void Room::initCallbacks()
 
     m_callbacks[S_COMMAND_SPEAK] = &Room::speakCommand;
     m_callbacks[S_COMMAND_TRUST] = &Room::trustCommand;
+    m_callbacks[S_COMMAND_SKIN_CHANGE] = &Room::skinChangeCommand;
     m_callbacks[S_COMMAND_PAUSE] = &Room::pauseCommand;
 
     //Client request
@@ -2334,6 +2335,16 @@ void Room::trustCommand(ServerPlayer *player, const QVariant &)
 
     player->releaseLock(ServerPlayer::SEMA_MUTEX);
     broadcastProperty(player, "state");
+    return;
+}
+
+void Room::skinChangeCommand(ServerPlayer *player, const QVariant &arg)
+{
+    JsonArray args;
+    args << (int)QSanProtocol::S_GAME_EVENT_CHANGE_SKIN;
+    args << player->objectName();
+    args << arg;
+    doBroadcastNotify(QSanProtocol::S_COMMAND_LOG_EVENT, args);
     return;
 }
 

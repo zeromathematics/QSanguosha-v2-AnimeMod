@@ -358,6 +358,19 @@ function SmartAI:slashIsEffective(slash, to, from, ignore_armor)
 	self.equipsToDec = 0
 	if not eff then return false end
 
+	--SE 杀的有效性
+	if to:getPile("gang"):length() > 0 and sgs.Sanguosha:getCard(to:getPile("gang"):first()):isKindOf("BasicCard") then
+		 return false
+	end
+	if to:hasSkill("Tianhuo") and (nature == sgs.DamageStruct_Fire or nature == sgs.DamageStruct_Thunder) then
+		 return false
+	end
+	if to:hasSkill("SE_Maoqun") then return false end
+	if to:hasSkill("xiaoshi") then return false end
+	if (to:hasSkill("SE_Touming") or to:hasSkill("Sixu")) and not to:faceUp() then return false end
+	if to:hasSkill("SE_Rennai") and to:getMark("@Patience") > 0 then return false end
+	if to:hasSkill("#LuaRedoNoSlash") and to:getMark("@Chamber") == 0 then return false end
+
 	if not ignore_armor and from:objectName() == self.player:objectName() then
 		if to:getArmor() and from:hasSkill("moukui") then
 			if not self:isFriend(to) or self:needToThrowArmor(to) then
@@ -2894,6 +2907,10 @@ function SmartAI:willUseLightning(card)
 	if self.player:containsTrick("lightning") then return end
 	if self.player:hasSkill("weimu") and card:isBlack() then return end
 	if self.room:isProhibited(self.player, self.player, card) then return end
+	--SE 闪电 电工
+	for _,p in ipairs(self.friends) do
+		if p:hasSkill("se_diangong") then return true end
+	end
 
 	local function hasDangerousFriend()
 		local hashy = false

@@ -231,6 +231,7 @@ public slots:
     void onPlayerChooseAG(int card_id);
     void onPlayerChoosePlayer(const Player *player);
     void trust();
+    void changeSkin(QString name);
     void addRobot(int num);
 
     void onPlayerReplyGongxin(int card_id = -1);

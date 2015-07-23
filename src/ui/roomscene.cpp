@@ -2864,9 +2864,25 @@ void RoomScene::doSkinChangeButton()
         Self->setMark("avator_num", 0);
     else
         Self->setMark("avator_num", num + 1);
-
+    if (num == 0)
+        ClientInstance->changeSkin(Self->getAvatarGeneral()->objectName());
+    else{
+        QFile *file = new QFile("image/fullskin/generals/full/" + Self->getAvatarGeneral()->objectName() + QString::number(num) + ".png");
+        if (file->exists())
+            ClientInstance->changeSkin(Self->getAvatarGeneral()->objectName() + QString::number(num));
+        else{
+            Self->setMark("avator_num", 0);
+            if (num != 1)
+                ClientInstance->changeSkin(Self->getAvatarGeneral()->objectName());
+        }
+    }
+    /*
     PlayerCardContainer *container = (PlayerCardContainer*)_getGenericCardContainer(Player::PlaceHand, Self);
-    container->updateAvatar(Self->getAvatarGeneral()->objectName() + QString(num));
+    if (num == 0)
+        container->updateAvatar(Self->getAvatarGeneral()->objectName());
+    else
+        container->updateAvatar(Self->getAvatarGeneral()->objectName() + QString::number(num));
+        */
 }
 
 void RoomScene::doCancelButton()

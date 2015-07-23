@@ -383,6 +383,9 @@ void MainWindow::gotoStartScene()
 
     setCentralWidget(view);
 
+    int r = rand() % 3;
+    start_scene->addBGM("audio/system/startsceneBGM" + QString::number(r) + ".ogg");
+
     ui->menuCheat->setEnabled(false);
     ui->actionDeath_note->disconnect();
     ui->actionDamage_maker->disconnect();

@@ -1017,6 +1017,11 @@ void Client::trust()
     setStatus(NotActive);
 }
 
+void Client::changeSkin(QString name)
+{
+    notifyServer(S_COMMAND_SKIN_CHANGE, name);
+}
+
 void Client::requestSurrender()
 {
     requestServer(S_COMMAND_SURRENDER);

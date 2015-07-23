@@ -133,6 +133,7 @@ namespace QSanProtocol {
         S_COMMAND_ARRANGE_SEATS,
         S_COMMAND_WARN,
         S_COMMAND_TRUST,
+        S_COMMAND_SKIN_CHANGE,
         S_COMMAND_PAUSE,
         S_COMMAND_TOGGLE_READY,
         S_COMMAND_ADD_ROBOT,

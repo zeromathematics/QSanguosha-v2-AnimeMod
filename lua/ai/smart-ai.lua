@@ -269,6 +269,10 @@ function sgs.getDefense(player)
 		if player:hasSkill("leiji") then defense = defense + 2 end
 		if player:hasSkill("noszhenlie") then defense = defense + 1 end
 		if player:hasSkill("hongyan") then defense = defense + 2 end
+		--SE 起电、呆
+		if player:hasSkill("SE_Qidian") then defense = defense + 4 end
+		if player:hasSkill("dai") then defense = defense + 3 end
+		if player:hasSkill("xiaoshi") then defense = defense + 20 end
 	end
 
 	local m = sgs.masochism_skill:split("|")
@@ -299,6 +303,11 @@ function sgs.getDefense(player)
 	if player:hasSkill("kofkuanggu") and player:getHp() > 1 then defense = defense + 1 end
 	if player:hasSkill("zaiqi") and player:getHp() > 1 then defense = defense + player:getLostHp() * 0.5 end
 	if player:hasSkill("tianming") then defense = defense + 0.5 end
+
+	--SE 防御调整
+	if player:hasSkill("Huansha") and player:getHp() > 1 then defense = defense - 1 end
+	if player:hasSkill("SE_Zishang") then defense = defense - 1 end
+
 	if player:hasSkill("nosmiji") then defense = defense + player:getLostHp() * 0.5 end
 	if player:hasSkill("keji") then defense = defense + player:getHandcardNum() * 0.25 end
 	if player:hasSkill("aocai") and player:getPhase() == sgs.Player_NotActive then defense = defense + 0.5 end
@@ -909,8 +918,8 @@ function SmartAI:cardNeed(card)
 		if self.player:getHp() < 2 then return 10 end
 	end
 	if card:isKindOf("Slash") and (self:getCardsNum("Slash") > 0) then return 4 end
-	if card:isKindOf("Crossbow") and self.player:hasSkills("luoshen|yongsi|kurou|keji|wusheng|wushen|chixin") then return 20 end
-	if card:isKindOf("Axe") and self.player:hasSkills("luoyi|jiushi|jiuchi|pojun") then return 15 end
+	if card:isKindOf("Crossbow") and self.player:hasSkills("luoshen|yongsi|kurou|keji|wusheng|wushen|chixin|SE_Qixin|Chaidao|SE_Shuangqiang|LuaWangxiang|LuaGungnir") then return 20 end
+	if card:isKindOf("Axe") and self.player:hasSkills("luoyi|jiushi|jiuchi|pojun|Zhena|SE_Shanguang|SE_Shuangqiang|LuaBimie") then return 15 end
 	if card:isKindOf("Weapon") and (not self.player:getWeapon()) and (self:getCardsNum("Slash") > 1) then return 6 end
 	if card:isKindOf("Nullification") and self:getCardsNum("Nullification") == 0 then
 		if self:willSkipPlayPhase() or self:willSkipDrawPhase() then return 10 end
@@ -2847,6 +2856,9 @@ function SmartAI:askForNullification(trick, from, to, positive)
 				--无观星友方判定区有乐不思蜀->视“突袭”、“巧变”情形而定
 				if trick:isKindOf("Indulgence") and not to:isSkipped(sgs.Player_Play) then
 					if to:getHp() - to:getHandcardNum() >= 2 then return nil end
+					--SE 无懈可击
+					if to:hasSkill("SE_Qizhuang") then return nil end
+
 					if to:hasSkill("tuxi") and to:getHp() > 2 then return nil end
 					if to:hasSkill("qiaobian") and not to:isKongcheng() then return nil end
 					if (to:containsTrick("supply_shortage") or self:willSkipDrawPhase(to)) and null_num <= 1 and self:getOverflow(to) < -1 then return nil end
@@ -3391,6 +3403,14 @@ function SmartAI:hasHeavySlashDamage(from, slash, to, getValue)
 		if to:hasArmorEffect("vine") and not IgnoreArmor(from, to) and fireSlash then dmg = dmg + 1 end
 		if to:getMark("@gale") > 0 and fireSlash then dmg = dmg + 1 end
 		if fireSlash and jinxuandi and jinxuandi:getMark("@wind") > 0 then dmg = dmg + 1 end
+
+--SE 额外伤害
+		if fireSlash and from:hasSkill("Tianhuo") then dmg = dmg + 1 end
+		if slash and from:hasSkill("LuaGungnir") and to:getHp() > from:getHp() then dmg = dmg + 1 end
+		if slash and to:hasSkill("Lichang") and to:getHp() <= 2 then dmg = 0 end
+		if slash and to:hasSkill("LuaGqset") and to:getPile("gang"):length() > 0 and sgs.Sanguosha:getCard(to:getPile("gang"):first()):isKindOf("BasicCard") then dmg = 0 end
+		if to:hasSkill("SE_Rennai") and to:getMark("@Patience") > 0 then dmg = 0 end
+
 		if thunderSlash and jinxuandi and jinxuandi:getMark("@thunder") > 0 then dmg = dmg + 1 end
 		if from:hasWeapon("guding_blade") and slash and to:isKongcheng() then dmg = dmg + 1 end
 		if to:hasSkill("chouhai") and slash and to:isKongcheng() then dmg = dmg + 1 end
@@ -4215,6 +4235,9 @@ function SmartAI:isWeak(player)
 	if player:hasSkill("longhun") and player:getCards("he"):length() > 2 then return false end
 	if player:hasSkill("hunzi") and player:getMark("hunzi") == 0 and player:getHp() > 1 then return false end
 	if (player:getHp() <= 2 and hcard <= 2) or player:getHp() <= 1 then return true end
+	--SE poi
+	if player:hasSkill("se_emeng") and player:getMark("@waked") == 0 and player:getHp() > 1 then return false end
+
 	return false
 end
 
@@ -4484,6 +4507,25 @@ function SmartAI:damageIsEffective_(damageStruct)
 	if to:hasSkill("shenjun") and to:getGender() ~= from:getGender() and nature ~= sgs.DamageStruct_Thunder then
 		return false
 	end
+
+	--SE 伤害无效
+	if to:hasSkill("xiaoshi") then return false end
+	if to:hasSkill("Tianhuo") and nature ~= sgs.DamageStruct_Normal then
+		return false
+	end
+	if to:hasSkill("Sixu") and not to:faceUp() then
+		return false
+	end
+	if to:hasSkill("SE_Touming") and not to:faceUp() then
+		return false
+	end
+	if to:hasSkill("SE_Niepan") and not (to:getHp()==1 and to:getHandcardNum() < 2) then
+		return false
+	end
+	if from:hasSkill("se_biling") and to:getMark("@Biling_target") > 0 then
+		return false
+	end
+
 	if to:getMark("@fenyong") > 0 and to:hasSkill("fenyong")  then
 		return false
 	end
@@ -5335,6 +5377,20 @@ function SmartAI:aoeIsEffective(card, to, source)
 		return false
 	end
 
+	--SE AOE有效性
+	if source:hasSkill("Xuwu") then
+		return true
+	end
+	if source:hasSkill("SE_Jiepi") and source:getHandcardNum() > to:getHandcardNum() then
+		return false
+	end
+	if to:hasSkill("SE_Jiepi") and to:getHandcardNum() > source:getHandcardNum() then
+		return false
+	end
+	if to:hasSkill("SE_Touming") and not to:faceUp() then return false end
+	if to:hasSkill("se_zhiyan") and to:getMark("@yukino_zhiyan") > 0 then return false end
+	if to:hasSkill("se_se_tuodui") then return false end
+
 	local liuxie = self.room:findPlayerBySkillName("huangen")
 	if liuxie and liuxie:getHp() > 0 and #players > 2 then
 		local friends = self:getFriends(liuxie)
@@ -5720,6 +5776,18 @@ function SmartAI:hasTrickEffective(card, to, from)
 
 	if to:hasSkills("wuyan|hongyan") and card:isKindOf("Lightning") then return false end
 
+	--SE 锦囊有效
+	if from:hasSkill("SE_Jiepi") and from:getHandcardNum() > to:getHandcardNum() then
+		return false
+	end
+	if to:hasSkill("SE_Jiepi") and to:getHandcardNum() > from:getHandcardNum() then
+		return false
+	end
+	if to:hasSkill("LuaGqset") and to:getPile("gang"):length() > 0 and sgs.Sanguosha:getCard(to:getPile("gang"):first()):isNDTrick() then
+		return false
+	end
+	if to:hasSkill("se_zhiyan") and to:getMark("@yukino_zhiyan") > 0 and to:getMark("@Yukino_shifeng") > 1 then return false end
+
 	if (from:hasSkill("wuyan") or to:hasSkill("wuyan")) and not from:hasSkill("jueqing") then
 		if card:isKindOf("TrickCard") and
 			(card:isKindOf("Duel") or card:isKindOf("FireAttack") or card:isKindOf("Drowning")
@@ -6101,6 +6169,10 @@ function getBestHp(player)
 			return math.max( (player:isLord() and 3 or 2) ,player:getMaxHp() - dec)
 		end
 	end
+
+	--SE 最佳HP
+	if player:hasSkill("SE_Qifen") then return (player:getMaxHp() - 1) end
+
 	if player:hasSkills("renjie+baiyin") and player:getMark("baiyin") == 0 then return (player:getMaxHp() - 1) end
 	if player:hasSkills("quanji+zili") and player:getMark("zili") == 0 then return (player:getMaxHp() - 1) end
 	return player:getMaxHp()
