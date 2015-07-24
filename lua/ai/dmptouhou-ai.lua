@@ -183,7 +183,7 @@ se_kuixin_skill.name = "se_kuixin"
 table.insert(sgs.ai_skills,se_kuixin_skill)
 se_kuixin_skill.getTurnUseCard = function(self,inclusive)
 	for _,p in sgs.qlist(self.room:getOtherPlayers(self.player)) do
-		if self.player:distanceTo(p) == 1 and not p:hasFlag("se_kuixin_used") then
+		if self.player:distanceTo(p) == 1 and not p:hasFlag("se_kuixin_used") and p:getHandcardNum() > 0 then
 			if math.random(1, 5) > 1 then
 				return sgs.Card_Parse("#se_kuixincard:.:")
 			end
@@ -193,7 +193,7 @@ se_kuixin_skill.getTurnUseCard = function(self,inclusive)
 end
 sgs.ai_skill_use_func["#se_kuixincard"] = function(card, use, self)
 	for _,p in sgs.qlist(self.room:getOtherPlayers(self.player)) do
-		if self.player:distanceTo(p) == 1 and not p:hasFlag("se_kuixin_used") then
+		if self.player:distanceTo(p) == 1 and not p:hasFlag("se_kuixin_used") and p:getHandcardNum() > 0 then
 			use.card = card
 			if use.to then use.to:append(p) end
 			return
