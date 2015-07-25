@@ -1766,7 +1766,7 @@ LuaJianyong = sgs.CreateTriggerSkill{
 					if not player:isKongcheng() then
 						local card_id = -1
 						local handcards = player:handCards()
-						while player:askForSkillInvoke(self:objectName()) do
+						while (not player:hasFlag("jianyongcant")) and (not player:isKongcheng()) and player:askForSkillInvoke(self:objectName()) do
 							if handcards:length() == 1 then
 								room:getThread():delay(800)
 								card_id = handcards:first()
