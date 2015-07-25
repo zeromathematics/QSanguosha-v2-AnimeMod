@@ -1748,8 +1748,8 @@ LuaGongqiTargetMod = sgs.CreateTargetModSkill{
 --------------------------------------------------------------剑咏@redarcher
 LuaJianyong = sgs.CreateTriggerSkill{
 	name = "LuaJianyong",
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.Damage,sgs.EventPhaseEnd},
+	frequency = sgs.Skill_NotFrequent, 
+	events = {sgs.Damage,sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Damage then
@@ -1757,7 +1757,7 @@ LuaJianyong = sgs.CreateTriggerSkill{
 			if  phase ~= sgs.Player_NotActive then
 				room:setPlayerMark(player,"yongdamage",1)
 			end
-		elseif event == sgs.EventPhaseEnd then
+		elseif event == sgs.EventPhaseStart then
 			local phase = player:getPhase()
 			if phase == sgs.Player_Discard then
 				if player:getMark("yongdamage") == 0 then
@@ -1766,7 +1766,8 @@ LuaJianyong = sgs.CreateTriggerSkill{
 					if not player:isKongcheng() then
 						local card_id = -1
 						local handcards = player:handCards()
-						while (not player:hasFlag("jianyongcant")) and (not player:isKongcheng()) and player:askForSkillInvoke(self:objectName()) do
+						while (not player:isKongcheng()) and player:getMark("turnyong") < math.max(1, player:getLostHp()) and player:askForSkillInvoke(self:objectName()) do
+							room:setPlayerMark(player, "turnyong", player:getMark("turnyong")+1)
 							if handcards:length() == 1 then
 								room:getThread():delay(800)
 								card_id = handcards:first()
@@ -1774,8 +1775,9 @@ LuaJianyong = sgs.CreateTriggerSkill{
 								card_id = room:askForCardChosen(player, player, "h", self:objectName())
 							end
 							player:addToPile("yong",card_id)
-						room:broadcastSkillInvoke("LuaJianyong")
+							room:broadcastSkillInvoke("LuaJianyong")
 						end
+						room:setPlayerMark(player, "turnyong", 0)
 					end
 				end
 			elseif phase == sgs.Player_Finish  then
@@ -1829,7 +1831,7 @@ luajianyucard = sgs.CreateSkillCard{
 		local alivenum = room:alivePlayerCount()
 		local yong = source:getPile("yong")
 		local cards = sgs.IntList()
-		for i = 0, alivenum-1, 1 do
+		for i = 0, alivenum/2 - 1, 1 do
 			yong = source:getPile("yong")
 			if yong:length() > 0 then
 				room:fillAG(yong,source)
@@ -1841,7 +1843,7 @@ luajianyucard = sgs.CreateSkillCard{
 				room:moveCardTo(sgs.Sanguosha:getCard(card_id), nil, sgs.Player_DiscardPile, reason, true)
 			end
 		end
-		if cards:length() >= alivenum/2 then
+		if cards:length() >= alivenum/2 - 1 then
 			local use = sgs.CardUseStruct()
 			local aa = sgs.Sanguosha:cloneCard("archery_attack",sgs.Card_NoSuit,0) 
 			aa:setSkillName("luajianyu")
@@ -1861,7 +1863,7 @@ luajianyu = sgs.CreateViewAsSkill{
 	enabled_at_play = function(self, player)
 		local yong = player:getPile("yong")
 		local alivenum = sgs.Self:aliveCount()
-		return yong:length() >= alivenum
+		return yong:length() >= alivenum/2
 	end
 }
 --------------------------------------------------------------炽天@redarcher
@@ -3527,7 +3529,7 @@ sgs.LoadTranslationTable{
 	[":LuaYinbao"]="<font color=\"blue\"><b>锁定技，</b></font>你计算的与其他角色距离为1。",
 	[":luatouying"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>若你的装备区没有武器，你可以声明一种武器，获得其特效直到回合结束。",
 	[":LuaGongqi"]="你可以将一张装备牌当无距离限制的【杀】使用。",
-	[":LuaJianyong"]="弃牌阶段开始时，若此回合内你未造成伤害，可以摸X张牌然后将任意数量的手牌置于武将牌上，称为“咏”。（X为你已损失的体力值，至少为1）",
+	[":LuaJianyong"]="弃牌阶段开始时，若此回合内你未造成伤害，可以摸X张牌。若如此做，你可以将至多X张手牌置于武将牌上，称为“咏”。（X为你已损失的体力值，至少为1；）",
 	[":luajianyu"]="你可以将等同于存活角色数的一半的张数的”咏“置入弃牌堆，视为使用一张【万箭齐发】。",
 	[":LuaChitian"]="你可以将一张”咏“视作【杀】或【闪】打出，然后摸一张牌。", 
 	[":LuaJianzhi"]="<font color=\"purple\"><b>觉醒技，</b></font>结束阶段开始时，若你的”咏“的数量达到三张或更多时，你减1点体力上限，获得每名其他角色各一张手牌并置于你的武将牌上，然后获得技能”剑雨“和”炽天“，此回合结束后进行一个额外的回合，",
