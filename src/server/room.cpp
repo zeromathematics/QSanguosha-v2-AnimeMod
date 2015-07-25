@@ -5334,6 +5334,7 @@ QList<const Card *> Room::askForPindianRace(ServerPlayer *from, ServerPlayer *to
 ServerPlayer *Room::askForPlayerChosen(ServerPlayer *player, const QList<ServerPlayer *> &targets, const QString &skillName,
     const QString &prompt, bool optional, bool notify_skill)
 {
+
     if (targets.isEmpty()) {
         Q_ASSERT(optional);
         return NULL;
@@ -5753,6 +5754,62 @@ void Room::showAllCards(ServerPlayer *player, ServerPlayer *to)
 
         doBroadcastNotify(getOtherPlayers(player), S_COMMAND_SHOW_ALL_CARDS, gongxinArgs);
     }
+}
+
+void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)
+{
+    //to akarin a player only means to remove the player's framework in roomscene
+    JsonArray args;
+    args << player->objectName();
+    args << true;//to Akarin
+    bool isUnicast = (to != NULL);
+    if (isUnicast) {
+        LogMessage log;
+        log.type = "$AkarinPlayer";
+        log.from = player;
+        log.to << to;
+        sendLog(log, to);
+        doNotify(to, S_COMMAND_AKARIN, args);
+        
+    }
+    else {
+        LogMessage log;
+        log.type = "$AkarinPlayerToAll";
+        log.from = player;
+        sendLog(log);
+    }
+        
+
+    doBroadcastNotify(getOtherPlayers(player), S_COMMAND_AKARIN, args);
+}
+
+void Room::removeAkarinEffect(ServerPlayer *player, ServerPlayer *to)
+{
+    //to akarin a player only means to remove the player's framework in roomscene
+    JsonArray args;
+    args << player->objectName();
+    args << false;//To remove Akarin
+
+    bool isUnicast = (to != NULL);
+    if (isUnicast) {
+        LogMessage log;
+        log.type = "$RemoveAkarin";
+        log.from = player;
+        log.to << to;
+        sendLog(log, to);
+
+
+        doNotify(to, S_COMMAND_AKARIN, args);
+    }
+    else {
+        LogMessage log;
+        log.type = "$RemoveAkarinToAll";
+        log.from = player;
+        sendLog(log);
+
+        doBroadcastNotify(getOtherPlayers(player), S_COMMAND_AKARIN, args);
+    }
+
 }
 
 void Room::retrial(const Card *card, ServerPlayer *player, JudgeStruct *judge, const QString &skill_name, bool exchange)

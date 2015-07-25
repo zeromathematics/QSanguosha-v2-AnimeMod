@@ -49,6 +49,27 @@ public:
     void setBackgroundBrush(bool center_as_origin);
 	QGraphicsScene* getScene();
 
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseDoubleClickEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+#endif
+
+    bool isLeftPressDown;
+    QPoint movePosition;
+
+    static const int S_PADDING = 4;
+    static const int S_CORNER_SIZE = 5;
+    enum Direction
+    {
+        Up, Down, Left, Right, LeftTop, LeftBottom, RightTop, RightBottom, None = -1
+    };
+
+    bool isZoomReady;
+    Direction direction;
+
+
 protected:
     virtual void closeEvent(QCloseEvent *);
 
@@ -60,9 +81,12 @@ private:
     ConfigDialog *config_dialog;
     QSystemTrayIcon *systray;
     Server *server;
+    QPushButton *closeButton;
+
+    void region(const QPoint &cursorGlobalPoint);
 
     void restoreFromConfig();
-
+    //void roundCorners();
 
 public slots:
     void startConnection();

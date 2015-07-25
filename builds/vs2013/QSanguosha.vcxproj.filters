@@ -1045,6 +1045,15 @@
     <ClCompile Include="..\..\src\ui\super-button.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\package\inovation.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_inovation.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_inovation.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\server\ai.h">
@@ -1382,6 +1391,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\ui\super-button.h">
       <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\package\inovation.h">
+      <Filter>package</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

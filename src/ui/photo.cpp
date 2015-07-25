@@ -98,6 +98,8 @@ void Photo::repaintAll()
     refresh();
 }
 
+//void Photo::timeout(double opacityInc, double maxOpacity)
+
 void Photo::_adjustComponentZValues(bool killed)
 {
     PlayerCardContainer::_adjustComponentZValues(killed);

@@ -159,6 +159,7 @@ public:
     void askForGuanxing(const QVariant &);
     void showAllCards(const QVariant &);
     void askForGongxin(const QVariant &);
+    void akarin(const QVariant &);
     void askForAssign(const QVariant &); // Assign roles at the beginning of game
     void askForSurrender(const QVariant &);
     void askForLuckCard(const QVariant &);
@@ -313,6 +314,7 @@ signals:
     void log_received(const QStringList &log_str);
     void guanxing(const QList<int> &card_ids, bool single_side);
     void gongxin(const QList<int> &card_ids, bool enable_heart, QList<int> enabled_ids);
+    void player_akarin(const QString &who, bool isAkarin);
     void focus_moved(const QStringList &focus, QSanProtocol::Countdown countdown);
     void emotion_set(const QString &target, const QString &emotion);
     void skill_invoked(const QString &who, const QString &skill_name);

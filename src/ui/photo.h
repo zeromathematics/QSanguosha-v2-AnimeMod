@@ -30,6 +30,7 @@ public:
     void setEmotion(const QString &emotion, bool permanent = false);
     void tremble();
     void showSkillName(const QString &skill_name);
+    //void timeout(double opacityInc, double maxOpacity);
 
     enum FrameType
     {

@@ -39,6 +39,7 @@ config = {
 		"YitianCard" ,
 		"Disaster" ,
 		"JoyEquip" ,
+		"Inovation",
 
 		"Standard",
 		"Wind",

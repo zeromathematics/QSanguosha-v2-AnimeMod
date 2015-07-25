@@ -437,6 +437,8 @@ private slots:
     void updateSkill(const QString &skill_name);
 
     void doGongxin(const QList<int> &card_ids, bool enable_heart, QList<int> enabled_ids);
+    void doAkarin(const QString &who, bool is_akarin);
+    void removeAkarinEffect(const QString &who);
 
     void startAssign();
 
