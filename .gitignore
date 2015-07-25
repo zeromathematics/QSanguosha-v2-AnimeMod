@@ -42,7 +42,6 @@ Bin/
 /QSanguosha.vcxproj
 /QSanguosha.vcxproj.filters
 tags
-/extensions
 *~
 *.kdev4
 .cproject
