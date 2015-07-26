@@ -741,5 +741,5 @@ void GeneralOverview::fillAllGenerals()
 
 void GeneralOverview::exitOverview()
 {
-    this->close();
+    this->hide();
 }

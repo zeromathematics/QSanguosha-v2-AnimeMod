@@ -5777,10 +5777,10 @@ void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)
         log.type = "$AkarinPlayerToAll";
         log.from = player;
         sendLog(log);
+        doBroadcastNotify(getOtherPlayers(player), S_COMMAND_AKARIN, args);
     }
         
 
-    doBroadcastNotify(getOtherPlayers(player), S_COMMAND_AKARIN, args);
 }
 
 void Room::removeAkarinEffect(ServerPlayer *player, ServerPlayer *to)

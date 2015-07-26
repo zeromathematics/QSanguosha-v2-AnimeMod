@@ -192,7 +192,7 @@ void CardOverview::askCard()
 
 void CardOverview::exitOverview()
 {
-    this->close();
+    this->hide();
 }
 
 void CardOverview::on_tableWidget_itemDoubleClicked(QTableWidgetItem *)

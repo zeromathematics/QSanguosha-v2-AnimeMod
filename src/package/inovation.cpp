@@ -687,6 +687,132 @@ public:
     }
 };
 
+class Huanxing : public TriggerSkill
+{
+public:
+    Huanxing() : TriggerSkill("huanxing")
+    {
+        events << CardUsed << EventPhaseEnd << TurnStart << TrickCardCanceling << SlashProceed;
+        frequency = NotFrequent;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *nao, QVariant &data) const
+    {
+        if (triggerEvent == CardUsed) {
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.to.length() == 0 || !use.to.at(0) || use.to.at(0)->getMark("disappear") == 1)
+                return false;
+            if (use.to.length() > 1)
+                return false;
+            if (!use.to.at(0)->hasSkill(objectName()))
+                return false;
+            if (!use.to.at(0)->askForSkillInvoke(objectName(), data))
+                return false;
+            foreach(ServerPlayer* p, room->getAlivePlayers()){
+                if (p->getMark("@huanxing_target") > 0){
+                    p->removeMark("@huanxing_target");
+                    room->removeAkarinEffect(use.to.at(0), p);
+                }
+            }
+            use.from->gainMark("@huanxing_target");
+            room->akarinPlayer(use.to.at(0), use.from);
+            use.to.at(0)->setMark("disappear", 1);
+            return true;
+        }
+        else if (triggerEvent == EventPhaseEnd) {
+            if (!nao || !nao->hasSkill(objectName()) || nao->getPhase() != Player::Finish)
+                return false;
+            foreach(ServerPlayer* p, room->getAlivePlayers()){
+                if (p->getMark("@huanxing_target") > 0){
+                    p->removeMark("@huanxing_target");
+                    room->removeAkarinEffect(nao, p);
+                }
+            }
+
+        }
+        else if (triggerEvent == TurnStart) {
+            if (!nao || !nao->hasSkill(objectName()))
+                return false;
+            nao->setMark("disappear", 0);
+
+        }
+        else if (triggerEvent == TrickCardCanceling) {
+            CardEffectStruct effect = data.value<CardEffectStruct>();
+            if (effect.from->hasSkill(objectName()) && effect.to->getMark("@huanxing_target") == 1){
+                LogMessage log;
+                log.type = "#huanxing_trick";
+                log.from = effect.to;
+                log.arg = effect.card->objectName();
+                room->sendLog(log);
+                return true;
+            }
+        }
+        else if (triggerEvent == SlashProceed) {
+            SlashEffectStruct effect = data.value<SlashEffectStruct>();
+            if (effect.from->hasSkill(objectName()) && effect.to->getMark("@huanxing_target") == 1){
+                LogMessage log;
+                log.type = "#huanxing_slash";
+                log.from = effect.to;
+                log.arg = effect.slash->objectName();
+                room->sendLog(log);
+                room->slashResult(effect, NULL);
+                return true;
+            }
+        }
+
+        return false;
+    }
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+};
+
+class Fushang : public TriggerSkill
+{
+public:
+    Fushang() : TriggerSkill("fushang")
+    {
+        events << Damaged << EventPhaseStart;
+        frequency = NotFrequent;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == Damaged) {
+            DamageStruct damage = data.value<DamageStruct>();
+            if (!damage.to || damage.to->isDead()){
+                return false;
+            }
+            ServerPlayer *nao = room->findPlayerBySkillName(objectName());
+            if (!nao || !nao->askForSkillInvoke(objectName(), data))
+                return false;
+            damage.to->gainMark("@fushang");
+            damage.to->gainMark("@fushang_time", 2 - damage.to->getMark("@fushang_time"));
+            return false;
+        }
+        else if (triggerEvent == EventPhaseStart) {
+            if (player->getPhase() == Player::RoundStart){
+                if (player->getMark("@fushang_time") > 0){
+                    player->loseMark("@fushang_time");
+                    if (player->getMark("@fushang_time") == 0){
+                        room->recover(player, RecoverStruct(player, NULL, player->getMark("@fushang")));
+                        player->loseAllMarks("@fushang");
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+};
+
+
+
 InovationPackage::InovationPackage()
     : Package("inovation")
 {
@@ -718,9 +844,12 @@ InovationPackage::InovationPackage()
 
 
     skills << new Keji;
-    General *akarin = new General(this, "Akarin", "real", 3, false); // WEI 009
+    General *akarin = new General(this, "Akarin", "real", 3, false); 
     akarin->addSkill(new SE_Touming);
     akarin->addSkill(new SE_Tuanzi);
+    General *nao = new General(this, "Nao", "real", 3, false);
+    nao->addSkill(new Huanxing);
+    nao->addSkill(new Fushang);
 
     addMetaObject<YinshenCard>();
 }

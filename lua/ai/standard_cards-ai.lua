@@ -295,6 +295,7 @@ function SmartAI:slashProhibit(card, enemy, from)
 		local filter = sgs.ai_slash_prohibit[askill:objectName()]
 		if filter and type(filter) == "function" and filter(self, from, enemy, card) then return true end
 	end
+	--SE akarin
 
 	if self:isFriend(enemy, from) then
 		if card:isKindOf("FireSlash") or from:hasWeapon("fan") or from:hasSkill("zonghuo") then
