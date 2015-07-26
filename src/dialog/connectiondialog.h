@@ -19,10 +19,18 @@ public:
     void hideAvatarList();
     void showAvatarList();
     void setAddress(const QString &);
+    static const int S_CORNER_SIZE = 5;
 
 private:
     Ui::ConnectionDialog *ui;
     MainWindowServerList *mwServerList;
+    QPoint windowPos;
+    QPoint mousePos;
+    QPoint dPos;
+
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void roundCorners();
 
 private slots:
     void on_detectLANButton_clicked();

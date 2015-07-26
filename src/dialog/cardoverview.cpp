@@ -22,6 +22,8 @@ CardOverview::CardOverview(QWidget *parent)
 {
     ui->setupUi(this);
 
+    roundCorners();
+
     ui->tableWidget->setColumnWidth(0, 80);
     ui->tableWidget->setColumnWidth(1, 60);
     ui->tableWidget->setColumnWidth(2, 30);
@@ -37,6 +39,38 @@ CardOverview::CardOverview(QWidget *parent)
     ui->malePlayButton->hide();
     ui->femalePlayButton->hide();
     ui->playAudioEffectButton->hide();
+    connect(ui->exitButton, SIGNAL(clicked()), this, SLOT(exitOverview()));
+}
+
+void CardOverview::mousePressEvent(QMouseEvent *event){
+    this->windowPos = this->pos();
+    this->mousePos = event->globalPos();
+    this->dPos = mousePos - windowPos;
+}
+void CardOverview::mouseMoveEvent(QMouseEvent *event){
+    this->move(event->globalPos() - this->dPos);
+}
+
+void CardOverview::roundCorners()
+{
+#ifndef Q_OS_ANDROID
+    QBitmap mask(size());
+    if (windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen)) {
+        mask.fill(Qt::black);
+    }
+    else {
+        mask.fill();
+        QPainter painter(&mask);
+        QPainterPath path;
+        QRect windowRect = mask.rect();
+        QRect maskRect(windowRect.x(), windowRect.y(), windowRect.width(), windowRect.height());
+        path.addRoundedRect(maskRect, S_CORNER_SIZE, S_CORNER_SIZE);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        painter.fillPath(path, Qt::black);
+    }
+    setMask(mask);
+#endif
 }
 
 void CardOverview::loadFromAll()
@@ -154,6 +188,11 @@ void CardOverview::askCard()
         }
         ClientInstance->requestCheatGetOneCard(card_id);
     }
+}
+
+void CardOverview::exitOverview()
+{
+    this->close();
 }
 
 void CardOverview::on_tableWidget_itemDoubleClicked(QTableWidgetItem *)

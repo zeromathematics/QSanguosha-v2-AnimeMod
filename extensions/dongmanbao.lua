@@ -6308,7 +6308,7 @@ SE_Heiyang = sgs.CreateTriggerSkill{
 		room:loseMaxHp(player)
 		player:drawCards(2)
 		room:acquireSkill(player, "SE_Chaopin")
-		room:acquireSkill(player, "qingguo")
+		--room:acquireSkill(player, "qingguo")
 		room:broadcastSkillInvoke("SE_Heiyang")
 		room:doLightbox("SE_Heiyang$", 3000)
 		return false
@@ -6374,6 +6374,7 @@ Kuroyukihime:addSkill(se_xunyu)
 Kuroyukihime:addSkill(SE_Heiyang)
 Kuroyukihime:addSkill(se_xunyu_damage)
 Kuroyukihime_sub:addSkill(SE_Chaopin)
+Kuroyukihime_sub:addSkill(SE_Chaopin)
 
 sgs.LoadTranslationTable{
 ["se_xunyu$"] = "image=image/animate/se_xunyu.png",
@@ -6392,7 +6393,7 @@ sgs.LoadTranslationTable{
 [":se_xunyu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将一张手牌交给你攻击范围内的一名其他角色，视为对其使用一张【杀】（此【杀】不计入出牌阶段使用限制），此【杀】结算后，若你没有“蓝”标记，你获得目标角色一张牌。",
 ["SE_Heiyang"] = "黑扬「黑扬之羽蝶」",
 ["$SE_Heiyang"] = "此刻，我就让你一睹我的真正姿态。",
-[":SE_Heiyang"] = "<font color=\"purple\"><b>觉醒技，</b></font>回合开始前，若场上有已觉醒的其他角色或有当前体力值为1的其他角色，你须减1点体力上限并摸两张牌，获得“超频”和“倾国”。\n\n<font weight=2><font color=\"brown\"><b>超频「Overdrive」：</b></font>准备阶段开始时,回合开始前，你可以选择一项：1.弃置1枚“绿”标记或“蓝”并获得1枚“红”标记；2.弃置1枚“红”标记或“蓝”标记并获得1枚“绿”标记；3.弃置1枚“红”标记或“绿”标记并获得1枚“蓝”标记。若你拥有“红”标记，你使用“迅羽”时攻击范围无限且可以不交给目标角色手牌，若该角色的攻击范围内没有你，其失去1点体力；若你拥有“蓝”标记，将“迅羽”的“将一张手牌交给你攻击范围内的一名其他角色”改为“弃置一张手牌”，“出牌阶段限一次”改为“出牌阶段限3次”；若你拥有“绿”标记，你获得“克己”。",
+[":SE_Heiyang"] = "<font color=\"purple\"><b>觉醒技，</b></font>回合开始前，若场上有已觉醒的其他角色或有当前体力值为1的其他角色，你须减1点体力上限并摸两张牌，获得“超频”。\n\n<font weight=2><font color=\"brown\"><b>超频「Overdrive」：</b></font>准备阶段开始时,回合开始前，你可以选择一项：1.弃置1枚“绿”标记或“蓝”并获得1枚“红”标记；2.弃置1枚“红”标记或“蓝”标记并获得1枚“绿”标记；3.弃置1枚“红”标记或“绿”标记并获得1枚“蓝”标记。若你拥有“红”标记，你使用“迅羽”时攻击范围无限且可以不交给目标角色手牌，若该角色的攻击范围内没有你，其失去1点体力；若你拥有“蓝”标记，将“迅羽”的“将一张手牌交给你攻击范围内的一名其他角色”改为“弃置一张手牌”，“出牌阶段限一次”改为“出牌阶段限3次”；若你拥有“绿”标记，你获得“克己”。",
 ["SE_Chaopin"] = "超频「Overdrive」",
 ["$SE_Chaopin1"] = "想加速的更快吗，少年？",
 ["$SE_Chaopin2"] = "Death By Piercing",

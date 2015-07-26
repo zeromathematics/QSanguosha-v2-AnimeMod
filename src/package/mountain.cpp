@@ -1388,6 +1388,7 @@ public:
 MountainPackage::MountainPackage()
     : Package("mountain")
 {
+    /*
     General *zhanghe = new General(this, "zhanghe", "wei"); // WEI 009
     zhanghe->addSkill(new Qiaobian);
 
@@ -1427,6 +1428,9 @@ MountainPackage::MountainPackage()
     General *caiwenji = new General(this, "caiwenji", "qun", 3, false); // QUN 012
     caiwenji->addSkill(new Beige);
     caiwenji->addSkill(new Duanchang);
+    */
+    skills << new Qiaobian << new Tuntian << new TuntianDistance << new Zaoxian << new Tiaoxin << new Zhiji << new Xiangle
+        << new Fangquan << new Ruoyu << new Jiang << new Hunzi << new Zhiba << new Zhijian << new Guzheng << new Huashen << new HuashenSelect << new HuashenClear << new Xinsheng << new Beige << new Duanchang;
 
     addMetaObject<QiaobianCard>();
     addMetaObject<TiaoxinCard>();

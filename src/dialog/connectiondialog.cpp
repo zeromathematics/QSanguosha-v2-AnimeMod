@@ -36,6 +36,8 @@ ConnectionDialog::ConnectionDialog(QWidget *parent)
     ui->setupUi(this);
     mwServerList=NULL;
 
+    roundCorners();
+
     ui->nameLineEdit->setText(Config.UserName);
     ui->nameLineEdit->setMaxLength(64);
 
@@ -138,6 +140,38 @@ void ConnectionDialog::on_pushButtonFindServer_clicked()
     }
     mwServerList->initWindow();
 }
+
+void ConnectionDialog::mousePressEvent(QMouseEvent *event){
+    this->windowPos = this->pos();
+    this->mousePos = event->globalPos();
+    this->dPos = mousePos - windowPos;
+}
+void ConnectionDialog::mouseMoveEvent(QMouseEvent *event){
+    this->move(event->globalPos() - this->dPos);
+}
+
+void ConnectionDialog::roundCorners()
+{
+#ifndef Q_OS_ANDROID
+    QBitmap mask(size());
+    if (windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen)) {
+        mask.fill(Qt::black);
+    }
+    else {
+        mask.fill();
+        QPainter painter(&mask);
+        QPainterPath path;
+        QRect windowRect = mask.rect();
+        QRect maskRect(windowRect.x(), windowRect.y(), windowRect.width(), windowRect.height());
+        path.addRoundedRect(maskRect, S_CORNER_SIZE, S_CORNER_SIZE);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        painter.fillPath(path, Qt::black);
+    }
+    setMask(mask);
+#endif
+}
+
 
 // -----------------------------------
 

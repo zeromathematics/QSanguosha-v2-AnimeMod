@@ -7,15 +7,17 @@ config = {
 	tiny_font = 18,
 	kingdoms = { "wei", "shu", "wu", "qun", "god", "touhou", "kancolle", "diva", "science", "magic", "real" },
 	kingdom_colors = {
-		wei = "#547998",
-		shu = "#D0796C",
-		wu = "#4DB873",
-		qun = "#8A807A",
-		god = "#96943D",
+		--wei = "#547998",
+		--shu = "#D0796C",
+		--wu = "#4DB873",
+		--qun = "#8A807A",
+		--god = "#96943D",
 		kancolle = "#9AC0CD",
 		diva = "#EEB422",
 		touhou = "#7CCD7C",
 		real = "#FF77FF",
+		science = "#FF77FF",
+		magic = "#FF77FF",
 	},
 
 	skill_type_colors = {
@@ -39,8 +41,10 @@ config = {
 		"YitianCard" ,
 		"Disaster" ,
 		"JoyEquip" ,
-		"Inovation",
 
+
+		"Inovation",
+--[[
 		"Standard",
 		"Wind",
 		"Fire",
@@ -75,11 +79,11 @@ config = {
 		"NostalYJCM",
 		"NostalYJCM2012",
 		"NostalYJCM2013",
-		"JianGeDefense",
-		"BossMode",
-		"Yitian" ,
-		"Wisdom" ,
-		"Test"
+		"JianGeDefense",]]
+		--"BossMode",
+		--"Yitian" ,
+		--"Wisdom" ,
+		--"Test"
 	},
 
 	hulao_generals = {

@@ -803,17 +803,18 @@ public:
 HegemonyPackage::HegemonyPackage()
     : Package("hegemony")
 {
+    /*
     General *yuejin = new General(this, "yuejin", "wei", 4, true, true); // WEI 016
     yuejin->addSkill(new Xiaoguo);
-
+    
     General *ganfuren = new General(this, "ganfuren", "shu", 3, false, true); // SHU 016
     ganfuren->addSkill(new Shushen);
     ganfuren->addSkill(new Shenzhi);
-
+    
     General *heg_luxun = new General(this, "heg_luxun", "wu", 3); // WU 007 G
     heg_luxun->addSkill("nosqianxun");
     heg_luxun->addSkill(new Duoshi);
-
+    
     General *dingfeng = new General(this, "dingfeng", "wu", 4, true, true); // WU 016
     dingfeng->addSkill(new Skill("duanbing", Skill::Compulsory));
     dingfeng->addSkill(new Fenxun);
@@ -834,6 +835,7 @@ HegemonyPackage::HegemonyPackage()
     General *tianfeng = new General(this, "tianfeng", "qun", 3); // QUN 016
     tianfeng->addSkill(new Sijian);
     tianfeng->addSkill(new Suishi);
+
 
     General *panfeng = new General(this, "panfeng", "qun", 4, true, true); // QUN 017
     panfeng->addSkill(new Kuangfu);
@@ -877,6 +879,10 @@ HegemonyPackage::HegemonyPackage()
     General *heg_diaochan = new General(this, "heg_diaochan", "qun", 3, false, true); // QUN 003 G
     heg_diaochan->addSkill("lijian");
     heg_diaochan->addSkill("biyue");
+    */
+    skills << new Xiaoguo << new Shushen << new Shenzhi << new Duoshi << new Fenxun << new Skill("duanbing", Skill::Compulsory) << new Xiongyi << new Mingshi <<
+        new Lirang << new Shuangren << new SlashNoDistanceLimitSkill("shuangren") << new Sijian << new Suishi << new Kuangfu << new Huoshui << new HuoshuiInvalidity << new Qingcheng <<
+        new QingchengInvalidity;
 
     addMetaObject<DuoshiCard>();
     addMetaObject<FenxunCard>();

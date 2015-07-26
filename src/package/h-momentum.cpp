@@ -611,6 +611,7 @@ public:
 HMomentumPackage::HMomentumPackage()
     : Package("h_momentum")
 {
+    /*
     General *zangba = new General(this, "zangba", "wei", 4); // WEI 023
     zangba->addSkill(new Hengjiang);
     zangba->addSkill(new HengjiangDraw);
@@ -649,6 +650,22 @@ HMomentumPackage::HMomentumPackage()
 
     skills << new Yongjue << new YongjueRecord;
     related_skills.insertMulti("yongjue", "#yongjue-record");
+    */
+    skills << new Hengjiang;
+    skills << new HengjiangDraw;
+    skills << new HengjiangMaxCards;
+    skills << new Guixiu;
+    skills << new GuixiuDetach;
+    skills << new Cunsi;
+    skills << new Yingyang;
+    skills << new Duanxie;
+    skills << new Fenming;
+    skills << new Hengzheng;
+    skills << new Baoling;
+    skills << new Chuanxin;
+    skills << new Fengshi;
+
+    skills << new Yongjue << new YongjueRecord;
 
     addMetaObject<GuixiuCard>();
     addMetaObject<CunsiCard>();

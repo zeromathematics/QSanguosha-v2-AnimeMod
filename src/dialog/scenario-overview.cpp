@@ -48,4 +48,3 @@ void ScenarioOverview::loadContent(int row)
         content_box->setHtml(content);
     }
 }
-

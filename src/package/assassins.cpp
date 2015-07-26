@@ -692,6 +692,7 @@ public:
 
 AssassinsPackage::AssassinsPackage() : Package("assassins")
 {
+    /*
     General *fuhuanghou = new General(this, "as_fuhuanghou", "qun", 3, false);
     fuhuanghou->addSkill(new Mixin);
     fuhuanghou->addSkill(new Cangni);
@@ -720,6 +721,9 @@ AssassinsPackage::AssassinsPackage() : Package("assassins")
     General *lingju = new General(this, "as_lingju", "qun", 3, false);
     lingju->addSkill(new Jieyuan);
     lingju->addSkill(new Fenxin);
+    */
+    skills << new Mixin << new Cangni << new Duyi << new Duanzhi << new FakeMoveSkill("duanzhi") << new Fengyin << new ChizhongKeep 
+        << new Chizhong << new Moukui << new Tianming << new Mizhao << new MizhaoSlashNoDistanceLimit << new Jieyuan << new Fenxin;
 
     addMetaObject<MizhaoCard>();
     addMetaObject<MixinCard>();

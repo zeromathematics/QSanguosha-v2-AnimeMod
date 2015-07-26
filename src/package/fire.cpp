@@ -547,6 +547,7 @@ public:
 FirePackage::FirePackage()
     : Package("fire")
 {
+    /*
     General *dianwei = new General(this, "dianwei", "wei"); // WEI 012
     dianwei->addSkill(new Qiangxi);
 
@@ -578,7 +579,9 @@ FirePackage::FirePackage()
     General *pangde = new General(this, "pangde", "qun"); // QUN 008
     pangde->addSkill("mashu");
     pangde->addSkill(new Mengjin);
-
+    */
+    skills << new Qiangxi << new Quhu << new Jieming << new Lianhuan << new Niepan << new Huoji << new Kanpo << new Bazhen << new Tianyi << new TianyiTargetMod
+        << new Luanji << new Xueyi << new Shuangxiong << new Mengjin;
     addMetaObject<QuhuCard>();
     addMetaObject<QiangxiCard>();
     addMetaObject<TianyiCard>();

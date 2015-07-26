@@ -953,7 +953,7 @@ JianGeDefensePackage::JianGeDefensePackage()
 {
     typedef General Soul;
     typedef General Machine;
-
+    /*
     Soul *jg_soul_caozhen = new Soul(this, "jg_soul_caozhen", "wei", 5, true, true);
     jg_soul_caozhen->addSkill(new JGChiying);
     jg_soul_caozhen->addSkill(new JGJingfan);
@@ -1028,6 +1028,7 @@ JianGeDefensePackage::JianGeDefensePackage()
     jg_machine_chiyuzhuque->addSkill("jgjiguan");
     jg_machine_chiyuzhuque->addSkill("jgyuhuo");
     jg_machine_chiyuzhuque->addSkill(new JGTianyun);
+    */
 }
 
 ADD_PACKAGE(JianGeDefense)

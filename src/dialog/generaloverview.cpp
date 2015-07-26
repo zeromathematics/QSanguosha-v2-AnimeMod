@@ -21,6 +21,7 @@ GeneralSearch::GeneralSearch(GeneralOverview *parent)
 {
     setWindowTitle(tr("Search..."));
 
+
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(createInfoTab());
     layout->addLayout(createButtonLayout());
@@ -252,11 +253,15 @@ GeneralOverview *GeneralOverview::getInstance(QWidget *main_window)
     return Overview;
 }
 
+
+
 GeneralOverview::GeneralOverview(QWidget *parent)
     : QDialog(parent), ui(new Ui::GeneralOverview)
 {
     ui->setupUi(this);
     origin_window_title = windowTitle();
+
+    roundCorners();
 
     button_layout = new QVBoxLayout;
 
@@ -280,6 +285,29 @@ GeneralOverview::GeneralOverview(QWidget *parent)
     connect(ui->searchButton, SIGNAL(clicked()), general_search, SLOT(show()));
     ui->returnButton->hide();
     connect(ui->returnButton, SIGNAL(clicked()), this, SLOT(fillAllGenerals()));
+    connect(ui->exitButton, SIGNAL(clicked()), this, SLOT(exitOverview()));
+}
+
+void GeneralOverview::roundCorners()
+{
+#ifndef Q_OS_ANDROID
+    QBitmap mask(size());
+    if (windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen)) {
+        mask.fill(Qt::black);
+    }
+    else {
+        mask.fill();
+        QPainter painter(&mask);
+        QPainterPath path;
+        QRect windowRect = mask.rect();
+        QRect maskRect(windowRect.x(), windowRect.y(), windowRect.width(), windowRect.height());
+        path.addRoundedRect(maskRect, S_CORNER_SIZE, S_CORNER_SIZE);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        painter.fillPath(path, Qt::black);
+    }
+    setMask(mask);
+#endif
 }
 
 void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool init)
@@ -390,6 +418,16 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
     ui->tableWidget->setColumnWidth(6, 95);
 
     ui->tableWidget->setCurrentItem(ui->tableWidget->item(0, 0));
+}
+
+
+void GeneralOverview::mousePressEvent(QMouseEvent *event){
+    this->windowPos = this->pos();
+    this->mousePos = event->globalPos();
+    this->dPos = mousePos - windowPos;
+}
+void GeneralOverview::mouseMoveEvent(QMouseEvent *event){
+    this->move(event->globalPos() - this->dPos);
 }
 
 void GeneralOverview::resetButtons()
@@ -699,4 +737,9 @@ void GeneralOverview::fillAllGenerals()
     ui->returnButton->hide();
     setWindowTitle(origin_window_title);
     fillGenerals(all_generals, false);
+}
+
+void GeneralOverview::exitOverview()
+{
+    this->close();
 }
