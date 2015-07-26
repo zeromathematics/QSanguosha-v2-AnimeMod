@@ -369,7 +369,6 @@ function SmartAI:isGoodChainTarget(who, source, nature, damagecount, card)
 				if hasWulingEffect("@thunder") then dmg = dmg + 1 end
 			end
 		end
-		if self:cantbeHurt(target, source, damagecount) then newvalue = newvalue - 100 end
 		if damagecount + (dmg or 0) >= target:getHp() then
 			newvalue = newvalue - 2
 			if target:isLord() and not self:isEnemy(target) then killlord = true end
@@ -447,7 +446,6 @@ function SmartAI:useCardIronChain(card, use)
 		if self.player:hasSkill("noswuyan") then return end
 		if self.player:isLocked(card) then return end
 		if #self.enemies == 1 and #(self:getChainedFriends()) <= 1 then return end
-		if self:needBear() then return end
 		--祖茂的引兵：如果手里只有一张铁索，这时最大效率化还是将其保留为好。
 		if self.player:hasSkill("yinbing") and self.player:getPile("yinbing"):length() == 0 and self.player:getHandcardNum() - self:getCardsNum("BasicCard") == 1 and not self:isWeak() then return end
 		if self:getOverflow() <= 0 and self.player:hasSkill("manjuan") then return end
@@ -668,7 +666,7 @@ function SmartAI:useCardFireAttack(fire_attack, use)
 			damage = damage - 1
 		end
 		return self:objectiveLevel(enemy) > 3 and damage > 0 and not enemy:isKongcheng() and not self.room:isProhibited(self.player, enemy, fire_attack)
-				and self:damageIsEffective(enemy, sgs.DamageStruct_Fire, self.player) and not self:cantbeHurt(enemy, self.player, damage)
+				and self:damageIsEffective(enemy, sgs.DamageStruct_Fire, self.player)
 				and self:hasTrickEffective(fire_attack, enemy)
 				and sgs.isGoodTarget(enemy, self.enemies, self)
 				and (self.player:hasSkill("jueqing")
@@ -696,7 +694,7 @@ function SmartAI:useCardFireAttack(fire_attack, use)
 		and self.role ~= "renegade" and can_FireAttack_self and self.player:isChained() and self:isGoodChainTarget(self.player, self.player, sgs.DamageStruct_Fire, nil, fire_attack)
 		and self.player:getHandcardNum() > 1 and not self.player:hasSkill("jueqing") and not self.player:hasSkill("mingshi")
 		and not self.room:isProhibited(self.player, self.player, fire_attack)
-		and self:damageIsEffective(self.player, sgs.DamageStruct_Fire, self.player) and not self:cantbeHurt(self.player)
+		and self:damageIsEffective(self.player, sgs.DamageStruct_Fire, self.player)
 		and self:hasTrickEffective(fire_attack, self.player) then
 
 		if self.player:hasSkill("niepan") and self.player:getMark("@nirvana") > 0 then

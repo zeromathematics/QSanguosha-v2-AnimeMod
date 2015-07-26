@@ -5128,7 +5128,7 @@ sgs.ai_skill_invoke["SE_Jiawu"] = function(self, data)
 end
 
 sgs.ai_skill_choice["SE_Jiawu"] = function(self, data)
-	if player:hasFlag("SE_Jiawu_EquipCard") then
+	if self.player:hasFlag("SE_Jiawu_EquipCard") then
 		if not self.player:getWeapon() then return "SE_Jiawu_use" end
 		return "SE_Jiawu_give"
 	else

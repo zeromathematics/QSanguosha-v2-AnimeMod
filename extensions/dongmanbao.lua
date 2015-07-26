@@ -129,7 +129,7 @@ Nagase = sgs.General(extension, "Nagase", "real", 3, false,false,false)
 Kazehaya = sgs.General(extension, "Kazehaya", "real", 3, true,false,false)
 Kazehaya_sub = sgs.General(extension, "Kazehaya_sub", "real", 3, true,true,true)
 Ayase = sgs.General(extension, "Ayase", "real", 3, false,false,false)
-Akarin = sgs.General(extension, "Akarin", "real", 3, false,false,false)
+--Akarin = sgs.General(extension, "Akarin", "real", 3, false,false,false)
 Hikigaya = sgs.General(extension, "Hikigaya", "real", 4, true,false,false)
 Chiyuri = sgs.General(extension, "Chiyuri", "science", 3, false,false,false)
 AiAstin = sgs.General(extension, "AiAstin", "magic", 3, false,false,false)
@@ -6999,43 +6999,10 @@ SE_Tuanzi = sgs.CreateTriggerSkill{
 
 
 
-Akarin:addSkill(SE_Touming)
+--Akarin:addSkill(SE_Touming)
 --Akarin:addSkill(SE_ToumingAF)
-Akarin:addSkill(SE_ToumingNT)
-Akarin:addSkill(SE_Tuanzi)
-
-sgs.LoadTranslationTable{
-["SE_Touming"] = "透明",
-["SE_Touming$"] = "image=image/animate/SE_Touming.png",
-["$SE_Touming1"] = "即使变为空气，主角之位也绝对不会让给你！",
-["$SE_Touming2"] = "哼...哼哼哼哼哼哼...哼哼哼...（黑化中）",
-["$SE_Touming3"] = "大家都只是在欺负灯里吧...既然如此的话，就不再依靠任何人了，我要以自己的力量展现一个全新的灯里给你们看！",
-["$SE_Touming4"] = "超.必杀-阿卡林ATTACK！",
-[":SE_Touming"] = "弃牌阶段结束时，若你未于此阶段弃置牌，你可以将武将牌翻面并摸X张牌（X为场上存活角色数）；每当你扣减体力时，若你的武将牌背面朝上时，你防止此次扣减并摸一张牌。",
-["SE_Tuanzi"] = "团子",
-["$SE_Tuanzi1"] = "灯里我超有人气的哦~",
-["$SE_Tuanzi2"] = "今天可爱的小甜心们也在为我而争夺着~（背景音：争宠声）~",
-["$SE_Tuanzi3"] = "啊，我真是个罪孽深重的女人。",
-["$SE_Tuanzi4"] = "（千夏，京子，结衣）灯里真是博学啊~",
-["$SE_Tuanzi5"] = "呜呜...把团子还给我，没有那个的话，灯里我连唯一的特征也要消失了...",
-["$SE_Tuanzi6"] = "灯里我超有人气的哦~",
-["$SE_Tuanzi7"] = "瞄准大家的心灵来一发的说~",
-["$SE_Tuanzi8"] = "正义的伙伴-阿卡林，参上！",
-["$SE_Tuanzi9"] = "必杀-团子火箭炮！",
-["$SE_ToumingNT1"] = "我的名字叫赤座灯里，是个随处可见的普通初中生。",
-["$SE_ToumingNT2"] = "阿卡林~",
-["$SE_ToumingNT3"] = "哇唔，透明而且没有团子的话，就没人能够认出灯里了...",
-
-[":SE_Tuanzi"] = "每当你使用或打出的一张基本牌或黑色锦囊牌结算完毕后，你可以将之置于牌堆顶。",
-["Akarin"] = "赤座灯里あかり", 
-["&Akarin"] = "赤座灯里", 
-["@Akarin"] = "摇曳百合", 
-["#Akarin"] = "存在感的铁壁", 
-["~Akarin"] = "不要啊，谁来救救我...阿卡林（消失）...", 
-["designer:Akarin"] = "黑猫roy",
-["cv:Akarin"] = "三上枝织",
-["illustrator:Akarin"] = "动画工房",
-}
+--Akarin:addSkill(SE_ToumingNT)
+--Akarin:addSkill(SE_Tuanzi)
 
 --比企谷八幡
 SE_Zishang = sgs.CreateTriggerSkill{
