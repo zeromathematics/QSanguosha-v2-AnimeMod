@@ -92,6 +92,7 @@ public:
         }
         if (main_window)
             main_window->setBackgroundBrush(true);
+        main_window->roundCorners();
     }
 };
 
@@ -139,7 +140,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(view);
     restoreFromConfig();
 
-    //roundCorners();
+    roundCorners();
 
     BackLoader::preload();
     gotoScene(start_scene);
@@ -156,11 +157,8 @@ MainWindow::MainWindow(QWidget *parent)
     closeButton = new QPushButton(this);
     closeButton->setObjectName("closeButton");
     closeButton->setProperty("control", true);
-    QPixmap mypixmap;   
-    mypixmap.load("image/system/close.png");
-    closeButton->setFixedSize(mypixmap.width(), mypixmap.height());
-    closeButton->setIconSize(QSize(mypixmap.width(), mypixmap.height()));
-    closeButton->setGeometry(0, 24, mypixmap.width(), mypixmap.height());
+    closeButton->setIconSize(QSize(50, 50));
+    closeButton->setGeometry(0, 24, 50, 50);
     closeButton->setStyleSheet("QPushButton{border-image: url(image/system/button/close.png);}"
         "QPushButton:hover{border-image: url(image/system/button/closeh.png);}"
         "QPushButton:pressed{border-image: url(image/system/button/closep.png);}");
@@ -234,7 +232,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
             bool can_move = true;
             if (view && view->scene()) {
                 QPointF pos = view->mapToScene(event->pos());
-                if (scene->itemAt(pos, QTransform()))
+                if (scene->itemAt(pos, QTransform()) && scene->itemAt(pos, QTransform())->zValue() > -100000)
                     can_move = false;
             }
             if (can_move) {
@@ -330,7 +328,7 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::RightButton){
         QMenuBar *menu_bar = menuBar();
-       menu_bar->setVisible(!menu_bar->isVisible());
+        menu_bar->setVisible(!menu_bar->isVisible());
 
         if (menu_bar->isVisible())
             closeButton->setGeometry(0, 24, 50, 50);
@@ -341,7 +339,7 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
     bool can_change = true;
     if (view && view->scene()) {
         QPointF pos = view->mapToScene(event->pos());
-        if (scene->itemAt(pos, QTransform()))
+        if (scene->itemAt(pos, QTransform()) && scene->itemAt(pos, QTransform())->zValue() > -100000)
             can_change = false;
     }
     if (can_change) {
@@ -352,7 +350,15 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 #endif
-/*
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange) {
+        roundCorners();
+    }
+    QMainWindow::changeEvent(event);
+}
+
 void MainWindow::roundCorners()
 {
 #ifndef Q_OS_ANDROID
@@ -374,7 +380,7 @@ void MainWindow::roundCorners()
     setMask(mask);
 #endif
 }
-*/
+
 void MainWindow::region(const QPoint &cursorGlobalPoint)
 {
     QRect rect = this->rect();
@@ -435,7 +441,6 @@ void MainWindow::gotoScene(QGraphicsScene *scene)
     view->setScene(scene);
     QResizeEvent e(QSize(view->size().width(), view->size().height()), view->size());
     view->resizeEvent(&e);
-    //roundCorners();//round
     changeBackground();
 }
 
@@ -821,6 +826,11 @@ void MainWindow::on_actionShow_Hide_Menu_triggered()
 {
     QMenuBar *menu_bar = menuBar();
     menu_bar->setVisible(!menu_bar->isVisible());
+    if (menu_bar->isVisible())
+        closeButton->setGeometry(0, 24, 50, 50);
+    else
+        closeButton->setGeometry(0, 0, 50, 50);
+    return;
 }
 
 void MainWindow::on_actionMinimize_to_system_tray_triggered()

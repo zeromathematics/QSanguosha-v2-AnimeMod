@@ -1138,6 +1138,7 @@ void RoomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsScene::mouseReleaseEvent(event);
 
+
     if (_m_isInDragAndUseMode) {
         if ((ok_button->isEnabled() || dashboard->currentSkill())
             && (!dashboard->isUnderMouse() || dashboard->isAvatarUnderMouse())) {
@@ -1156,9 +1157,9 @@ void RoomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 void RoomScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsScene::mouseMoveEvent(event);
-
     if (!Config.EnableSuperDrag)
         return;
+
 
     QGraphicsObject *obj = static_cast<QGraphicsObject *>(focusItem());
     CardItem *card_item = qobject_cast<CardItem *>(obj);

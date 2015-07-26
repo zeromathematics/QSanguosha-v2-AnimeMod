@@ -234,6 +234,8 @@ private:
     const QSanRoomSkin* _m_roomSkin;
     QGraphicsItem *_m_last_front_item;
     double _m_last_front_ZValue;
+
+
     GenericCardContainer *_getGenericCardContainer(Player::Place place, Player *player);
     QMap<int, QList<QList<CardItem *> > > _m_cardsMoveStash;
     SuperButton *add_robot, *start_game, *return_to_main_menu;

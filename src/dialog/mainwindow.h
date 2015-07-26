@@ -48,12 +48,14 @@ public:
     ~MainWindow();
     void setBackgroundBrush(bool center_as_origin);
 	QGraphicsScene* getScene();
+    void roundCorners();
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
     virtual void mouseDoubleClickEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void changeEvent(QEvent *event);
 #endif
 
     bool isLeftPressDown;
@@ -86,7 +88,6 @@ private:
     void region(const QPoint &cursorGlobalPoint);
 
     void restoreFromConfig();
-    //void roundCorners();
 
 public slots:
     void startConnection();
