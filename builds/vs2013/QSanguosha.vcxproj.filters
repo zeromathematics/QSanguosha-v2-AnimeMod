@@ -31,9 +31,6 @@
     <Filter Include="package">
       <UniqueIdentifier>{12921f3f-26ad-402c-a6a2-9865e25d3ec8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scenario">
-      <UniqueIdentifier>{6db79ca9-2e4f-498e-b52b-c59736aabf0f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ui">
       <UniqueIdentifier>{ffa117bb-84ff-4371-9304-3f2c80af7d0e}</UniqueIdentifier>
     </Filter>
@@ -59,6 +56,9 @@
       <UniqueIdentifier>{f34c2bba-ec30-47e0-a92a-c941cd46ab62}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="package\scenario">
+      <UniqueIdentifier>{6db79ca9-2e4f-498e-b52b-c59736aabf0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -171,22 +171,22 @@
       <Filter>package</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scenario\boss-mode-scenario.cpp">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scenario\couple-scenario.cpp">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scenario\guandu-scenario.cpp">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scenario\miniscenarios.cpp">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scenario\scenario.cpp">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scenario\scenerule.cpp">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ui\chatwidget.cpp">
       <Filter>ui</Filter>
@@ -294,7 +294,7 @@
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scenario\zombie-scenario.cpp">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_record-analysis.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -315,7 +315,7 @@
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scenario\fancheng-scenario.cpp">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_fancheng-scenario.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -1174,19 +1174,19 @@
       <Filter>package</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\scenario\boss-mode-scenario.h">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\scenario\couple-scenario.h">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\scenario\scenario.h">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\scenario\miniscenarios.h">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\scenario\guandu-scenario.h">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\ui\button.h">
       <Filter>ui</Filter>
@@ -1252,7 +1252,7 @@
       <Filter>ui</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\scenario\zombie-scenario.h">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\core\record-analysis.h">
       <Filter>core</Filter>
@@ -1261,7 +1261,7 @@
       <Filter>package</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\scenario\fancheng-scenario.h">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\server\roomthreadxmode.h">
       <Filter>server</Filter>
@@ -1454,7 +1454,7 @@
       <Filter>package</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\scenario\scenerule.h">
-      <Filter>scenario</Filter>
+      <Filter>package\scenario</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\core\util.h">
       <Filter>core</Filter>

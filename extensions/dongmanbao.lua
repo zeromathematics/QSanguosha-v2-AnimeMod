@@ -998,6 +998,7 @@ SE_Dapo = sgs.CreateTriggerSkill{
 			local dying_data = data:toDying()
 			local source = dying_data.who
 			local mygod= room:findPlayerBySkillName("SE_Dapo")
+			if not mygod then return end
 			if mygod:isAlive() then
 				if mygod:getMaxHp() > source:getMaxHp() and source and source:getRole() ~= "lord" then
 					if mygod:getHp() == 1 then
@@ -10047,6 +10048,7 @@ luaqice_tr=sgs.CreateTriggerSkill{
 		local room=player:getRoom()
 		if event==sgs.EventPhaseEnd then
 			local Eu = room:findPlayerBySkillName(self:objectName())
+			if not Eu then return end
 			room:setPlayerFlag(Eu,"-qiceused")
 		end
 		if event==sgs.CardUsed then

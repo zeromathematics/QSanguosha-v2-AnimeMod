@@ -545,7 +545,7 @@ sgs.ai_skill_use_func["#se_paojicard"] = function(card,use,self)
 	local target
 	local hp = 100
 	for _,enemy in ipairs(self.enemies) do
-		if not ThunderImmune(self, enemy) and not isEquip("SilverLion",enemy) and enemy:getHp() < hp then
+		if not ThunderImmune(self, enemy) and not isEquip("SilverLion",enemy) and enemy:getHp() < hp and not self.room:isAkarin(enemy, self.player) then
 			target = enemy
 			hp = enemy:getHp()
 		end
@@ -643,7 +643,7 @@ sgs.ai_skill_playerchosen.se_zhijiancard = function(self, targets)
 	local target
 	self:sort(self.enemies,"handcard")
 	for _,enemy in ipairs(self.enemies) do
-		if enemy:isAlive() and not enemy:isKongcheng() and not enemy:hasSkill("tuntian") and not (enemy:getHandcardNum() == 1 and enemy:hasSkill("kongcheng")) then
+		if enemy:isAlive() and not enemy:isKongcheng() and not enemy:hasSkill("tuntian") and not (enemy:getHandcardNum() == 1 and enemy:hasSkill("kongcheng")) and not self.room:isAkarin(enemy, self.player) then
 			target = enemy
 			break
 		end
@@ -673,7 +673,7 @@ sgs.ai_skill_use_func["#se_hengsaocard"] = function(card,use,self)
 	local targets = sgs.SPlayerList()
 	self:sort(self.enemies, "defense") 
 	for _,enemy in ipairs(self.enemies) do
-		if enemy and targets:length() < 3 then
+		if enemy and targets:length() < 3 and not self.room:isAkarin(enemy, self.player) then
 			targets:append(enemy)
 		end
 	end
@@ -5071,7 +5071,7 @@ end
 
 sgs.ai_skill_playerchosen["SE_JianshiTr"] = function(self, targets)
 	for _,p in ipairs(self.friends) do
-		if p:getMark("@Wuwei")> self.room:getAlivePlayers() then return p end
+		if p:getMark("@Wuwei")> self.room:getAlivePlayers():length() then return p end
 	end
 	for _,p in ipairs(self.enemies) do
 		local target

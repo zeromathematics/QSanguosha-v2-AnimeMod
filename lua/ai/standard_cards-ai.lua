@@ -288,14 +288,16 @@ function SmartAI:slashProhibit(card, enemy, from)
 	if mode:find("_mini_36") then return self.player:hasSkill("keji") end
 	card = card or sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0)
 	from = from or self.player
-	if self.room:isProhibited(from, enemy, card) then return true end
+	if self.room:isProhibited(from, enemy, card) or self.room:isAkarin(enemy, from) then return true end
 	local nature = card:isKindOf("FireSlash") and sgs.DamageStruct_Fire
 					or card:isKindOf("ThunderSlash") and sgs.DamageStruct_Thunder
 	for _, askill in sgs.qlist(enemy:getVisibleSkillList(true)) do
 		local filter = sgs.ai_slash_prohibit[askill:objectName()]
 		if filter and type(filter) == "function" and filter(self, from, enemy, card) then return true end
 	end
-	--SE akarin
+	--SE AKARIN
+	if self.room:isAkarin(enemy, from) then return true end
+
 
 	if self:isFriend(enemy, from) then
 		if card:isKindOf("FireSlash") or from:hasWeapon("fan") or from:hasSkill("zonghuo") then
@@ -502,6 +504,8 @@ function SmartAI:useCardSlash(card, use)
 
 	local function canAppendTarget(target)
 		if use.to:contains(target) then return false end
+		--SE AKARIN
+		if self.room:isAkarin(target, self.player) then return false end
 		local targets = sgs.PlayerList()
 		for _, to in sgs.qlist(use.to) do
 			targets:append(to)
@@ -812,7 +816,7 @@ sgs.ai_card_intention.Slash = function(self, card, from, tos)
 		speakTrigger(card, from, to)
 		if to:hasSkills("yiji|qiuyaun") then value = 0 end
 		if to:hasSkills("nosleiji|leiji") and (getCardsNum("Jink", to, from) > 0 or to:hasArmorEffect("eight_diagram")) and not self:hasHeavySlashDamage(from, card, to)
-			and (hasExplicitRebel(self.room) or sgs.explicit_renegade) and not self:canLiegong(to, from) then value = 0 end
+			and (hasExplicitRebel(self.room) or sgs.explicit_renegade) then value = 0 end
 		if not self:hasHeavySlashDamage(from, card, to) and (self:getDamagedEffects(to, from, true) or self:needToLoseHp(to, from, true, true)) then value = 0 end
 		if from:hasSkill("pojun") and to:getHp() > (2 + self:hasHeavySlashDamage(from, card, to, true)) then value = 0 end
 		if to:hasSkill("fangzhu") and to:isLord() and sgs.turncount < 2 then value = 10 end
@@ -914,7 +918,6 @@ function SmartAI:canHit(to, from, conservative)
 	to = to or self.player
 	local jink = sgs.Sanguosha:cloneCard("jink")
 	if to:isCardLimited(jink, sgs.Card_MethodUse) then return true end
-	if self:canLiegong(to, from) then return true end
 	if not self:isFriend(to, from) then
 		if from:hasWeapon("axe") and from:getCards("he"):length() > 2 then return true end
 		if from:hasWeapon("blade") and getCardsNum("Jink", to, from) <= getCardsNum("Slash", from, from) then return true end
@@ -1200,7 +1203,7 @@ sgs.ai_skill_invoke.ice_sword = function(self, data)
 		if target:hasSkill("lirang") and #self:getFriendsNoself(target) > 0 then return false end
 		if target:getArmor() and self:evaluateArmor(target:getArmor(), target) > 3 and not (target:hasArmorEffect("silver_lion") and target:isWounded()) then return true end
 		local num = target:getHandcardNum()
-		if self.player:hasSkill("tieji") or self:canLiegong(target, self.player) then return false end
+		if self.player:hasSkill("tieji") then return false end
 		if target:hasSkills("tuntian+zaoxian") and target:getPhase() == sgs.Player_NotActive then return false end
 		if self:hasSkills(sgs.need_kongcheng, target) then return false end
 		if target:getCards("he"):length()<4 and target:getCards("he"):length()>1 then return true end
@@ -1829,7 +1832,7 @@ function SmartAI:useCardDuel(duel, use)
 	local targets = {}
 
 	local canUseDuelTo=function(target)
-		return self:hasTrickEffective(duel, target) and self:damageIsEffective(target,sgs.DamageStruct_Normal) and not self.room:isProhibited(self.player, target, duel)
+		return self:hasTrickEffective(duel, target) and self:damageIsEffective(target,sgs.DamageStruct_Normal) and not self.room:isProhibited(self.player, target, duel) and not self.room:isAkarin(target, self.player)
 	end
 
 	for _, friend in ipairs(friends) do
@@ -2621,7 +2624,7 @@ function SmartAI:useCardCollateral(card, use)
 			and friend:getWeapon() and (getKnownCard(friend, self.player, "Slash", true, "he") > 0 or getCardsNum("Slash", friend) > 1 and friend:getHandcardNum() >= 4)
 			and self:hasTrickEffective(card, friend)
 			and self:objectiveLevel(friend) < 0
-			and not self.room:isProhibited(self.player, friend, card) then
+			and not self.room:isProhibited(self.player, friend, card) and not self.room:isAkarin(friend, self.player) then
 
 			for _, enemy in ipairs(toList) do
 				if friend:canSlash(enemy, nil) and self:objectiveLevel(enemy) > 3 and friend:objectName() ~= enemy:objectName()
@@ -2643,7 +2646,7 @@ function SmartAI:useCardCollateral(card, use)
 			and self:hasTrickEffective(card, friend)
 			and self:objectiveLevel(friend) < 0
 			and not (friend:getWeapon():isKindOf("Crossbow") and getCardsNum("Slash", friend) > 1)
-			and not self.room:isProhibited(self.player, friend, card) then
+			and not self.room:isProhibited(self.player, friend, card) and not self.room:isAkarin(friend, self.player) then
 
 			for _, enemy in ipairs(toList) do
 				if friend:canSlash(enemy, nil) and friend:objectName() ~= enemy:objectName() then
@@ -3189,7 +3192,6 @@ sgs.ai_skill_askforag.amazing_grace = function(self, card_ids)
 					hit_num = hit_num + 1
 					if getCardsNum("Jink", enemy) < 1
 						or enemy:isKongcheng()
-						or self:canLiegong(enemy, self.player)
 						or self.player:hasSkills("tieji|wushuang|dahe|qianxi")
 						or self.player:hasSkill("roulin") and enemy:isFemale()
 						or (self.player:hasWeapon("axe") or self:getCardsNum("Axe") > 0) and self.player:getCards("he"):length() > 4

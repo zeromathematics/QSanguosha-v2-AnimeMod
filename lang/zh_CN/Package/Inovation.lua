@@ -9,7 +9,7 @@ return {
 	["$SE_Touming3"] = "大家都只是在欺负灯里吧...既然如此的话，就不再依靠任何人了，我要以自己的力量展现一个全新的灯里给你们看！",
 	["$SE_Touming4"] = "超.必杀-阿卡林ATTACK！",
 
-	[":SE_Touming"] = "弃牌阶段结束时，若你此阶段手牌数无变化，你可以消失并摸X张牌（X为场上存活角色数），你的回合开始时，你解除消失状态。",
+	[":SE_Touming"] = "弃牌阶段结束时，若你此阶段手牌数无变化，你可以消失并摸X张牌，你的回合开始时，你解除消失状态并失去一点体力。X为场上存活角色数的一半，向上取整。",
 	["SE_Tuanzi"] = "团子",
 	["$SE_Tuanzi1"] = "灯里我超有人气的哦~",
 	["$SE_Tuanzi2"] = "今天可爱的小甜心们也在为我而争夺着~（背景音：争宠声）~",
@@ -36,11 +36,13 @@ return {
 
 
 	["huanxing"] = "幻形",
-	--["huanxing$"] = "image=image/animate/huanxing.png",
+	["huanxing$"] = "image=image/animate/huanxing.png",
 	["$huanxing1"] = "",
 	["$huanxing2"] = "",
 
-	[":huanxing"] = "当你成为一名其他角色的唯一目标时，若你本轮未发动过“幻形”，你可以取消之并从该角色视野中消失直到你的下一回合结束。被“幻形”的角色不可响应你使用的【杀】和锦囊牌。当你使用“幻形”时，去除你对上一名角色的“幻形”效果。",
+	["#huanxing_effect"] = "%from 受到“幻形”的影响，无法响应 %arg 的效果。", 
+
+	[":huanxing"] = "当一名其他角色使用牌时，若目标仅有你，且你本轮未发动过“幻形”，你可以取消之并从该角色视野中消失直到你的下一回合结束。被“幻形”的角色不可响应你使用的【杀】和锦囊牌。当你使用“幻形”时，去除你对上一名角色的“幻形”效果。",
 
 	["fushang"] = "抚伤",
 	--["huanxing$"] = "image=image/animate/huanxing.png",
@@ -55,5 +57,5 @@ return {
 	["~Nao"] = "", 
 	["designer:Nao"] = "Sword Elucidator",
 	["cv:Nao"] = "佐仓绫音",
-	["illustrator:Nao"] = "",
+	["illustrator:Nao"] = "ののの",
 }

@@ -5759,6 +5759,12 @@ void Room::showAllCards(ServerPlayer *player, ServerPlayer *to)
 void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)
 {
     //to akarin a player only means to remove the player's framework in roomscene
+    if (!player)
+        return;
+    QStringList akarined_players = getTag("akarinStatus" + player->objectName()).toStringList();
+    if (to && akarined_players.contains(to->objectName()))
+        return;
+
     JsonArray args;
     args << player->objectName();
     args << true;//to Akarin
@@ -5770,6 +5776,10 @@ void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)
         log.to << to;
         sendLog(log, to);
         doNotify(to, S_COMMAND_AKARIN, args);
+
+        akarined_players.append(to->objectName());
+
+        setTag("akarinStatus" + player->objectName(), QVariant(akarined_players));
         
     }
     else {
@@ -5778,6 +5788,12 @@ void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)
         log.from = player;
         sendLog(log);
         doBroadcastNotify(getOtherPlayers(player), S_COMMAND_AKARIN, args);
+
+        foreach(ServerPlayer* p, getOtherPlayers(player)){
+            if (!akarined_players.contains(p->objectName()))
+                akarined_players.append(p->objectName());
+        }
+        setTag("akarinStatus" + player->objectName(), QVariant(akarined_players));
     }
         
 
@@ -5785,7 +5801,15 @@ void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)
 
 void Room::removeAkarinEffect(ServerPlayer *player, ServerPlayer *to)
 {
+    if (!player)
+        return;
     //to akarin a player only means to remove the player's framework in roomscene
+    if (getTag("akarinStatus" + player->objectName()).isNull())
+        return;
+    QStringList akarined_players = getTag("akarinStatus" + player->objectName()).toStringList();
+    if (to && !akarined_players.contains(to->objectName()))
+        return;
+
     JsonArray args;
     args << player->objectName();
     args << false;//To remove Akarin
@@ -5800,6 +5824,10 @@ void Room::removeAkarinEffect(ServerPlayer *player, ServerPlayer *to)
 
 
         doNotify(to, S_COMMAND_AKARIN, args);
+
+        akarined_players.removeOne(to->objectName());
+
+        setTag("akarinStatus" + player->objectName(), QVariant(akarined_players));
     }
     else {
         LogMessage log;
@@ -5808,8 +5836,25 @@ void Room::removeAkarinEffect(ServerPlayer *player, ServerPlayer *to)
         sendLog(log);
 
         doBroadcastNotify(getOtherPlayers(player), S_COMMAND_AKARIN, args);
+
+        foreach(ServerPlayer* p, getOtherPlayers(player)){
+            if (akarined_players.contains(p->objectName()))
+                akarined_players.removeOne(p->objectName());
+        }
+        setTag("akarinStatus" + player->objectName(), QVariant(akarined_players));
     }
 
+}
+
+bool Room::isAkarin(ServerPlayer *player, ServerPlayer *to){
+    if (!player || !to)
+        return false;
+    if (getTag("akarinStatus" + player->objectName()).isNull())
+        return false;
+    QStringList akarined_players = getTag("akarinStatus" + player->objectName()).toStringList();
+    if (akarined_players.contains(to->objectName()))
+        return true;
+    return false;
 }
 
 void Room::retrial(const Card *card, ServerPlayer *player, JudgeStruct *judge, const QString &skill_name, bool exchange)

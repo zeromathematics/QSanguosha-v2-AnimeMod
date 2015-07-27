@@ -152,6 +152,12 @@ function setInitialTables()
 
 end
 
+function SmartAI:cardAkarined(card, from ,to)
+	if not self.room:isAkarin(to, from) then return false end
+	if card:isKindOf("Slash") or (card:isKindOf("TrickCard") and not card:isKindOf("AOE") and not card:isKindOf("AmazingGrace") and not card:isKindOf("GodSalvation")) then return true end
+	return false
+end
+
 function SmartAI:initialize(player)
 	self.player = player
 	self.room = player:getRoom()
@@ -1281,7 +1287,7 @@ end
 
 function sgs.updateIntention(from, to, intention, card)
 	if not to then global_room:writeToConsole(debug.traceback()) return end
-	if from:objectName() == to:objectName() then return end
+	if from and from:objectName() == to:objectName() then return end
 
 	sgs.ai_card_intention.general(from, to, intention)
 end
@@ -2539,16 +2545,12 @@ function SmartAI:askForChoice(skill_name, choices, data)
 		return choice(self, choices, data)
 	else
 		local skill = sgs.Sanguosha:getSkill(skill_name)
-		if skill and choices:match(skill:getDefaultChoice(self.player)) then
-			return skill:getDefaultChoice(self.player)
-		else
-			local choice_table = choices:split("+")
-			for index, achoice in ipairs(choice_table) do
-				if achoice == "benghuai" then table.remove(choice_table, index) break end
-			end
-			local r = math.random(1, #choice_table)
-			return choice_table[r]
+		local choice_table = choices:split("+")
+		for index, achoice in ipairs(choice_table) do
+			if achoice == "benghuai" then table.remove(choice_table, index) break end
 		end
+		local r = math.random(1, #choice_table)
+		return choice_table[r]
 	end
 end
 
@@ -3863,13 +3865,28 @@ sgs.ai_skill_playerchosen.damage = function(self, targets)
 end
 
 function SmartAI:askForPlayerChosen(targets, reason)
+	local r = math.random(0, targets:length() - 1)
 	local playerchosen = sgs.ai_skill_playerchosen[string.gsub(reason, "%-", "_")]
 	local target = nil
 	if type(playerchosen) == "function" then
 		target = playerchosen(self, targets)
+		if self.room:isAkarin(target, self.player) then
+			if self:isEnemy(target) then
+				for _,p in ipairs(self.enemies) do
+					if not self.room:isAkarin(p, self.player) and targets:contains(p) then
+						return p
+					end
+				end
+			else
+				for _,p in ipairs(self.friends) do
+					if not self.room:isAkarin(p, self.player) and targets:contains(p)  then
+						return p
+					end
+				end
+			end
+		end
 		return target
 	end
-	local r = math.random(0, targets:length() - 1)
 	return targets:at(r)
 end
 
@@ -3996,7 +4013,6 @@ function SmartAI:willUsePeachTo(dying)
 			end
 		elseif dying:isLord() then
 			card_str = self:getCardId("Peach")
-		elseif self:doNotSave(dying) then return "."
 		else
 			for _, friend in ipairs(self.friends_noself) do
 				if friend:getHp() == 1 and friend:isLord() and not friend:hasSkill("buqu") then  weaklord = weaklord + 1 end
@@ -5310,6 +5326,29 @@ function SmartAI:useSkillCard(card, use)
 				end
 				use.card = nil
 			end
+			if not use.to:isEmpty() then
+				--AKARIN
+				for _,target in sgs.qlist(use.to) do
+					if self.room:isAkarin(target, self.player) then
+						local intValue = use.to:indexOf(target)
+						if self:isEnemy(target) then
+							for _,p in ipairs(self.enemies) do
+								if p:objectName() ~= target:objectName() and not use.to:contains(p) then
+									use.to:replace(intValue, p)
+									break
+								end
+							end
+						else
+							for _,p in ipairs(self.friends) do
+								if p:objectName() ~= target:objectName() and not use.to:contains(p) then
+									use.to:replace(intValue, p)
+									break
+								end
+							end
+						end
+					end
+				end
+			end
 		end
 		return
 	end
@@ -5434,7 +5473,7 @@ function SmartAI:exclude(players, card, from)
 	end
 
 	for _, player in ipairs(players) do
-		if not self.room:isProhibited(from, player, card) then
+		if not self.room:isProhibited(from, player, card) and not self:cardAkarined(card, from ,player) then
 			local should_insert = true
 			if limit then
 				should_insert = from:distanceTo(player, range_fix) <= limit
@@ -5742,7 +5781,7 @@ end
 function SmartAI:hasTrickEffective(card, to, from)
 	from = from or self.room:getCurrent()
 	to = to or self.player
-	if self.room:isProhibited(from, to, card) then return false end
+	if self.room:isProhibited(from, to, card) or self:cardAkarined(card, from ,to) then return false end
 	if to:getMark("@late") > 0 and not card:isKindOf("DelayedTrick") then return false end
 	if to:getPile("dream"):length() > 0 and to:isLocked(card) then return false end
 
@@ -5809,7 +5848,7 @@ function SmartAI:useTrickCard(card, use)
 		local avail = #others
 		local avail_friends = 0
 		for _, other in ipairs(others) do
-			if self.room:isProhibited(self.player, other, card) then
+			if self.room:isProhibited(self.player, other, card) or self:cardAkarined(card, self.player ,other) then
 				avail = avail - 1
 			elseif self:isFriend(other) then
 				avail_friends = avail_friends + 1
@@ -6098,7 +6137,7 @@ function SmartAI:damageMinusHp(self, enemy, type)
 		end
 		for _, acard in ipairs(cards) do
 			if ((acard:isKindOf("Duel") or acard:isKindOf("SavageAssault") or acard:isKindOf("ArcheryAttack") or acard:isKindOf("FireAttack"))
-			and not self.room:isProhibited(self.player, enemy, acard))
+			and not self.room:isProhibited(self.player, enemy, acard) and not self:cardAkarined(acard, self.player ,enemy))
 			or ((acard:isKindOf("SavageAssault") or acard:isKindOf("ArcheryAttack")) and self:aoeIsEffective(acard, enemy)) then
 				if acard:isKindOf("FireAttack") then
 					if not enemy:isKongcheng() then

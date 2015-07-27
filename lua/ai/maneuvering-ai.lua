@@ -474,7 +474,7 @@ function SmartAI:useCardIronChain(card, use)
 		self:sort(self.enemies, "defense")
 		for _, enemy in ipairs(self.enemies) do
 			if (not use.current_targets or not table.contains(use.current_targets, enemy:objectName()))
-				and not enemy:isChained() and not self.room:isProhibited(self.player, enemy, card) and not enemy:hasSkill("danlao")
+				and not enemy:isChained() and not self.room:isProhibited(self.player, enemy, card) and not self:cardAkarined(card, self.player, enemy) and not self:cardAkarined(card, self.player ,enemy) and not enemy:hasSkill("danlao")
 				and self:hasTrickEffective(card, enemy) and not (self:objectiveLevel(enemy) <= 3)
 				and not self:getDamagedEffects(enemy) and not self:needToLoseHp(enemy) and sgs.isGoodTarget(enemy, self.enemies, self) then
 				table.insert(enemytargets, enemy)
@@ -665,7 +665,7 @@ function SmartAI:useCardFireAttack(fire_attack, use)
 		if not self.player:hasSkill("jueqing") and enemy:hasSkill("mingshi") and self.player:getEquips():length() <= enemy:getEquips():length() then
 			damage = damage - 1
 		end
-		return self:objectiveLevel(enemy) > 3 and damage > 0 and not enemy:isKongcheng() and not self.room:isProhibited(self.player, enemy, fire_attack)
+		return self:objectiveLevel(enemy) > 3 and damage > 0 and not enemy:isKongcheng() and not self.room:isProhibited(self.player, enemy, fire_attack) and not self:cardAkarined(fire_attack, self.player, enemy)
 				and self:damageIsEffective(enemy, sgs.DamageStruct_Fire, self.player)
 				and self:hasTrickEffective(fire_attack, enemy)
 				and sgs.isGoodTarget(enemy, self.enemies, self)
@@ -693,7 +693,7 @@ function SmartAI:useCardFireAttack(fire_attack, use)
 	if (not use.current_targets or not table.contains(use.current_targets, self.player:objectName()))
 		and self.role ~= "renegade" and can_FireAttack_self and self.player:isChained() and self:isGoodChainTarget(self.player, self.player, sgs.DamageStruct_Fire, nil, fire_attack)
 		and self.player:getHandcardNum() > 1 and not self.player:hasSkill("jueqing") and not self.player:hasSkill("mingshi")
-		and not self.room:isProhibited(self.player, self.player, fire_attack)
+		and not self.room:isProhibited(self.player, self.player, fire_attack) and not self:cardAkarined(fire_attack, self.player ,self.player)
 		and self:damageIsEffective(self.player, sgs.DamageStruct_Fire, self.player)
 		and self:hasTrickEffective(fire_attack, self.player) then
 

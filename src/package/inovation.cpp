@@ -632,8 +632,11 @@ public:
                 return false;
             if (akarin->getPhase() == Player::Discard)
                 akarin->setMark("SE_Touming_num", akarin->getHandcardNum());
-            else if (akarin->getPhase() == Player::RoundStart)
+            else if (akarin->getPhase() == Player::RoundStart && akarin->getMark("touming_used") > 0){
                 room->removeAkarinEffect(akarin);
+                akarin->setMark("touming_used", 0);
+                room->loseHp(akarin);
+            }
         }
         else if (triggerEvent == EventPhaseEnd) 
         {
@@ -646,7 +649,8 @@ public:
                 room->broadcastSkillInvoke(objectName());
                 room->doLightbox("SE_Touming$", 1500);
                 room->akarinPlayer(akarin);
-                akarin->drawCards(room->getAlivePlayers().length());
+                akarin->setMark("touming_used", 1);
+                akarin->drawCards((room->getAlivePlayers().length() + 1)/2);
             }
         }
 
@@ -700,7 +704,7 @@ public:
     {
         if (triggerEvent == CardUsed) {
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.to.length() == 0 || !use.to.at(0) || use.to.at(0)->getMark("disappear") == 1)
+            if (use.to.length() == 0 || !use.to.at(0) || use.to.at(0)->getMark("disappear") == 1 || use.from->objectName() == use.to.at(0)->objectName())
                 return false;
             if (use.to.length() > 1)
                 return false;
@@ -710,11 +714,13 @@ public:
                 return false;
             foreach(ServerPlayer* p, room->getAlivePlayers()){
                 if (p->getMark("@huanxing_target") > 0){
-                    p->removeMark("@huanxing_target");
+                    p->loseMark("@huanxing_target");
                     room->removeAkarinEffect(use.to.at(0), p);
                 }
             }
             use.from->gainMark("@huanxing_target");
+            room->broadcastSkillInvoke(objectName(), rand() % 2 + 1);
+            room->doLightbox("huanxing$", 300);
             room->akarinPlayer(use.to.at(0), use.from);
             use.to.at(0)->setMark("disappear", 1);
             return true;
@@ -724,7 +730,7 @@ public:
                 return false;
             foreach(ServerPlayer* p, room->getAlivePlayers()){
                 if (p->getMark("@huanxing_target") > 0){
-                    p->removeMark("@huanxing_target");
+                    p->loseMark("@huanxing_target");
                     room->removeAkarinEffect(nao, p);
                 }
             }
@@ -738,23 +744,25 @@ public:
         }
         else if (triggerEvent == TrickCardCanceling) {
             CardEffectStruct effect = data.value<CardEffectStruct>();
-            if (effect.from->hasSkill(objectName()) && effect.to->getMark("@huanxing_target") == 1){
+            if (effect.from && effect.from->hasSkill(objectName()) && effect.to && effect.to->getMark("@huanxing_target") == 1){
                 LogMessage log;
-                log.type = "#huanxing_trick";
+                log.type = "#huanxing_effect";
                 log.from = effect.to;
                 log.arg = effect.card->objectName();
                 room->sendLog(log);
+                room->broadcastSkillInvoke(objectName(), 3);
                 return true;
             }
         }
         else if (triggerEvent == SlashProceed) {
             SlashEffectStruct effect = data.value<SlashEffectStruct>();
-            if (effect.from->hasSkill(objectName()) && effect.to->getMark("@huanxing_target") == 1){
+            if (effect.from && effect.from->hasSkill(objectName()) && effect.to && effect.to->getMark("@huanxing_target") == 1){
                 LogMessage log;
-                log.type = "#huanxing_slash";
+                log.type = "#huanxing_effect";
                 log.from = effect.to;
                 log.arg = effect.slash->objectName();
                 room->sendLog(log);
+                room->broadcastSkillInvoke(objectName(), 4);
                 room->slashResult(effect, NULL);
                 return true;
             }
@@ -787,6 +795,7 @@ public:
             ServerPlayer *nao = room->findPlayerBySkillName(objectName());
             if (!nao || !nao->askForSkillInvoke(objectName(), data))
                 return false;
+            room->broadcastSkillInvoke(objectName(), rand() % 3 + 1);//1 2 3
             damage.to->gainMark("@fushang");
             damage.to->gainMark("@fushang_time", 2 - damage.to->getMark("@fushang_time"));
             return false;
@@ -796,6 +805,7 @@ public:
                 if (player->getMark("@fushang_time") > 0){
                     player->loseMark("@fushang_time");
                     if (player->getMark("@fushang_time") == 0){
+                        room->broadcastSkillInvoke(objectName(), rand() % 2 + 4);//4 5
                         room->recover(player, RecoverStruct(player, NULL, player->getMark("@fushang")));
                         player->loseAllMarks("@fushang");
                     }
@@ -847,7 +857,7 @@ InovationPackage::InovationPackage()
     General *akarin = new General(this, "Akarin", "real", 3, false); 
     akarin->addSkill(new SE_Touming);
     akarin->addSkill(new SE_Tuanzi);
-    General *nao = new General(this, "Nao", "real", 3, false);
+    General *nao = new General(this, "Nao", "science", 3, false);
     nao->addSkill(new Huanxing);
     nao->addSkill(new Fushang);
 

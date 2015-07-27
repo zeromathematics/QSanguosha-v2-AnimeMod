@@ -50,14 +50,14 @@ function SmartAI:useCardreijyuu(card, use) --need help 这个锦囊太复杂了�
 		for _,v in ipairs(self.enemies) do
 			if v:objectName() ~= weak:objectName() then
 				use.card = card
-				if use.to then use.to:append(v) end
+				if use.to and not (self.room:isProhibited(self.player, v, card) or self.room:isAkarin(self.player, v)) then use.to:append(v) end
 				return
 			end
 		end
 	else
 		for _,v in ipairs(self.enemies) do
 			use.card = card
-			if use.to then use.to:append(v) end
+			if use.to and not (self.room:isProhibited(self.player, v, card) or self.room:isAkarin(self.player, v)) then use.to:append(v) end
 			return
 		end
 	end
