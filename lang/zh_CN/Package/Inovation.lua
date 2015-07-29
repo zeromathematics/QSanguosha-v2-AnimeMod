@@ -62,7 +62,7 @@ return {
 	["illustrator:Nao"] = "ののの",
 
 	["guangyu"] = "光玉",
-	--["guangyu$"] = "image=image/animate/huanxing.png",
+	["guangyu$"] = "image=image/animate/guangyu.png",
 	["$guangyu"] = "",
 
 	[":guangyu"] = "每当你的红色牌因弃置而进入弃牌堆时，你可以将其当做【键】使用。判定区有【键】的角色的判定阶段开始时，你可以令其获得判定区里的所有牌。",
@@ -72,6 +72,7 @@ return {
 	["xiyuan"] = "汐愿",
 	["$xiyuan1"] = "",
 	["$xiyuan2"] = "",
+	["xiyuan$"] = "image=image/animate/xiyuan.png",
 
 	[":xiyuan"] = "<font color=\"red\"><b>限定技，</b></font>你死亡时，令一名角色的副将变为“冈崎汐”。",
 	["#XiyuanChangeHero"] = "受到 %arg 的影响， %from 令 %to 将副将替换为 冈崎汐。", 
@@ -85,6 +86,7 @@ return {
 	["illustrator:Nagisa"] = "",
 
 	["dingxin"] = "町心",
+	["dingxin$"] = "image=image/animate/dingxin.png",
 	["$dingxin1"] = "",
 	["$dingxin2"] = "",
 	[":dingxin"] = "<font color=\"blue\"><b>锁定技,</b></font>准备阶段开始时，你失去一点体力。你以此法进入濒死时，你回复3点体力或令古河渚复活至2点体力并摸两张牌。",

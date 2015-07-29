@@ -1338,6 +1338,7 @@ public:
                     ServerPlayer *nagisa = room->findPlayerBySkillName("guangyu");
                     if (!nagisa || !nagisa->askForSkillInvoke("guangyu", data))
                         return false;
+                    room->doLightbox("guangyu$", 800);
                     foreach(const Card* card, player->getJudgingArea()){
                         player->obtainCard(card);
                     }
@@ -1383,6 +1384,7 @@ public:
             if (room->getTag("xiyuan_used").toBool() || !death.who->askForSkillInvoke(objectName(), data))
                 return false;
             ServerPlayer *tomoya = room->askForPlayerChosen(death.who, room->getOtherPlayers(death.who), objectName());
+            room->doLightbox("xiyuan$", 3000);
             room->changeHero(tomoya, "Ushio", false, true, true, true);
             LogMessage log;
             log.type = "#XiyuanChangeHero";
@@ -1436,7 +1438,7 @@ public:
             else{
                 choice = "dingxin_recover";
             }
-             
+            room->doLightbox("dingxin$", 2000);
             if (choice == "dingxin_recover"){
                 room->recover(dying.who, RecoverStruct(dying.who, NULL, 3));
                 LogMessage log;
