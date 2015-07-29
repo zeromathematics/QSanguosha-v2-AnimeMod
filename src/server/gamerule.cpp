@@ -95,6 +95,17 @@ void GameRule::onPhaseProceed(ServerPlayer *player) const
         break;
     }
     case Player::Finish: {
+        foreach(ServerPlayer *p, room->getAlivePlayers()){
+            if (p->getMark("mtUsed") > 0){
+                room->recover(p, RecoverStruct(p, NULL, p->getMark("mtUsed")));
+                LogMessage log;
+                log.type = "#MapoTofuRecover";
+                log.from = p;
+                log.arg = objectName();
+                room->sendLog(log);
+                p->setMark("mtUsed", 0);
+            }
+        }
         break;
     }
     case Player::NotActive:{

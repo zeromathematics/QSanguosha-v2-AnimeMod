@@ -88,6 +88,7 @@ CommonTranslationTable = {
 	["attack_card"] = "进攻牌",
 	["defense_card"] = "防御牌",
 	["recover_card"] = "恢复牌",
+	["food_card"] = "食物牌",
 	["global_effect"] = "全局效果",
 	["aoe"] = "AOE",
 	["single_target_trick"] = "单目标锦囊",
