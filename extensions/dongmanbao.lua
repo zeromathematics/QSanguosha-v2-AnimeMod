@@ -2954,9 +2954,9 @@ SE_Xianjing = sgs.CreateTriggerSkill{
 					elseif source and source:isAlive() and source:hasSkill("benghuai") then
 						if not player:hasSkill("yingzi") then
 							room:acquireSkill(player, "yingzi")
-						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("shensu") then
-							room:acquireSkill(player, "shensu")
-						elseif player:isAlive() and  player:hasSkill("shensu") and not player:hasSkill("fankui") then
+						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("tiaoxin") then
+							room:acquireSkill(player, "tiaoxin")
+						elseif player:isAlive() and  player:hasSkill("tiaoxin") and not player:hasSkill("fankui") then
 							room:acquireSkill(player, "fankui")
 						elseif player:isAlive() and  player:hasSkill("fankui") and not player:hasSkill("longdan") then
 							room:acquireSkill(player, "longdan")
@@ -2969,9 +2969,9 @@ SE_Xianjing = sgs.CreateTriggerSkill{
 				elseif suit == sgs.Card_Heart then
 					if not player:hasSkill("yingzi") then
 							room:acquireSkill(player, "yingzi")
-						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("shensu") then
-							room:acquireSkill(player, "shensu")
-						elseif player:isAlive() and  player:hasSkill("shensu") and not player:hasSkill("fankui") then
+						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("tiaoxin") then
+							room:acquireSkill(player, "tiaoxin")
+						elseif player:isAlive() and  player:hasSkill("tiaoxin") and not player:hasSkill("fankui") then
 							room:acquireSkill(player, "fankui")
 						elseif player:isAlive() and  player:hasSkill("fankui") and not player:hasSkill("longdan") then
 							room:acquireSkill(player, "longdan")
@@ -2986,9 +2986,9 @@ SE_Xianjing = sgs.CreateTriggerSkill{
 					elseif source and source:isAlive() and source:hasSkill("wumou") then
 						if not player:hasSkill("yingzi") then
 							room:acquireSkill(player, "yingzi")
-						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("shensu") then
-							room:acquireSkill(player, "shensu")
-						elseif player:isAlive() and  player:hasSkill("shensu") and not player:hasSkill("fankui") then
+						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("tiaoxin") then
+							room:acquireSkill(player, "tiaoxin")
+						elseif player:isAlive() and  player:hasSkill("tiaoxin") and not player:hasSkill("fankui") then
 							room:acquireSkill(player, "fankui")
 						elseif player:isAlive() and  player:hasSkill("fankui") and not player:hasSkill("longdan") then
 							room:acquireSkill(player, "longdan")
@@ -3026,9 +3026,9 @@ SE_Boming = sgs.CreateTriggerSkill{
 						if mygod:hasSkill("yingzi") then
 							i = i + 1
 							room:detachSkillFromPlayer(mygod, "yingzi")
-						elseif mygod:hasSkill("shensu") then
+						elseif mygod:hasSkill("tiaoxin") then
 							i = i + 1
-							room:detachSkillFromPlayer(mygod, "shensu")
+							room:detachSkillFromPlayer(mygod, "tiaoxin")
 						elseif mygod:hasSkill("fankui") then
 							i = i + 1
 							room:detachSkillFromPlayer(mygod, "fankui")
@@ -3085,7 +3085,7 @@ Sakamoto:addSkill(SE_Boming_KOF)
 
 sgs.LoadTranslationTable{
 ["SE_Xianjing"] = "陷阱「坂本の计谋」",
-[":SE_Xianjing"] = "每当你受到一次伤害后，你可以进行一次判定：若结果为<font color=\"red\"><b>♥</b></font>，你获得1枚“陷阱”标记；若结果为<font color=\"red\"><b>♦</b></font>，你令伤害来源的武将牌翻面；若结果为♠且伤害来源没有“崩坏”，你令伤害来源获得“崩坏”；若结果为♣且伤害来源没有“无谋”，你令伤害来源获得“无谋 ”；若结果无法执行以上效果，你获得1枚“陷阱”标记。若你的“陷阱”标记数量大于0，你获得“英姿”；大于1，你获得“神速”；大于2，你获得“反馈”；大于3，你获得 “龙胆”；大于4，你获得“咆哮”；大于5，你获得“鬼才 ”。",
+[":SE_Xianjing"] = "每当你受到一次伤害后，你可以进行一次判定：若结果为<font color=\"red\"><b>♥</b></font>，你获得1枚“陷阱”标记；若结果为<font color=\"red\"><b>♦</b></font>，你令伤害来源的武将牌翻面；若结果为♠且伤害来源没有“崩坏”，你令伤害来源获得“崩坏”；若结果为♣且伤害来源没有“无谋”，你令伤害来源获得“无谋 ”；若结果无法执行以上效果，你获得1枚“陷阱”标记。若你的“陷阱”标记数量大于0，你获得“英姿”；大于1，你获得“挑衅”；大于2，你获得“反馈”；大于3，你获得 “龙胆”；大于4，你获得“咆哮”；大于5，你获得“鬼才 ”。",
 ["$SE_Xianjing1"] = "...别动！敢动一下我就用撞击型砸你了。",
 ["$SE_Xianjing2"] = "你果然很厉害！但是...玩BTOOOM我可不会输！",
 ["$SE_Xianjing3"] = "真是个惨痛的教训...是该和之前天真的自己告别的时候了！",
@@ -3641,7 +3641,7 @@ sgs.LoadTranslationTable{
 
 Yuyue = sgs.CreateTriggerSkill{
 	name = "Yuyue",  
-	frequency = sgs.Skill_Frequent, 
+	frequency = sgs.Skill_Compulsory, 
 	events = {sgs.Damage},  
 	on_trigger = function(self, event, player, data) 
 		local room = player:getRoom()
@@ -3679,6 +3679,7 @@ Xianhai = sgs.CreateTriggerSkill{
 		if event == sgs.DamageCaused then
 			local victim = damage.to
 			if victim and victim:isAlive() then
+				if victim:getHp() - damage.damage > 0 then return end
 				local list = room:getAlivePlayers()
 				for _,p in sgs.qlist(list) do
 					if p:hasSkill("Xianhai") then
@@ -3713,7 +3714,7 @@ sgs.LoadTranslationTable{
 ["Xianhai"] = "陷害「阴谋与剧本」",
 ["$Xianhai1"] = "酒的味道...比想象中的还要善变...",
 ["$Xianhai2"] = "为了庆祝你独当一面，我要送你一件礼物。",
-[":Xianhai"] = "每当一名角色造成伤害时，你可以指定该伤害的来源。",
+[":Xianhai"] = "每当一名角色造成伤害时，若该伤害可以令目标进入濒死，你可以指定该伤害的来源。",
 ["Kirei"] = "言峰綺礼", 
 ["&Kirei"] = "言峰綺礼", 
 ["@Kirei"] = "Fate Zero/Fate Stay Night", 
@@ -7647,8 +7648,6 @@ sgs.LoadTranslationTable{
 }
 
 
---枣恭介
---卫宫切嗣
 
 --五河琴里
 SE_Niepan = sgs.CreateTriggerSkill{
@@ -7733,7 +7732,7 @@ SE_Wufan = sgs.CreateTriggerSkill{
 			if player:getMark("@Efreet") >= 1 then
 				if room:askForSkillInvoke(player, self:objectName()) then
 					player:loseMark("@Efreet")
-					room:broadcastSkillInvoke("SE_Wufan")
+					room:broadcastSkillInvoke("SE_Wufan", math.random(1, 3))
 					room:doLightbox("SE_Wufan$", 2000)
 					room:acquireSkill(player, "SE_Niepan")
 					room:acquireSkill(player, "se_jiangui")
@@ -7759,7 +7758,7 @@ SE_WufanMark = sgs.CreateTriggerSkill{
 			end
 		elseif event == sgs.TurnStart then
 			if player:getMark("@Efreet") < 1 then
-				room:broadcastSkillInvoke("SE_Wufan_Change")
+				room:broadcastSkillInvoke("SE_Wufan", 4)
 				room:doLightbox("SE_Wufan_Change$", 3000)
 				if player:hasSkill("SE_Niepan") then
 					room:detachSkillFromPlayer(player,"SE_Niepan")
@@ -7807,7 +7806,7 @@ sgs.LoadTranslationTable{
 ["$SE_Wufan1"] = "神威灵装·五番（Elohim Gibor）！",
 ["$SE_Wufan2"] = "拿起枪来。战斗还没结束呢。战争还没结束呢。",
 ["$SE_Wufan3"] = "来吧，我们还能继续厮杀呢。这可是你期盼的战斗，是你希望的争斗啊！",
-["$SE_Wufan_Change"] = "喜欢！我也最喜欢你了！最喜欢哥哥了！是世界上最爱的人！",
+["$SE_Wufan4"] = "喜欢！我也最喜欢你了！最喜欢哥哥了！是世界上最爱的人！",
 [":SE_Wufan"] = "游戏开始时，你获得3枚 Efreet 标记；每当你处于濒死状态被救回，你获得一枚 Efreet 标记。回合开始前，若你没有 Efreet 标记，你失去所有技能。准备阶段，你可以弃置一个 Efreet 标记，并获得<font color=\"brown\"><b>【涅槃】</b></font>和<font color=\"brown\"><b>【灼烂歼鬼（Camael）】</b></font>\n\n<font weight=2><font color=\"brown\"><b>涅槃「伤势复原」：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"blue\"><b>锁定技,</b></font>你受到一次伤害后，回复一点体力。\n\n<font weight=2><font color=\"brown\"><b>奸鬼「灼烂歼鬼（Camael）」：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定任意名其他角色，对这些角色造成一点火焰伤害，弃置这些角色各两张牌，然后摸三张牌。",
 ["Kotori"] = "五河琴里", 
 ["&Kotori"] = "五河琴里", 
@@ -9248,7 +9247,7 @@ local function searchBaibianForSkill(card)
 		elseif number == 3 then return "anxian"
 		elseif number == 4 then return "lijian"
 		elseif number == 5 then return "mashu"
-		elseif number == 6 then return "shensu"
+		elseif number == 6 then return "tiaoxin"
 		elseif number == 7 then return "luoyi"
 		elseif number == 8 then return "guihan"
 		elseif number == 9 then return "qiaobian"
@@ -11166,9 +11165,12 @@ SE_Zhandan = sgs.CreateTriggerSkill{
 			local damage = data:toDamage()
 			if damage.damage <= 1 then return end
 			local source = damage.from
-			if not source then return end
 			local mygod = room:findPlayerBySkillName(self:objectName())
 			if not mygod then return end
+			if not source then
+				if room:askForSkillInvoke(mygod, self:objectName(), data) then return true end
+				return
+			end
 			if not mygod:inMyAttackRange(source) and not mygod:inMyAttackRange(damage.to) then return end
 			if not room:askForSkillInvoke(mygod, self:objectName(), data) then return end
 			local card
@@ -11229,7 +11231,7 @@ sgs.LoadTranslationTable{
 ["$SE_Zhandan2"] = "（挡子弹声） （亚里亚）啊...你是 超侦！？",
 ["$SE_Zhandan3"] = "魔剑,我不会再让你伤害我的伙伴了！",
 ["$SE_Zhandan4"] = "我的讳名，真正的名字是「绯色的巫女」，也就是「绯巫女」！",
-[":SE_Zhandan"] = "每当一名角色受到伤害时，若该伤害大于1，且其或伤害来源在你的攻击范围内时，你可以令伤害来源展示一张手牌，若其无法展示或你弃置一张与其展示手牌花色相同的牌，你令该伤害无效。",
+[":SE_Zhandan"] = "每当一名角色受到伤害时，若该伤害大于1，1.且若没有伤害来源，你可以防止之。2.且其或伤害来源在你的攻击范围内时，你可以令伤害来源展示一张手牌，若其无法展示或你弃置一张与其展示手牌花色相同的牌，你令该伤害无效。",
 
 ["Shirayuki"] = "星伽白雪", 
 ["&Shirayuki"] = "星伽白雪", 
@@ -11336,7 +11338,11 @@ SE_Lingshang = sgs.CreateTriggerSkill{
 				end
 			end
 		elseif event == sgs.DrawNCards then
-			data:setValue(data:toInt() + player:getMark("@Saki") * 2)
+			if player:hasSkill("SE_Guiling") then
+				data:setValue(data:toInt() + player:getMark("@Saki") * 2)
+			else
+				data:setValue(data:toInt() + math.min(player:getMark("@Saki"), 4))
+			end
 		end
 		return false
 	end,
@@ -11346,7 +11352,11 @@ SE_Lingshang_end = sgs.CreateMaxCardsSkill{
 	name = "#SE_Lingshang_end", 
 	extra_func = function(self, player) 
 		if player:hasSkill(self:objectName()) then
-			return player:getMark("@Saki")
+			if player:hasSkill("SE_Guiling") then
+				return player:getMark("@Saki")
+			else
+				return math.min(player:getMark("@Saki"), 4)
+			end
 		end
 	end
 }
@@ -11379,7 +11389,7 @@ sgs.LoadTranslationTable{
 ["$SE_Lingshang2"] = "自摸，岭上开花。",
 ["$SE_Lingshang3"] = "杠",
 ["$SE_Lingshang4"] = "再来一个，杠",
-[":SE_Lingshang"]="每当一张牌非因弃置而进入弃牌堆时，你可以弃置两张与之相同类别的牌，然后指定一种牌堆中存在的牌名，你从牌堆中获得一张这种牌，然后你获得一个“咲”标记。摸牌阶段，你可以额外摸2X张牌。你的手牌上限始终+X。X为你“咲”标记的数量。",
+[":SE_Lingshang"]="每当一张牌非因弃置而进入弃牌堆时，你可以弃置两张与之相同类别的牌，然后指定一种牌堆中存在的牌名，你从牌堆中获得一张这种牌，然后你获得一个“咲”标记。摸牌阶段，你可以额外摸2X张牌。你的手牌上限始终+X。X为你“咲”标记的数量。若你没有“归零”，X至多为4，且摸牌数变为X。",
 ["@Saki"] = "咲", 
 
 ["SE_Guiling"] = "归零",
@@ -11848,7 +11858,7 @@ se_origin_tmod = sgs.CreateTargetModSkill{
     pattern = "Slash",
     residue_func = function(self, player)
         if player:hasSkill("se_origin") and player:getMark("@origin_bullet") > 0 then
-            return 1000
+            return player:getMark("@origin_bullet")
         end
     end,
 }
@@ -11987,7 +11997,7 @@ sgs.LoadTranslationTable{
 ["$se_origin2"] = "这颗子弹放进了小少爷肋骨磨成的粉末，小少爷的起源会在被它击中的人身上具体化。",
 ["$se_origin3"] = "这就是小少爷的礼装，起源弹",
 ["$se_origin4"] = "（砰——）",
-[":se_origin"]="出牌阶段，你可以失去一点体力上限，获得一发“起源弹”。\n若你拥有起源弹，你额外摸“起源弹”数目张牌，你使用【杀】无次数限制。\n你使用【杀】指定一名角色时，需选择是否为“起源弹”（目标不知道选项），当你的【杀】造成的伤害时，若为“起源弹”，目标失去副将外的所有的技能。", 
+[":se_origin"]="出牌阶段，你可以失去一点体力上限，获得一发“起源弹”。\n若你拥有起源弹，你额外摸“起源弹”数目张牌，你回合使用【杀】次数+“起源弹”数目。\n你使用【杀】指定一名角色时，需选择是否为“起源弹”（目标不知道选项），当你的【杀】造成的伤害时，若为“起源弹”，目标失去副将外的所有的技能。", 
 
 ["se_biling"] = "逼令「自我强制证文」",
 ["se_bilingvs"] = "逼令「自我强制证文」",

@@ -2269,6 +2269,19 @@ function SmartAI:useCardSnatchOrDismantlement(card, use)
 					if addTarget(friend, cardchosen) then return end
 				end
 			end
+			if (friend:containsTrick("key_trick") and friend:getLostHp() > 0) then
+				for _,p in ipairs(self.friends) do
+					if p:hasSkill("guangyu") then break end
+				end
+				for _, trick in sgs.qlist(tricks) do
+					if trick:isKindOf("KeyTrick") then
+						cardchosen = trick:getEffectiveId()
+					end
+				end
+				if cardchosen then
+					if addTarget(friend, cardchosen) then return end
+				end
+			end
 		end
 	end
 

@@ -10,6 +10,325 @@
 #include "roomthread.h"
 #include "wrapped-card.h"
 
+//standard
+class Yingzi : public DrawCardsSkill
+{
+public:
+    Yingzi() : DrawCardsSkill("yingzi")
+    {
+        frequency = Compulsory;
+    }
+
+    int getDrawNum(ServerPlayer *zhouyu, int n) const
+    {
+        Room *room = zhouyu->getRoom();
+
+        int index = qrand() % 2 + 1;
+        if (!zhouyu->hasInnateSkill(this)) {
+            if (zhouyu->hasSkill("hunzi"))
+                index = 5;
+            else if (zhouyu->hasSkill("mouduan"))
+                index += 2;
+        }
+        room->broadcastSkillInvoke(objectName(), index);
+        room->sendCompulsoryTriggerLog(zhouyu, objectName());
+
+        return n + 1;
+    }
+};
+
+class YingziMaxCards : public MaxCardsSkill
+{
+public:
+    YingziMaxCards() : MaxCardsSkill("#yingzi")
+    {
+    }
+
+    int getFixed(const Player *target) const
+    {
+        if (target->hasSkill("yingzi"))
+            return target->getMaxHp();
+        else
+            return -1;
+    }
+};
+
+class Fankui : public MasochismSkill
+{
+public:
+    Fankui() : MasochismSkill("fankui")
+    {
+    }
+
+    void onDamaged(ServerPlayer *simayi, const DamageStruct &damage) const
+    {
+        ServerPlayer *from = damage.from;
+        Room *room = simayi->getRoom();
+        for (int i = 0; i < damage.damage; i++) {
+            QVariant data = QVariant::fromValue(from);
+            if (from && !from->isNude() && room->askForSkillInvoke(simayi, "fankui", data)) {
+                room->broadcastSkillInvoke(objectName());
+                int card_id = room->askForCardChosen(simayi, from, "he", "fankui");
+                CardMoveReason reason(CardMoveReason::S_REASON_EXTRACTION, simayi->objectName());
+                room->obtainCard(simayi, Sanguosha->getCard(card_id),
+                    reason, room->getCardPlace(card_id) != Player::PlaceHand);
+            }
+            else {
+                break;
+            }
+        }
+    }
+};
+
+class Guicai : public RetrialSkill
+{
+public:
+    Guicai() : RetrialSkill("guicai")
+    {
+
+    }
+
+    const Card *onRetrial(ServerPlayer *player, JudgeStruct *judge) const
+    {
+        if (player->isNude())
+            return NULL;
+
+        QStringList prompt_list;
+        prompt_list << "@guicai-card" << judge->who->objectName()
+            << objectName() << judge->reason << QString::number(judge->card->getEffectiveId());
+        QString prompt = prompt_list.join(":");
+        bool forced = false;
+        if (player->getMark("JilveEvent") == int(AskForRetrial))
+            forced = true;
+
+        Room *room = player->getRoom();
+
+        const Card *card = room->askForCard(player, forced ? "..!" : "..", prompt, QVariant::fromValue(judge), Card::MethodResponse, judge->who, true);
+        if (forced && card == NULL) {
+            QList<const Card *> c = player->getCards("he");
+            card = c.at(qrand() % c.length());
+        }
+
+        if (card) {
+            if (player->hasInnateSkill("guicai") || !player->hasSkill("jilve"))
+                room->broadcastSkillInvoke(objectName());
+            else
+                room->broadcastSkillInvoke("jilve", 1);
+        }
+
+        return card;
+    }
+};
+
+class Longdan : public OneCardViewAsSkill
+{
+public:
+    Longdan() : OneCardViewAsSkill("longdan")
+    {
+        response_or_use = true;
+    }
+
+    bool viewFilter(const Card *to_select) const
+    {
+        const Card *card = to_select;
+
+        switch (Sanguosha->currentRoomState()->getCurrentCardUseReason()) {
+        case CardUseStruct::CARD_USE_REASON_PLAY: {
+            return card->isKindOf("Jink");
+        }
+        case CardUseStruct::CARD_USE_REASON_RESPONSE:
+        case CardUseStruct::CARD_USE_REASON_RESPONSE_USE: {
+            QString pattern = Sanguosha->currentRoomState()->getCurrentCardUsePattern();
+            if (pattern == "slash")
+                return card->isKindOf("Jink");
+            else if (pattern == "jink")
+                return card->isKindOf("Slash");
+        }
+        default:
+            return false;
+        }
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return Slash::IsAvailable(player);
+    }
+
+    bool isEnabledAtResponse(const Player *, const QString &pattern) const
+    {
+        return pattern == "jink" || pattern == "slash";
+    }
+
+    const Card *viewAs(const Card *originalCard) const
+    {
+        if (originalCard->isKindOf("Slash")) {
+            Jink *jink = new Jink(originalCard->getSuit(), originalCard->getNumber());
+            jink->addSubcard(originalCard);
+            jink->setSkillName(objectName());
+            return jink;
+        }
+        else if (originalCard->isKindOf("Jink")) {
+            Slash *slash = new Slash(originalCard->getSuit(), originalCard->getNumber());
+            slash->addSubcard(originalCard);
+            slash->setSkillName(objectName());
+            return slash;
+        }
+        else
+            return NULL;
+    }
+
+    int getEffectIndex(const ServerPlayer *player, const Card *) const
+    {
+        int index = qrand() % 2 + 1;
+        if (Player::isNostalGeneral(player, "zhaoyun"))
+            index += 2;
+        return index;
+    }
+};
+
+class Paoxiao : public TargetModSkill
+{
+public:
+    Paoxiao() : TargetModSkill("paoxiao")
+    {
+        frequency = NotCompulsory;
+    }
+
+    int getResidueNum(const Player *from, const Card *) const
+    {
+        if (from->hasSkill(this))
+            return 1000;
+        else
+            return 0;
+    }
+};
+
+class Wumou : public TriggerSkill
+{
+public:
+    Wumou() : TriggerSkill("wumou")
+    {
+        frequency = Compulsory;
+        events << CardUsed;
+    }
+
+    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        CardUseStruct use = data.value<CardUseStruct>();
+        if (use.card->isNDTrick()) {
+            room->broadcastSkillInvoke(objectName());
+            room->sendCompulsoryTriggerLog(player, objectName());
+
+            int num = player->getMark("@wrath");
+            if (num >= 1 && room->askForChoice(player, objectName(), "discard+losehp") == "discard") {
+                player->loseMark("@wrath");
+            }
+            else
+                room->loseHp(player);
+        }
+
+        return false;
+    }
+};
+
+class Benghuai : public PhaseChangeSkill
+{
+public:
+    Benghuai() : PhaseChangeSkill("benghuai")
+    {
+        frequency = Compulsory;
+    }
+
+    bool onPhaseChange(ServerPlayer *dongzhuo) const
+    {
+        bool trigger_this = false;
+        Room *room = dongzhuo->getRoom();
+
+        if (dongzhuo->getPhase() == Player::Finish) {
+            QList<ServerPlayer *> players = room->getOtherPlayers(dongzhuo);
+            foreach(ServerPlayer *player, players) {
+                if (dongzhuo->getHp() > player->getHp()) {
+                    trigger_this = true;
+                    break;
+                }
+            }
+        }
+
+        if (trigger_this) {
+            room->sendCompulsoryTriggerLog(dongzhuo, objectName());
+
+            QString result = room->askForChoice(dongzhuo, "benghuai", "hp+maxhp");
+            int index = (dongzhuo->isFemale()) ? 2 : 1;
+
+            if (!dongzhuo->hasInnateSkill(this) && dongzhuo->getMark("juyi") > 0)
+                index = 3;
+
+            if (!dongzhuo->hasInnateSkill(this) && dongzhuo->getMark("baoling") > 0)
+                index = result == "hp" ? 4 : 5;
+
+            room->broadcastSkillInvoke(objectName(), index);
+            if (result == "hp")
+                room->loseHp(dongzhuo);
+            else
+                room->loseMaxHp(dongzhuo);
+        }
+
+        return false;
+    }
+};
+
+TiaoxinCard::TiaoxinCard()
+{
+}
+
+bool TiaoxinCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    return targets.isEmpty() && to_select->inMyAttackRange(Self);
+}
+
+void TiaoxinCard::onEffect(const CardEffectStruct &effect) const
+{
+    Room *room = effect.from->getRoom();
+    bool use_slash = false;
+    if (effect.to->canSlash(effect.from, NULL, false))
+        use_slash = room->askForUseSlashTo(effect.to, effect.from, "@tiaoxin-slash:" + effect.from->objectName());
+    if (!use_slash && effect.from->canDiscard(effect.to, "he"))
+        room->throwCard(room->askForCardChosen(effect.from, effect.to, "he", "tiaoxin", false, Card::MethodDiscard), effect.to, effect.from);
+}
+
+class Tiaoxin : public ZeroCardViewAsSkill
+{
+public:
+    Tiaoxin() : ZeroCardViewAsSkill("tiaoxin")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("TiaoxinCard");
+    }
+
+    const Card *viewAs() const
+    {
+        return new TiaoxinCard;
+    }
+
+    int getEffectIndex(const ServerPlayer *player, const Card *) const
+    {
+        int index = qrand() % 2 + 1;
+        if (!player->hasInnateSkill(this) && player->hasSkill("baobian"))
+            index += 3;
+        else if (!player->hasInnateSkill(this) && player->getMark("fengliang") > 0)
+            index += 5;
+        else if (player->hasArmorEffect("eight_diagram"))
+            index = 3;
+        return index;
+    }
+};
+
+
+
+
 QString BasicCard::getType() const
 {
     return "basic";
@@ -1172,7 +1491,7 @@ InovationPackage::InovationPackage()
     patterns["peach+analeptic"] = new ExpPattern("Peach,Analeptic");
 
 
-    skills << new Keji;
+    skills << new Keji << new Yingzi << new Paoxiao << new Tiaoxin << new Fankui << new Longdan << new Guicai << new Wumou << new Benghuai;
     General *nagisa = new General(this, "Nagisa", "real", 3, false);
     nagisa->addSkill(new Guangyu);
     nagisa->addSkill(new GuangyuTrigger);

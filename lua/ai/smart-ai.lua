@@ -101,8 +101,8 @@ function setInitialTables()
 	sgs.lose_equip_skill = "kofxiaoji|xiaoji|xuanfeng|nosxuanfeng"
 	sgs.need_kongcheng = "lianying|noslianying|kongcheng|sijian|hengzheng"
 	sgs.masochism_skill =   "guixin|yiji|fankui|jieming|xuehen|neoganglie|ganglie|vsganglie|enyuan|fangzhu|nosenyuan|langgu|quanji|" ..
-										"zhiyu|renjie|tanlan|tongxin|huashen|duodao|chengxiang|benyu"
-	sgs.wizard_skill =      "guicai|guidao|jilve|tiandu|luoying|noszhenlie|huanshi"
+										"zhiyu|renjie|tanlan|tongxin|huashen|duodao|chengxiang|benyu|jinqu|SE_Dixian|SE_Xianjing"
+	sgs.wizard_skill =      "guicai|guidao|jilve|tiandu|luoying|noszhenlie|huanshi|Xuwu"
 	sgs.wizard_harm_skill =     "guicai|guidao|jilve"
 	sgs.priority_skill =        "dimeng|haoshi|qingnang|nosjizhi|jizhi|guzheng|qixi|jieyin|guose|duanliang|jujian|fanjian|neofanjian|lijian|" ..
 						"noslijian|manjuan|tuxi|qiaobian|yongsi|zhiheng|luoshen|nosrende|rende|mingce|wansha|gongxin|jilve|anxu|" ..
@@ -111,16 +111,16 @@ function setInitialTables()
 	sgs.exclusive_skill =       "huilei|duanchang|wuhun|buqu|dushi"
 	sgs.Active_cardneed_skill =     "paoxiao|tianyi|xianzhen|shuangxiong|nosjizhi|jizhi|guose|duanliang|qixi|qingnang|luoyi|" ..
 												"guhuo|nosguhuo|jieyin|zhiheng|rende|nosrende|nosjujian|luanji|qiaobian|lirang|mingce|"..
-												"fuhun|spzhenwei|nosfuhun|nosluoyi|yinbing|jieyue|sanyao|xinzhan"
+												"fuhun|spzhenwei|nosfuhun|nosluoyi|yinbing|jieyue|sanyao|xinzhan|Tianhuo"
 	sgs.notActive_cardneed_skill =      "kanpo|guicai|guidao|beige|xiaoguo|liuli|tianxiang|jijiu|leiji|nosleiji"..
 													"qingjian|zhuhai|qinxue|jspdanqi"
 	sgs.cardneed_skill =  sgs.Active_cardneed_skill .. "|" .. sgs.notActive_cardneed_skill
 	sgs.drawpeach_skill =       "tuxi|qiaobian"
 	sgs.recover_skill =     "nosrende|rende|kofkuanggu|kuanggu|zaiqi|jieyin|qingnang|yinghun|hunzi|shenzhi|longhun|nosmiji|zishou|ganlu|xueji|shangshi|" ..
-						"nosshangshi|ytchengxiang|buqu|miji|quji"
+						"nosshangshi|ytchengxiang|buqu|miji|quji|se_emeng"
 	sgs.use_lion_skill =         "longhun|duanliang|qixi|guidao|noslijian|lijian|jujian|nosjujian|zhiheng|mingce|yongsi|fenxun|gongqi|" ..
-						"yinling|jilve|qingcheng|neoluoyi|diyyicong"
-	sgs.need_equip_skill =      "shensu|mingce|jujian|beige|yuanhu|huyuan|gongqi|nosgongqi|yanzheng|qingcheng|neoluoyi|longhun|shuijian|yinbing"
+						"yinling|jilve|qingcheng|neoluoyi|diyyicong|se_zhifu"
+	sgs.need_equip_skill =      "shensu|mingce|jujian|beige|yuanhu|huyuan|gongqi|nosgongqi|yanzheng|qingcheng|neoluoyi|longhun|shuijian|yinbing|SE_Erdao|se_gate"
 	sgs.judge_reason =      "bazhen|EightDiagram|wuhun|supply_shortage|tuntian|nosqianxi|nosmiji|indulgence|lightning|baonue"..
 									"|nosleiji|leiji|caizhaoji_hujia|tieji|luoshen|ganglie|neoganglie|vsganglie|kofkuanggu"
 	sgs.straight_damage_skill = "qiangxi|nosxuanfeng|duwu|danshou"
@@ -128,6 +128,12 @@ function setInitialTables()
 	sgs.need_maxhp_skill = "yingzi|zaiqi|yinghun|hunzi|juejing|ganlu|zishou|miji|chizhong|xueji"..
 						"|quji|xuehen|shude|neojushou|tannang|fangzhu|nosshangshi|nosmiji"
 	sgs.bad_skills = "benghuai|wumou|shiyong|yaowu|zaoyao|chanyuan|chouhai"
+	--SE新加的类型
+	sgs.masochism_by_self_skill = "se_nike|jinqu|SE_Xiuse|SE_Niepan|luarenzha"
+	sgs.weak_killer_skill = "SE_Shouzang|se_qianlei|SE_Mishi|se_shouren|Xianhai"
+	sgs.key_use_skill = "guangyu"
+	sgs.akarin_skill = "SE_Touming|huanxing"
+
 
 	sgs.Friend_All = 0
 	sgs.Friend_Draw = 1
