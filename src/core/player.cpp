@@ -843,8 +843,10 @@ void Player::removeDelayedTrick(const Card *trick)
     if (index >= 0){
         judging_area.removeAt(index);
         if (trick->objectName() == "key_trick"){
-            this->hp = hp + 1;
-            emit hp_changed();
+            if (hp < max_hp && alive){
+                this->hp = hp + 1;
+                emit hp_changed();
+            }
         }
     }
 }

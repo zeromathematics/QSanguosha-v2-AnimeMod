@@ -8879,7 +8879,7 @@ function askForChooseSkill(riko)
 	local sks = {}
 	local all_generals = sgs.Sanguosha:getLimitedGeneralNames()
 	for i=1, #all_generals do
-		if all_generals[i]=="Tukasa" or all_generals[i]=="Eugeo" or all_generals[i]=="mianma" or  all_generals[i]=="Sayaka" or all_generals[i]=="Koishi" or all_generals[i]=="Mikoto" or all_generals[i]=="Natsume_Rin" or all_generals[i]=="Kazehaya" or all_generals[i]=="AiAstin" or all_generals[i]=="Reimu" or all_generals[i]=="Louise" then
+		if all_generals[i]=="Ushio" or all_generals[i]=="mianma" or all_generals[i]=="Chiyo" or all_generals[i]=="Eugen" or all_generals[i]=="Tukasa" or  all_generals[i]=="Sayaka" or all_generals[i]=="Koishi" or all_generals[i]=="Mikoto" or all_generals[i]=="Natsume_Rin" or all_generals[i]=="Kazehaya" or all_generals[i]=="AiAstin" or all_generals[i]=="Reimu" or all_generals[i]=="Louise" then
 			table.remove(all_generals, i)
 			i = i - 1 
 		end
@@ -12291,10 +12291,6 @@ se_wenchang = sgs.CreateTriggerSkill{
 			room:obtainCard(damage.to, cardid)
 			local card = sgs.Sanguosha:getCard(cardid)
 			if not card then return end
-			if card:isBlack() then
-				Yyui:drawCards(1)
-				--damage.to:drawCards(1)
-			end
 			if card:isRed() then
 				local re = sgs.RecoverStruct()
 				re.who = damage.to
@@ -12370,7 +12366,7 @@ sgs.LoadTranslationTable{
 ["$se_wenchang1"] = "就是嘛。啊哈哈...哈哈......",
 ["$se_wenchang2"] = "说起来大家都和平常一样啊，那个，嗯，大家都......",
 ["$se_wenchang3"] = "等等...怎么会变成这样的呢...很奇怪啊......",
-[":se_wenchang"]="一次伤害造成后，你可以弃置一张牌，令受到伤害的角色获得伤害来源的一张牌并展示。若获得的牌为黑色，你摸一张牌；若获得的牌为红色，受伤角色回复一点体力。", 
+[":se_wenchang"]="一次伤害造成后，你可以弃置一张牌，令受到伤害的角色获得伤害来源的一张牌并展示。若获得的牌为红色，受伤角色回复一点体力。", 
 
 ["se_yuanxin$"] = "image=image/animate/se_yuanxin.png",
 ["se_yuanxin"] = "援心",

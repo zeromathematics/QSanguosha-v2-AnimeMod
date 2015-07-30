@@ -1091,7 +1091,7 @@ sgs.ai_skill_use_func["#luasaoshecard"] = function(card,use,self)
 	local min_people
 	local min_Hp = 100
 	for _,enemy in ipairs(self.enemies) do
-		if not self:hasSkills(sgs.masochism_skill, enemy) and enemy:getMark("SaosheX") < 2 and not enemy:isCardLimited(sgs.Sanguosha:cloneCard("Slash"), sgs.Card_MethodUse) and self.player:inMyAttackRange(enemy) and not isEquip("EightDiagram",enemy) and not isEquip("Vine",enemy) then
+		if not self:hasSkills(sgs.masochism_skill, enemy) and self:slashIsEffective(sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0), enemy) and enemy:getMark("SaosheX") < 2 and not enemy:isCardLimited(sgs.Sanguosha:cloneCard("Slash"), sgs.Card_MethodUse) and self.player:inMyAttackRange(enemy) and not isEquip("EightDiagram",enemy) and not isEquip("Vine",enemy) then
 			if enemy:getHp() <= min_Hp then
 				min_people = enemy
 				min_Hp = enemy:getHp()

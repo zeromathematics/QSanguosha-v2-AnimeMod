@@ -22,6 +22,52 @@ sgs.ai_skill_invoke.fushang = function(self, data)
 	return false
 end
 
+--skill guangyu
+sgs.ai_skill_use["@@guangyu"] = function(self)
+	local ids = self.player:property("guangyu"):toString():split("+")
+	for _, id in ipairs(ids) do
+		local card = sgs.Sanguosha:getCard(id)
+		if self.player:isCardLimited(card, sgs.Card_MethodUse) then continue end
+		local card_str = ("key_trick:guangyu[%s:%s]=%d"):format(card:getSuitString(), card:getNumberString(), id)
+		local ss = sgs.Card_Parse(card_str)
+		local dummy_use = { isDummy = true , to = sgs.SPlayerList() }
+		self:useCardKeyTrick(ss, dummy_use)
+		if dummy_use.card and not dummy_use.to:isEmpty() then
+			return card_str .. "->" .. dummy_use.to:first():objectName()
+		end
+	end
+	return "."
+end
+sgs.ai_skill_invoke.guangyu = function(self, data)
+	if self:isFriend(self.room:getCurrent()) then return true end
+	return false
+end
+
+--skill xiyuan
+sgs.ai_skill_invoke.xiyuan = function(self, data)
+	if #self.friends_noself == 0 then return false end
+	return true
+end
+
+sgs.ai_skill_playerchosen.xiyuan = function(self, targets)
+	for _,p in ipairs(self.friends_noself) do
+		if not p:getGeneral2() and self:isWeak(p) then return p end
+		if p:hasSkill("se_diangong") then return p end
+	end
+	return self.friends_noself[1]
+end
+
+--skill dingxin
+sgs.ai_skill_choice["dingxin"] = function(self, choices, data)
+	if self:getCardsNum("Peach") == 0 then return "dingxin_recover" end
+	for _,p in sgs.qlist(room:getPlayers()) do
+		if (p:getGeneralName() == "Nagisa" or p:getGeneral2Name() == "Nagisa") and (self.player:getRole() == p:getRole() or (self.player:getRole() == "lord" and p:getRole() == "loyalist")) then return "dingxin_revive" end
+	end
+	return "dingxin_recover"
+end
+
+
+
 --麻婆豆腐
 function SmartAI:useCardMapoTofu(card, use) --need help 这个锦囊太复杂了。。。。。
 	local targets = {}
@@ -75,6 +121,13 @@ sgs.ai_card_intention.MapoTofu = 0
 function SmartAI:useCardKeyTrick(card, use)
 	for _,v in ipairs(self.friends) do
 		if v:getLostHp() > 0 and not v:containsTrick("key_trick") and not (self.room:isProhibited(self.player, v, card) or self.room:isAkarin(self.player, v)) then
+			use.card = card
+			if use.to then use.to:append(v) end
+			return
+		end
+	end
+	for _,v in ipairs(self.friends) do
+		if not v:containsTrick("key_trick") and not (self.room:isProhibited(self.player, v, card) or self.room:isAkarin(self.player, v)) then
 			use.card = card
 			if use.to then use.to:append(v) end
 			return

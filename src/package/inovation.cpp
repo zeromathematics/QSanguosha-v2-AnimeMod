@@ -1425,7 +1425,7 @@ public:
             if (!dying.who->hasSkill(objectName()) || !dying.who->hasFlag("dingxin_used"))
                 return false;
             ServerPlayer *nagisa;
-            foreach(ServerPlayer *p, room->getAllPlayers()){
+            foreach(ServerPlayer *p, room->getPlayers()){
                 if ((p->getGeneralName() == "Nagisa" || (p->getGeneral2() && p->getGeneral2Name() == "Nagisa")) && p->isDead()){
                     nagisa = p;
                     break;
@@ -1448,7 +1448,7 @@ public:
             }
             else{
                 room->revivePlayer(nagisa, true);
-                nagisa->setHp(2);
+                room->setPlayerProperty(nagisa, "hp", QVariant(2));
                 nagisa->drawCards(2);
                 LogMessage log;
                 log.type = "#DingxinRevive";
@@ -1512,6 +1512,7 @@ InovationPackage::InovationPackage()
 
     QList<Card *> cards;
     cards << new KeyTrick(Card::Heart, 10)
+        << new KeyTrick(Card::Heart, 4)
         << new MapoTofu(Card::Spade, 1);
 
     foreach(Card *card, cards)

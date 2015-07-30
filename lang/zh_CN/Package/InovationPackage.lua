@@ -90,8 +90,6 @@ return {
 	["$dingxin1"] = "",
 	["$dingxin2"] = "",
 	[":dingxin"] = "<font color=\"blue\"><b>锁定技,</b></font>准备阶段开始时，你失去一点体力。你以此法进入濒死时，你回复3点体力或令古河渚复活至2点体力并摸两张牌。",
-	["dingxin_recover"] = "令自己回复三点体力",
-	["dingxin_revive"] = "令古河渚复活至两点体力并摸两张牌",
 	["#DingxinRecover"] = "副将冈崎汐 町心 的效果，%from 回复了3点体力。", 
 	["#DingxinRevive"] = "副将冈崎汐 町心 的效果，%from 令 %to 复活至2点体力并摸两张牌。", 
 	["Ushio"] = "冈崎汐", 
