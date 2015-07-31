@@ -546,7 +546,7 @@ void RoomScene::handleGameEvent(const QVariant &args)
             }
             log_box->appendLog(type, player->objectName(), QStringList(), QString(), newHeroName, arg2);
         }
-        if (player->getGeneralName() == "shenlvbu1" && newHeroName == "shenlvbu2"
+        if (player->getGeneralName() == "DarkSakura1" && newHeroName == "DarkSakura2"
             && player->getMark("secondMode") > 0)
             Sanguosha->playSystemAudioEffect("stagechange");
         if (player != Self) break;

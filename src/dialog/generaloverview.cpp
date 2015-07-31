@@ -587,7 +587,7 @@ void GeneralOverview::on_tableWidget_itemSelectionChanged()
         connect(win_button, SIGNAL(clicked()), this, SLOT(playAudioEffect()));
     }
 
-    if (general_name == "shenlvbu1" || general_name == "shenlvbu2") {
+    if (general_name == "DarkSakura1" || general_name == "DarkSakura2") {
         QCommandLinkButton *stage_change_button = new QCommandLinkButton(tr("Stage Change"),
             tr("Trashes, the real fun is just beginning!"));
 

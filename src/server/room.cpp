@@ -2894,7 +2894,7 @@ void Room::run()
         connect(thread_1v1, SIGNAL(finished()), thread_1v1, SLOT(deleteLater()));
     } else if (mode == "04_1v3") {
         ServerPlayer *lord = m_players.first();
-        setPlayerProperty(lord, "general", "shenlvbu1");
+        setPlayerProperty(lord, "general", "DarkSakura1");
 
         QStringList names;
         foreach (QString gen_name, GetConfigFromLuaState(Sanguosha->getLuaState(), "hulao_generals").toStringList()) {

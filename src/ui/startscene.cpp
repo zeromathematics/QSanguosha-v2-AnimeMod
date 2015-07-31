@@ -54,7 +54,7 @@ void StartScene::addButton(QAction *action)
     if (n > 3)
         button = new SuperButton(action->text(), *size, action->objectName(), Qt::AlignLeft);
     else
-        button = new SuperButton(action->text(), *size, action->objectName());
+        button = new SuperButton(action->text(), *size, action->objectName(), Qt::AlignRight);
 
     QString icon = action->objectName();
     icon.remove(0, 6);

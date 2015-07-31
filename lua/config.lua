@@ -87,23 +87,23 @@ config = {
 	},
 
 	hulao_generals = {
-		"package:nostal_standard",
-		"package:wind",
-		"package:nostal_wind",
-		"zhenji", "zhugeliang", "sunquan", "sunshangxiang",
-		"-zhangjiao", "-zhoutai", "-caoren", "-yuji",
-		"-nos_yuji"
+		"package:Inovation",
+		"package:dmpkancolle",
+		"package:dmpdiva",
+		"package:dmptouhou",
+		"package:dongmanbao",
+		"package:erciyuan",
+		"package:lolihime",
 	},
 
 	xmode_generals = {
-		"package:nostal_standard",
-		"package:wind",
-		"package:fire",
-		"package:nostal_wind",
-		"zhenji", "zhugeliang", "sunquan", "sunshangxiang",
-		"-nos_huatuo",
-		"-zhangjiao", "-zhoutai", "-caoren", "-yuji",
-		"-nos_zhangjiao", "-nos_yuji"
+		"package:Inovation",
+		"package:dmpkancolle",
+		"package:dmpdiva",
+		"package:dmptouhou",
+		"package:dongmanbao",
+		"package:erciyuan",
+		"package:lolihime",
 	},
 
 	easy_text = {

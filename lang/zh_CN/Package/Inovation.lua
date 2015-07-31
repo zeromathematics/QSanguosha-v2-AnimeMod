@@ -109,4 +109,43 @@ return {
 	[":mapo_tofu"] = "基本牌<br /><b>时机</b>：出牌阶段<br /><b>目标</b>：距离为1的一名角色<br /><b>效果</b>：目标角色受到X点火属性伤害（该伤害不会被传导），该回合结束时目标角色回复X+1点体力。X为目标角色的体力值-1且至少为0。每名角色每阶段限一次。",
 	["#MapoTofuUse"] = "%from 令 %to 食用了激辣的麻婆豆腐！",
 	["#MapoTofuRecover"] = "%from 感受到了麻婆豆腐的魅力！",
+
+	["xushu"] = "虚数",
+	["$xushu"] = "",
+	[":xushu"] = "<font color=\"blue\"><b>锁定技,</b></font>对你造成的伤害和你造成的伤害视为体力流失。准备阶段开始时，你需令一名其他角色流失一点体力。",
+
+	["xishou"] = "吸收",
+	["$xishou"] = "",
+	[":xishou"] = "一名其他角色进入濒死时，你可以获得其一个技能并回复一点体力。",
+
+	["shengbei"] = "圣杯",
+	["$shengbei"] = "",
+	[":shengbei"] = "<font color=\"blue\"><b>锁定技,</b></font>回合开始前，弃置你判定区内的所有牌，若你背面朝上，将你的武将牌翻面。你的摸牌数+3，你的手牌上限+3。",
+
+	["caoying"] = "操影",
+	["$caoying"] = "",
+	[":caoying"] = "其他角色指定你为目标时，获得一个“影”标记。一名角色流失体力时，你可以弃置其“影”标记，然后弃置其两倍数量的牌。",
+
+	["shengjian_black"] = "黑·约束胜利之剑",
+	["$shengjian_black"] = "",
+	[":shengjian_black"] = "当你失去体力时，你可以对一名其他角色造成X点伤害，X为你和其装备区牌的差，然后弃置其所有的装备牌。",
+
+	["DarkSakura1"] = "黑化间桐樱", 
+	["&DarkSakura1"] = "黑化间桐樱", 
+	["@DarkSakura1"] = "Fate/Stay Night", 
+	["#DarkSakura1"] = "间桐家的御主", 
+	["~DarkSakura1"] = "", 
+	["designer:DarkSakura1"] = "Sword Elucidator",
+	["cv:DarkSakura1"] = "下屋则子",
+	["illustrator:DarkSakura1"] = "月本葵",
+
+
+	["DarkSakura2"] = "黑化间桐樱（圣杯模式）", 
+	["&DarkSakura2"] = "黑化间桐樱（圣杯模式）", 
+	["@DarkSakura2"] = "Fate/Stay Night", 
+	["#DarkSakura2"] = "间桐家的圣杯", 
+	["~DarkSakura2"] = "", 
+	["designer:DarkSakura2"] = "Sword Elucidator",
+	["cv:DarkSakura2"] = "下屋则子",
+	["illustrator:DarkSakura2"] = "皇♦小J",
 }

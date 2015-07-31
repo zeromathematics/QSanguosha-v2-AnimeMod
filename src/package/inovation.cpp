@@ -1338,6 +1338,7 @@ public:
                     ServerPlayer *nagisa = room->findPlayerBySkillName("guangyu");
                     if (!nagisa || !nagisa->askForSkillInvoke("guangyu", data))
                         return false;
+                    room->broadcastSkillInvoke(objectName());
                     room->doLightbox("guangyu$", 800);
                     foreach(const Card* card, player->getJudgingArea()){
                         player->obtainCard(card);
@@ -1384,6 +1385,7 @@ public:
             if (room->getTag("xiyuan_used").toBool() || !death.who->askForSkillInvoke(objectName(), data))
                 return false;
             ServerPlayer *tomoya = room->askForPlayerChosen(death.who, room->getOtherPlayers(death.who), objectName());
+            room->broadcastSkillInvoke(objectName());
             room->doLightbox("xiyuan$", 3000);
             room->changeHero(tomoya, "Ushio", false, true, true, true);
             LogMessage log;
@@ -1394,6 +1396,7 @@ public:
             room->sendLog(log);
             room->setTag("xiyuan_used", QVariant(true));
         }
+        return false;
     }
 
     bool triggerable(const ServerPlayer *target) const
@@ -1438,6 +1441,7 @@ public:
             else{
                 choice = "dingxin_recover";
             }
+            room->broadcastSkillInvoke(objectName());
             room->doLightbox("dingxin$", 2000);
             if (choice == "dingxin_recover"){
                 room->recover(dying.who, RecoverStruct(dying.who, NULL, 3));
@@ -1462,6 +1466,223 @@ public:
     }
 };
 
+//Dark Sakura
+class Xushu : public TriggerSkill
+{
+public:
+    Xushu() : TriggerSkill("xushu")
+    {
+        frequency = Compulsory;
+        events << Predamage << EventPhaseStart;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == Predamage){
+            DamageStruct damage = data.value<DamageStruct>();
+            if (damage.from->hasSkill(objectName()) || damage.to->hasSkill(objectName())) {
+                room->broadcastSkillInvoke(objectName());
+                if (damage.from->hasSkill(objectName()))
+                    room->sendCompulsoryTriggerLog(damage.from, objectName());
+                else
+                    room->sendCompulsoryTriggerLog(damage.to, objectName());
+                room->loseHp(damage.to, damage.damage);
+
+                return true;
+            }
+        }
+        else if (triggerEvent == EventPhaseStart){
+            if (!player->hasSkill(objectName()) || player->getPhase() != Player::RoundStart)
+                return false;
+            room->loseHp(room->askForPlayerChosen(player, room->getOtherPlayers(player), objectName()));
+            room->broadcastSkillInvoke(objectName());
+        }
+        
+        return false;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+};
+
+//xishou
+class Xishou : public TriggerSkill
+{
+public:
+    Xishou() : TriggerSkill("xishou")
+    {
+        frequency = NotFrequent;
+        events << Dying;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == Dying){
+            DyingStruct dying = data.value<DyingStruct>();
+            ServerPlayer *sakura = room->findPlayerBySkillName(objectName());
+            if (!sakura || dying.who == sakura || !player->hasSkill(objectName()))
+                return false;
+            QList<const Skill *> list = dying.who->getVisibleSkillList();
+            QString choices = "";
+            int len = list.length();
+            int i = 0;
+            foreach(const Skill *skill, list){
+                if (!sakura->hasSkill(skill))
+                    choices += skill->objectName();
+                i++;
+                if (len != i && !sakura->hasSkill(skill)){
+                    choices += "+";
+                }
+            }
+            QString choice = room->askForChoice(sakura, objectName(), choices, data);
+            room->broadcastSkillInvoke(objectName());
+            if (!sakura->hasSkill(choice))
+                room->acquireSkill(sakura, choice);
+            room->recover(sakura, RecoverStruct(sakura));
+        }
+
+        return false;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+};
+
+//shengbei
+//Dark Sakura
+class Shengbei : public TriggerSkill
+{
+public:
+    Shengbei() : TriggerSkill("shengbei")
+    {
+        frequency = Compulsory;
+        events << DrawNCards << TurnStart;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == DrawNCards){
+            if (player->hasSkill(objectName())){
+                room->broadcastSkillInvoke(objectName());
+                data.setValue(data.toInt() + 3);
+            }
+        }
+        else if (triggerEvent == TurnStart){
+            if (player->hasSkill(objectName())){
+                if (!player->faceUp()){
+                    player->turnOver();
+                }
+                if (player->getJudgingArea().length() > 0){
+                    foreach(const Card* card, player->getJudgingArea()){
+                        room->throwCard(card, player);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+};
+
+class ShengbeiMaxCards : public MaxCardsSkill
+{
+public:
+    ShengbeiMaxCards() : MaxCardsSkill("#shengbei")
+    {
+    }
+
+    int getFixed(const Player *target) const
+    {
+        if (target->hasSkill("shengbei"))
+            return target->getHp() + 3;
+        else
+            return -1;
+    }
+};
+
+//caoying
+class Caoying : public TriggerSkill
+{
+public:
+    Caoying() : TriggerSkill("caoying")
+    {
+        frequency = NotFrequent;
+        events << TargetConfirmed << HpLost;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == TargetConfirmed){
+            CardUseStruct use = data.value<CardUseStruct>();
+            foreach(ServerPlayer *p, use.to){
+                if (p->hasSkill(objectName())){
+                    use.from->gainMark("@kage");
+                }
+            }
+        }
+        else if (triggerEvent == HpLost){
+            if (player->getMark("@kage") == 0)
+                return false;
+            ServerPlayer *sakura = room->findPlayerBySkillName(objectName());
+            if (!sakura)
+                return false;
+            if (sakura->askForSkillInvoke(objectName(), data)){
+                room->broadcastSkillInvoke(objectName());
+                for (int i = 0; i < player->getMark("@kage") * 2; i++){
+                    if (!player->isNude()){
+                        room->throwCard(room->askForCardChosen(sakura, player, "he", objectName()), player, sakura);
+                    }
+                    else{
+                        break;
+                    }
+                }
+                player->loseAllMarks("@kage");
+            }
+        }
+
+        return false;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+};
+
+//caoying
+class ShengjianBlack : public TriggerSkill
+{
+public:
+    ShengjianBlack() : TriggerSkill("shengjian_black")
+    {
+        frequency = NotFrequent;
+        events << HpLost;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == HpLost){
+            if (player->hasSkill(objectName()) && player->askForSkillInvoke(objectName(), data)){
+                ServerPlayer *p = room->askForPlayerChosen(player, room->getOtherPlayers(player), objectName());
+                if (!p)
+                    return false;
+                room->broadcastSkillInvoke(objectName());
+                DamageStruct damage;
+                damage.from = player;
+                damage.to = p;
+                damage.damage = abs(player->getEquips().length() - p->getEquips().length());
+                room->damage(damage);
+                foreach(const Card* card, p->getEquips()){
+                    room->throwCard(card, p, player);
+                }
+            }
+        }
+        return false;
+    }
+};
 
 InovationPackage::InovationPackage()
     : Package("inovation")
@@ -1509,6 +1730,19 @@ InovationPackage::InovationPackage()
     General *nao = new General(this, "Nao", "science", 3, false);
     nao->addSkill(new Huanxing);
     nao->addSkill(new Fushang);
+
+    General *sakura = new General(this, "DarkSakura1", "magic", 8, false, true);
+    sakura->addSkill(new Xushu);
+    sakura->addSkill(new Xishou);
+
+    General *sakura2 = new General(this, "DarkSakura2", "magic", 4, false, true);
+    sakura2->addSkill("xushu");
+    sakura2->addSkill("xishou");
+    sakura2->addSkill(new Shengbei);
+    sakura2->addSkill(new ShengbeiMaxCards);
+    related_skills.insertMulti("shengbei", "#shengbei");
+    sakura2->addSkill(new Caoying);
+    sakura2->addSkill(new ShengjianBlack);
 
     QList<Card *> cards;
     cards << new KeyTrick(Card::Heart, 10)

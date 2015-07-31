@@ -705,17 +705,17 @@ QGroupBox *ServerDialog::create1v1Box()
         officialComboBox->setCurrentIndex(2);
 
     kof_using_extension_checkbox = new QCheckBox(tr("General extensions"));
-    kof_using_extension_checkbox->setChecked(Config.value("1v1/UsingExtension", false).toBool());
+    kof_using_extension_checkbox->setChecked(Config.value("1v1/UsingExtension", true).toBool());
 
     kof_card_extension_checkbox = new QCheckBox(tr("Card extensions"));
-    kof_card_extension_checkbox->setChecked(Config.value("1v1/UsingCardExtension", false).toBool());
+    kof_card_extension_checkbox->setChecked(Config.value("1v1/UsingCardExtension", true).toBool());
 
     vlayout->addLayout(HLay(new QLabel(tr("Rule option")), official_1v1_ComboBox));
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->addWidget(new QLabel(tr("Extension setting")));
     hlayout->addStretch();
-    hlayout->addWidget(kof_using_extension_checkbox);
+    //hlayout->addWidget(kof_using_extension_checkbox);
     hlayout->addWidget(kof_card_extension_checkbox);
 
     vlayout->addLayout(hlayout);
@@ -769,13 +769,13 @@ QGroupBox *ServerDialog::create3v3Box()
     else if (scheme == "AllRoles")
         roleChooseComboBox->setCurrentIndex(2);
 
-    vlayout->addLayout(HLay(official_3v3_radiobutton, official_3v3_ComboBox));
+    //vlayout->addLayout(HLay(official_3v3_radiobutton, official_3v3_ComboBox));
     vlayout->addLayout(HLay(extend, extend_edit_button));
     vlayout->addWidget(exclude_disaster_checkbox);
     vlayout->addLayout(HLay(new QLabel(tr("Role choose")), role_choose_ComboBox));
     box->setLayout(vlayout);
 
-    bool using_extension = Config.value("3v3/UsingExtension", false).toBool();
+    bool using_extension = Config.value("3v3/UsingExtension", true).toBool();
     if (using_extension)
         extend->setChecked(true);
     else

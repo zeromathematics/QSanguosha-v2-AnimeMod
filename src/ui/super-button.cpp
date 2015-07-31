@@ -3,7 +3,7 @@
 #include "engine.h"
 #include "settings.h"
 
-static QRectF ButtonRect(0, 0, 225, 150);
+static QRectF ButtonRect(0, 0, 190, 50);
 
 SuperButton::SuperButton(const QString &label, qreal scale)
     : label(label), size(ButtonRect.size() * scale), mute(true), font(Config.SmallFont)
@@ -42,10 +42,10 @@ void SuperButton::init(QString file_name, Qt::AlignmentFlag flag)
     pt.setFont(font);
     pt.setPen(Config.TextEditColor);
     pt.setRenderHint(QPainter::TextAntialiasing);
-    if (flag != Qt::AlignRight)
+    if (flag != Qt::AlignCenter)
         pt.drawText(boundingRect(), flag, label);
     else
-        pt.drawText(boundingRect(), Qt::AlignRight, label);
+        pt.drawText(boundingRect(), Qt::AlignCenter, label);
 
     title_item = new QGraphicsPixmapItem(this);
     title_item->setPixmap(title);

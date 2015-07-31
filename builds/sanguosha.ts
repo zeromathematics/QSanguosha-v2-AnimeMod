@@ -1743,62 +1743,62 @@
         <translation>查看距离</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="76"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="74"/>
         <source>From</source>
         <translation>从</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="77"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="75"/>
         <source>To</source>
         <translation>至</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="78"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="76"/>
         <source>From seat</source>
         <translation>源座位</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="79"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="77"/>
         <source>To seat</source>
         <translation>目标座位</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="80"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="78"/>
         <source>Left</source>
         <translation>左距离</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="81"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="79"/>
         <source>Right</source>
         <translation>右距离</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="82"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="80"/>
         <source>Minimum</source>
         <translation>较小值</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="85"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="83"/>
         <source>Distance correct</source>
         <translation>距离修正</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="93"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="91"/>
         <source>In attack range</source>
         <translation>在攻击范围内</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="94"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="92"/>
         <source>Final</source>
         <translation>最终结果</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="151"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="149"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../src/dialog/distanceviewdialog.cpp" line="151"/>
+        <location filename="../src/dialog/distanceviewdialog.cpp" line="149"/>
         <source>No</source>
         <translation>否</translation>
     </message>
@@ -1828,7 +1828,7 @@
     <message>
         <location filename="../src/core/engine.cpp" line="324"/>
         <source>4 players (Hulao Pass)</source>
-        <translation>4 人局 [虎牢关1v3]</translation>
+        <translation>4 人局 [天之杯1v3]</translation>
     </message>
     <message>
         <location filename="../src/core/engine.cpp" line="325"/>
@@ -1881,9 +1881,8 @@
         <translation>8 人局 [无内奸]</translation>
     </message>
     <message>
-        <location filename="../src/core/engine.cpp" line="335"/>
         <source>8 players (JianGe Defense)</source>
-        <translation>8 人局 [守卫剑阁]</translation>
+        <translation type="vanished">8 人局 [守卫剑阁]</translation>
     </message>
     <message>
         <location filename="../src/core/engine.cpp" line="336"/>
@@ -1924,17 +1923,17 @@
 <context>
     <name>FreeChooseDialog</name>
     <message>
-        <location filename="../src/dialog/choosegeneraldialog.cpp" line="245"/>
+        <location filename="../src/dialog/choosegeneraldialog.cpp" line="244"/>
         <source>Free choose generals</source>
         <translation>自由选择人物</translation>
     </message>
     <message>
-        <location filename="../src/dialog/choosegeneraldialog.cpp" line="274"/>
+        <location filename="../src/dialog/choosegeneraldialog.cpp" line="273"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../src/dialog/choosegeneraldialog.cpp" line="277"/>
+        <location filename="../src/dialog/choosegeneraldialog.cpp" line="276"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -3048,7 +3047,7 @@
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/core/player.cpp" line="1114"/>
+        <location filename="../src/core/player.cpp" line="1121"/>
         <source>No skills</source>
         <translation>无技能</translation>
     </message>
@@ -3345,58 +3344,58 @@
         <translation>自由分配身份和座位</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="55"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="54"/>
         <source>Lord</source>
         <translation>主公</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="56"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="55"/>
         <source>Loyalist</source>
         <translation>忠臣</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="57"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="56"/>
         <source>Renegade</source>
         <translation>内奸</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="58"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="57"/>
         <source>Rebel</source>
         <translation>反贼</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="60"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="59"/>
         <source>Move up</source>
         <translation>移上</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="61"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="60"/>
         <source>Move down</source>
         <translation>移下</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="62"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="61"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="63"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="62"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="115"/>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="131"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="114"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="130"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="115"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="114"/>
         <source>The first assigned role must be lord!</source>
         <translation>1号位必须是主公!</translation>
     </message>
     <message>
-        <location filename="../src/dialog/roleassigndialog.cpp" line="132"/>
+        <location filename="../src/dialog/roleassigndialog.cpp" line="131"/>
         <source>The roles that you assigned do not comform with the current game mode</source>
         <translation>你所分配的身份不符合当前游戏的身份设置</translation>
     </message>
@@ -3456,7 +3455,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../src/server/room.cpp" line="6020"/>
+        <location filename="../src/server/room.cpp" line="6065"/>
         <source>&lt;font color=#EEB422&gt;The network delay of player &lt;b&gt;%1&lt;/b&gt; is %2 milliseconds.&lt;/font&gt;</source>
         <translation>&lt;font color=#EEB422&gt;玩家 &lt;b&gt;%1&lt;/b&gt; 的网络延迟为 %2 毫秒&lt;/font&gt;</translation>
     </message>
@@ -4091,7 +4090,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/server/server.cpp" line="229"/>
         <source>-1 means no limitations</source>
-        <translation>-1表示无次数限制（虎牢关模式不生效）</translation>
+        <translation>-1表示无次数限制（天之杯模式不生效）</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="234"/>
