@@ -1621,7 +1621,7 @@ public:
         if (triggerEvent == TargetConfirmed){
             CardUseStruct use = data.value<CardUseStruct>();
             foreach(ServerPlayer *p, use.to){
-                if (p->hasSkill(objectName())){
+                if (p->hasSkill(objectName()) && p == player && !use.from->hasSkill(objectName())){
                     use.from->gainMark("@kage");
                 }
             }
