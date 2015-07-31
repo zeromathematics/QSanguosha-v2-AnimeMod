@@ -1513,7 +1513,7 @@ class Xishou : public TriggerSkill
 public:
     Xishou() : TriggerSkill("xishou")
     {
-        frequency = NotFrequent;
+        frequency = Frequent;
         events << Dying;
     }
 
@@ -1536,6 +1536,9 @@ public:
                     choices += "+";
                 }
             }
+            if (choices == "" || !sakura->askForSkillInvoke(objectName(), data))
+                return false;
+            
             QString choice = room->askForChoice(sakura, objectName(), choices, data);
             room->broadcastSkillInvoke(objectName());
             if (!sakura->hasSkill(choice))
@@ -1609,7 +1612,7 @@ class Caoying : public TriggerSkill
 public:
     Caoying() : TriggerSkill("caoying")
     {
-        frequency = NotFrequent;
+        frequency = Frequent;
         events << TargetConfirmed << HpLost;
     }
 
@@ -1631,7 +1634,7 @@ public:
                 return false;
             if (sakura->askForSkillInvoke(objectName(), data)){
                 room->broadcastSkillInvoke(objectName());
-                for (int i = 0; i < player->getMark("@kage") * 2; i++){
+                for (int i = 0; i < player->getMark("@kage"); i++){
                     if (!player->isNude()){
                         room->throwCard(room->askForCardChosen(sakura, player, "he", objectName()), player, sakura);
                     }
@@ -1658,7 +1661,7 @@ class ShengjianBlack : public TriggerSkill
 public:
     ShengjianBlack() : TriggerSkill("shengjian_black")
     {
-        frequency = NotFrequent;
+        frequency = Frequent;
         events << HpLost;
     }
 

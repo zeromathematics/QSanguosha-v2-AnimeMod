@@ -141,6 +141,35 @@ Aria = sgs.General(extension, "Aria", "science", 3, false,false,false)
 Reki = sgs.General(extension, "Reki", "science", 3, false,false,false)		
 Ange = sgs.General(extension, "Ange", "magic", 3, false,false,false)
 Ange2 = sgs.General(extension, "Ange2", "magic", 3, true,true,true)
+Rivaille = sgs.General(extension, "Rivaille", "science", 3, true,false,false)
+Asagi = sgs.General(extension, "Asagi", "magic", 3, false,false,false)
+Riko = sgs.General(extension, "Riko", "science", 2, false,false,false)
+Kurumi = sgs.General(extension, "Kurumi", "magic", 3, false,false,false)
+Sakura = sgs.General(extension, "Sakura", "magic", 3, false,false,false)
+Eugeo = sgs.General(extension, "Eugeo", "science", 3, true,false,false)
+Eugeo_sub = sgs.General(extension, "Eugeo_sub", "science", 3, true,true,true)
+Rika = sgs.General(extension, "Rika", "real", 3, false,false,false)
+Eucliwood = sgs.General(extension, "Eucliwood", "magic", 3, false,false,false)
+Eu_Zombie = sgs.General(extension, "Eu_Zombie", "magic", 5, true,true,true)
+Yuri = sgs.General(extension, "Yuri", "real", 3, false,false,false)
+Setsuna = sgs.General(extension, "Setsuna", "real", 3, false,false,false)
+Yukina = sgs.General(extension, "Yukina", "magic", 3, false,false,false)
+K1 = sgs.General(extension, "K1", "real", 4, true,false,false)
+Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
+Batora = sgs.General(extension, "Batora", "magic", 4, true,true,false)
+Shirayuki = sgs.General(extension, "Shirayuki", "science", 4, false,false,false)
+Saki = sgs.General(extension, "Saki", "real", 4, false,false,false)
+Sayaka = sgs.General(extension, "Sayaka", "magic", 3, false,false,false)
+Majyo = sgs.General(extension, "Majyo", "magic", 4, false,true,true)
+Kinpika = sgs.General(extension, "Kinpika", "magic", 4, true,false,false)
+Kiritsugu = sgs.General(extension, "Kiritsugu", "magic", 4, true,false,false)
+Yakumo = sgs.General(extension, "Yakumo", "magic", 4, true,true,false)
+Yukino = sgs.General(extension, "Yukino", "real", 3, false,false,false)
+Yyui = sgs.General(extension, "Yyui", "real", 3, false,false,false)
+Chiyo = sgs.General(extension, "Chiyo", "real", 3, false,false,false)
+Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
+
+
 
 YingbiGet = sgs.CreateTriggerSkill{
 	name = "#YingbiGet", 
@@ -8622,7 +8651,7 @@ sgs.LoadTranslationTable{
 ["illustrator:Ange"] = "時火",
 }
 --利维尔
-Rivaille = sgs.General(extension, "Rivaille", "science", 3, true,false,false)
+
 
 SE_Jiepi = sgs.CreateTriggerSkill{
         name = "SE_Jiepi", 
@@ -8739,7 +8768,7 @@ sgs.LoadTranslationTable{
 ["illustrator:Rivaille"] = "NA2-A5",
 }
 --蓝羽浅葱
-Asagi = sgs.General(extension, "Asagi", "magic", 3, false,false,false)
+
 
 se_poyi=sgs.CreateViewAsSkill{
 	name="se_poyi",
@@ -8867,7 +8896,7 @@ sgs.LoadTranslationTable{
 }
 
 --峰理子
-Riko = sgs.General(extension, "Riko", "science", 2, false,false,false)
+
 
 function askForChooseSkill(riko)
 	local room = riko:getRoom()
@@ -9048,7 +9077,7 @@ sgs.LoadTranslationTable{
 
 
 --时崎狂三
-Kurumi = sgs.General(extension, "Kurumi", "magic", 3, false,false,false)
+
 
 SE_Qidan = sgs.CreateTriggerSkill{
 	name = "SE_Qidan",
@@ -9222,7 +9251,7 @@ sgs.LoadTranslationTable{
 
 
 --木之本樱
-Sakura = sgs.General(extension, "Sakura", "magic", 3, false,false,false)
+
 
 local function searchBaibianForSkill(card)
 	local suit = card:getSuit()
@@ -9364,8 +9393,7 @@ sgs.LoadTranslationTable{
 }
 
 --优吉欧
-Eugeo = sgs.General(extension, "Eugeo", "science", 3, true,false,false)
-Eugeo_sub = sgs.General(extension, "Eugeo_sub", "science", 3, true,true,true)
+
 --忍耐
 SE_Rennai = sgs.CreateTriggerSkill{
 	name = "SE_Rennai",  
@@ -9609,7 +9637,7 @@ sgs.LoadTranslationTable{
 }
 
 --古手梨花
-Rika = sgs.General(extension, "Rika", "real", 3, false,false,false)
+
 SE_Shenghua = sgs.CreateTriggerSkill{
 	name = "SE_Shenghua", 
 	frequency = sgs.Skill_NotFrequent, 
@@ -9834,7 +9862,7 @@ sgs.LoadTranslationTable{
 }
 
 --死灵法师
-Eucliwood = sgs.General(extension, "Eucliwood", "magic", 3, false,false,false)
+
 
 luaqicetrick={
 	--"slash",
@@ -10183,7 +10211,6 @@ sgs.LoadTranslationTable{
 ["illustrator:Eucliwood"] = "Windforcelan",
 }
 
-Eu_Zombie = sgs.General(extension, "Eu_Zombie", "magic", 5, true,true,true)
 
 SE_Juyang = sgs.CreateTriggerSkill{
 	name = "SE_Juyang",  
@@ -10241,7 +10268,7 @@ sgs.LoadTranslationTable{
 --五河士道
 
 --仲村由理
-Yuri = sgs.General(extension, "Yuri", "real", 3, false,false,false)
+
 
 SE_Zuozhan = sgs.CreateTriggerSkill{
 	name = "SE_Zuozhan", 
@@ -10387,7 +10414,7 @@ sgs.LoadTranslationTable{
 
 
 --小木曽雪菜
-Setsuna = sgs.General(extension, "Setsuna", "real", 3, false,false,false)
+
 
 sgs.GaolingPattern = {"pattern"}
 
@@ -10520,7 +10547,6 @@ sgs.LoadTranslationTable{
 
 --姫柊雪菜
 
-Yukina = sgs.General(extension, "Yukina", "magic", 3, false,false,false)
 
 Schneewalzer = sgs.CreateTriggerSkill{
 	name = "Schneewalzer",  
@@ -10723,7 +10749,7 @@ sgs.LoadTranslationTable{
 
 
 --前原圭一
-K1 = sgs.General(extension, "K1", "real", 4, true,false,false)
+
 
 SE_Guiyin = sgs.CreateTriggerSkill{
 	name = "SE_Guiyin",  
@@ -10866,7 +10892,7 @@ sgs.LoadTranslationTable{
 
 
 --江之岛盾子
-Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
+
 
 SE_Heimu = sgs.CreateTriggerSkill{
 	name = "SE_Heimu",  
@@ -10978,7 +11004,7 @@ sgs.LoadTranslationTable{
 }
 
 --右代宫战人
-Batora = sgs.General(extension, "Batora", "magic", 4, true,true,false)
+
 
 SE_Xianzhuo = sgs.CreateTriggerSkill{
 	name = "SE_Xianzhuo",
@@ -11074,7 +11100,7 @@ sgs.LoadTranslationTable{
 
 
 --白雪
-Shirayuki = sgs.General(extension, "Shirayuki", "science", 4, false,false,false)
+
 
 sgs.SE_Jiawu_broad = true
 SE_Jiawu = sgs.CreateTriggerSkill{
@@ -11245,7 +11271,7 @@ sgs.LoadTranslationTable{
 }
 
 --宮永咲
-Saki = sgs.General(extension, "Saki", "real", 4, false,false,false)
+
 
 sgs.kansuu = 0
 
@@ -11409,7 +11435,7 @@ sgs.LoadTranslationTable{
 }
 
 --沙耶香
-Sayaka = sgs.General(extension, "Sayaka", "magic", 3, false,false,false)
+
 
 SE_Wuwei = sgs.CreateTriggerSkill{
 	name = "SE_Wuwei", 
@@ -11533,7 +11559,6 @@ SE_Wuwei_tmod = sgs.CreateTargetModSkill{
 Sayaka:addSkill(SE_Wuwei)
 Sayaka:addSkill(SE_Wuwei_tmod)
 
-Majyo = sgs.General(extension, "Majyo", "magic", 4, false,true,true)
 
 sgs.LoadTranslationTable{
 ["SE_Wuwei$"] = "image=image/animate/SE_Wuwei.png",
@@ -11568,7 +11593,6 @@ sgs.LoadTranslationTable{
 ["illustrator:Majyo"] = "",
 }
 
-Kinpika = sgs.General(extension, "Kinpika", "magic", 4, true,false,false)
 
 se_gate=sgs.CreateTriggerSkill{
 	name="#se_gate",
@@ -11768,7 +11792,7 @@ sgs.LoadTranslationTable{
 ["cv:Kinpika"] = "関智一",
 ["illustrator:Kinpika"] = "null",
 }
-Kiritsugu = sgs.General(extension, "Kiritsugu", "magic", 4, true,false,false)
+
 se_origincard = sgs.CreateSkillCard{
 	name = "se_origincard",
 	target_fixed = true,
@@ -12031,7 +12055,7 @@ sgs.LoadTranslationTable{
 }
 
 --八云社长
-Yakumo = sgs.General(extension, "Yakumo", "magic", 4, true,true,false)
+
 
 se_banyun = sgs.CreateViewAsSkill{
 	name = "se_banyun",
@@ -12187,8 +12211,6 @@ sgs.LoadTranslationTable{
 }
 
 --雪之下雪乃
-Yukino = sgs.General(extension, "Yukino", "real", 3, false,false,false)
-Yyui = sgs.General(extension, "Yyui", "real", 3, false,false,false)
 
 se_shifeng = sgs.CreateTriggerSkill{
 	name = "se_shifeng",  
@@ -12396,8 +12418,7 @@ sgs.LoadTranslationTable{
 }
 
 --佐仓千代 
-Chiyo = sgs.General(extension, "Chiyo", "real", 3, false,false,false)
-Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
+
 
 
 se_linmo_trigger = sgs.CreateTriggerSkill{

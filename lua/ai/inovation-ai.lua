@@ -138,3 +138,18 @@ sgs.ai_use_priority.KeyTrick = 3
 sgs.ai_use_value.KeyTrick = 2
 sgs.ai_keep_value.KeyTrick = 2
 sgs.ai_card_intention.KeyTrick = -50
+
+--shengjian_black
+sgs.ai_skill_playerchosen.shengjian_black = function(self, targets)
+	local source = self.player
+	local power = 0
+	for _,enemy in ipairs(self.enemies) do
+		local force = math.abs(source:getEquips():length() - enemy:getEquips():length()) + (enemy:getEquips():length())/2
+		if force > power then
+			target = enemy
+			power = force
+		end
+	end
+	return target
+end
+	
