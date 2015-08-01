@@ -29,7 +29,41 @@ public:
     {
         setSceneRect(Config.Rect);
         setRenderHints(QPainter::TextAntialiasing | QPainter::Antialiasing);
+#if !defined(QT_NO_OPENGL) && defined(USING_OPENGL)
+        if (QGLFormat::hasOpenGL()) {
+            QGLWidget *widget = new QGLWidget(QGLFormat(QGL::SampleBuffers));
+            widget->makeCurrent();
+            setViewport(widget);
+            setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+        }
+#endif
     }
+
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
+    virtual void mousePressEvent(QMouseEvent *event)
+    {
+        MainWindow *parent = qobject_cast<MainWindow *>(parentWidget());
+        if (parent)
+            parent->mousePressEvent(event);
+        QGraphicsView::mousePressEvent(event);
+    }
+
+    virtual void mouseMoveEvent(QMouseEvent *event)
+    {
+        MainWindow *parent = qobject_cast<MainWindow *>(parentWidget());
+        if (parent)
+            parent->mouseMoveEvent(event);
+        QGraphicsView::mouseMoveEvent(event);
+    }
+
+    virtual void mouseReleaseEvent(QMouseEvent *event)
+    {
+        MainWindow *parent = qobject_cast<MainWindow *>(parentWidget());
+        if (parent)
+            parent->mouseReleaseEvent(event);
+        QGraphicsView::mouseReleaseEvent(event);
+    }
+#endif
 
     virtual void resizeEvent(QResizeEvent *event)
     {
@@ -58,13 +92,16 @@ public:
         }
         if (main_window)
             main_window->setBackgroundBrush(true);
+        main_window->roundCorners();
     }
 };
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), server(NULL)
+    : QMainWindow(parent), ui(new Ui::MainWindow), server(NULL),closeButton(NULL)
 {
     ui->setupUi(this);
+
+    this->setWindowFlags(Qt::FramelessWindowHint);
 
 
     setWindowTitle(tr("Anime Mod") + " " + Sanguosha->getVersionNumber());
@@ -103,6 +140,8 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(view);
     restoreFromConfig();
 
+    roundCorners();
+
     BackLoader::preload();
     gotoScene(start_scene);
 
@@ -111,6 +150,33 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionRestart_Game, SIGNAL(triggered()), this, SLOT(startConnection()));
     connect(ui->actionReturn_to_Main_Menu, SIGNAL(triggered()), this, SLOT(gotoStartScene()));
+
+
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
+
+    closeButton = new QPushButton(this);
+    closeButton->setObjectName("closeButton");
+    closeButton->setProperty("control", true);
+    closeButton->setIconSize(QSize(50, 50));
+    closeButton->setGeometry(0, 24, 50, 50);
+    closeButton->setStyleSheet("QPushButton{border-image: url(image/system/button/close.png);}"
+        "QPushButton:hover{border-image: url(image/system/button/closeh.png);}"
+        "QPushButton:pressed{border-image: url(image/system/button/closep.png);}");
+    connect(closeButton, &QPushButton::clicked, this, &MainWindow::close);
+
+    //menuBar()->setVisible(false);
+#elif defined(Q_OS_ANDROID)
+    ui->menuSumMenu->removeAction(ui->menuView->menuAction());
+#endif
+
+#ifndef Q_OS_ANDROID
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+    animation->setDuration(1000);
+    animation->setStartValue(0);
+    animation->setEndValue(1);
+    animation->setEasingCurve(QEasingCurve::OutCurve);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
+#endif
 
     systray = NULL;
 }
@@ -147,6 +213,225 @@ MainWindow::~MainWindow()
         scene->deleteLater();
     QSanSkinFactory::destroyInstance();
 }
+
+
+
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen))
+        return;
+    if (event->button() == Qt::LeftButton) {
+        if (isZoomReady) {
+            isLeftPressDown = true;
+            if (direction != None) {
+                releaseMouse();
+                setCursor(QCursor(Qt::ArrowCursor));
+            }
+        } else {
+            bool can_move = true;
+            if (view && view->scene()) {
+                QPointF pos = view->mapToScene(event->pos());
+                if (scene->itemAt(pos, QTransform()) && scene->itemAt(pos, QTransform())->zValue() > -100000)
+                    can_move = false;
+            }
+            if (can_move) {
+                isLeftPressDown = true;
+                movePosition = event->globalPos() - frameGeometry().topLeft();
+                event->accept();
+            }
+        }
+    }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if (windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen))
+        return;
+    QPoint globalPoint = event->globalPos();
+    if (isZoomReady && isLeftPressDown) {
+        QRect rect = this->rect();
+        QPoint topLeft = mapToGlobal(rect.topLeft());
+        QPoint bottomRight = mapToGlobal(rect.bottomRight());
+
+        QRect rMove(topLeft, bottomRight);
+
+        switch (direction) {
+        case Left:
+            if (bottomRight.x() - globalPoint.x() <= minimumWidth())
+                rMove.setX(topLeft.x());
+            else
+                rMove.setX(globalPoint.x());
+            break;
+        case Right:
+            rMove.setWidth(globalPoint.x() - topLeft.x());
+            break;
+        case Up:
+            if (bottomRight.y() - globalPoint.y() <= minimumHeight())
+                rMove.setY(topLeft.y());
+            else
+                rMove.setY(globalPoint.y());
+            break;
+        case Down:
+            rMove.setHeight(globalPoint.y() - topLeft.y());
+            break;
+        case LeftTop:
+            if (bottomRight.x() - globalPoint.x() <= minimumWidth())
+                rMove.setX(topLeft.x());
+            else
+                rMove.setX(globalPoint.x());
+            if (bottomRight.y() - globalPoint.y() <= minimumHeight())
+                rMove.setY(topLeft.y());
+            else
+                rMove.setY(globalPoint.y());
+            break;
+        case RightTop:
+            rMove.setWidth(globalPoint.x() - topLeft.x());
+            if (bottomRight.y() - globalPoint.y() <= minimumHeight())
+                rMove.setY(topLeft.y());
+            else
+                rMove.setY(globalPoint.y());
+            break;
+        case LeftBottom:
+            if (bottomRight.x() - globalPoint.x() <= minimumWidth())
+                rMove.setX(topLeft.x());
+            else
+                rMove.setX(globalPoint.x());
+            rMove.setHeight(globalPoint.y() - topLeft.y());
+            break;
+        case RightBottom:
+            rMove.setWidth(globalPoint.x() - topLeft.x());
+            rMove.setHeight(globalPoint.y() - topLeft.y());
+            break;
+        default:
+            break;
+        }
+        setGeometry(rMove);
+    } else if (isLeftPressDown && (event->buttons() & Qt::LeftButton)) {
+        move(event->globalPos() - movePosition);
+        event->accept();
+    } else if (!isLeftPressDown) {
+        region(globalPoint);
+    }
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *)
+{
+    isLeftPressDown = false;
+    if (direction != None) {
+        releaseMouse();
+        setCursor(QCursor(Qt::ArrowCursor));
+    }
+}
+
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::RightButton){
+        QMenuBar *menu_bar = menuBar();
+        menu_bar->setVisible(!menu_bar->isVisible());
+
+        if (menu_bar->isVisible())
+            closeButton->setGeometry(0, 24, 50, 50);
+        else
+            closeButton->setGeometry(0, 0, 50, 50);
+        return;
+    }
+    bool can_change = true;
+    if (view && view->scene()) {
+        QPointF pos = view->mapToScene(event->pos());
+        if (scene->itemAt(pos, QTransform()) && scene->itemAt(pos, QTransform())->zValue() > -100000)
+            can_change = false;
+    }
+    if (can_change) {
+        if (windowState() & Qt::WindowFullScreen)
+            showNormal();
+        else
+            showFullScreen();
+    }
+}
+#endif
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange) {
+        roundCorners();
+    }
+    QMainWindow::changeEvent(event);
+}
+
+void MainWindow::roundCorners()
+{
+#ifndef Q_OS_ANDROID
+    QBitmap mask(size());
+    if (windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen)) {
+        mask.fill(Qt::black);
+    }
+    else {
+        mask.fill();
+        QPainter painter(&mask);
+        QPainterPath path;
+        QRect windowRect = mask.rect();
+        QRect maskRect(windowRect.x(), windowRect.y(), windowRect.width(), windowRect.height());
+        path.addRoundedRect(maskRect, S_CORNER_SIZE, S_CORNER_SIZE);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        painter.fillPath(path, Qt::black);
+    }
+    setMask(mask);
+#endif
+}
+
+void MainWindow::region(const QPoint &cursorGlobalPoint)
+{
+    QRect rect = this->rect();
+    QPoint topLeft = mapToGlobal(rect.topLeft());
+    QPoint bottomRight = mapToGlobal(rect.bottomRight());
+
+    int x = cursorGlobalPoint.x();
+    int y = cursorGlobalPoint.y();
+
+    if (topLeft.x() + S_PADDING >= x && topLeft.x() <= x && topLeft.y() + S_PADDING >= y && topLeft.y() <= y) {
+        direction = LeftTop;
+        setCursor(QCursor(Qt::SizeFDiagCursor));
+    }
+    else if (x >= bottomRight.x() - S_PADDING && x <= bottomRight.x() && y >= bottomRight.y() - S_PADDING && y <= bottomRight.y()) {
+        direction = RightBottom;
+        setCursor(QCursor(Qt::SizeFDiagCursor));
+    }
+    else if (x <= topLeft.x() + S_PADDING && x >= topLeft.x() && y >= bottomRight.y() - S_PADDING && y <= bottomRight.y()) {
+        direction = LeftBottom;
+        setCursor(QCursor(Qt::SizeBDiagCursor));
+    }
+    else if (x <= bottomRight.x() && x >= bottomRight.x() - S_PADDING && y >= topLeft.y() && y <= topLeft.y() + S_PADDING) {
+        direction = RightTop;
+        setCursor(QCursor(Qt::SizeBDiagCursor));
+    }
+    else if (x <= topLeft.x() + S_PADDING && x >= topLeft.x()) {
+        direction = Left;
+        setCursor(QCursor(Qt::SizeHorCursor));
+    }
+    else if (x <= bottomRight.x() && x >= bottomRight.x() - S_PADDING) {
+        direction = Right;
+        setCursor(QCursor(Qt::SizeHorCursor));
+    }
+    else if (y >= topLeft.y() && y <= topLeft.y() + S_PADDING) {
+        direction = Up;
+        setCursor(QCursor(Qt::SizeVerCursor));
+    }
+    else if (y <= bottomRight.y() && y >= bottomRight.y() - S_PADDING) {
+        direction = Down;
+        setCursor(QCursor(Qt::SizeVerCursor));
+    }
+    else {
+        direction = None;
+        setCursor(QCursor(Qt::ArrowCursor));
+    }
+    if (direction != None)
+        isZoomReady = true;
+    else
+        isZoomReady = false;
+}
+
 
 void MainWindow::gotoScene(QGraphicsScene *scene)
 {
@@ -541,6 +826,11 @@ void MainWindow::on_actionShow_Hide_Menu_triggered()
 {
     QMenuBar *menu_bar = menuBar();
     menu_bar->setVisible(!menu_bar->isVisible());
+    if (menu_bar->isVisible())
+        closeButton->setGeometry(0, 24, 50, 50);
+    else
+        closeButton->setGeometry(0, 0, 50, 50);
+    return;
 }
 
 void MainWindow::on_actionMinimize_to_system_tray_triggered()

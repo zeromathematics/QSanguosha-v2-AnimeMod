@@ -170,7 +170,7 @@ sgs.ai_skill_choice["se_huibi"] = function(self, data)
 	return "se_huibi_plus"
 end
 
-sgs.ai_skill_invoke.se_qianlei = = function(self, data)
+sgs.ai_skill_invoke.se_qianlei = function(self, data)
 	local dying_data = data:toDying()
 	local damage = dying_data.damage
 	local der = dying_data.who

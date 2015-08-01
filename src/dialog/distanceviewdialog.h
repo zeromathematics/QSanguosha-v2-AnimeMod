@@ -12,13 +12,17 @@ class DistanceViewDialog : public QDialog
 public:
     DistanceViewDialog(QWidget *parent = 0);
     ~DistanceViewDialog();
+    static const int S_CORNER_SIZE = 5;
 
 private:
     DistanceViewDialogUI *ui;
+    QPoint windowPos;
+    QPoint mousePos;
+    QPoint dPos;
+    void roundCorners();
 
 private slots:
     void showDistance();
 };
 
 #endif
-

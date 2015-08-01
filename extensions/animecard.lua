@@ -320,7 +320,7 @@ tacos = sgs.CreateBasicCard{
 	can_recast = false,
 	suit = sgs.Card_Heart,
 	number = 13,
-	subtype = "basic",
+	subtype = "food_card",
 	subclass = sgs.LuaTrickCard_TypeBasic,
 	available = function(self, player)
 		return true

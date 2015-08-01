@@ -57,11 +57,22 @@ public:
     void fillGenerals(const QList<const General *> &generals, bool init = true);
 
     static GeneralOverview *getInstance(QWidget *main_window);
+    static const int S_CORNER_SIZE = 5;
 
 private:
     Ui::GeneralOverview *ui;
     QVBoxLayout *button_layout;
     GeneralSearch *general_search;
+
+    QPoint windowPos;
+    QPoint mousePos;
+    QPoint dPos;
+
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void roundCorners();
+
+
 
     QString origin_window_title;
     QList<const General *> all_generals;
@@ -81,6 +92,7 @@ private slots:
     void askTransfiguration();
     void askChangeSkin();
     void fillAllGenerals();
+    void exitOverview();
     void on_tableWidget_itemSelectionChanged();
     void on_tableWidget_itemDoubleClicked(QTableWidgetItem *item);
 };

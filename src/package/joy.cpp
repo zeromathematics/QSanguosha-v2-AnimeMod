@@ -603,10 +603,9 @@ JoyEquipPackage::JoyEquipPackage()
     (new Monkey(Card::Diamond, 5))->setParent(this);
     (new GaleShell(Card::Heart, 1))->setParent(this);
     (new YxSword(Card::Club, 9))->setParent(this);
-    (new FiveLines(Card::Heart, 5))->setParent(this);
 
     type = CardPack;
-    skills << new GaleShellSkill << new YxSwordSkill << new GrabPeach << new FiveLinesSkill;
+    skills << new GaleShellSkill << new YxSwordSkill << new GrabPeach;
 }
 
 //ADD_PACKAGE(Joy)

@@ -611,54 +611,6 @@ public:
     }
 };
 
-TiaoxinCard::TiaoxinCard()
-{
-}
-
-bool TiaoxinCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
-{
-    return targets.isEmpty() && to_select->inMyAttackRange(Self);
-}
-
-void TiaoxinCard::onEffect(const CardEffectStruct &effect) const
-{
-    Room *room = effect.from->getRoom();
-    bool use_slash = false;
-    if (effect.to->canSlash(effect.from, NULL, false))
-        use_slash = room->askForUseSlashTo(effect.to, effect.from, "@tiaoxin-slash:" + effect.from->objectName());
-    if (!use_slash && effect.from->canDiscard(effect.to, "he"))
-        room->throwCard(room->askForCardChosen(effect.from, effect.to, "he", "tiaoxin", false, Card::MethodDiscard), effect.to, effect.from);
-}
-
-class Tiaoxin : public ZeroCardViewAsSkill
-{
-public:
-    Tiaoxin() : ZeroCardViewAsSkill("tiaoxin")
-    {
-    }
-
-    bool isEnabledAtPlay(const Player *player) const
-    {
-        return !player->hasUsed("TiaoxinCard");
-    }
-
-    const Card *viewAs() const
-    {
-        return new TiaoxinCard;
-    }
-
-    int getEffectIndex(const ServerPlayer *player, const Card *) const
-    {
-        int index = qrand() % 2 + 1;
-        if (!player->hasInnateSkill(this) && player->hasSkill("baobian"))
-            index += 3;
-        else if (!player->hasInnateSkill(this) && player->getMark("fengliang") > 0)
-            index += 5;
-        else if (player->hasArmorEffect("eight_diagram"))
-            index = 3;
-        return index;
-    }
-};
 
 class Zhiji : public PhaseChangeSkill
 {
@@ -1388,6 +1340,7 @@ public:
 MountainPackage::MountainPackage()
     : Package("mountain")
 {
+    /*
     General *zhanghe = new General(this, "zhanghe", "wei"); // WEI 009
     zhanghe->addSkill(new Qiaobian);
 
@@ -1427,15 +1380,18 @@ MountainPackage::MountainPackage()
     General *caiwenji = new General(this, "caiwenji", "qun", 3, false); // QUN 012
     caiwenji->addSkill(new Beige);
     caiwenji->addSkill(new Duanchang);
-
+    
+    skills << new Qiaobian << new Tuntian << new TuntianDistance << new Zaoxian << new Zhiji << new Xiangle
+        << new Fangquan << new Ruoyu << new Jiang << new Hunzi << new Zhiba << new Zhijian << new Guzheng << new Huashen << new HuashenSelect << new HuashenClear << new Xinsheng << new Beige << new Duanchang;
+        
     addMetaObject<QiaobianCard>();
-    addMetaObject<TiaoxinCard>();
     addMetaObject<ZhijianCard>();
     addMetaObject<ZhibaCard>();
     addMetaObject<FangquanCard>();
     addMetaObject<GuzhengCard>();
 
     skills << new ZhibaPindian << new Jixi;
+    */
 }
 
 ADD_PACKAGE(Mountain)

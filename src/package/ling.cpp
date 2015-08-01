@@ -255,6 +255,7 @@ public:
 LingPackage::LingPackage()
     : Package("ling")
 {
+    /*
     General *neo_xiahoudun = new General(this, "neo_xiahoudun", "wei");
     neo_xiahoudun->addSkill(new NeoGanglie);
 
@@ -285,6 +286,9 @@ LingPackage::LingPackage()
     General *neo_gongsunzan = new General(this, "neo_gongsunzan", "qun");
     neo_gongsunzan->addSkill(new Zhulou);
     neo_gongsunzan->addSkill("yicong");
+    */
+    skills << new NeoGanglie << new NeoLuoyi << new NeoLuoyiBuff << new NeoJushou << new Yishi << new Tannang << new NeoFanjian
+        << new Zhulou;
 
     addMetaObject<LuoyiCard>();
     addMetaObject<NeoFanjianCard>();

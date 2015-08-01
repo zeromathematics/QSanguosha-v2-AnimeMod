@@ -24,6 +24,7 @@ sgs.ai_skill_invoke.vector = function(self, data)
 end
 
 local function doVector(who, self)
+	if not who then return false end
 	if who:objectName() == self.player:objectName() then return false end
 	if not self:isFriend(who) and who:hasSkill("leiji") and (self:hasSuit("spade", true, who) or who:getHandcardNum() >= 3) and (getKnownCard(who, "Jink", true) >= 1 or self:hasEightDiagramEffect(who)) then
 		return false

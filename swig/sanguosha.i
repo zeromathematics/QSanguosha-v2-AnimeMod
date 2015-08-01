@@ -1244,6 +1244,10 @@ public:
     bool broadcastProperty(ServerPlayer *player, const char *property_name, const char *value = NULL);
 
     int getBossModeExpMult(int level) const;
+
+    void akarinPlayer(ServerPlayer *player, ServerPlayer *to);
+    void removeAkarinEffect(ServerPlayer *player, ServerPlayer *to);
+    bool isAkarin(ServerPlayer *player, ServerPlayer *to);
 };
 
 %extend Room {

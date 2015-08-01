@@ -51,6 +51,7 @@ Client::Client(QObject *parent, const QString &filename)
     m_callbacks[S_COMMAND_INVOKE_SKILL] = &Client::skillInvoked;
     m_callbacks[S_COMMAND_SHOW_ALL_CARDS] = &Client::showAllCards;
     m_callbacks[S_COMMAND_SKILL_GONGXIN] = &Client::askForGongxin;
+    m_callbacks[S_COMMAND_AKARIN] = &Client::akarin;
     m_callbacks[S_COMMAND_LOG_EVENT] = &Client::handleGameEvent;
     m_callbacks[S_COMMAND_ADD_HISTORY] = &Client::addHistory;
     m_callbacks[S_COMMAND_ANIMATE] = &Client::animate;
@@ -1690,6 +1691,17 @@ void Client::onPlayerReplyGongxin(int card_id)
         reply = card_id;
     replyToServer(S_COMMAND_SKILL_GONGXIN, reply);
     setStatus(NotActive);
+}
+
+void Client::akarin(const QVariant &arg)
+{
+    JsonArray args = arg.value<JsonArray>();
+    if (args.size() != 2 || !JsonUtils::isString(args[0]) || !JsonUtils::isBool(args[1]))
+        return;
+    QString name = args[0].toString();
+    bool aka = args[1].toBool();
+
+    emit player_akarin(name, aka);
 }
 
 void Client::askForPindian(const QVariant &ask_str)

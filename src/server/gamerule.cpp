@@ -95,6 +95,17 @@ void GameRule::onPhaseProceed(ServerPlayer *player) const
         break;
     }
     case Player::Finish: {
+        foreach(ServerPlayer *p, room->getAlivePlayers()){
+            if (p->getMark("mtUsed") > 0){
+                room->recover(p, RecoverStruct(p, NULL, p->getMark("mtUsed")));
+                LogMessage log;
+                log.type = "#MapoTofuRecover";
+                log.from = p;
+                log.arg = objectName();
+                room->sendLog(log);
+                p->setMark("mtUsed", 0);
+            }
+        }
         break;
     }
     case Player::NotActive:{
@@ -1225,19 +1236,19 @@ bool HulaoPassMode::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer 
     case StageChange: {
         ServerPlayer *lord = room->getLord();
         room->setPlayerMark(lord, "secondMode", 1);
-        room->changeHero(lord, "shenlvbu2", true, true, false, false);
+        room->changeHero(lord, "DarkSakura2", true, true, false, false);
 
         LogMessage log;
         log.type = "$AppendSeparator";
         room->sendLog(log);
 
         log.type = "#HulaoTransfigure";
-        log.arg = "#shenlvbu1";
-        log.arg2 = "#shenlvbu2";
+        log.arg = "#DarkSakura1";
+        log.arg2 = "#DarkSakura2";
         room->sendLog(log);
 
         //room->doLightbox("$StageChange", 5000);
-        room->doSuperLightbox("shenlvbu2", "StageChange");
+        room->doSuperLightbox("DarkSakura2", "StageChange");
 
         QList<const Card *> tricks = lord->getJudgingArea();
         if (!tricks.isEmpty()) {

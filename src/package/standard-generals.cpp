@@ -1575,31 +1575,7 @@ public:
     }
 };
 
-class Yingzi : public DrawCardsSkill
-{
-public:
-    Yingzi() : DrawCardsSkill("yingzi")
-    {
-        frequency = Compulsory;
-    }
 
-    int getDrawNum(ServerPlayer *zhouyu, int n) const
-    {
-        Room *room = zhouyu->getRoom();
-
-        int index = qrand() % 2 + 1;
-        if (!zhouyu->hasInnateSkill(this)) {
-            if (zhouyu->hasSkill("hunzi"))
-                index = 5;
-            else if (zhouyu->hasSkill("mouduan"))
-                index += 2;
-        }
-        room->broadcastSkillInvoke(objectName(), index);
-        room->sendCompulsoryTriggerLog(zhouyu, objectName());
-
-        return n + 1;
-    }
-};
 
 class YingziMaxCards : public MaxCardsSkill
 {
@@ -2700,6 +2676,7 @@ public:
 
 void StandardPackage::addGenerals()
 {
+    /*
     // Wei
     General *caocao = new General(this, "caocao$", "wei"); // WEI 001
     caocao->addSkill(new Jianxiong);
@@ -2839,7 +2816,7 @@ void StandardPackage::addGenerals()
     General *st_gongsunzan = new General(this, "st_gongsunzan", "qun"); // QUN 026
     st_gongsunzan->addSkill(new Qiaomeng);
     st_gongsunzan->addSkill("yicong");
-
+    */
     // for skill cards
     addMetaObject<ZhihengCard>();
     addMetaObject<RendeCard>();

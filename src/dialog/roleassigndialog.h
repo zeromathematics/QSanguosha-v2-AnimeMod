@@ -8,6 +8,7 @@ class RoleAssignDialog : public QDialog
 
 public:
     RoleAssignDialog(QWidget *parent);
+    static const int S_CORNER_SIZE = 5;
 
 protected:
     virtual void accept();

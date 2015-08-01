@@ -2310,6 +2310,7 @@ public:
 
 BGMDIYPackage::BGMDIYPackage() : Package("BGMDIY")
 {
+    /*
     General *diy_simazhao = new General(this, "diy_simazhao", "wei", 3); // DIY 001
     diy_simazhao->addSkill(new Zhaoxin);
     diy_simazhao->addSkill(new Langgu);
@@ -2340,6 +2341,10 @@ BGMDIYPackage::BGMDIYPackage() : Package("BGMDIY")
     General *diy_zhugeke = new General(this, "diy_zhugeke", "wu", 3, true, true);
     diy_zhugeke->addSkill("aocai");
     diy_zhugeke->addSkill("duwu");
+    */
+    skills << new Zhaoxin << new Langgu << new Fuluan << new FuluanForbid << new Shude << new Huangen << new Hantong << new HantongAcquire << new HantongDetach << new DIYYicong << new DIYYicongDistance
+        << new Tuqi << new TuqiDistance;
+
 
     addMetaObject<ZhaoxinCard>();
     addMetaObject<FuluanCard>();

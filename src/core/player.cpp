@@ -840,8 +840,15 @@ void Player::addDelayedTrick(const Card *trick)
 void Player::removeDelayedTrick(const Card *trick)
 {
     int index = judging_area.indexOf(trick->getId());
-    if (index >= 0)
+    if (index >= 0){
         judging_area.removeAt(index);
+        if (trick->objectName() == "key_trick"){
+            if (hp < max_hp && alive){
+                this->hp = hp + 1;
+                emit hp_changed();
+            }
+        }
+    }
 }
 
 bool Player::containsTrick(const QString &trick_name) const

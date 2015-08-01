@@ -2349,7 +2349,7 @@ public:
         return !player->isKongcheng();
     }
 };
-
+/*
 NostalStandardPackage::NostalStandardPackage()
     : Package("nostal_standard")
 {
@@ -2543,3 +2543,4 @@ ADD_PACKAGE(NostalStandard)
 ADD_PACKAGE(NostalYJCM)
 ADD_PACKAGE(NostalYJCM2012)
 ADD_PACKAGE(NostalYJCM2013)
+*/

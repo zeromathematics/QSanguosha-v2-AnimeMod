@@ -11,7 +11,7 @@ class SuperButton : public QGraphicsObject
 public:
     explicit SuperButton(const QString &label, qreal scale = 1.0);
     explicit SuperButton(const QString &label, const QSizeF &size);
-    explicit SuperButton(const QString &label, const QSizeF &size, const QString file_name, Qt::AlignmentFlag flag = Qt::AlignRight);
+    explicit SuperButton(const QString &label, const QSizeF &size, const QString file_name, Qt::AlignmentFlag flag = Qt::AlignCenter);
     ~SuperButton();
     void setMute(bool mute);
     void setFont(const QFont &font);

@@ -10,6 +10,8 @@ ConfigDialog::ConfigDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
+    roundCorners();
+
     // tab 1
     QString bg_path = Config.value("BackgroundImage").toString();
     if (!bg_path.startsWith(":"))
@@ -62,6 +64,37 @@ ConfigDialog::ConfigDialog(QWidget *parent)
     int aver = (color.red() + color.green() + color.blue()) / 3;
     palette.setColor(QPalette::Base, aver >= 208 ? Qt::black : Qt::white);
     ui->textEditFontLineEdit->setPalette(palette);
+}
+
+void ConfigDialog::mousePressEvent(QMouseEvent *event){
+    this->windowPos = this->pos();
+    this->mousePos = event->globalPos();
+    this->dPos = mousePos - windowPos;
+}
+void ConfigDialog::mouseMoveEvent(QMouseEvent *event){
+    this->move(event->globalPos() - this->dPos);
+}
+
+void ConfigDialog::roundCorners()
+{
+#ifndef Q_OS_ANDROID
+    QBitmap mask(size());
+    if (windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen)) {
+        mask.fill(Qt::black);
+    }
+    else {
+        mask.fill();
+        QPainter painter(&mask);
+        QPainterPath path;
+        QRect windowRect = mask.rect();
+        QRect maskRect(windowRect.x(), windowRect.y(), windowRect.width(), windowRect.height());
+        path.addRoundedRect(maskRect, S_CORNER_SIZE, S_CORNER_SIZE);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        painter.fillPath(path, Qt::black);
+    }
+    setMask(mask);
+#endif
 }
 
 void ConfigDialog::showFont(QLineEdit *lineedit, const QFont &font)

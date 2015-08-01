@@ -10,6 +10,7 @@ class ScenarioOverview : public QDialog
 
 public:
     ScenarioOverview(QWidget *parent);
+    static const int S_CORNER_SIZE = 5;
 
 private:
     QListWidget *list;

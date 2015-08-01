@@ -16,6 +16,7 @@ RoleAssignDialog::RoleAssignDialog(QWidget *parent)
 {
     setWindowTitle(tr("Assign roles and seats"));
 
+
     list = new QListWidget;
     list->setFlow(QListView::TopToBottom);
     list->setMovement(QListView::Static);
@@ -184,4 +185,3 @@ void RoomScene::startAssign()
     RoleAssignDialog *dialog = new RoleAssignDialog(main_window);
     dialog->exec();
 }
-

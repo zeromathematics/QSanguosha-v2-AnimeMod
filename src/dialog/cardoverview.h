@@ -14,6 +14,7 @@ class CardOverview : public QDialog
 
 public:
     static CardOverview *getInstance(QWidget *main_window);
+    static const int S_CORNER_SIZE = 5;
 
     CardOverview(QWidget *parent = 0);
     void loadFromAll();
@@ -23,6 +24,13 @@ public:
 
 private:
     Ui::CardOverview *ui;
+    QPoint windowPos;
+    QPoint mousePos;
+    QPoint dPos;
+
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void roundCorners();
 
     void addCard(int i, const Card *card);
 
@@ -33,6 +41,7 @@ private slots:
     void on_tableWidget_itemDoubleClicked(QTableWidgetItem *item);
     void on_tableWidget_itemSelectionChanged();
     void askCard();
+    void exitOverview();
 };
 
 #endif

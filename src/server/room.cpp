@@ -2894,7 +2894,7 @@ void Room::run()
         connect(thread_1v1, SIGNAL(finished()), thread_1v1, SLOT(deleteLater()));
     } else if (mode == "04_1v3") {
         ServerPlayer *lord = m_players.first();
-        setPlayerProperty(lord, "general", "shenlvbu1");
+        setPlayerProperty(lord, "general", "DarkSakura1");
 
         QStringList names;
         foreach (QString gen_name, GetConfigFromLuaState(Sanguosha->getLuaState(), "hulao_generals").toStringList()) {
@@ -5334,6 +5334,7 @@ QList<const Card *> Room::askForPindianRace(ServerPlayer *from, ServerPlayer *to
 ServerPlayer *Room::askForPlayerChosen(ServerPlayer *player, const QList<ServerPlayer *> &targets, const QString &skillName,
     const QString &prompt, bool optional, bool notify_skill)
 {
+
     if (targets.isEmpty()) {
         Q_ASSERT(optional);
         return NULL;
@@ -5753,6 +5754,107 @@ void Room::showAllCards(ServerPlayer *player, ServerPlayer *to)
 
         doBroadcastNotify(getOtherPlayers(player), S_COMMAND_SHOW_ALL_CARDS, gongxinArgs);
     }
+}
+
+void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)
+{
+    //to akarin a player only means to remove the player's framework in roomscene
+    if (!player)
+        return;
+    QStringList akarined_players = getTag("akarinStatus" + player->objectName()).toStringList();
+    if (to && akarined_players.contains(to->objectName()))
+        return;
+
+    JsonArray args;
+    args << player->objectName();
+    args << true;//to Akarin
+    bool isUnicast = (to != NULL);
+    if (isUnicast) {
+        LogMessage log;
+        log.type = "$AkarinPlayer";
+        log.from = player;
+        log.to << to;
+        sendLog(log, to);
+        doNotify(to, S_COMMAND_AKARIN, args);
+
+        akarined_players.append(to->objectName());
+
+        setTag("akarinStatus" + player->objectName(), QVariant(akarined_players));
+        
+    }
+    else {
+        LogMessage log;
+        log.type = "$AkarinPlayerToAll";
+        log.from = player;
+        sendLog(log);
+        doBroadcastNotify(getOtherPlayers(player), S_COMMAND_AKARIN, args);
+
+        foreach(ServerPlayer* p, getOtherPlayers(player)){
+            if (!akarined_players.contains(p->objectName()))
+                akarined_players.append(p->objectName());
+        }
+        setTag("akarinStatus" + player->objectName(), QVariant(akarined_players));
+    }
+        
+
+}
+
+void Room::removeAkarinEffect(ServerPlayer *player, ServerPlayer *to)
+{
+    if (!player)
+        return;
+    //to akarin a player only means to remove the player's framework in roomscene
+    if (getTag("akarinStatus" + player->objectName()).isNull())
+        return;
+    QStringList akarined_players = getTag("akarinStatus" + player->objectName()).toStringList();
+    if (to && !akarined_players.contains(to->objectName()))
+        return;
+
+    JsonArray args;
+    args << player->objectName();
+    args << false;//To remove Akarin
+
+    bool isUnicast = (to != NULL);
+    if (isUnicast) {
+        LogMessage log;
+        log.type = "$RemoveAkarin";
+        log.from = player;
+        log.to << to;
+        sendLog(log, to);
+
+
+        doNotify(to, S_COMMAND_AKARIN, args);
+
+        akarined_players.removeOne(to->objectName());
+
+        setTag("akarinStatus" + player->objectName(), QVariant(akarined_players));
+    }
+    else {
+        LogMessage log;
+        log.type = "$RemoveAkarinToAll";
+        log.from = player;
+        sendLog(log);
+
+        doBroadcastNotify(getOtherPlayers(player), S_COMMAND_AKARIN, args);
+
+        foreach(ServerPlayer* p, getOtherPlayers(player)){
+            if (akarined_players.contains(p->objectName()))
+                akarined_players.removeOne(p->objectName());
+        }
+        setTag("akarinStatus" + player->objectName(), QVariant(akarined_players));
+    }
+
+}
+
+bool Room::isAkarin(ServerPlayer *player, ServerPlayer *to){
+    if (!player || !to)
+        return false;
+    if (getTag("akarinStatus" + player->objectName()).isNull())
+        return false;
+    QStringList akarined_players = getTag("akarinStatus" + player->objectName()).toStringList();
+    if (akarined_players.contains(to->objectName()))
+        return true;
+    return false;
 }
 
 void Room::retrial(const Card *card, ServerPlayer *player, JudgeStruct *judge, const QString &skill_name, bool exchange)

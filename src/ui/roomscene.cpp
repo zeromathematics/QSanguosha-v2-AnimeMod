@@ -146,6 +146,7 @@ RoomScene::RoomScene(QMainWindow *main_window)
     connect(ClientInstance, SIGNAL(player_revived(QString)), this, SLOT(revivePlayer(QString)));
     connect(ClientInstance, SIGNAL(card_shown(QString, int)), this, SLOT(showCard(QString, int)));
     connect(ClientInstance, SIGNAL(gongxin(QList<int>, bool, QList<int>)), this, SLOT(doGongxin(QList<int>, bool, QList<int>)));
+    connect(ClientInstance, SIGNAL(player_akarin(QString, bool)), this, SLOT(doAkarin(QString, bool)));
     connect(ClientInstance, SIGNAL(focus_moved(QStringList, QSanProtocol::Countdown)), this, SLOT(moveFocus(QStringList, QSanProtocol::Countdown)));
     connect(ClientInstance, SIGNAL(emotion_set(QString, QString)), this, SLOT(setEmotion(QString, QString)));
     connect(ClientInstance, SIGNAL(skill_invoked(QString, QString)), this, SLOT(showSkillInvocation(QString, QString)));
@@ -545,7 +546,7 @@ void RoomScene::handleGameEvent(const QVariant &args)
             }
             log_box->appendLog(type, player->objectName(), QStringList(), QString(), newHeroName, arg2);
         }
-        if (player->getGeneralName() == "shenlvbu1" && newHeroName == "shenlvbu2"
+        if (player->getGeneralName() == "DarkSakura1" && newHeroName == "DarkSakura2"
             && player->getMark("secondMode") > 0)
             Sanguosha->playSystemAudioEffect("stagechange");
         if (player != Self) break;
@@ -1137,6 +1138,7 @@ void RoomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsScene::mouseReleaseEvent(event);
 
+
     if (_m_isInDragAndUseMode) {
         if ((ok_button->isEnabled() || dashboard->currentSkill())
             && (!dashboard->isUnderMouse() || dashboard->isAvatarUnderMouse())) {
@@ -1155,9 +1157,9 @@ void RoomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 void RoomScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsScene::mouseMoveEvent(event);
-
     if (!Config.EnableSuperDrag)
         return;
+
 
     QGraphicsObject *obj = static_cast<QGraphicsObject *>(focusItem());
     CardItem *card_item = qobject_cast<CardItem *>(obj);
@@ -3753,6 +3755,28 @@ void RoomScene::doGongxin(const QList<int> &card_ids, bool enable_heart, QList<i
         card_container->startGongxin(enabled_ids);
     else
         card_container->addCloseButton();
+}
+
+void RoomScene::doAkarin(const QString &who, bool is_akarin)
+{
+    //TODO add 
+    ClientPlayer *akarin = ClientInstance->getPlayer(who);
+    Photo *photo = name2photo[akarin->objectName()];
+    if (!photo)
+        return;
+    if (is_akarin)
+        photo->hide();
+    else
+        photo->show();
+}
+
+void RoomScene::removeAkarinEffect(const QString &who)
+{
+    ClientPlayer *akarin = ClientInstance->getPlayer(who);
+    Photo *photo = name2photo[akarin->objectName()];
+    if (!photo)
+        return;
+    photo->show();
 }
 
 void RoomScene::showOwnerButtons(bool owner)
