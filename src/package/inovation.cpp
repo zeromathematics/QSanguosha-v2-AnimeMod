@@ -1219,7 +1219,7 @@ KeyTrick::KeyTrick(Card::Suit suit, int number)
     handling_method = Card::MethodNone;
 }
 
-bool KeyTrick::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+bool KeyTrick::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *) const
 {
     if (!targets.isEmpty() || to_select->containsTrick(objectName()))
         return false;
@@ -1302,8 +1302,17 @@ public:
                 return false;
 
             room->setPlayerProperty(player, "guangyu", IntList2StringList(guangyu_card).join("+"));
+            if (room->getTag("nagisa_voice").isNull())
+                room->setTag("nagisa_voice", QVariant(1));
+            int num = room->getTag("nagisa_voice").toInt();
+
             do {
                 if (!room->askForUseCard(player, "@@guangyu", "@guangyu-use")) break;
+                if (num > 40)
+                    room->broadcastSkillInvoke(objectName(), 40);
+                else
+                    room->broadcastSkillInvoke(objectName(), num);
+                num++;
                 QList<int> ids = StringList2IntList(player->property("guangyu").toString().split("+"));
                 QList<int> to_remove;
                 foreach(int card_id, guangyu_card) {
@@ -1314,6 +1323,7 @@ public:
                 data = QVariant::fromValue(move);
                 guangyu_card = ids;
             } while (!guangyu_card.isEmpty());
+            room->setTag("nagisa_voice", QVariant(num));
         }
         return false;
     }
@@ -1338,7 +1348,13 @@ public:
                     ServerPlayer *nagisa = room->findPlayerBySkillName("guangyu");
                     if (!nagisa || !nagisa->askForSkillInvoke("guangyu", data))
                         return false;
-                    room->broadcastSkillInvoke(objectName());
+                    int num = room->getTag("nagisa_voice").toInt();
+                    if (num > 40)
+                        room->broadcastSkillInvoke(objectName(), rand()%9 + 31);
+                    else
+                        room->broadcastSkillInvoke(objectName(), num);
+                    num++;
+                    room->setTag("nagisa_voice", QVariant(num));
                     room->doLightbox("guangyu$", 800);
                     foreach(const Card* card, player->getJudgingArea()){
                         player->obtainCard(card);
