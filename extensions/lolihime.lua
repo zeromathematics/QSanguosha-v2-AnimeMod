@@ -944,7 +944,7 @@ sgs.LoadTranslationTable{
 ["designer:kuro"] = "帕秋莉·萝莉姬",
 
 
-["jdd"] = "千反田爱瑠える", 
+["jdd"] = "千反田爱瑠", 
 ["&jdd"] = "千反田爱瑠", 
 ["@jdd"] = "冰菓", 
 ["#jdd"] = "我很好奇", 

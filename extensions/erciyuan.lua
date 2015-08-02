@@ -1,7 +1,6 @@
 module("extensions.erciyuan", package.seeall)
 extension = sgs.Package("erciyuan")
 ------------------------------------------------------------------------武将登陆区
-yj=sgs.General(extension, "yj", "Erciyuan", 9, true,true,true) --完全隐藏武将
 itomakoto=sgs.General(extension, "itomakoto", "real", 3, true,false) --伊藤誠
 ayanami=sgs.General(extension,"ayanami","science",3,false,false) --綾波レイ
 keima=sgs.General(extension,"keima","real",3,true,false) --桂馬
@@ -3173,28 +3172,29 @@ LuaDikai=sgs.CreateTriggerSkill{
 	end,
 }
 ------------------------------------------------------------------------翻译添加区
-yj:addSkill(GuanchuanSkill)
-yj:addSkill(ZhuishaSkill)
-yj:addSkill(CixiongSkill)
-yj:addSkill(HuoshanSkill)
-yj:addSkill(BaojiSkill)
-yj:addSkill(HanbingSkill)
-yj:addSkill(ShemaSkill)
-yj:addSkill(ZhangbaSkill)
-yj:addSkill(HuajiSkill)
-yj:addSkill(GreenRoseSkill)
-yj:addSkill(ElucidatorSkill)
-yj:addSkill(LuaChitian)
-yj:addSkill(luajianyu)
-yj:addSkill(LuaJiguangAsk)
-yj:addSkill(LuaGaokang)
-yj:addSkill(LuaGaoxiao)
-yj:addSkill(LuaYinbao)
-yj:addSkill(LuaKuanggu)
-yj:addSkill(LuaWushuang)
-yj:addSkill(LuaPaoxiao)
-yj:addSkill(LuaKuangshi)
-yj:addSkill(LuaXiuluo)
+extension:addToSkills(GuanchuanSkill)
+extension:addToSkills(ZhuishaSkill)
+extension:addToSkills(CixiongSkill)
+extension:addToSkills(HuoshanSkill)
+extension:addToSkills(BaojiSkill)
+extension:addToSkills(HanbingSkill)
+extension:addToSkills(ShemaSkill)
+extension:addToSkills(ZhangbaSkill)
+extension:addToSkills(HuajiSkill)
+extension:addToSkills(GreenRoseSkill)
+extension:addToSkills(ElucidatorSkill)
+extension:addToSkills(LuaChitian)
+extension:addToSkills(luajianyu)
+extension:addToSkills(LuaJiguangAsk)
+extension:addToSkills(LuaGaokang)
+extension:addToSkills(LuaGaoxiao)
+extension:addToSkills(LuaYinbao)
+extension:addToSkills(LuaKuanggu)
+extension:addToSkills(LuaWushuang)
+extension:addToSkills(LuaPaoxiao)
+extension:addToSkills(LuaKuangshi)
+extension:addToSkills(LuaXiuluo)
+
 itomakoto:addSkill(luarenzha)
 itomakoto:addSkill(renzha)
 itomakoto:addSkill(haochuantimes)
@@ -3423,7 +3423,7 @@ sgs.LoadTranslationTable{
 	["#diarmuid"]="光辉之貌",
 	["LuaPomo"]="破魔",
 	["LuaBimie"]="必灭",
-	["ikarishinji"]="碇真嗣シンジ",
+	["ikarishinji"]="碇真嗣",
 	["&ikarishinji"]="碇真嗣",
 	["@ikarishinji"]="EVA",
 	["#ikarishinji"]="中二少年",

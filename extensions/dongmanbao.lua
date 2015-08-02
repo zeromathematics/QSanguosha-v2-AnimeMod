@@ -86,10 +86,9 @@ end
 -------------------------------------------------------------------------------------------------------------
 --完成
 Mikoto = sgs.General(extension, "Mikoto", "science", 4, false,false,false)
-Mikotopart = sgs.General(extension, "Mikotopart", "science", 4, true,true,true)
 Shana = sgs.General(extension, "Shana", "magic", 3, false,false,false)
 Louise = sgs.General(extension, "Louise", "magic", 3, false,false,false)
-Saito = sgs.General(extension, "Saito", "magic", 4, true,true,true)
+Saito = sgs.General(extension, "Saito", "magic", 4, true,true,false)
 Eustia = sgs.General(extension, "Eustia", "magic", 3,false, false, false)
 Touma = sgs.General(extension, "Touma", "science", 4)
 Okarin = sgs.General(extension, "Okarin", "science", 4)
@@ -98,11 +97,9 @@ Taiga = sgs.General(extension, "Taiga", "real", 3, false)
 SE_Kirito = sgs.General(extension, "SE_Kirito", "science", 3)
 SE_Asuna = sgs.General(extension, "SE_Asuna", "science", 3, false)
 SE_Eren = sgs.General(extension, "SE_Eren", "science", 4)
-SE_Eren_p = sgs.General(extension, "SE_Eren_p", "science", 4, true, true, true)
 Kuroko = sgs.General(extension, "Kuroko", "science", 3, false,false,false)
-Kuroko_p = sgs.General(extension, "Kuroko_p", "science", 3, false,true,true)
 HYui = sgs.General(extension, "HYui", "real", 3, false,false,false)
-HYui_sub = sgs.General(extension, "HYui_sub", "real", 3, false,true,true)
+--HYui_sub = sgs.General(extension, "HYui_sub", "real", 3, false,true,true)
 Alice = sgs.General(extension, "Alice", "science", 3, false,false,false)
 Sakamoto = sgs.General(extension, "Sakamoto", "science", 4)
 Kanade = sgs.General(extension, "Kanade", "real", 3, false,false,false)
@@ -111,23 +108,23 @@ Rena_black = sgs.General(extension, "Rena_black", "real", 3, false,true,true)
 Saber = sgs.General(extension, "Saber", "magic", 4, false,false,false)
 Kirei = sgs.General(extension, "Kirei", "magic", 4, true,false,false)
 Tomoya = sgs.General(extension, "Tomoya", "real", 4, true,false,false)
-Tomoya_sub = sgs.General(extension, "Tomoya_sub", "real", 4, true,true,true)
+--Tomoya_sub = sgs.General(extension, "Tomoya_sub", "real", 4, true,true,true)
 Accelerator = sgs.General(extension, "Accelerator", "science", 1, true,true,false)
 Shino = sgs.General(extension, "Shino", "science", 3, false,false,false)
 Misaka_Imouto = sgs.General(extension, "Misaka_Imouto", "science", 3, false,false,false)
 Tukasa = sgs.General(extension, "Tukasa", "real", 3, false,false,false)
 Natsume_Rin = sgs.General(extension, "Natsume_Rin", "real", 99, false,false,false)
-Natsume_Rin_sub = sgs.General(extension, "Natsume_Rin_sub", "real", 99, false,true,true)
+--Natsume_Rin_sub = sgs.General(extension, "Natsume_Rin_sub", "real", 99, false,true,true)
 Lelouch = sgs.General(extension, "Lelouch", "science", 2, true,true,false)
 Leafa = sgs.General(extension, "Leafa", "science", 3, false,false,false)
 Reimu = sgs.General(extension, "Reimu", "touhou", 3, false,false,false)
 Kuroneko = sgs.General(extension, "Kuroneko", "real", 3, false,false,false)
 Sugisaki = sgs.General(extension, "Sugisaki", "real", 3, true,false,false)
 Kuroyukihime = sgs.General(extension, "Kuroyukihime", "science", 4, false,false,false)
-Kuroyukihime_sub = sgs.General(extension, "Kuroyukihime_sub", "science", 4, false,true,true)
+--Kuroyukihime_sub = sgs.General(extension, "Kuroyukihime_sub", "science", 4, false,true,true)
 Nagase = sgs.General(extension, "Nagase", "real", 3, false,false,false)
 Kazehaya = sgs.General(extension, "Kazehaya", "real", 3, true,false,false)
-Kazehaya_sub = sgs.General(extension, "Kazehaya_sub", "real", 3, true,true,true)
+--Kazehaya_sub = sgs.General(extension, "Kazehaya_sub", "real", 3, true,true,true)
 Ayase = sgs.General(extension, "Ayase", "real", 3, false,false,false)
 --Akarin = sgs.General(extension, "Akarin", "real", 3, false,false,false)
 Hikigaya = sgs.General(extension, "Hikigaya", "real", 4, true,false,false)
@@ -135,19 +132,19 @@ Chiyuri = sgs.General(extension, "Chiyuri", "science", 3, false,false,false)
 AiAstin = sgs.General(extension, "AiAstin", "magic", 3, false,false,false)
 Hakaze = sgs.General(extension, "Hakaze", "magic", 3, false,false,false)
 Kotori = sgs.General(extension, "Kotori", "magic", 3, false,false,false)
-Kotori_sub = sgs.General(extension, "Kotori_sub", "magic", 3, true,true,true)
+--Kotori_sub = sgs.General(extension, "Kotori_sub", "magic", 3, true,true,true)
 Kotori_white = sgs.General(extension, "Kotori_white", "magic", 3, false,true,true)
 Aria = sgs.General(extension, "Aria", "science", 3, false,false,false)
 Reki = sgs.General(extension, "Reki", "science", 3, false,false,false)		
 Ange = sgs.General(extension, "Ange", "magic", 3, false,false,false)
-Ange2 = sgs.General(extension, "Ange2", "magic", 3, true,true,true)
+--Ange2 = sgs.General(extension, "Ange2", "magic", 3, true,true,true)
 Rivaille = sgs.General(extension, "Rivaille", "science", 3, true,false,false)
 Asagi = sgs.General(extension, "Asagi", "magic", 3, false,false,false)
 Riko = sgs.General(extension, "Riko", "science", 2, false,false,false)
 Kurumi = sgs.General(extension, "Kurumi", "magic", 3, false,false,false)
 Sakura = sgs.General(extension, "Sakura", "magic", 3, false,false,false)
 Eugeo = sgs.General(extension, "Eugeo", "science", 3, true,false,false)
-Eugeo_sub = sgs.General(extension, "Eugeo_sub", "science", 3, true,true,true)
+--Eugeo_sub = sgs.General(extension, "Eugeo_sub", "science", 3, true,true,true)
 Rika = sgs.General(extension, "Rika", "real", 3, false,false,false)
 Eucliwood = sgs.General(extension, "Eucliwood", "magic", 3, false,false,false)
 Eu_Zombie = sgs.General(extension, "Eu_Zombie", "magic", 5, true,true,true)
@@ -307,23 +304,18 @@ se_paoji = sgs.CreateViewAsSkill{
 
 
 
-Mikotopart:addSkill(se_paoji)
-
-
-
 
 Mikoto:addSkill(YingbiGet)
 Mikoto:addSkill(Yingbi)
+extension:insertRelatedSkills("#YingbiGet", "Yingbi")
 Mikoto:addSkill(Dianci)
-
+extension:addToSkills(se_paoji)
+Mikoto:addWakeTypeSkillForAudio("se_paoji")
 
 
 sgs.LoadTranslationTable{
 ["dongmanbao"] = "动漫包-SE",
 ["#Pifu_Mikoto"] = "更换皮肤~",
-["Mikoto_1"] = "学生装",
-["Mikoto_2"] = "学生装2",
-["Mikoto_3"] = "便服",
 ["Yingbi"] = "硬币「电流突破：警告」",
 ["$Yingbi1"] = "呐，你知道电磁炮嘛。",
 ["$Yingbi2"] = "今天的我绝对不能输，所以你也拼死握紧双拳吧！",
@@ -466,6 +458,7 @@ Tianhuo = sgs.CreateTriggerSkill{
 
 Shana:addSkill(ZhenaDistance)
 Shana:addSkill(Zhena)
+extension:insertRelatedSkills("Zhena", "#ZhenaDistance")
 Shana:addSkill(Tianhuo)
 
 sgs.LoadTranslationTable{
@@ -479,7 +472,7 @@ sgs.LoadTranslationTable{
 [":Tianhuo"] = "<font color=\"blue\"><b>锁定技,</b></font>你造成的火焰伤害+1；你防止你受到的属性伤害。",
 ["$Tianhuo1"] = "燃烧吧！！！",
 ["$Tianhuo2"] = "小白，我找到了哦，最强的自在法。",
-["Shana"] = "夏娜シャナ", 
+["Shana"] = "夏娜", 
 ["&Shana"] = "夏娜", 
 ["@Shana"] = "灼眼的夏娜", 
 ["#Shana"] = "炎发灼眼的讨伐者", 
@@ -617,6 +610,7 @@ Beizeng = sgs.CreateTriggerSkill{
 
 Louise:addSkill(XuwuDistance)
 Louise:addSkill(Xuwu)
+extension:insertRelatedSkills("Xuwu", "#XuwuDistance")
 Louise:addSkill(se_cairen)
 Louise:addSkill(Beizeng)
 
@@ -631,12 +625,12 @@ sgs.LoadTranslationTable{
 ["se_cairencard"] = "才人「唤来才人」",
 ["$se_cairen"] = "你们对露易丝做了些什么！！",
 ["se_cairen$"] = "image=image/animate/se_cairen.png",
-[":se_cairen"] = "出牌阶段，若你拥有4枚或以上的“魔力”，你可以将一张“魔力”置入弃牌堆，然后变身为平贺才人并将手牌数补至5。\n\n<font weight=2><font color=\"brown\"><b>智剑「デルフリンガー」：</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将一张“魔力”置入弃牌堆，然后你选择一名角色进行拼点：若你赢，你进行一次判定，然后摸X张牌（X为判定结果的点数且至少为6）。\n\n<font weight=2><font color=\"brown\"><b>横扫「以一对七万」：</b></font>出牌阶段，你可以失去2点体力，然后对至多三名角色各造成一点伤害，并获得一个“守护”标 记。\n\n<font weight=2><font color=\"brown\"><b>唤回「继续被虐待-。-」：</b></font>结束阶段开始时，你须变身为露易丝并回复体力至体力上限。",
+[":se_cairen"] = "出牌阶段，若你拥有4枚或以上的“魔力”，你可以将一张“魔力”置入弃牌堆，然后变身为平贺才人并将手牌数补至5。\n\n<font weight=2><font color=\"brown\"><b>智剑「デルフリンガー」：</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将一张“魔力”置入弃牌堆，然后你选择一名角色进行拼点：若你赢，你进行一次判定，然后摸X张牌（X为判定结果的点数且至少为6）。\n\n<font weight=2><font color=\"brown\"><b>横扫「以一对七万」：</b></font>出牌阶段，你可以失去2点体力，然后对至多三名角色各造成一点伤害，并获得一个“守护”标记。\n\n<font weight=2><font color=\"brown\"><b>唤回「继续被虐待-。-」：</b></font>结束阶段开始时，你须变身为露易丝并回复体力至体力上限。",
 ["Beizeng"] = "倍增「explosion」",
 ["beizeng"] = "倍增「explosion」",
 [":Beizeng"] = "弃牌阶段开始时，你可以弃置2枚“守护”标记，指定一名角色并令其减1点体力上限并失去1点体力。",
 ["$Beizeng"] = "「explosion」！",
-["Louise"] = "露易丝ルイス", 
+["Louise"] = "露易丝", 
 ["&Louise"] = "露易丝", 
 ["@Louise"] = "零之使魔", 
 ["#Louise"] = "零之", 
@@ -645,17 +639,17 @@ sgs.LoadTranslationTable{
 ["cv:Louise"] = "钉宫理惠",
 ["illustrator:Louise"] = "节操Staff",
 ["se_zhijian"] = "智剑「デルフリンガー」",
-["$se_zhijian"] = "唉...为什么我要勉强地做这种事情啊...（デルフリンガー）那当然是，为了你喜欢的女人了。",
-[":se_zhijian"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置一个“魔力”标记，然后你选择一名角色进行拼点。若你赢，你可以进行一次判定，然后摸判定牌点数张牌（最少为6）。",
+["$se_zhijian1"] = "唉...为什么我要勉强地做这种事情啊...（デルフリンガー）那当然是，为了你喜欢的女人了。",
+[":se_zhijian"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将一张“魔力”置入弃牌堆，然后你选择一名角色进行拼点：若你赢，你进行一次判定，然后摸X张牌（X为判定结果的点数且至少为6）。",
 ["se_zhijiancard"] = "智剑",
 ["se_hengsao"] = "横扫「以一对七万」",
 ["$se_hengsao1"] = "デルフリンガー...（干啥？） 我会...死吗...",
 ["$se_hengsao2"] = "可恶！！......",
-[":se_hengsao"] = "出牌阶段，你可以自减两点体力，然后对至多三名角色各造成一点伤害，并获得一个“守护”标记。",
+[":se_hengsao"] = "出牌阶段，你可以失去2点体力，然后对至多三名角色各造成一点伤害，并获得一个“守护”标记。",
 ["se_hengsaocard"] = "横扫",
 ["@shouhu"] = "守护",
 ["huanhui"] = "唤回「继续被虐待-。-」",
-[":huanhui"] = "弃牌阶段，你必须将才人唤回，自己作战。",
+[":huanhui"] = "结束阶段开始时，你须变身为露易丝并回复体力至体力上限。",
 ["Saito"] = "平賀才人", 
 ["&Saito"] = "平賀才人", 
 ["@Saito"] = "零之使魔", 
@@ -932,6 +926,7 @@ jiushuMark = sgs.CreateTriggerSkill{
 Eustia:addSkill(jinghua)
 Eustia:addSkill(jiushu)
 Eustia:addSkill(jiushuMark)
+extension:insertRelatedSkills("jiushu", "#jiushuMark")
 sgs.LoadTranslationTable{
 ["jinghua"] = "净化「天使·净化之力」",
 [":jinghua"] = "回合开始前，你可以交给一名角色一张牌并令其选择一项：1、令你获得其判定区内的一张牌。2、令你和其各摸一张牌。3、令其回复一点体力。",
@@ -947,7 +942,7 @@ sgs.LoadTranslationTable{
 ["$jiushu"] = "凯伊姆先生...请您保重身体...我会为...凯伊姆先生的幸福...永远、永远地...祈祷...",
 [":jiushu"] = "<font color=\"red\"><b>限定技，</b></font>一名角色求桃阶段结束时，若该角色仍处于濒死状态，你可以使其回复体力至X，然后令其补充手牌至X张（X不超过8）。X为该角色的体力上限。",
 ["@tsubasa"] = "净化之翼",
-["Eustia"] = "尤斯蒂娅ユースティア", 
+["Eustia"] = "尤斯蒂娅", 
 ["&Eustia"] = "尤斯蒂娅", 
 ["@Eustia"] = "秽翼的尤斯蒂娅", 
 ["#Eustia"] = "圣子", 
@@ -1228,6 +1223,9 @@ se_shixianKeep = sgs.CreateMaxCardsSkill{
 Okarin:addSkill(se_shixian)
 Okarin:addSkill(se_shixianMark)
 Okarin:addSkill(se_shixianEnd)
+extension:insertRelatedSkills("se_shixian", "#se_shixianEnd")
+extension:insertRelatedSkills("se_shixian", "#se_shixianMark")
+extension:insertRelatedSkills("se_shixian", "#se_shixianKeep")
 Okarin:addSkill(se_tiaoyue)
 Okarin:addSkill(se_shixianKeep)
 sgs.LoadTranslationTable{
@@ -1262,130 +1260,122 @@ sgs.LoadTranslationTable{
 shengyou = sgs.CreateTriggerSkill{
 	name = "shengyou", 
 	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TurnStart},  
+	events = {sgs.EventPhaseStart, sgs.EventPhaseEnd},  
 	on_trigger = function(self, event, player, data) 
-		if player:isAlive() and player:hasSkill(self:objectName()) then
-			local room = player:getRoom()
-			if room:askForSkillInvoke(player, self:objectName()) then
-				local cardNum = math.floor(player:getHandcardNum() / 2)
-				if cardNum > 0 and not room:askForDiscard(player,"shengyou",cardNum,cardNum,false,false) then return end
-				local players = room:getAlivePlayers()
-				local general_names = {}
-				for _,y in sgs.qlist(players) do
-					table.insert(general_names, y:getGeneralName())
-				end
-				table.insert(general_names, "Louise")
-				table.insert(general_names, "Misaka_Imouto")
-				table.insert(general_names, "Natsume_Rin")
-				table.insert(general_names, "Riko")
-				table.insert(general_names, "Koishi")
-				table.insert(general_names, "mianma")
-				table.insert(general_names, "tsukushi")
-				table.insert(general_names, "Niko")
-				local all_generals = sgs.Sanguosha:getLimitedGeneralNames()
-				if not table.contains(all_generals, "Eustia") then
-					table.insert(all_generals, "Eustia")
-				end
-				if not table.contains(all_generals, "Shana") then
-					table.insert(all_generals, "Shana")
-				end
-				if not table.contains(all_generals, "Mikoto") then
-					table.insert(all_generals, "Mikoto")
-				end
-				if not table.contains(all_generals, "Taiga") then
-					table.insert(all_generals, "Taiga")
-				end
-				if not table.contains(all_generals, "SE_Asuna") then
-					table.insert(all_generals, "SE_Asuna")
-				end
-				if not table.contains(all_generals, "Kuroko") then
-					table.insert(all_generals, "Kuroko")
-				end
-				if not table.contains(all_generals, "HYui") then
-					table.insert(all_generals, "HYui")
-				end
-				if not table.contains(all_generals, "Alice") then
-					table.insert(all_generals, "Alice")
-				end
-				if not table.contains(all_generals, "Kanade") then
-					table.insert(all_generals, "Kanade")
-				end
-				if not table.contains(all_generals, "Saber") then
-					table.insert(all_generals, "Saber")
-				end
-				--[[if not table.contains(all_generals, "Rena") then
-					table.insert(all_generals, "Rena")
-				end]]
-				if not table.contains(all_generals, "Shino") then
-					table.insert(all_generals, "Shino")
-				end
-				if not table.contains(all_generals, "Tukasa") then
-					table.insert(all_generals, "Tukasa")
-				end
-				if not table.contains(all_generals, "Leafa") then
-					table.insert(all_generals, "Leafa")
-				end
-				if not table.contains(all_generals, "Reimu") then
-					table.insert(all_generals, "Reimu")
-				end
-				if not table.contains(all_generals, "Kuroneko") then
-					table.insert(all_generals, "Kuroneko")
-				end
-				local All_needed_g = {}
-				local i = 0
-				for _,name in ipairs(all_generals) do
-					local general = sgs.Sanguosha:getGeneral(name)
-					if not general:isMale() then
-						if general:getKingdom() ~= "god" then
-							if not table.contains(general_names, name) then
-								i = i + 1
-								table.insert(All_needed_g, name)
+		if event == sgs.EventPhaseStart and player:getPhase() == sgs.Player_RoundStart then
+			if player:isAlive() and player:hasSkill(self:objectName()) then
+				local room = player:getRoom()
+				if room:askForSkillInvoke(player, self:objectName()) then
+					local cardNum = math.floor(player:getHandcardNum() / 2)
+					if cardNum > 0 and not room:askForDiscard(player,"shengyou",cardNum,cardNum,false,false) then return end
+					local players = room:getAlivePlayers()
+					local general_names = {}
+					for _,y in sgs.qlist(players) do
+						table.insert(general_names, y:getGeneralName())
+					end
+					table.insert(general_names, "Louise")
+					table.insert(general_names, "Misaka_Imouto")
+					table.insert(general_names, "Natsume_Rin")
+					table.insert(general_names, "Riko")
+					table.insert(general_names, "Koishi")
+					table.insert(general_names, "mianma")
+					table.insert(general_names, "tsukushi")
+					table.insert(general_names, "Niko")
+					local all_generals = sgs.Sanguosha:getLimitedGeneralNames()
+					if not table.contains(all_generals, "Eustia") then
+						table.insert(all_generals, "Eustia")
+					end
+					if not table.contains(all_generals, "Shana") then
+						table.insert(all_generals, "Shana")
+					end
+					if not table.contains(all_generals, "Mikoto") then
+						table.insert(all_generals, "Mikoto")
+					end
+					if not table.contains(all_generals, "Taiga") then
+						table.insert(all_generals, "Taiga")
+					end
+					if not table.contains(all_generals, "SE_Asuna") then
+						table.insert(all_generals, "SE_Asuna")
+					end
+					if not table.contains(all_generals, "Kuroko") then
+						table.insert(all_generals, "Kuroko")
+					end
+					if not table.contains(all_generals, "HYui") then
+						table.insert(all_generals, "HYui")
+					end
+					if not table.contains(all_generals, "Alice") then
+						table.insert(all_generals, "Alice")
+					end
+					if not table.contains(all_generals, "Kanade") then
+						table.insert(all_generals, "Kanade")
+					end
+					if not table.contains(all_generals, "Saber") then
+						table.insert(all_generals, "Saber")
+					end
+					--[[if not table.contains(all_generals, "Rena") then
+						table.insert(all_generals, "Rena")
+					end]]
+					if not table.contains(all_generals, "Shino") then
+						table.insert(all_generals, "Shino")
+					end
+					if not table.contains(all_generals, "Tukasa") then
+						table.insert(all_generals, "Tukasa")
+					end
+					if not table.contains(all_generals, "Leafa") then
+						table.insert(all_generals, "Leafa")
+					end
+					if not table.contains(all_generals, "Reimu") then
+						table.insert(all_generals, "Reimu")
+					end
+					if not table.contains(all_generals, "Kuroneko") then
+						table.insert(all_generals, "Kuroneko")
+					end
+					local All_needed_g = {}
+					local i = 0
+					for _,name in ipairs(all_generals) do
+						local general = sgs.Sanguosha:getGeneral(name)
+						if not general:isMale() then
+							if general:getKingdom() ~= "god" then
+								if not table.contains(general_names, name) then
+									i = i + 1
+									table.insert(All_needed_g, name)
+								end
 							end
 						end
 					end
-				end
-				if i > 0 then
-					local general = room:askForGeneral(player, table.concat(All_needed_g, "+"))
-					room:broadcastSkillInvoke("shengyou")
-					room:doLightbox("shengyou$", 800)
-					player:setTag("newgeneral", sgs.QVariant(general))
-					if player:getGeneralName() == "Nanami" then
-						room:changeHero(player, general,false, false, false, true)
-					else
-						room:changeHero(player, general,false, false, true, true)
+					if i > 0 then
+						local general = room:askForGeneral(player, table.concat(All_needed_g, "+"))
+						room:broadcastSkillInvoke("shengyou")
+						room:doLightbox("shengyou$", 800)
+						player:setTag("newgeneral", sgs.QVariant(general))
+						if player:getGeneralName() == "Nanami" then
+							room:changeHero(player, general,false, false, false, true)
+						else
+							room:changeHero(player, general,false, false, true, true)
+						end
+						room:setPlayerFlag(player, "shengyou")
 					end
-					room:setPlayerFlag(player, "shengyou")
 				end
 			end
-		end
-	end
-}
-
-shengyouBack = sgs.CreateTriggerSkill{
-	name = "#shengyouBack",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.EventPhaseEnd}, 
-	on_trigger = function(self, event, player, data) 
-		if player:getPhase() == sgs.Player_Finish then
-			if player:isAlive() and player:hasFlag("shengyou") then
-				local room = player:getRoom()
-				if player:getGeneralName() == player:getTag("newgeneral"):toString() then
-					room:changeHero(player, "Nanami",false, false, false, true)
-				else
-					if player:getTag("newgeneral"):toString() == "Kotori" and  player:getGeneralName() == "Kotori_white" then
+		elseif event == sgs.EventPhaseEnd then
+			if player:getPhase() == sgs.Player_Finish then
+				if player:isAlive() and player:hasFlag("shengyou") then
+					local room = player:getRoom()
+					if player:getGeneralName() == player:getTag("newgeneral"):toString() then
 						room:changeHero(player, "Nanami",false, false, false, true)
 					else
-						room:changeHero(player, "Nanami",false, false, true, true)
+						if player:getTag("newgeneral"):toString() == "Kotori" and  player:getGeneralName() == "Kotori_white" then
+							room:changeHero(player, "Nanami",false, false, false, true)
+						else
+							room:changeHero(player, "Nanami",false, false, true, true)
+						end
 					end
-				end
-				if room:getAllPlayers(true):length() == 2 then
-					room:detachSkillFromPlayer(player, "jinqu")
+					if room:getAllPlayers(true):length() == 2 then
+						room:detachSkillFromPlayer(player, "jinqu")
+					end
 				end
 			end
 		end
-	end,
-	can_trigger = function(self, target)
-		return target
 	end
 }
 
@@ -1418,7 +1408,6 @@ jinqu = sgs.CreateTriggerSkill{
 
 
 Nanami:addSkill(shengyou)
-Nanami:addSkill(shengyouBack)
 Nanami:addSkill(jinqu)
 
 sgs.LoadTranslationTable{
@@ -1426,7 +1415,7 @@ sgs.LoadTranslationTable{
 ["shengyou$"] = "image=image/animate/shengyou.png",
 ["$shengyou1"] = "啊，这里有台词~",
 ["$shengyou2"] = "为什么不行！...为什么我就不行！...",
-[":shengyou"] = "回合开始前，你可以弃置一半数量的手牌（向下取整）,变身为非死亡的武将牌堆中的一张女性武将。若如此做，回合结束后，你须变身为“青山七海”。",
+[":shengyou"] = "回合准备阶段开始时，你可以弃置一半数量的手牌（向下取整）,变身为非死亡的武将牌堆中的一张女性武将。若如此做，回合结束后，你须变身为“青山七海”。",
 ["jinqu"] = "进取",
 [":jinqu"] = "每当你受到一次伤害后，你可以指定一名角色，你与该角色各摸X张牌（X为你已损失的体力且最多为2）。 ",
 ["$jinqu1"] = "我喜欢有目标的人！喜欢拼命努力的人！",
@@ -1715,6 +1704,7 @@ SixuDef = sgs.CreateTriggerSkill{
 Taiga:addSkill(Zhudao)
 Taiga:addSkill(Sixu)
 Taiga:addSkill(SixuDef)
+extension:insertRelatedSkills("Sixu", "#SixuDef")
 
 sgs.LoadTranslationTable{
 ["Zhudao"] = "竹刀「萌虎必杀」",
@@ -2032,8 +2022,11 @@ SE_ShanguangX = sgs.CreateDistanceSkill{
 SE_Kirito:addSkill(se_yekongRe)		
 SE_Kirito:addSkill(se_yekong)	
 SE_Kirito:addSkill(se_yekongMark)
+extension:insertRelatedSkills("se_yekong", "#se_yekongRe")
+extension:insertRelatedSkills("se_yekong", "#se_yekongMark")
 SE_Kirito:addSkill(se_erdao)
 SE_Kirito:addSkill(se_erdaoTwice)
+extension:insertRelatedSkills("se_erdao", "#se_erdaoTwice")
 SE_Asuna:addSkill(SE_Shanguang)
 SE_Asuna:addSkill(SE_Dixian)
 
@@ -2059,7 +2052,7 @@ sgs.LoadTranslationTable{
 ["$SE_Dixian1"] = "..我是不能原谅只是站在这里等待的自己！",
 ["$SE_Dixian2"] = "赶上了...赶上了！神啊...！",
 [":SE_Dixian"] = "每当你受到一次无属性伤害后，你可以对伤害来源造成1点伤害并进行一次判定，然后你令一名角色获得此判定牌并对其造成1点火焰伤害。",
-["SE_Kirito"] = "桐人キリト", 
+["SE_Kirito"] = "桐人", 
 ["&SE_Kirito"] = "桐人", 
 ["@SE_Kirito"] = "刀剑神域", 
 ["#SE_Kirito"] = "黑の剑士", 
@@ -2073,7 +2066,7 @@ sgs.LoadTranslationTable{
 ["$SE_Shanguang1"] = "不要！！！！！！",
 ["$SE_Shanguang2"] = "（连续斩杀声）",
 [":SE_Shanguang"] = "每当你对一名角色造成一次无属性伤害时，你可以获得其X+1张牌（X为你已损失的体力）。",
-["SE_Asuna"] = "亚丝娜アスナ", 
+["SE_Asuna"] = "亚丝娜", 
 ["&SE_Asuna"] = "亚丝娜", 
 ["@SE_Asuna"] = "刀剑神域", 
 ["#SE_Asuna"] = "白の闪光", 
@@ -2186,9 +2179,10 @@ SE_Qixin = sgs.CreateTriggerSkill{
 
 SE_Eren:addSkill(se_chouyuan)
 SE_Eren:addSkill(se_chouyuanMark)
-SE_Eren_p:addSkill(SE_Qixin)
 
-
+extension:insertRelatedSkills("se_chouyuan", "#se_chouyuanMark")
+extension:addToSkills(SE_Qixin)
+SE_Eren:addWakeTypeSkillForAudio("SE_Qixin")
 
 
 sgs.LoadTranslationTable{
@@ -2207,7 +2201,7 @@ sgs.LoadTranslationTable{
 ["$SE_Qixin2"] = "固定炮整备四班！准备战斗！目标是...眼前的超大型巨人！",
 ["@hates"] = "仇怨",
 ["@juren"] = "巨人",
-["SE_Eren"] = "艾伦エレン", 
+["SE_Eren"] = "艾伦", 
 ["&SE_Eren"] = "艾伦", 
 ["@SE_Eren"] = "进击的巨人", 
 ["#SE_Eren"] = "驱逐巨人的先锋", 
@@ -2463,12 +2457,14 @@ se_jieshucard = sgs.CreateSkillCard{
 Kuroko:addSkill(se_chongjing)
 Kuroko:addSkill(se_chongjingMark)
 Kuroko:addSkill(se_chongjingStart)
+extension:insertRelatedSkills("se_chongjing", "#se_chongjingMark")
+extension:insertRelatedSkills("se_chongjing", "#se_chongjingStart")
 Kuroko:addSkill(se_shunshan)
---Kuroko:addSkill(se_shunshan_Another)
-Kuroko:addSkill(se_jieshu)
-Kuroko_p:addSkill(se_chongjing_Attack)
-Kuroko_p:addSkill(se_shunshanKeep)
-Kuroko_p:addSkill(se_shunshanStopped)
+
+extension:addToSkills(se_chongjing_Attack)
+extension:addToSkills(se_shunshanKeep)
+extension:addToSkills(se_shunshanStopped)
+Kuroko:addWakeTypeSkillForAudio("se_chongjing_Attack")
 sgs.LoadTranslationTable{
 ["se_shunshan"] = "瞬闪「空间移动能力」",
 ["se_shunshan_Another"] = "瞬闪「空间移动能力」",
@@ -2481,10 +2477,10 @@ sgs.LoadTranslationTable{
 ["se_chongjing"] = "憧憬「姐姐大人」",
 ["chongjing"] = "憧憬「姐姐大人」",
 ["se_chongjing$"] = "image=image/animate/se_chongjing.png",
-["$se_chongjing"] = "啊啊~お姉様...お姉様...お姉様!お姉様!お姉様!!!!!!!!!!!",
+["$se_chongjing1"] = "啊啊~お姉様...お姉様...お姉様!お姉様!お姉様!!!!!!!!!!!",
 [":se_chongjing"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以令一名其他女性角色获得1枚“お姉様”标记。每当拥有“お姉様”标记的角色造成或受到一次伤害时，其可以令其或对方获得1枚“定身”标记。若如此做且目标角色为御坂美琴，其额外获得1枚“定身”标记。此技能发动前，摸牌阶段，你额外摸一张牌。",
 ["se_chongjing_Attack"] = "お姉様の辅助",
-["$se_chongjing_Attack"] = "着光芒是...お姉様！",
+["$se_chongjing_Attack"] = "这光芒是...お姉様！",
 ["se_jieshu"] = "解束「解除束缚」",
 ["jieshu"] = "解束「解除束缚」",
 [":se_jieshu"] = "出牌阶段，你可以令一名其他角色弃置其所有“定身”标记。",
@@ -2658,10 +2654,12 @@ zhuchangCloneGet = sgs.CreateTriggerSkill{
 
 
 HYui:addSkill(dai)
-HYui_sub:addSkill(zhuchangClone)
+extension:addToSkills(zhuchangClone)
 HYui:addSkill(daiVS)
+extension:insertRelatedSkills("dai", "#daiVS")
 HYui:addSkill(zhuchang)
 HYui:addSkill(zhuchangCloneGet)
+extension:insertRelatedSkills("zhuchang", "#zhuchangCloneGet")
 
 sgs.LoadTranslationTable{
 ["dai"] = "呆  「天然呆」",
@@ -2927,6 +2925,10 @@ Alice:addSkill(TianmingGetS)
 Alice:addSkill(TianmingGet)
 Alice:addSkill(se_jianwu)
 Alice:addSkill(se_kanhu)
+extension:insertRelatedSkills("se_tianming", "#se_tianmingFlag")
+extension:insertRelatedSkills("se_tianming", "#se_tianmingWore")
+extension:insertRelatedSkills("se_tianming", "#TianmingGetS")
+extension:insertRelatedSkills("se_tianming", "#TianmingGet")
 
 sgs.LoadTranslationTable{
 ["se_tianming"] = "天命「天命运算」",
@@ -2945,7 +2947,7 @@ sgs.LoadTranslationTable{
 ["kanhu"] = "看护「神圣术治疗」",
 ["se_kanhucard"] = "看护「神圣术治疗」",
 [":se_kanhu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置20枚“天命”标记并指定一名已受伤的角色，令其回复1点体力。若目标角色为桐人，你令其额外回复1点体力。",
-["Alice"] = "爱丽丝.The.Thirty", 
+["Alice"] = "爱丽丝", 
 ["&Alice"] = "爱丽丝", 
 ["@Alice"] = "刀剑神域", 
 ["#Alice"] = "金色の骑士", 
@@ -3111,6 +3113,7 @@ SE_Boming_KOF = sgs.CreateTriggerSkill{
 Sakamoto:addSkill(SE_Xianjing)
 Sakamoto:addSkill(SE_Boming)
 Sakamoto:addSkill(SE_Boming_KOF)
+extension:insertRelatedSkills("SE_Boming", "#SE_Boming_KOF")
 
 sgs.LoadTranslationTable{
 ["SE_Xianjing"] = "陷阱「坂本の计谋」",
@@ -3277,6 +3280,7 @@ se_shourencard = sgs.CreateSkillCard{
 
 Kanade:addSkill(se_qiyuan)
 Kanade:addSkill(se_qiyuanMark)
+extension:insertRelatedSkills("se_qiyuan", "#se_qiyuanMark")
 Kanade:addSkill(Lichang)
 Kanade:addSkill(se_shouren)
 
@@ -3515,6 +3519,7 @@ Chaidao = sgs.CreateTriggerSkill{
 Rena:addSkill(Zizhu)
 Rena:addSkill(Keai)
 Rena:addSkill(KeaiStart)
+extension:insertRelatedSkills("Keai", "#KeaiStart")
 Rena:addSkill(Chaidao)
 Rena:addSkill(ChaidaoChange)
 Rena:addSkill(ZizhuChange)
@@ -3543,7 +3548,7 @@ sgs.LoadTranslationTable{
 ["$Chaidao2"] = "啊哈哈哈！啊哈哈哈哈哈！！！啊哈哈哈哈哈！！！",
 ["$Chaidao3"] = "明明那么相信你...明明那么相信你！！...",
 [":Chaidao"] = "每当其他角色的黑色牌因弃置、使用、打出或判定置入弃牌堆时，你可以获得之。",
-["Rena"] = "龙宫礼奈レナ", 
+["Rena"] = "龙宫礼奈", 
 ["&Rena"] = "龙宫礼奈", 
 ["@Rena"] = "寒蝉鸣泣之时", 
 ["#Rena"] = "柴刀女", 
@@ -3656,7 +3661,7 @@ sgs.LoadTranslationTable{
 ["$Jianqiao1"] = "不要紧...治疗已经派上用场了。",
 ["$Jianqiao2"] = "Avalon！！",
 [":Jianqiao"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你受到一次伤害时，有1/3概率防止此伤害。",
-["Saber"] = "Saberセイバー", 
+["Saber"] = "Saber", 
 ["&Saber"] = "Saber", 
 ["@Saber"] = "Fate Zero", 
 ["#Saber"] = "吾王", 
@@ -3879,7 +3884,7 @@ Daolu = sgs.CreateTriggerSkill{
 }
 
 se_diangong_def = sgs.CreateTriggerSkill{
-	name = "se_diangong_def",  
+	name = "#se_diangong_def",  
 	frequency = sgs.Skill_Compulsory, 
 	events = {sgs.DamageInflicted}, 
 	on_trigger = function(self, event, player, data)
@@ -3922,7 +3927,7 @@ se_diangong = sgs.CreateViewAsSkill{
 }
 
 Shouyang_ed = sgs.CreateTriggerSkill{
-	name = "Shouyang_ed",  
+	name = "#Shouyang_ed",  
 	frequency = sgs.Skill_Compulsory, 
 	events = {sgs.DamageCaused}, 
 	on_trigger = function(self, event, player, data)
@@ -4034,18 +4039,24 @@ DaoluC = sgs.CreateTriggerSkill{
 
 Tomoya:addSkill(se_zhuren)
 Tomoya:addSkill(se_zhuren_End)
+extension:insertRelatedSkills("se_zhuren", "#se_zhuren_End")
 Tomoya:addSkill(Daolu)
 
-Tomoya_sub:addSkill(se_diangong_def)
-Tomoya_sub:addSkill(se_diangong)
-Tomoya_sub:addSkill(Shouyang_ed)
-Tomoya_sub:addSkill(Shouyang)
-Tomoya_sub:addSkill(Haixing)
-Tomoya_sub:addSkill(DaoluA)
-Tomoya_sub:addSkill(DaoluB)
-Tomoya_sub:addSkill(DaoluC)
+extension:addToSkills(se_diangong_def)
+extension:addToSkills(se_diangong)
+extension:insertRelatedSkills("se_diangong", "#se_diangong_def")
+extension:addToSkills(Shouyang_ed)
+extension:addToSkills(Shouyang)
+extension:insertRelatedSkills("Shouyang", "#Shouyang_ed")
+extension:addToSkills(Haixing)
+extension:addToSkills(DaoluA)
+extension:addToSkills(DaoluB)
+extension:addToSkills(DaoluC)
 
 
+Tomoya:addWakeTypeSkillForAudio("se_diangong")
+Tomoya:addWakeTypeSkillForAudio("Shouyang")
+Tomoya:addWakeTypeSkillForAudio("Haixing")
 
 sgs.LoadTranslationTable{
 ["se_zhuren"] = "助人「实现梦想」",
@@ -4289,8 +4300,10 @@ Accelerator:addSkill(Bianhua)
 Accelerator:addSkill(Heiyi)
 Accelerator:addSkill(Baiyi)
 Accelerator:addSkill(BaiyiGet)
+extension:insertRelatedSkills("Baiyi", "#BaiyiGet")
 Accelerator:addSkill(Wangluo)
 Accelerator:addSkill(WangluoLaugh)
+extension:insertRelatedSkills("Wangluo", "#WangluoLaugh")
 sgs.LoadTranslationTable{
 ["Fanshe"] = "反射「矢量操作1」",
 ["Fanshe$"] = "image=image/animate/Fanshe.png",
@@ -4450,6 +4463,7 @@ se_jianyucard = sgs.CreateSkillCard{
 
 Shino:addSkill(SE_Juji_Start)
 Shino:addSkill(SE_Juji)
+extension:insertRelatedSkills("SE_Juji", "#SE_Juji_Start")
 Shino:addSkill(se_jianyu)
 
 sgs.LoadTranslationTable{
@@ -4467,7 +4481,7 @@ sgs.LoadTranslationTable{
 ["$se_jianyu2"] = "不会让你白白牺牲的！",
 ["$se_jianyu3"] = "Boss死之前，你就保持在那。要是你跑到我的弹道上的话，我照打不误哦。",
 [":se_jianyu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定X+1名角色（X为你已损失的体力），视为你对他们使用一张【杀】。",
-["Shino"] = "朝田诗乃シノン", 
+["Shino"] = "朝田诗乃", 
 ["&Shino"] = "朝田诗乃", 
 ["@Shino"] = "刀剑神域", 
 ["#Shino"] = "深蓝の狙击手", 
@@ -4577,6 +4591,7 @@ SE_Weigong_end = sgs.CreateMaxCardsSkill{
 Misaka_Imouto:addSkill(se_qidian)
 Misaka_Imouto:addSkill(SE_Weigong)
 Misaka_Imouto:addSkill(SE_Weigong_end)
+extension:insertRelatedSkills("SE_Weigong", "#SE_Weigong_end")
 
 sgs.LoadTranslationTable{
 ["se_qidian"] = "起电「电力驱动」",
@@ -4914,8 +4929,10 @@ se_liaoli=sgs.CreateTriggerSkill{
 Tukasa:addSkill(SE_Maoshi)
 Tukasa:addSkill(se_zhiyu)
 Tukasa:addSkill(se_zhiyuGetRe)
+extension:insertRelatedSkills("se_zhiyu", "#se_zhiyuGetRe")
 Tukasa:addSkill(se_liaolivs)
 Tukasa:addSkill(se_liaoli)
+extension:insertRelatedSkills("se_liaoli", "#se_liaoli")
 
 
 sgs.LoadTranslationTable{
@@ -4943,7 +4960,7 @@ sgs.LoadTranslationTable{
 ["$se_zhiyu4"] = "虽然我废话很多，但这个没关系。",
 ["$se_zhiyu5"] = "我讲不出那么有趣的故事，我是小司。",
 [":se_zhiyu"] = "出牌阶段，你可以将任意数量的<font color=\"red\"><b>♥</b></font>牌或装备牌交给一名其他角色。",
-["Tukasa"] = "柊司つかさ", 
+["Tukasa"] = "柊司", 
 ["&Tukasa"] = "柊司", 
 ["@Tukasa"] = "Lucky Star!", 
 ["#Tukasa"] = "天然", 
@@ -5269,14 +5286,21 @@ SE_Zhixing = sgs.CreateTriggerSkill{
 Natsume_Rin:addSkill(SE_Pasheng)
 Natsume_Rin:addSkill(SE_Maoqun)
 Natsume_Rin:addSkill(SE_Maoqun_KOF)
+extension:insertRelatedSkills("SE_Maoqun", "#SE_Maoqun_KOF")
 Natsume_Rin:addSkill(SE_Chengzhang)
-Natsume_Rin_sub:addSkill(se_zhiling_S)
-Natsume_Rin_sub:addSkill(se_zhiling_C)
+
 Natsume_Rin:addSkill(se_zhiling_D)
 Natsume_Rin:addSkill(se_zhiling_H)
-Natsume_Rin_sub:addSkill(se_zhiling)
-Natsume_Rin_sub:addSkill(SE_Zhixing)
 
+
+
+extension:addToSkills(se_zhiling_S)
+extension:addToSkills(se_zhiling_C)
+extension:addToSkills(se_zhiling)
+extension:addToSkills(SE_Zhixing)
+
+Natsume_Rin:addWakeTypeSkillForAudio("se_zhiling")
+Natsume_Rin:addWakeTypeSkillForAudio("SE_Zhixing")
 
 
 sgs.LoadTranslationTable{
@@ -5472,6 +5496,7 @@ SE_Zhihui = sgs.CreateTriggerSkill{
 
 Lelouch:addSkill(SE_Geass_start)
 Lelouch:addSkill(SE_Geass)
+extension:insertRelatedSkills("SE_Geass", "#SE_Geass_start")
 Lelouch:addSkill(SE_Zhihui)
 
 sgs.LoadTranslationTable{
@@ -5488,7 +5513,7 @@ sgs.LoadTranslationTable{
 ["SE_Zhihui$"] = "image=image/animate/SE_Zhihui.png",
 ["$SE_Zhihui"] = "All Hail Lelouch!",
 [":SE_Zhihui"] = "每当一名角色对你造成一次伤害时，你可以将此伤害转移给拥有GEASS标记的一名角色。",
-["Lelouch"] = "真·鲁鲁修ルルーシュ", 
+["Lelouch"] = "真·鲁鲁修", 
 ["&Lelouch"] = "真·鲁鲁修", 
 ["@Lelouch"] = "叛逆的鲁鲁修", 
 ["#Lelouch"] = "暗之皇子", 
@@ -5617,7 +5642,7 @@ sgs.LoadTranslationTable{
 ["$SE_Huifu1"] = "（恢复系咒语）",
 ["$SE_Huifu2"] = "啊，危险...",
 [":SE_Huifu"] = "<font color=\"blue\"><b>锁定技,</b></font>回合开始时，若你的当前体力值不为场上最多或之一，你自然增加一点体力。",
-["Leafa"] = "莉法リーファ", 
+["Leafa"] = "莉法", 
 ["&Leafa"] = "莉法", 
 ["@Leafa"] = "刀剑神域", 
 ["#Leafa"] = "风の剑士", 
@@ -5760,6 +5785,7 @@ SE_Nagong = sgs.CreateTriggerSkill{
 
 Reimu:addSkill(SE_Mengfeng)
 Reimu:addSkill(SE_MengfengGive)
+extension:insertRelatedSkills("SE_Mengfeng", "#SE_MengfengGive")
 Reimu:addSkill(SE_Nagong)
 
 sgs.LoadTranslationTable{
@@ -6156,8 +6182,10 @@ Sugisaki:addSkill(SE_Minatsu)
 Sugisaki:addSkill(SE_Chizuru)
 Sugisaki:addSkill(SE_Mafuyu)
 Sugisaki:addSkill(SE_Mafuyu_Do)
+extension:insertRelatedSkills("SE_Mafuyu", "#SE_Mafuyu")
 Sugisaki:addSkill(SE_Haremu)
 Sugisaki:addSkill(SE_HaremuLaugh)
+extension:insertRelatedSkills("SE_Haremu", "#SE_HaremuLaugh")
 
 sgs.LoadTranslationTable{
 ["SE_Kurimu$"] = "image=image/animate/SE_Kurimu.png",
@@ -6404,8 +6432,9 @@ SE_Chaopin = sgs.CreateTriggerSkill{
 Kuroyukihime:addSkill(se_xunyu)
 Kuroyukihime:addSkill(SE_Heiyang)
 Kuroyukihime:addSkill(se_xunyu_damage)
-Kuroyukihime_sub:addSkill(SE_Chaopin)
-Kuroyukihime_sub:addSkill(SE_Chaopin)
+extension:insertRelatedSkills("se_xunyu", "#se_xunyu_damage")
+extension:addToSkills(SE_Chaopin)
+Kuroyukihime:addWakeTypeSkillForAudio("SE_Chaopin")
 
 sgs.LoadTranslationTable{
 ["se_xunyu$"] = "image=image/animate/se_xunyu.png",
@@ -6725,7 +6754,8 @@ SE_Lianmu = sgs.CreateTriggerSkill{
 Kazehaya:addSkill(SE_Xiuse)
 Kazehaya:addSkill(SE_Shuanglang)
 Kazehaya:addSkill(SE_Lianmu)
-Kazehaya_sub:addSkill(SE_Shuanglang_target)
+extension:addToSkills(SE_Shuanglang_target)
+extension:insertRelatedSkills("SE_Shuanglang", "#SE_Shuanglang_target")
 
 sgs.LoadTranslationTable{
 ["SE_Shuanglang$"] = "image=image/animate/SE_Shuanglang.png",
@@ -6904,6 +6934,7 @@ Ayase:addSkill(SE_Feiti)
 Ayase:addSkill(SE_Menghei)
 Ayase:addSkill(se_gaobai)
 Ayase:addSkill(se_gaobaiMark)
+extension:insertRelatedSkills("se_gaobai", "#se_gaobaiMark")
 
 sgs.LoadTranslationTable{
 ["SE_Feiti"] = "飞踢「旋风飞踢」",
@@ -6928,7 +6959,7 @@ sgs.LoadTranslationTable{
 ["se_gaobai$"] = "image=image/animate/se_gaobai.png",
 ["$se_gaobai"] = "哥哥你真是个不得了的大骗子！是色狼，变态，妹控，萝莉控，而且还是抖M！每次见到我都对我性骚扰，还惹我生气！但无论什么时候都老好人的，又爱管闲事！...迟钝又不讲理，却很温柔...总是...总是欺骗我...但是我喜欢...那样的你...",
 [":se_gaobai"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以令一名男性角色的体力上限增加或减少至4，然后令其将体力补至体力上限。",
-["Ayase"] = "新垣绫濑あやせ", 
+["Ayase"] = "新垣绫濑", 
 ["&Ayase"] = "新垣绫濑", 
 ["@Ayase"] = "我的妹妹不可能这么可爱！",
 ["#Ayase"] = "黑化天使", 
@@ -7331,6 +7362,7 @@ Chiyuri:addSkill(se_huanyuan_Pre)
 Chiyuri:addSkill(se_huanyuan)
 Chiyuri:addSkill(se_chengling)
 Chiyuri:addSkill(se_chenglingMark)
+extension:insertRelatedSkills("se_chengling", "#se_chenglingMark")
 --Chiyuri:addSkill(SE_Huwei)
 
 sgs.LoadTranslationTable{
@@ -7510,6 +7542,7 @@ AiAstin:addSkill(SE_Shouzang)
 AiAstin:addSkill(SE_Xiangren)
 AiAstin:addSkill(SE_Shenmin)
 AiAstin:addSkill(SE_ShenminKeep)
+extension:insertRelatedSkills("SE_Shenmin", "#SE_ShenminKeep")
 
 
 sgs.LoadTranslationTable{
@@ -7534,8 +7567,8 @@ sgs.LoadTranslationTable{
 [":SE_ShenminAll"] = "你处于神悯之下。",
 ["$SE_Shenmin"] = "如果神抛弃了世界，我就去拯救这个世界。",
 [":SE_Shenmin"] = "<font color=\"blue\"><b>锁定技,</b></font>每当一名角色死亡后，你回复1点体力；你的手牌上限+X（X为已死亡的人数）。",
-["AiAstin"] = "艾·亚斯汀", 
-["&AiAstin"] = "艾·亚斯汀", 
+["AiAstin"] = "艾", 
+["&AiAstin"] = "艾", 
 ["@AiAstin"] = "神不在的星期天", 
 ["#AiAstin"] = "终焉的墓旅人", 
 ["~AiAstin"] = "...我出发了！", 
@@ -7651,6 +7684,7 @@ se_jiejieEffect = sgs.CreateTriggerSkill{
 Hakaze:addSkill(SE_Gongpin)
 Hakaze:addSkill(se_jiejie)
 Hakaze:addSkill(se_jiejieEffect)
+extension:insertRelatedSkills("se_jiejie", "#se_jiejieEffect")
 
 sgs.LoadTranslationTable{
 ["se_jiejie$"] = "image=image/animate/se_jiejie.png",
@@ -7814,8 +7848,11 @@ SE_WufanMark = sgs.CreateTriggerSkill{
 
 Kotori:addSkill(SE_WufanMark)
 Kotori:addSkill(SE_Wufan)
-Kotori_sub:addSkill(SE_Niepan)
-Kotori_sub:addSkill(se_jiangui)
+extension:insertRelatedSkills("SE_Wufan", "#SE_WufanMark")
+extension:addToSkills(SE_Niepan)
+extension:addToSkills(se_jiangui)
+Kotori:addWakeTypeSkillForAudio("SE_Niepan")
+Kotori:addWakeTypeSkillForAudio("se_jiangui")
 
 sgs.LoadTranslationTable{
 ["se_jiangui$"] = "image=image/animate/se_jiangui.png",
@@ -8004,7 +8041,7 @@ sgs.LoadTranslationTable{
 ["$SE_Xinlai3"] = "武侦第一条·相信同伴，拯救同伴！",
 [":SE_Xinlai"] = "<font color=\"Sky Blue\"><b>萌战技，3，武侦，</b></font>每当一名武侦角色造成伤害后，若其参战，你可以令任意数量的武侦角色各摸X张牌（X为此伤害的数值）。",
 ["#SE_Xinlai_Draw"] = "令该角色摸牌", 
-["Aria"] = "亚里亚アリア", 
+["Aria"] = "亚里亚", 
 ["&Aria"] = "亚里亚", 
 ["@Aria"] = "绯弹的亚里亚", 
 ["#Aria"] = "双枪双剑", 
@@ -8128,6 +8165,7 @@ SE_Zhiyuan = sgs.CreateTriggerSkill{
 
 Reki:addSkill(SE_Juji_Reki)
 Reki:addSkill("#SE_Juji_Start")
+extension:insertRelatedSkills("SE_Juji_Reki", "#SE_Juji_Start")
 Reki:addSkill(SE_Zhiyuan)
 Reki:addSkill("#SE_Baskervilles_make")
 
@@ -8144,7 +8182,7 @@ sgs.LoadTranslationTable{
 ["$SE_Zhiyuan3"] = "请冷静。失去冷静的人只能发挥其五成的能力。",
 [":SE_Zhiyuan"] = "<font color=\"Sky Blue\"><b>萌战技，武侦，3，</b></font>每当你使用【杀】造成一次伤害后，你可以选择一项：1.令任意数量的参战角色（目标角色必须包括其他角色）各进行一次判定：若结果为♠，该角色获得一个额外的回合，然后若没有角色判定为♠，你弃置受到伤害角色的一张牌。2.令为参战角色的你进行一次判定：若结果为黑色，你获得一个额外的回合，然后若没有角色判定为黑色，你弃置受到伤害角色的一张牌。",
 ["#SE_Zhiyuan_Judge"] = "支援",
-["Reki"] = "雷姬レキ", 
+["Reki"] = "雷姬", 
 ["&Reki"] = "雷姬", 
 ["@Reki"] = "绯弹的亚里亚",
 ["#Reki"] = "风の狙击手", 
@@ -8558,15 +8596,16 @@ Asmodeus = sgs.CreateTriggerSkill{
 
 Ange:addSkill(SE_Qizhuang)
 Ange:addSkill(SE_QizhuangCompulsory)
+extension:insertRelatedSkills("SE_Qizhuang", "#SE_QizhuangCompulsory")
 Ange:addSkill(SE_Fanhun)
 
-Ange2:addSkill(Lucifer)
-Ange2:addSkill(Leviathan)
-Ange2:addSkill(Satan)
-Ange2:addSkill(Belphegor)
-Ange2:addSkill(Mammon)
-Ange2:addSkill(Beelzebub)
-Ange2:addSkill(Asmodeus)
+extension:addToSkills(Lucifer)
+extension:addToSkills(Leviathan)
+extension:addToSkills(Satan)
+extension:addToSkills(Belphegor)
+extension:addToSkills(Mammon)
+extension:addToSkills(Beelzebub)
+extension:addToSkills(Asmodeus)
 
 
 
@@ -8758,7 +8797,7 @@ sgs.LoadTranslationTable{
 ["$se_zhanjing2"] = "给我放老实点。不然我就没办法...漂亮地切下你的肉了好嘛。",
 ["$se_zhanjing3"] = "（斩颈声）",
 [":se_zhanjing"] = "<font color=\"green\"><b>出牌阶段限一次,</b></font>你可以向右依次交换位置至一名角色右侧，然后弃掉该角色一半（向下取整）数量的手牌。若该角色的体力值大于你的体力值，你令其失去一点体力；若该角色体力上限大于你的体力上限，你令其失去一点体力上限。若该角色体力值和体力上限均不大于你，你对其造成一点伤害。",
-["Rivaille"] = "利维尔リヴァイ", 
+["Rivaille"] = "利维尔", 
 ["&Rivaille"] = "利维尔", 
 ["@Rivaille"] = "进击的巨人", 
 ["#Rivaille"] = "兵长", 
@@ -8908,7 +8947,7 @@ function askForChooseSkill(riko)
 	local sks = {}
 	local all_generals = sgs.Sanguosha:getLimitedGeneralNames()
 	for i=1, #all_generals do
-		if all_generals[i]=="Ushio" or all_generals[i]=="mianma" or all_generals[i]=="Chiyo" or all_generals[i]=="Eugen" or all_generals[i]=="Tukasa" or  all_generals[i]=="Sayaka" or all_generals[i]=="Koishi" or all_generals[i]=="Mikoto" or all_generals[i]=="Natsume_Rin" or all_generals[i]=="Kazehaya" or all_generals[i]=="AiAstin" or all_generals[i]=="Reimu" or all_generals[i]=="Louise" then
+		if all_generals[i]=="Ushio" or all_generals[i]=="Nico" or all_generals[i]=="rika2" or all_generals[i]=="mianma" or all_generals[i]=="Chiyo" or all_generals[i]=="Eugen" or all_generals[i]=="Tukasa" or  all_generals[i]=="Sayaka" or all_generals[i]=="Koishi" or all_generals[i]=="Mikoto" or all_generals[i]=="Natsume_Rin" or all_generals[i]=="Kazehaya" or all_generals[i]=="AiAstin" or all_generals[i]=="Reimu" or all_generals[i]=="Louise" then
 			table.remove(all_generals, i)
 			i = i - 1 
 		end
@@ -9064,8 +9103,8 @@ sgs.LoadTranslationTable{
 ["Youhuo_Obtain_Not"] = "不令其获得牌。",
 ["se_youhuo_Obtain"] = "令武侦角色获得你的牌",
 ["se_youhuo_Recovery"] = "失去一点体力，并令理子恢复体力。",
-["Riko"] = "峰·理子", 
-["&Riko"] = "峰·理子", 
+["Riko"] = "理子", 
+["&Riko"] = "理子", 
 ["@Riko"] = "绯弹的亚里亚", 
 ["#Riko"] = "侦探科宅女", 
 ["~Riko"] = "我不会再轻视你们，将视你们为同等的对手。所以，承诺过的约定一定会遵守。要是被我以外的人干掉了我课不会轻饶你们。au revoir！", 
@@ -9602,9 +9641,9 @@ SE_Huajian_ed = sgs.CreateTriggerSkill{
 
 Eugeo:addSkill(SE_Rennai)
 Eugeo:addSkill(SE_Huajian)
-Eugeo_sub:addSkill(se_qingqiangwei)
-Eugeo_sub:addSkill(SE_Zhanfang)
-Eugeo_sub:addSkill(SE_Huajian_ed)
+extension:addToSkills(se_qingqiangwei)
+extension:addToSkills(SE_Zhanfang)
+extension:addToSkills(SE_Huajian_ed)
 
 sgs.LoadTranslationTable{
 ["SE_Rennai$"] = "image=image/animate/SE_Rennai.png", 
@@ -9626,7 +9665,7 @@ sgs.LoadTranslationTable{
 ["SE_Huajian_ed"] = "化剑",
 ["$SE_Huajian_ed"] = "",
 [":SE_Huajian_ed"] = "每当“青蔷薇之剑”从你的手牌区打出、弃置或装备区移出时，你重新获得之。",
-["Eugeo"] = "优吉欧ユージオ", 
+["Eugeo"] = "优吉欧", 
 ["&Eugeo"] = "优吉欧", 
 ["@Eugeo"] = "刀剑神域", 
 ["#Eugeo"] = "青の剑士", 
@@ -9819,7 +9858,8 @@ Rika:addSkill(SE_Shenghua)
 Rika:addSkill(SE_Wumai)
 Rika:addSkill(SE_Poxiao)
 Rika:addSkill(SE_Mipa_ed)
-Mikotopart:addSkill(se_mipa)
+extension:addToSkills(se_mipa)
+Rika:addWakeTypeSkillForAudio("se_mipa")
 
 sgs.LoadTranslationTable{
 ["SE_Poxiao$"] = "image=image/animate/SE_Poxiao.png", 
@@ -10177,6 +10217,7 @@ se_tonglingcard = sgs.CreateSkillCard{
 
 Eucliwood:addSkill(se_tongling)
 Eucliwood:addSkill(se_tonglingMark)
+extension:insertRelatedSkills("se_tongling", "#se_tongling")
 
 sgs.LoadTranslationTable{
 ["se_tongling$"] = "image=image/animate/se_tongling.png", 
@@ -10401,7 +10442,7 @@ sgs.LoadTranslationTable{
 ["$SE_Zuozhan4"] = "不...今天的作战是「怪物流」。",
 ["$SE_Zuozhan"] = "",
 [":SE_Zuozhan"] = "一名角色回合开始时，若其血量不少于你，你可以重新为其分配判定阶段、摸牌阶段、出牌阶段、弃牌阶段的顺序。",
-["Yuri"] = "仲村由理ゆり", 
+["Yuri"] = "仲村由理", 
 ["&Yuri"] = "仲村由理", 
 ["@Yuri"] = "Angel Beats!", 
 ["#Yuri"] = "死后战线の领袖", 
@@ -10518,6 +10559,7 @@ SE_Shengmu = sgs.CreateTriggerSkill{
 
 Setsuna:addSkill(SE_Gaoling)
 Setsuna:addSkill(SE_Gaoling_tr)
+extension:insertRelatedSkills("SE_Gaoling", "#SE_Gaoling_tr")
 Setsuna:addSkill(SE_Shengmu)
 
 sgs.LoadTranslationTable{
@@ -10626,7 +10668,7 @@ SE_JianshiTrAll = sgs.CreateTriggerSkill{
 		if event==sgs.CardUsed then
 			local use=data:toCardUse()
 			if use.from:getMark("@surveillance") > 0 then
-				if math.random(1, 100) < 14 then--
+				if math.random(1, 100) < 18 then--
 					local Yukina = room:findPlayerBySkillName("se_jianshi")
 					if not Yukina then return end
 					if not room:askForSkillInvoke(Yukina,"se_jianshi",data) then return end
@@ -10644,7 +10686,7 @@ SE_JianshiTrAll = sgs.CreateTriggerSkill{
 			local use=data:toCardResponse()
 			if not use.to then return end
 			if use.to:getMark("@surveillance") > 0 then
-				if math.random(1, 5) == 1 then--
+				if math.random(1, 100) < 18 then--
 					local Yukina = room:findPlayerBySkillName("se_jianshi")
 					if not Yukina then return end
 					if not room:askForSkillInvoke(Yukina,"se_jianshi",data) then return end
@@ -10723,6 +10765,9 @@ Yukina:addSkill(SE_JianshiTr)
 Yukina:addSkill(SE_JianshiTri)
 Yukina:addSkill(SE_JianshiTrAll)
 Yukina:addSkill(se_jianshi)
+extension:insertRelatedSkills("se_jianshi", "#SE_JianshiTrAll")
+extension:insertRelatedSkills("se_jianshi", "#SE_JianshiTri")
+extension:insertRelatedSkills("se_jianshi", "#SE_JianshiTr")
 
 sgs.LoadTranslationTable{
 ["Schneewalzer$"] = "image=image/animate/Schneewalzer.png", 
@@ -10736,7 +10781,7 @@ sgs.LoadTranslationTable{
 ["$se_jianshi1"] = "我作为剑巫接受了监视学长的任务才来到弦神岛。——等等，监视？",
 ["$se_jianshi2"] = "难道今后一直跟着？当然啦，我可是监视者啊。",
 ["$se_jianshi3"] = "前...前辈......",
-[":se_jianshi"] = "游戏开始时，你获得1枚“监视”标记；每当你受到1点伤害后，你获得1枚“监视”标记。\n出牌阶段，你可以指定一名没有“监视”标记的角色，若如此做，你令其获得你的1枚“监视”标记。\n每当拥有“监视”标记的角色使用一张牌后或成为一张牌的目标后，你有13%的概率可以指定一名角色，你对其造成1点雷电伤害。每当拥有“监视”标记的角色死亡时，所有其他角色各失去“监视”标记。",
+[":se_jianshi"] = "游戏开始时，你获得1枚“监视”标记；每当你受到1点伤害后，你获得1枚“监视”标记。\n出牌阶段，你可以指定一名没有“监视”标记的角色，若如此做，你令其获得你的1枚“监视”标记。\n每当拥有“监视”标记的角色使用一张牌后或成为一张牌的目标后，你有17%的概率可以指定一名角色，你对其造成1点雷电伤害。每当拥有“监视”标记的角色死亡时，所有其他角色各失去“监视”标记。",
 ["Yukina"] = "姫柊雪菜", 
 ["&Yukina"] = "姫柊雪菜", 
 ["@Yukina"] = "噬血狂袭", 
@@ -10869,6 +10914,7 @@ SE_GuiyinDis = sgs.CreateDistanceSkill{
 
 K1:addSkill(SE_Guiyin)
 K1:addSkill(SE_GuiyinDis)
+extension:insertRelatedSkills("SE_Guiyin", "#SE_GuiyinDis")
 
 
 sgs.LoadTranslationTable{
@@ -11405,6 +11451,7 @@ SE_Guiling = sgs.CreateTriggerSkill{
 
 Saki:addSkill(SE_Lingshang)
 Saki:addSkill(SE_Lingshang_end)
+extension:insertRelatedSkills("SE_Lingshang", "#SE_Lingshang_end")
 Saki:addSkill(SE_Guiling)
 
 sgs.LoadTranslationTable{
@@ -11558,6 +11605,7 @@ SE_Wuwei_tmod = sgs.CreateTargetModSkill{
 
 Sayaka:addSkill(SE_Wuwei)
 Sayaka:addSkill(SE_Wuwei_tmod)
+extension:insertRelatedSkills("SE_Wuwei", "#SE_Wuwei_tmod")
 
 
 sgs.LoadTranslationTable{
@@ -11575,7 +11623,7 @@ sgs.LoadTranslationTable{
 ["#SE_Wuwei_noJink"] = "沙耶香发动了「无畏」令目标不能闪避。", 
 ["#SE_Wuwei_noLimit"] = "沙耶香发动了「无畏」出【杀】没有次数限制。", 
 
-["Sayaka"] = "美樹沙耶香さやか", 
+["Sayaka"] = "美樹沙耶香", 
 ["&Sayaka"] = "美樹沙耶香", 
 ["@Sayaka"] = "魔法少女小圆",
 ["#Sayaka"] = "迷茫的魔法少女", 
@@ -11754,7 +11802,7 @@ SE_Tiansuo = sgs.CreateTriggerSkill{
 
 Kinpika:addSkill(se_gate)
 Kinpika:addSkill(se_gatevs)
-
+extension:insertRelatedSkills("se_gate", "#se_gate")
 Kinpika:addSkill(SE_Tiansuo)
 
 
@@ -11783,7 +11831,7 @@ sgs.LoadTranslationTable{
 ["#SE_Tiansuo_noJink"] = "吉尔伽美什的「天之锁」令该【杀】不可被闪避。", 
 ["@SE_Tiansuo-discard"] = "吉尔伽美什的「天之锁」效果，你需要弃置一张基本牌，否则该【杀】不能闪避。",
 
-["Kinpika"] = "吉尔伽美什ギルガメッシュ", 
+["Kinpika"] = "吉尔伽美什", 
 ["&Kinpika"] = "吉尔伽美什", 
 ["@Kinpika"] = "Fate Zero/Fate Stay Night", 
 ["#Kinpika"] = "金闪闪", 
@@ -12004,10 +12052,13 @@ se_jianqiao_start = sgs.CreateTriggerSkill{
 Kiritsugu:addSkill(se_origin)
 Kiritsugu:addSkill(se_origin_trigger)
 Kiritsugu:addSkill(se_origin_tmod)
+extension:insertRelatedSkills("se_origin", "#se_origin_trigger")
+extension:insertRelatedSkills("se_origin", "#se_origin_tmod")
 Kiritsugu:addSkill(se_biling)
-Mikotopart:addSkill(se_bilingvs)
+extension:addToSkills(se_bilingvs)
 Kiritsugu:addSkill(se_jianqiao)
 Kiritsugu:addSkill(se_jianqiao_start)
+extension:insertRelatedSkills("se_jianqiao", "#se_jianqiao_start")
 
 --卫宫切嗣
 sgs.LoadTranslationTable{
@@ -12360,6 +12411,7 @@ se_yuanxin = sgs.CreateTriggerSkill{
 Yukino:addSkill(se_shifeng)
 Yukino:addSkill(se_zhiyan)
 Yukino:addSkill(se_zhiyan_Trigger)
+extension:insertRelatedSkills("se_zhiyan", "#se_zhiyan_Trigger")
 
 Yyui:addSkill(se_wenchang)
 Yyui:addSkill(se_yuanxin)
@@ -12629,6 +12681,7 @@ se_tuodui = sgs.CreateTriggerSkill{
 
 Chiyo:addSkill(se_linmo)
 Chiyo:addSkill(se_linmo_trigger)
+extension:insertRelatedSkills("se_linmo", "#se_linmo_trigger")
 Chiyo:addSkill(se_zhenfen)
 
 Eugen:addSkill(se_fupao)

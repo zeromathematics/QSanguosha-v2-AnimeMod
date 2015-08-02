@@ -436,7 +436,7 @@ sgs.LoadTranslationTable{
 	["$se_fuzhi"] = "",
 	[":se_fuzhi"] = "<font color=\"orange\"><b>主公技，</b></font>你可以跳过你的出牌阶段，若你手牌数大于你当前体力值，你可指定一名东方势力角色，将手牌数与体力值之差的手牌交给该角色。若如此做，回合结束时，该角色执行一个额外的出牌阶段。",
 	
-	["Koishi"] = "古明地恋こいし", 
+	["Koishi"] = "古明地恋", 
 	["&Koishi"] = "古明地恋", 
 	["@Koishi"] = "東方project", 
 	["#Koishi"] = "紧闭的恋之瞳", 
@@ -445,7 +445,7 @@ sgs.LoadTranslationTable{
 	["cv:Koishi"] = "",
 	["illustrator:Koishi"] = "tecoyuke",
 
-	["Satori"] = "古明地覚さとり", 
+	["Satori"] = "古明地覚", 
 	["&Satori"] = "古明地覚", 
 	["#Satori"] = "地底的读心少女", 
 	["@Satori"] = "東方project", 
