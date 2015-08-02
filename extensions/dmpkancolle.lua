@@ -465,6 +465,7 @@ se_shuacun = sgs.CreateTriggerSkill{
 			if not use.from then return end
 			if use.from:getPhase() ~= sgs.Player_Play then return end
 			local buki = room:findPlayerBySkillName(self:objectName())
+			if not buki then return end
 			if not use.to:contains(buki) then return end
 			if not buki:hasFlag("sonzaikan_aru") then
 				buki:setFlags("sonzaikan_aru")
@@ -510,6 +511,8 @@ poi_kai2:addSkill(poi_yingzi)
 poi_kai2:addSkill(poi_paoxiao)
 poi_kai2:addSkill(se_chongzhuang)
 poi_kai2:addSkill(se_kuangquan)
+Yuudachi:addWakeTypeSkillForAudio("se_chongzhuang")
+
 Shimakaze:addSkill(se_jifeng)
 Shimakaze:addSkill(se_huibi)
 Fubuki:addSkill(se_qianlei)

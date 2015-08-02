@@ -551,6 +551,12 @@ void GeneralOverview::on_tableWidget_itemSelectionChanged()
         if (skill && skill->isVisible()) skills << skill;
     }
 
+    QStringList skills_wake = general->getWakeTypeSkillNamesForAudio();
+    foreach(QString skill_name, skills_wake) {
+        const Skill *skill = Sanguosha->getSkill(skill_name);
+        if (skill && skill->isVisible()) skills << skill;
+    }
+
     ui->skillTextEdit->clear();
 
     resetButtons();

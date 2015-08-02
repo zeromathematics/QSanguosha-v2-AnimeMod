@@ -51,10 +51,12 @@ public:
 
     void addSkill(Skill *skill);
     void addSkill(const char *skill_name);
+    void addWakeTypeSkillForAudio(const char *skill_name);
     bool hasSkill(const char *skill_name) const;
     QList<const Skill *> getSkillList() const;
     QList<const Skill *> getVisibleSkillList() const;
     QSet<const Skill *> getVisibleSkills() const;
+    QStringList getWakeTypeSkillNamesForAudio() const;
     QSet<const TriggerSkill *> getTriggerSkills() const;
 
     void addRelateSkill(const char *skill_name);
@@ -895,6 +897,7 @@ public:
     Package(const char *name, Type pack_type = GeneralPack);
     void insertRelatedSkills(const char *main_skill, const char *related_skill);
     void insertConvertPairs(const char *from, const char *to);
+    void addToSkills(const Skill *skill);
 };
 
 class Engine: public QObject {

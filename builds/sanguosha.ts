@@ -2129,7 +2129,7 @@
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="592"/>
         <source>Trashes, the real fun is just beginning!</source>
-        <translation>杂鱼们，好戏才刚刚开始！</translation>
+        <translation type="unfinished">圣杯的魔力是无限的，仅仅飞沫般弱小的力量，也想与之抗衡吗？</translation>
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="726"/>

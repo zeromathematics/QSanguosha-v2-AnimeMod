@@ -94,6 +94,15 @@ config = {
 		"package:dongmanbao",
 		"package:erciyuan",
 		"package:lolihime",
+		"-DarkSakura1",
+		"-Saito",
+		"-Lelouch",
+		"-Lelouch",
+		"-Batora",
+		"-Yakumo",
+		"-Eugen",
+		"-rokushikimei",
+		"-bernkastel",
 	},
 
 	xmode_generals = {
@@ -104,6 +113,17 @@ config = {
 		"package:dongmanbao",
 		"package:erciyuan",
 		"package:lolihime",
+		"-DarkSakura1",
+		"-DarkSakura2",
+		"-Saito",
+		"-Lelouch",
+		"-Batora",
+		"-Yakumo",
+		"-Eugen",
+		"-rokushikimei",
+		"-bernkastel",
+		"-batora",
+		"-Accelerator",
 	},
 
 	easy_text = {

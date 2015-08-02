@@ -426,7 +426,7 @@ sgs.LoadTranslationTable{
 	["cv:Honoka"] = "新田惠海",
 	["illustrator:Honoka"] = "伍長",
 
-	["MKotori"] = "南小鸟ことり", 
+	["MKotori"] = "南小鸟", 
 	["&MKotori"] = "南小鸟", 
 	["#MKotori"] = "小鸟神教主", 
 	["@MKotori"] = "Love Live!",
@@ -435,7 +435,7 @@ sgs.LoadTranslationTable{
 	["cv:MKotori"] = "内田彩",
 	["illustrator:MKotori"] = "りも",
 
-	["Nico"] = "矢澤妮可にこ", 
+	["Nico"] = "矢澤妮可", 
 	["&Nico"] = "矢澤妮可", 
 	["#Nico"] = "妮可妮可妮", 
 	["@Nico"] = "Love Live!",

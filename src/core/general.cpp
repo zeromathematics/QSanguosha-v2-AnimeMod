@@ -92,6 +92,14 @@ void General::addSkill(const QString &skill_name)
     }
 }
 
+void General::addWakeTypeSkillForAudio(const QString &skill_name)
+{
+    if (!wake_type_skills.contains(skill_name)) {
+        extra_set.insert(skill_name);
+        wake_type_skills << skill_name;
+    }
+}
+
 bool General::hasSkill(const QString &skill_name) const
 {
     return skillname_list.contains(skill_name);
@@ -145,6 +153,11 @@ void General::addRelateSkill(const QString &skill_name)
 QStringList General::getRelatedSkillNames() const
 {
     return related_skills;
+}
+
+QStringList General::getWakeTypeSkillNamesForAudio() const
+{
+    return wake_type_skills;
 }
 
 QString General::getPackage() const

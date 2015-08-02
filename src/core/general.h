@@ -41,6 +41,7 @@ public:
 
     void addSkill(Skill *skill);
     void addSkill(const QString &skill_name);
+    void addWakeTypeSkillForAudio(const QString &skill_name);
     bool hasSkill(const QString &skill_name) const;
     QList<const Skill *> getSkillList() const;
     QList<const Skill *> getVisibleSkillList() const;
@@ -49,6 +50,7 @@ public:
 
     void addRelateSkill(const QString &skill_name);
     QStringList getRelatedSkillNames() const;
+    QStringList getWakeTypeSkillNamesForAudio() const;
 
     QString getPackage() const;
     QString getSkillDescription(bool include_name = false) const;
@@ -70,6 +72,7 @@ private:
     QSet<QString> extra_set;
     QStringList skillname_list;
     QStringList related_skills;
+    QStringList wake_type_skills;
     bool hidden;
     bool never_shown;
 };

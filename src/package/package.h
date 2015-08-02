@@ -32,6 +32,8 @@ public:
         type = pack_type;
     }
 
+    void addToSkills(const Skill *skill);
+
     QList<const QMetaObject *> getMetaObjects() const
     {
         return metaobjects;

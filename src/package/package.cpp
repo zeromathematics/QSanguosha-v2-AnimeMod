@@ -6,3 +6,6 @@ PackageHash &PackageAdder::packages()
     return *(::Packages());
 }
 
+void Package::addToSkills(const Skill *skill){
+    skills << skill;
+}
