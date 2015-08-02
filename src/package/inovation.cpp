@@ -1481,11 +1481,16 @@ public:
         if (triggerEvent == Predamage){
             DamageStruct damage = data.value<DamageStruct>();
             if (damage.from->hasSkill(objectName()) || damage.to->hasSkill(objectName())) {
-                room->broadcastSkillInvoke(objectName());
-                if (damage.from->hasSkill(objectName()))
+                if (damage.from->hasSkill(objectName(), 1)){
+                    if (damage.reason != "shengjian_black")
+                        room->broadcastSkillInvoke(objectName());
                     room->sendCompulsoryTriggerLog(damage.from, objectName());
-                else
+                }   
+                else{
+                    if (damage.to->getHp() > 4)
+                        room->broadcastSkillInvoke(objectName(), 2);
                     room->sendCompulsoryTriggerLog(damage.to, objectName());
+                }  
                 room->loseHp(damage.to, damage.damage);
 
                 return true;
@@ -1495,7 +1500,7 @@ public:
             if (!player->hasSkill(objectName()) || player->getPhase() != Player::RoundStart)
                 return false;
             room->loseHp(room->askForPlayerChosen(player, room->getOtherPlayers(player), objectName()));
-            room->broadcastSkillInvoke(objectName());
+            room->broadcastSkillInvoke(objectName(), rand()%2 + 3);
         }
         
         return false;
@@ -1570,19 +1575,23 @@ public:
     {
         if (triggerEvent == DrawNCards){
             if (player->hasSkill(objectName())){
-                room->broadcastSkillInvoke(objectName());
                 data.setValue(data.toInt() + 3);
             }
         }
         else if (triggerEvent == TurnStart){
             if (player->hasSkill(objectName())){
+                bool do_voice = true;
                 if (!player->faceUp()){
+                    room->broadcastSkillInvoke(objectName());
                     player->turnOver();
+                    do_voice = false;
                 }
                 if (player->getJudgingArea().length() > 0){
                     foreach(const Card* card, player->getJudgingArea()){
                         room->throwCard(card, player);
                     }
+                    if (do_voice)
+                        room->broadcastSkillInvoke(objectName());
                 }
             }
         }
@@ -1655,7 +1664,6 @@ public:
     }
 };
 
-//caoying
 class ShengjianBlack : public TriggerSkill
 {
 public:
@@ -1676,6 +1684,7 @@ public:
                 DamageStruct damage;
                 damage.from = player;
                 damage.to = p;
+                damage.reason = "shengjian_black";
                 damage.damage = abs(player->getEquips().length() - p->getEquips().length());
                 room->damage(damage);
                 foreach(const Card* card, p->getEquips()){
