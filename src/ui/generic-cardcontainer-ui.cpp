@@ -431,7 +431,10 @@ void PlayerCardContainer::updateHandcardNum()
     Q_ASSERT(num >= 0);
     _m_layout->m_handCardFont.paintText(_m_handCardNumText, _m_layout->m_handCardArea,
         Qt::AlignCenter, QString::number(num));
-    _m_handCardNumText->setVisible(true);
+    if (!m_player || m_player->hasSkill("fengbi"))
+        _m_handCardNumText->setVisible(false);
+    else
+        _m_handCardNumText->setVisible(true);
 }
 
 void PlayerCardContainer::updateMarks()

@@ -95,6 +95,7 @@ config = {
 		"package:erciyuan",
 		"package:lolihime",
 		"-DarkSakura1",
+		"-DarkSakura2",
 		"-Saito",
 		"-Lelouch",
 		"-Lelouch",
@@ -103,6 +104,7 @@ config = {
 		"-Eugen",
 		"-rokushikimei",
 		"-bernkastel",
+		"-Ushio",
 	},
 
 	xmode_generals = {
@@ -124,6 +126,7 @@ config = {
 		"-bernkastel",
 		"-batora",
 		"-Accelerator",
+		"-Ushio",
 	},
 
 	easy_text = {
@@ -143,7 +146,20 @@ config = {
 	},
 
 	kof_ban = {
-		"sunquan",
+		"Nao",
+		"DarkSakura1",
+		"DarkSakura2",
+		"Saito",
+		"Lelouch",
+		"Batora",
+		"Yakumo",
+		"Eugen",
+		"rokushikimei",
+		"bernkastel",
+		"batora",
+		"Accelerator",
+		"Ushio",
+
 	},
 
 	bossmode_ban = {
@@ -166,7 +182,20 @@ config = {
 		"shenzhugeliang",
 		"shenlvbu",
 		"bgm_lvmeng",
-		"zhanggongqi"
+		"zhanggongqi",
+		"Nao",
+		"DarkSakura1",
+		"DarkSakura2",
+		"Saito",
+		"Lelouch",
+		"Batora",
+		"Yakumo",
+		"Eugen",
+		"rokushikimei",
+		"bernkastel",
+		"batora",
+		"Accelerator",
+		"Ushio",
 	},
 
 	hegemony_ban = {

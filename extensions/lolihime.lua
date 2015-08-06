@@ -679,6 +679,7 @@ dandiao = sgs.CreateTriggerSkill{
 					room:showAllCards(player)
 					local to = room:askForPlayerChosen(player, room:getAlivePlayers(), self:objectName(), self:objectName(), true, true)
 					room:damage(sgs.DamageStruct(self:objectName(), player, to, 3, sgs.DamageStruct_Thunder))
+					room:loseMaxHp(to, 2)
 				else
 					if math.random(1, 2) == 1 then
 						room:broadcastSkillInvoke("dandiao", 3)
@@ -710,7 +711,7 @@ sgs.LoadTranslationTable{
 ["$dandiao3"] = "那么，你打算...把仅此一次的人生，也用理论和计算度过吗？",
 ["$dandiao4"] = "和看见了又该生气了吧。",
 ["dandiao"] = "单吊",
-[':dandiao'] = "摸牌阶段开始时，你可以放弃摸牌，改为从牌堆顶亮出一张牌，若此牌的花色是弃牌堆中是最多的花色，且是手牌中最少且仅有一张的花色。则可以展示所有手牌，并选择一名角色，对其造成3点雷电伤害；然后获得此牌。",
+[':dandiao'] = "摸牌阶段开始时，你可以放弃摸牌，改为从牌堆顶亮出一张牌，若此牌的花色是弃牌堆中是最多的花色，且是手牌中最少且仅有一张的花色。则可以展示所有手牌，并选择一名角色，对其造成3点雷电伤害并令其减少2点体力上限；然后获得此牌。",
 ["designer:ku"] = "帕秋莉·萝莉姬",
 ["cv:ku"] = "伊藤静",
 ["illustrator:ku"] = "",

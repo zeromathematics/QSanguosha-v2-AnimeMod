@@ -4070,7 +4070,7 @@ table.insert(sgs.ai_skills,se_huanyuan_skill)
 se_huanyuan_skill.getTurnUseCard=function(self,inclusive)
 	if self.player:hasFlag("se_huanyuan_used") then return end
 	if self.player:getMark("se_huanyuan_Pre_MaxHp") <= 0 then return end
-	if #self.friends < 2 and #self.enemies < 1 then return end
+	if #self.friends < 1 and #self.enemies < 1 then return end
 	for _,friend in ipairs(self.friends) do
 		if friend:getMark("se_huanyuan_Pre_Hp") - friend:getHp() + (friend:getMark("se_huanyuan_Pre_MaxHp") - friend:getMaxHp())*2 > 0 then
 			return sgs.Card_Parse("#se_huanyuancard:.:")
@@ -4090,7 +4090,7 @@ end
 sgs.ai_skill_use_func["#se_huanyuancard"] = function(card,use,self)
 	local target
 	local value = 0
-	for _,p in sgs.qlist(self.room:getOtherPlayers(self.player)) do
+	for _,p in sgs.qlist(self.room:getAlivePlayers()) do
 		local p_v = 0
 		if self:isFriend(p) then
 			if p:getMark("se_huanyuan_Pre_Hp") - p:getHp() + (p:getMark("se_huanyuan_Pre_MaxHp") - p:getMaxHp())*2> p_v then
