@@ -253,9 +253,7 @@ se_paojicard = sgs.CreateSkillCard{
 		if count == 0 then return end
 		local prompt = "paoji_1"
 		if count > 1 then
-			for i = 2, count do
-				prompt = string.format(prompt.."+".."paoji_"..i)
-			end
+			prompt = string.format(prompt.."+".."paoji_2")
 		end
 		local choice = room:askForChoice(source,"se_paoji",prompt)
 		local coins = string.sub(choice,7,-1)
@@ -323,12 +321,12 @@ sgs.LoadTranslationTable{
 ["Dianci"] = "电磁「电磁炮发动准备」",
 ["$Dianci"] = "别叫我嗶哩嗶哩，我可是好好地有着御坂美琴这个名字啊！",
 ["Dianci$"] = "image=image/animate/Dianci.png",
-[":Dianci"] = "<font color=\"purple\"><b>觉醒技，</b></font>摸牌阶段开始时，若你的“硬币”数量大于或等于2，你需失去一点体力上限，并获得<font color=\"brown\"><b>“炮击”</b></font>\n\n<font weight=2><font color=\"brown\"><b>炮击「超电磁炮」：</b></font> <font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置X枚“硬币”，使一名角色进行一次判定：若结果为♠，则受到你造成的2^X点雷属性伤害，否则受到你造成的2^（X-1）点雷属性伤害。",
+[":Dianci"] = "<font color=\"purple\"><b>觉醒技，</b></font>摸牌阶段开始时，若你的“硬币”数量大于或等于2，你需失去一点体力上限，并获得<font color=\"brown\"><b>“炮击”</b></font>\n\n<font weight=2><font color=\"brown\"><b>炮击「超电磁炮」：</b></font> <font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置X枚“硬币”，使一名角色进行一次判定：若结果为♠，则受到你造成的2^X点雷属性伤害，否则受到你造成的2^（X-1）点雷属性伤害。X至多为2。",
 ["se_paoji"] = "炮击「超电磁炮」",
 ["se_paoji$"] = "image=image/animate/se_paoji.png",
 ["$se_paoji1"] = "给我觉悟吧，你这个臭笨蛋！",
 ["$se_paoji2"] = "所以说！不想死的话就给我让开！",
-[":se_paoji"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置X枚“硬币”，使一名角色进行一次判定：若结果为♠，则受到你造成的2^X点雷属性伤害，否则受到你造成的2^（X-1）点雷属性伤害。",
+[":se_paoji"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置X枚“硬币”，使一名角色进行一次判定：若结果为♠，则受到你造成的2^X点雷属性伤害，否则受到你造成的2^（X-1）点雷属性伤害。X至多为2。",
 ["se_paojicard"] = "炮击「超电磁炮」",
 ["se_paoji"] = "炮击「超电磁炮」",
 ["Mikoto"] = "御坂美琴", 
@@ -342,20 +340,6 @@ sgs.LoadTranslationTable{
 ["illustrator:Mikoto"] = "りいちゅ＠2日目/東セ28b",
 ["paoji_1"] = "使用1个硬币",
 ["paoji_2"] = "使用2个硬币",
-["paoji_3"] = "使用3个硬币",
-["paoji_4"] = "使用4个硬币",
-["paoji_5"] = "使用5个硬币",
-["paoji_6"] = "使用6个硬币",
-["paoji_7"] = "使用7个硬币",
-["paoji_8"] = "使用8个硬币",
-["paoji_9"] = "使用9个硬币",
-["paoji_10"] = "使用10个硬币",
-["paoji_11"] = "丧心病狂11",
-["paoji_12"] = "丧心病狂12",
-["paoji_13"] = "丧心病狂13",
-["paoji_14"] = "丧心病狂14",
-["paoji_15"] = "丧心病狂15",
-["paoji_16"] = "丧心病狂16",
 }
 
 --夏娜
@@ -2026,6 +2010,7 @@ extension:insertRelatedSkills("se_yekong", "#se_yekongRe")
 extension:insertRelatedSkills("se_yekong", "#se_yekongMark")
 SE_Kirito:addSkill(se_erdao)
 SE_Kirito:addSkill(se_erdaoTwice)
+SE_Kirito:addSkill("fengbi")
 extension:insertRelatedSkills("se_erdao", "#se_erdaoTwice")
 SE_Asuna:addSkill(SE_Shanguang)
 SE_Asuna:addSkill(SE_Dixian)
@@ -2057,7 +2042,7 @@ sgs.LoadTranslationTable{
 ["@SE_Kirito"] = "刀剑神域", 
 ["#SE_Kirito"] = "黑の剑士", 
 ["~SE_Kirito"] = "对不起，亚丝娜...至少你要活下去！...", 
-["designer:SE_Kirito"] = "Sword Elucidator",
+["designer:SE_Kirito"] = "Sword Elucidator; Lolihime",
 ["cv:SE_Kirito"] = "松岡禎丞",
 ["illustrator:SE_Kirito"] = "SL@原稿修羅場",
 ["SE_Shanguang"] = "闪光「细剑·闪烁之光」",
@@ -2460,6 +2445,7 @@ Kuroko:addSkill(se_chongjingStart)
 extension:insertRelatedSkills("se_chongjing", "#se_chongjingMark")
 extension:insertRelatedSkills("se_chongjing", "#se_chongjingStart")
 Kuroko:addSkill(se_shunshan)
+Kuroko:addSkill(se_jieshu)
 
 extension:addToSkills(se_chongjing_Attack)
 extension:addToSkills(se_shunshanKeep)
@@ -7203,12 +7189,9 @@ se_huanyuan_Pre = sgs.CreateTriggerSkill{
 			if player:getPhase() == sgs.Player_Finish then
 				local room = player:getRoom()
 				for _,p in sgs.qlist(room:getAlivePlayers()) do
-					p:loseAllMarks("se_huanyuan_Pre_Hp")
-					p:loseAllMarks("se_huanyuan_Pre_MaxHp")
-					p:loseAllMarks("se_huanyuan_Pre_Handcards")
-					p:gainMark("se_huanyuan_Pre_Hp",p:getHp())
-					p:gainMark("se_huanyuan_Pre_MaxHp",p:getMaxHp())
-					p:gainMark("se_huanyuan_Pre_Handcards",p:getHandcardNum())
+					p:setMark("se_huanyuan_Pre_Hp",p:getHp())
+					p:setMark("se_huanyuan_Pre_MaxHp",p:getMaxHp())
+					p:setMark("se_huanyuan_Pre_Handcards",p:getHandcardNum())
 				end
 			end
 		end
@@ -7240,11 +7223,11 @@ se_huanyuancard = sgs.CreateSkillCard{
 	name="se_huanyuancard",
 	will_throw = true,
 	filter = function(self, selected, to_select)
-		return #selected < 1 and to_select:objectName() ~= sgs.Self:objectName()
+		return #selected < 1
 	end,
 	on_use = function(self,room,source,targets)
 		local choice = room:askForChoice(source, self:objectName(), "se_huanyuan_Draw+se_huanyuan_Hp")
-		room:broadcastSkillInvoke("se_huanyuan")
+		--room:broadcastSkillInvoke("se_huanyuan")
 		room:doLightbox("se_huanyuan$", 1000)
 		if choice == "se_huanyuan_Draw" then
 			local card_num = targets[1]:getMark("se_huanyuan_Pre_Handcards")
@@ -7379,7 +7362,7 @@ sgs.LoadTranslationTable{
 ["se_huanyuan_Hp"] = "令其恢复至你上一回合结束时的体力和体力上限。",
 --[[["SE_Huwei_help"] = "失去一点体力，令其回复一点体力。",
 ["SE_Huwei_not"] = "不进行技能。",]]
-[":se_huanyuan"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置一张手牌并指定一名其他角色，你选择一项：令其将手牌补至X（X为你上回合结束阶段结束时该角色的手牌数），或令其将体力和体力上限还原至你上回合结束阶段结束时该角色的体力和体力上限。你不能于你的第一回合使用此技能。 你上一回合结束时 该角色的手牌数。2、令其体力和体力上限变为 你上一回合结束时 该角色的体力和体力上限。",
+[":se_huanyuan"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置一张手牌并指定一名角色，你选择一项：令其将手牌补至X（X为你上回合结束阶段结束时该角色的手牌数），或令其将体力和体力上限还原至你上回合结束阶段结束时该角色的体力和体力上限。你不能于你的第一回合使用此技能。 ",
 ["se_chengling"] = "橙铃「Lime Bell」",
 ["se_chengling"] = "橙铃「Lime Bell」",
 ["se_chengling$"] = "image=image/animate/se_chengling.png",
@@ -9296,6 +9279,7 @@ local function searchBaibianForSkill(card)
 	local suit = card:getSuit()
 	local number = card:getNumber()
 	if suit == sgs.Card_Spade then
+		--[[
 		if number == 1 then return "longdan"
 		elseif number == 2 then return "lianying"
 		elseif number == 3 then return "weimu"
@@ -9309,7 +9293,9 @@ local function searchBaibianForSkill(card)
 		elseif number == 11 then return "shuijian"
 		elseif number == 12 then return "qingguo"
 		elseif number == 13 then return "tuxi" end
+		]]
 	elseif suit == sgs.Card_Club then
+		--[[
 		if number == 1 then return "manjuan"
 		elseif number == 2 then return "quhu"
 		elseif number == 3 then return "anxian"
@@ -9323,7 +9309,9 @@ local function searchBaibianForSkill(card)
 		elseif number == 11 then return "luanji"
 		elseif number == 12 then return "guose"
 		elseif number == 13 then return "qixi" end
+		]]
 	elseif suit == sgs.Card_Heart then
+		--[[
 		if number == 1 then return "liuli"
 		elseif number == 2 then return "zuixiang"
 		elseif number == 3 then return "guanxing"
@@ -9337,7 +9325,9 @@ local function searchBaibianForSkill(card)
 		elseif number == 11 then return "pojun"
 		elseif number == 12 then return "shuangxiong"
 		elseif number == 13 then return "qinyin" end
+		]]
 	elseif suit == sgs.Card_Diamond then
+		--[[
 		if number == 1 then return "anjian"
 		elseif number == 2 then return "niepan"
 		elseif number == 3 then return "buqu"
@@ -9351,6 +9341,7 @@ local function searchBaibianForSkill(card)
 		elseif number == 11 then return "bazhen"
 		elseif number == 12 then return "lieren"
 		elseif number == 13 then return "qingnang" end
+		]]
 	end
 end
 
@@ -9716,7 +9707,7 @@ SE_Wumai = sgs.CreateTriggerSkill{
 		if event == sgs.Damaged then
 			if player:isAlive() and player:hasSkill(self:objectName()) then
 				local da = data:toDamage()
-				if da.from:isNude() then return end
+				if not da.from or da.from:isNude() then return end
 				if not player:askForSkillInvoke(self:objectName(),data) then return end
 				room:broadcastSkillInvoke("SE_Wumai")
 				local card

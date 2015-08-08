@@ -3204,6 +3204,7 @@ keima:addSkill(LuaShenzhi)
 keima:addSkill(luagonglue)
 SPkirito:addSkill(LuaChanshi)
 SPkirito:addSkill(LuaZhuan)
+SPkirito:addSkill("fengbi")
 odanobuna:addSkill(LuaChigui)
 odanobuna:addSkill(LuaBuwu)
 odanobuna:addSkill(LuaTianmo)
@@ -3507,7 +3508,7 @@ sgs.LoadTranslationTable{
 	[":LuaBuwu"]="每当你造成一次伤害后，你可令受到伤害的角色将其武将牌翻面，然后该角色摸等同于其体力值-1张牌。",
 	[":LuaChigui"]="结束阶段开始时，你可失去1点体力，获得1名角色装备区内的武器牌，然后再摸1张牌，直到场上没有武器牌。",
 	[":LuaTianmoDefense"]="当你使用的【杀】被【闪】抵消时，你获得1枚“天魔”标记。当扣减你的体力时，你可弃置1枚“天魔”标记，防止此次扣减体力。",	
-	[":LuaChanshi"]="你的【杀】可以额外指定1个目标。",
+	[":LuaChanshi"]="你的【杀】可以额外指定2个目标。",
 	[":LuaZhuan"]="你每使用一张黑【杀】，可以摸一张牌，每使用一张【决斗】，可以摸两张牌",
 	[":luarenzha"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置一张“渣”,然后恢复X点体力并将你的武将牌翻面，视作你发动了一次技能“乱武”。（X为“渣”的数量-1）",
 	[":renzha"]="每当你受到1点伤害后，你摸两张牌并将一张手牌置于你的武将牌上，称为“渣”，然后你可将武将牌翻面并摸一张牌。",

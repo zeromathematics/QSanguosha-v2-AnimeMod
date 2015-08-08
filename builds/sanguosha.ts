@@ -2043,7 +2043,7 @@
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.ui" line="262"/>
-        <location filename="../src/dialog/generaloverview.cpp" line="730"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="736"/>
         <source>Search...</source>
         <translation>搜索...</translation>
     </message>
@@ -2058,8 +2058,8 @@
         <translation>配音</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.cpp" line="605"/>
-        <location filename="../src/dialog/generaloverview.cpp" line="613"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="611"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="619"/>
         <source>Official</source>
         <translation>官方</translation>
     </message>
@@ -2097,7 +2097,7 @@
     </message>
     <message>
         <location filename="../src/dialog/generaloverview.cpp" line="509"/>
-        <location filename="../src/dialog/generaloverview.cpp" line="567"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="573"/>
         <source>Translation missing.</source>
         <translation>翻译缺失。</translation>
     </message>
@@ -2107,37 +2107,37 @@
         <translation>复制台词</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.cpp" line="568"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="574"/>
         <source>Death</source>
         <translation>阵亡</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.cpp" line="577"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="583"/>
         <source>Victory</source>
         <translation>胜利</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.cpp" line="578"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="584"/>
         <source>Six dragons lead my chariot, I will ride the wind with the greatest speed.With all of the feudal lords under my command,to rule the world with one name!</source>
         <translation>驾六龙，乘风而行，九合诸侯，一匡天下!</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.cpp" line="591"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="597"/>
         <source>Stage Change</source>
         <translation>变身</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.cpp" line="592"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="598"/>
         <source>Trashes, the real fun is just beginning!</source>
-        <translation type="unfinished">圣杯的魔力是无限的，仅仅飞沫般弱小的力量，也想与之抗衡吗？</translation>
+        <translation>圣杯的魔力是无限的，仅仅飞沫般弱小的力量，也想与之抗衡吗？</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.cpp" line="726"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="732"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.cpp" line="726"/>
+        <location filename="../src/dialog/generaloverview.cpp" line="732"/>
         <source>No generals are found</source>
         <translation>未找到符合要求的人物</translation>
     </message>
@@ -3066,41 +3066,46 @@
     </message>
     <message>
         <location filename="../src/dialog/playercarddialog.cpp" line="111"/>
+        <source>This guy&apos;s skill avoid you to know his hand cards</source>
+        <translation>该角色的技能阻止您了解其手牌</translation>
+    </message>
+    <message>
+        <location filename="../src/dialog/playercarddialog.cpp" line="116"/>
         <source>This guy has no any hand cards</source>
         <translation>该角色无手牌</translation>
     </message>
     <message>
-        <location filename="../src/dialog/playercarddialog.cpp" line="114"/>
+        <location filename="../src/dialog/playercarddialog.cpp" line="119"/>
         <source>This guy has %1 hand card(s)</source>
         <translation>该角色有 %1 张手牌</translation>
     </message>
     <message>
-        <location filename="../src/dialog/playercarddialog.cpp" line="125"/>
+        <location filename="../src/dialog/playercarddialog.cpp" line="130"/>
         <source>Equip area</source>
         <translation>装备区</translation>
     </message>
     <message>
-        <location filename="../src/dialog/playercarddialog.cpp" line="152"/>
+        <location filename="../src/dialog/playercarddialog.cpp" line="157"/>
         <source>(+1 horse)</source>
         <translation>(+1坐骑)</translation>
     </message>
     <message>
-        <location filename="../src/dialog/playercarddialog.cpp" line="163"/>
+        <location filename="../src/dialog/playercarddialog.cpp" line="168"/>
         <source>(-1 horse)</source>
         <translation>(-1坐骑)</translation>
     </message>
     <message>
-        <location filename="../src/dialog/playercarddialog.cpp" line="185"/>
+        <location filename="../src/dialog/playercarddialog.cpp" line="190"/>
         <source>No equip</source>
         <translation>无装备</translation>
     </message>
     <message>
-        <location filename="../src/dialog/playercarddialog.cpp" line="197"/>
+        <location filename="../src/dialog/playercarddialog.cpp" line="202"/>
         <source>Judging Area</source>
         <translation>判定区</translation>
     </message>
     <message>
-        <location filename="../src/dialog/playercarddialog.cpp" line="213"/>
+        <location filename="../src/dialog/playercarddialog.cpp" line="218"/>
         <source>No judging cards</source>
         <translation>无延时类锦囊牌</translation>
     </message>

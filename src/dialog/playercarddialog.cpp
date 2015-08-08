@@ -106,17 +106,22 @@ QWidget *PlayerCardDialog::createHandcardButton()
 
     PlayerCardButton *button = new PlayerCardButton(tr("Handcard"));
     button->setObjectName("handcard_button");
-    int num = player->getHandcardNum();
-    if (num == 0) {
-        button->setDescription(tr("This guy has no any hand cards"));
-        button->setEnabled(false);
-    } else {
-        button->setDescription(tr("This guy has %1 hand card(s)").arg(num));
-        button->setEnabled(method != Card::MethodDiscard || Self->canDiscard(player, "h"));
-        mapper.insert(button, -1);
-        connect(button, SIGNAL(clicked()), this, SLOT(emitId()));
-    }
 
+    if (player->hasSkill("fengbi")){
+        button->setDescription(tr("This guy's skill avoid you to know his hand cards"));
+        button->setEnabled(false);
+    } else{
+        int num = player->getHandcardNum();
+        if (num == 0) {
+            button->setDescription(tr("This guy has no any hand cards"));
+            button->setEnabled(false);
+        } else {
+            button->setDescription(tr("This guy has %1 hand card(s)").arg(num));
+            button->setEnabled(method != Card::MethodDiscard || Self->canDiscard(player, "h"));
+            mapper.insert(button, -1);
+            connect(button, SIGNAL(clicked()), this, SLOT(emitId()));
+        }
+    }
     return button;
 }
 
