@@ -37,7 +37,7 @@ public:
             }
         }    
     }
-}
+};
 
 #include "thicket.h"
 
@@ -55,13 +55,13 @@ public:
         return player->faceUp();
     }
 
-    const Card *viewAs(const QList<const Card *> &cards) const
+    const Card *viewAs(const Card *originalCard) const
     {
         LuanwuCard *luanwu = new LuanwuCard;
-        luanwu->addSubcard(cards[1]);
+        luanwu->addSubcard(originalCard);
         return luanwu;
     }
-}
+};
 
 class Chidun : public TriggerSkill
 {
@@ -76,7 +76,7 @@ public:
         return target != NULL;
     }
     
-    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data)
+    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
         DamageStruct damage = data.value<DamageStruct>();
         if (event == DamageInflicted)
@@ -98,7 +98,7 @@ public:
                     damage.to->setFlags("chidun_tar");
                     damage.transfer = true;
                     damage.to = ayanami;
-                    damage.tranfer_reason = objectName();
+                    damage.transfer_reason = objectName();
                     player->tag["TransferDamage"] = QVariant::fromValue(damage);
                     
                     return true;
@@ -142,8 +142,9 @@ public:
                 room->broadcastSkillInvoke(objectName(), 3);
             }
         }
+        return false;
     }
-}
+};
 
 WuxinCard::WuxinCard()
 {
@@ -173,7 +174,7 @@ void WuxinCard::use(Room *room, ServerPlayer *player, QList<ServerPlayer *> &tar
 class WuxinVS : public ZeroCardViewAsSkill
 {
 public:
-    WuxinVs() : ZeroCardViewAsSkill("wuxin")
+    WuxinVS() : ZeroCardViewAsSkill("wuxin")
     {
     }
 
@@ -191,7 +192,7 @@ public:
     {
         return new WuxinCard;
     }
-}
+};
 
 class WuxinAya : public TriggerSkill
 {
@@ -202,16 +203,16 @@ public:
         view_as_skill = new WuxinVS;
     }
     
-    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data)
+    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
         DamageStruct damage = data.value<DamageStruct>();
         if (damage.damage >= player->getHp() && !player->isKongcheng() && player->isAlive() && player->askForSkillInvoke(objectName(), data))
         {
-            room->askForUseCard(player, "@@wuxin", "@wuxin_give", -1, Card::MethodUse)
+            room->askForUseCard(player, "@@wuxin", "@wuxin_give", -1, Card::MethodUse);
             return true;
         }
     }
-}
+};
 
 ErciyuanPackage::ErciyuanPackage() : Package("erciyuan")
 {
@@ -220,7 +221,7 @@ ErciyuanPackage::ErciyuanPackage() : Package("erciyuan")
     itomakoto->addSkill(new Renzha);
     
     General *ayanamirei = new General(this, "ayanamirei", "science", 3, false, false);
-    ayanamirei->addSkill(new Wuxin);
+    ayanamirei->addSkill(new WuxinAya);
     ayanamirei->addSkill(new Chidun);
 }
 
