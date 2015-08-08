@@ -1747,7 +1747,7 @@ LuaGongqiTargetMod = sgs.CreateTargetModSkill{
 --------------------------------------------------------------剑咏@redarcher
 LuaJianyong = sgs.CreateTriggerSkill{
 	name = "LuaJianyong",
-	frequency = sgs.Skill_NotFrequent, 
+	frequency = sgs.Skill_Frequent, 
 	events = {sgs.Damage,sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()

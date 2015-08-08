@@ -86,13 +86,12 @@ end
 -------------------------------------------------------------------------------------------------------------
 --完成
 Mikoto = sgs.General(extension, "Mikoto", "science", 4, false,false,false)
-Shana = sgs.General(extension, "Shana", "magic", 3, false,false,false)
 Louise = sgs.General(extension, "Louise", "magic", 3, false,false,false)
 Saito = sgs.General(extension, "Saito", "magic", 4, true,true,false)
 Eustia = sgs.General(extension, "Eustia", "magic", 3,false, false, false)
 Touma = sgs.General(extension, "Touma", "science", 4)
 Okarin = sgs.General(extension, "Okarin", "science", 4)
-Nanami = sgs.General(extension, "Nanami", "real", 3, false)
+--Nanami = sgs.General(extension, "Nanami", "real", 3, false)
 Taiga = sgs.General(extension, "Taiga", "real", 3, false)
 SE_Kirito = sgs.General(extension, "SE_Kirito", "science", 3)
 SE_Asuna = sgs.General(extension, "SE_Asuna", "science", 3, false)
@@ -107,7 +106,7 @@ Rena = sgs.General(extension, "Rena", "real", 3, false,false,false)
 Rena_black = sgs.General(extension, "Rena_black", "real", 3, false,true,true)
 Saber = sgs.General(extension, "Saber", "magic", 4, false,false,false)
 Kirei = sgs.General(extension, "Kirei", "magic", 4, true,false,false)
-Tomoya = sgs.General(extension, "Tomoya", "real", 4, true,false,false)
+--Tomoya = sgs.General(extension, "Tomoya", "real", 4, true,false,false)
 --Tomoya_sub = sgs.General(extension, "Tomoya_sub", "real", 4, true,true,true)
 Accelerator = sgs.General(extension, "Accelerator", "science", 1, true,true,false)
 Shino = sgs.General(extension, "Shino", "science", 3, false,false,false)
@@ -342,129 +341,6 @@ sgs.LoadTranslationTable{
 ["paoji_2"] = "使用2个硬币",
 }
 
---夏娜
-
-ZhenaDistance = sgs.CreateDistanceSkill{
-	name = "#ZhenaDistance", 
-	correct_func = function(self, from, to) 
-		if from:hasSkill(self:objectName()) then
-			if  from:getWeapon() then
-				return -99
-			end
-		end
-		if to:hasSkill(self:objectName()) then
-			if not to:getWeapon() then
-				return 0
-			end
-		end
-		return 0
-	end
-}
-
-Zhena = sgs.CreateTriggerSkill{
-	name = "Zhena",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused},  
-	priority = 2,
-	on_trigger = function(self, event, player, data) 
-		local room = player:getRoom()
-		local damage = data:toDamage()
-		if event == sgs.DamageCaused then
-			local victim = damage.to
-			if victim and victim:isAlive() then
-				if player:getWeapon() then
-					if victim:objectName() ~= player:objectName() then
-						if room:askForSkillInvoke(player,self:objectName(),data) then
-							room:broadcastSkillInvoke("Zhena")
-							room:setPlayerProperty(player,"hp",sgs.QVariant(0))
-							room:doLightbox("Zhena$", 2500)
-							--room:doLightbox("SE_Zhena$", 10000)
-							local Hp = victim:getHp()
-							if Hp > 0 then
-								damage.nature = sgs.DamageStruct_Fire 
-								damage.damage = Hp
-								data:setValue(damage)
-							end
-							--KOF
-							if room:getAllPlayers(true):length() == 2 then
-								local damage2 = sgs.DamageStruct()
-								damage2.from = player
-								room:killPlayer(player,damage2)
-							end
-						end
-					end
-				end
-			end
-		end
-		return false
-	end
-}
-
-Tianhuo = sgs.CreateTriggerSkill{
-	name = "Tianhuo",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageCaused, sgs.DamageInflicted}, 
-	priority = -1,
-	on_trigger = function(self, event, player, data)
-		local damage = data:toDamage()
-		local room = player:getRoom()
-			if damage.nature == sgs.DamageStruct_Fire or damage.nature == sgs.DamageStruct_Thunder then
-				if event == sgs.DamageInflicted then
-					if player:hasSkill(self:objectName()) then
-						damage.damage = 0
-						data:setValue(damage)
-						room:broadcastSkillInvoke("Tianhuo")
-						return
-					end
-				end
-				if event == sgs.DamageCaused then
-					local source = damage.from
-					if source then
-						if source:isAlive() then
-							if damage.nature == sgs.DamageStruct_Fire then
-								if source:hasSkill(self:objectName()) then
-									damage.damage = damage.damage + 1
-									data:setValue(damage)
-									room:broadcastSkillInvoke("Tianhuo")
-									return
-								end
-							end
-						end
-					end
-				end
-			end
-		return false
-	end, 
-	can_trigger = function(self, target)
-		return target
-	end
-}
-
-Shana:addSkill(ZhenaDistance)
-Shana:addSkill(Zhena)
-extension:insertRelatedSkills("Zhena", "#ZhenaDistance")
-Shana:addSkill(Tianhuo)
-
-sgs.LoadTranslationTable{
-["SE_Zhena$"] = "anim=skill/SE_Zhena",
-["Zhena"] = "遮那「贽殿遮那·天破壤碎」",
-["Zhena$"] = "image=image/animate/Zhena.png",
-[":Zhena"] = "当你的装备区存在武器牌时：1、你与其他角色计算距离时-99；2、当你将要造成伤害时，若你的装备区里有武器牌，你可以将你的体力值降为0，令此伤害变为火属性并使其基数等于该角色的体力值。",
-["@ZhenaWORE"] = "弃掉一张手牌并使该伤害造成濒死状态。",
-["$Zhena"] = "悠二...我的...我的一切，给我接住！！！",
-["Tianhuo"] = "天火「真红·飞焰」",
-[":Tianhuo"] = "<font color=\"blue\"><b>锁定技,</b></font>你造成的火焰伤害+1；你防止你受到的属性伤害。",
-["$Tianhuo1"] = "燃烧吧！！！",
-["$Tianhuo2"] = "小白，我找到了哦，最强的自在法。",
-["Shana"] = "夏娜", 
-["&Shana"] = "夏娜", 
-["@Shana"] = "灼眼的夏娜", 
-["#Shana"] = "炎发灼眼的讨伐者", 
-["~Shana"] = "为什么...为什么！...", 
-["designer:Shana"] = "Sword Elucidator",
-["cv:Shana"] = "钉宫理惠",
-["illustrator:Shana"] = "舘津テト",
-}
 
 --露易丝
 
@@ -980,6 +856,10 @@ Huansha = sgs.CreateTriggerSkill{
 										damage2.to = p
 										damage2.damage = damage.damage
 										room:damage(damage2)
+										local damage3=sgs.DamageStruct()
+										damage3.from = p
+										damage3.to = source
+										room:damage(damage3)
 										return true
 									end
 								end
@@ -1024,7 +904,10 @@ SE_Dapo = sgs.CreateTriggerSkill{
 							end
 						end
 						if right then
-							room:gameOver(mygod)
+							local death = sgs.DeathStruct()
+							death.who = source
+							death.reason = "SE_Dapo"
+							room:getThread():trigger(46, room, source, death)
 						end
 					end
 				end
@@ -1041,7 +924,7 @@ Touma:addSkill(Huansha)
 Touma:addSkill(SE_Dapo)
 sgs.LoadTranslationTable{
 ["Huansha"] = "幻杀「幻想杀手Imagine Breaker」",
-[":Huansha"] = "每当一名角色受到一次属性伤害时，你可以与伤害来源进行拼点：若你赢，你取消该伤害并获得其一张牌；若你未赢，你承受与原伤害等值的普通伤害。若无伤害来源或伤害来源没有手牌时，你可以防止此伤害。 ",
+[":Huansha"] = "每当一名角色受到一次属性伤害时，你可以与伤害来源进行拼点：若你赢，你取消该伤害并获得其一张牌；若你未赢，你承受与原伤害等值的普通伤害，对伤害来源造成一点伤害，然后取消原伤害。若无伤害来源或伤害来源没有手牌时，你可以防止此伤害。 ",
 ["$Huansha"] = "救人用不着什么理由吧。",
 ["$Huansha1"] = "救人用不着什么理由吧。",
 ["$Huansha2"] = "我自然担心啊！",
@@ -1240,7 +1123,7 @@ sgs.LoadTranslationTable{
 
 --青山七海
 
-
+--[[
 shengyou = sgs.CreateTriggerSkill{
 	name = "shengyou", 
 	frequency = sgs.Skill_NotFrequent, 
@@ -1296,9 +1179,9 @@ shengyou = sgs.CreateTriggerSkill{
 					if not table.contains(all_generals, "Saber") then
 						table.insert(all_generals, "Saber")
 					end
-					--[[if not table.contains(all_generals, "Rena") then
+					--if not table.contains(all_generals, "Rena") then
 						table.insert(all_generals, "Rena")
-					end]]
+					end
 					if not table.contains(all_generals, "Shino") then
 						table.insert(all_generals, "Shino")
 					end
@@ -1395,25 +1278,9 @@ Nanami:addSkill(shengyou)
 Nanami:addSkill(jinqu)
 
 sgs.LoadTranslationTable{
-["shengyou"] = "声优「追寻梦想」",
-["shengyou$"] = "image=image/animate/shengyou.png",
-["$shengyou1"] = "啊，这里有台词~",
-["$shengyou2"] = "为什么不行！...为什么我就不行！...",
-[":shengyou"] = "回合准备阶段开始时，你可以弃置一半数量的手牌（向下取整）,变身为非死亡的武将牌堆中的一张女性武将。若如此做，回合结束后，你须变身为“青山七海”。",
-["jinqu"] = "进取",
-[":jinqu"] = "每当你受到一次伤害后，你可以指定一名角色，你与该角色各摸X张牌（X为你已损失的体力且最多为2）。 ",
-["$jinqu1"] = "我喜欢有目标的人！喜欢拼命努力的人！",
-["$jinqu2"] = "不要随便把我的挫折归类到真白你的问题上！",
-["Nanami"] = "青山七海", 
-["&Nanami"] = "青山七海", 
-["@Nanami"] = "樱花庄的宠物女孩", 
-["#Nanami"] = "永远的追梦", 
-["~Nanami"] = "我绝对会回来的！决不放弃一定会回来的！", 
-["designer:Nanami"] = "Sword Elucidator",
-["cv:Nanami"] = "中津真莉子",
-["illustrator:Nanami"] = "节操Staff",
-}
 
+}
+]]
 --逢坂大河
 
 
@@ -2463,7 +2330,7 @@ sgs.LoadTranslationTable{
 ["se_chongjing"] = "憧憬「姐姐大人」",
 ["chongjing"] = "憧憬「姐姐大人」",
 ["se_chongjing$"] = "image=image/animate/se_chongjing.png",
-["$se_chongjing1"] = "啊啊~お姉様...お姉様...お姉様!お姉様!お姉様!!!!!!!!!!!",
+["$se_chongjing"] = "啊啊~お姉様...お姉様...お姉様!お姉様!お姉様!!!!!!!!!!!",
 [":se_chongjing"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以令一名其他女性角色获得1枚“お姉様”标记。每当拥有“お姉様”标记的角色造成或受到一次伤害时，其可以令其或对方获得1枚“定身”标记。若如此做且目标角色为御坂美琴，其额外获得1枚“定身”标记。此技能发动前，摸牌阶段，你额外摸一张牌。",
 ["se_chongjing_Attack"] = "お姉様の辅助",
 ["$se_chongjing_Attack"] = "这光芒是...お姉様！",
@@ -3167,12 +3034,14 @@ se_qiyuancard = sgs.CreateSkillCard{
 			return 
 		end
 		local ap = room:askForChoice(source,"se_qiyuan",table.concat(deathplayer,"+"))
+		if ap == "" then return end
 		local player
 		for _,p in sgs.qlist(room:getPlayers()) do
 			if p:getGeneralName() == ap and p:isDead() then
 				player=p
 			end
 		end
+		if not player then return end
 		source:loseMark("@se_qiyuan")
 		--room:broadcastSkillInvoke("se_qiyuan")
 		room:doLightbox("se_qiyuan$", 3000)
@@ -4022,7 +3891,7 @@ DaoluC = sgs.CreateTriggerSkill{
 	on_trigger = function(self, event, player, data)
 	end
 }
-
+--[[
 Tomoya:addSkill(se_zhuren)
 Tomoya:addSkill(se_zhuren_End)
 extension:insertRelatedSkills("se_zhuren", "#se_zhuren_End")
@@ -4043,70 +3912,7 @@ extension:addToSkills(DaoluC)
 Tomoya:addWakeTypeSkillForAudio("se_diangong")
 Tomoya:addWakeTypeSkillForAudio("Shouyang")
 Tomoya:addWakeTypeSkillForAudio("Haixing")
-
-sgs.LoadTranslationTable{
-["se_zhuren"] = "助人「实现梦想」",
-["zhuren"] = "助人「实现梦想」",
-["se_zhurencard"] = "助人「实现梦想」",
-["#se_zhuren_End"] = "助人「实现梦想」",
-[":se_zhuren"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将至多X+1张牌交给一名角色（X为你已损失的体力值）。弃牌阶段结束时，你可以将手牌补至4张。 ",
-["$se_zhuren1"] = "只要找到下一件愉快和开心的事不就好了嘛。",
-["$se_zhuren2"] = "大家都在担心你啊。你是知道的吧。",
-["$se_zhuren3"] = "这和篮球部的特训比起来根本不算什么。",
-["Daolu"] = "道路「选择的道路」",
-["DaoluA"] = "道路「选择的道路」",
-["DaoluA$"] = "image=image/animate/DaoluA.png",
-["DaoluB"] = "道路「选择的道路」",
-["DaoluB$"] = "image=image/animate/DaoluB.png",
-["DaoluC"] = "道路「选择的道路」",
-["DaoluC$"] = "image=image/animate/DaoluC.png",
-["$Daolu1"] = "请和我交往吧，渚。",
-["$Daolu2"] = "虽然稍微慢了一点，但我也要到你的身边来。",
-["$Daolu3"] = "如果可以的话，请成为风子的好朋友！",
-["$DaoluA"] = "请和我交往吧，渚。",
-["$DaoluB"] = "虽然稍微慢了一点，但我也要到你的身边来。",
-["$DaoluC"] = "如果可以的话，请成为风子的好朋友！",
-[":Daolu"] = "<font color=\"purple\"><b>觉醒技，</b></font>你的濒死状态结束时，你可以将体力回复至2点，然后你减一点体力上限并选择一个技能获得：“电工”“收养”“海星”。\n\n<font weight=2><font color=\"brown\"><b>电工「电路工人」：</b></font>出牌阶段，你可以将一张黑色手牌当【闪电】使用；你防止【闪电】对你造成的伤害；每当你获得此技能后，你须指定至多三名角色，你防止【闪电】对他们造成的伤害。\n\n<font weight=2><font color=\"brown\"><b>收养「Tomo」：</b></font>结束阶段结束时，你可以摸X+1张牌（X为你已损失的体力）；每当你获得此技能后，你须指定一名其他角色，每当其受到伤害时，该角色将此伤害转移给你。\n\n<font weight=2><font color=\"brown\"><b>海星「梦的碎片」：</b></font>每当一名角色的濒死状态结束时，你可以弃置一张牌并进行一次判定：若结果大于8，该角色回复1点体力；若结果为红色，该角色回复1点体力。",
-["@Nagisa"] = "渚的守护者",
-["@Tomoyo"] = "智代的伴侣",
-["@Fuko"] = "风子召唤使",
-["Nagisa_Protector"] = "渚的守护者",
-["Tomoyo_Couple"] = "智代的伴侣",
-["Fuko_summoner"] = "风子召唤使",
-["se_diangong"] = "电工「电路工人」",
-["diangong"] = "电工「电路工人」",
-["se_diangong_st"] = "电工「电路工人」",
-["se_diangong_def"] = "绝缘「雷电免疫」",
-[":se_diangong_def"] = "<font color=\"blue\"><b>锁定技,</b></font>「闪电」对你无效。",
-["$se_diangong1"] = "朋也君...朋也君！",
-["$se_diangong2"] = "渚...我找到了。终于找到了..只有我能守护的的东西。",
-[":se_diangong"] = "获得技能时，并依次指定至多三名角色免受「闪电」的伤害。出牌阶段，你可以将一张黑色的手牌当做「闪电」。「闪电」对你无效。",
-["Shouyang"] = "收养「Tomo」",
-["Shouyang_st"] = "收养「Tomo」",
-["Shouyang_ed"] = "小智「被收养状态」",
-[":Shouyang_ed"] = "<font color=\"blue\"><b>锁定技,</b></font>你的伤害均由冈崎朋也承担。",
-[":Shouyang"] = "获得技能时，你指定你以外的一名角色，你为其承担所有的伤害。在你的回合末，你额外摸X+1张牌。X为你失去的体力值。",
-["$Shouyang"] = "不管发生什么，我都会保护你的~",
-["Haixing"] = "海星「梦的碎片」",
-[":Haixing"] = "当一名角色进入濒死阶段时，你可以弃置一张牌，然后进行一次判定。若判定牌点数>8，该角色回复一点体力；若判定牌为红色，该角色回复一点体力。",
-["$Haixing"] = "非常感谢你们..风子过得很开心..",
-["Tomoya"] = "岡崎朋也", 
-["&Tomoya"] = "岡崎朋也", 
-["@Tomoya"] = "Clannad", 
-["#Tomoya"] = "家族的誓言", 
-["~Tomoya"] = "我和春原没能做到的事情...你现在正要去实现！你现在背负着我们充满挫折的记忆！", 
-["designer:Tomoya"] = "Sword Elucidator",
-["cv:Tomoya"] = "中村悠一",
-["illustrator:Tomoya"] = "京アニ",
-["Tomoya_sound"] = "----岡崎朋也台词", 
-["&Tomoya_sound"] = "----岡崎朋也台词", 
-["#Tomoya_sound"] = "台词向", 
-["~Tomoya_sound"] = "我和春原没能做到的事情...你现在正要去实现！你现在背负着我们充满挫折的记忆！", 
-["designer:Tomoya_sound"] = "Sword Elucidator",
-["cv:Tomoya_sound"] = "中村悠一",
-["illustrator:Tomoya_sound"] = "京アニ",
-}
-
+]]
 
 --真·一方通行
 
@@ -12267,7 +12073,7 @@ se_shifeng = sgs.CreateTriggerSkill{
 			if not source then return end
 			local mygod = room:findPlayerBySkillName(self:objectName())
 			if not mygod then return end
-			if mygod:getMark("@Yukino_shifeng") > math.floor(room:getAlivePlayers():length()/ 5) then return end
+			if mygod:getMark("@Yukino_shifeng") > 2 then return end
 			if not mygod:askForSkillInvoke(self:objectName(), data) then return end
 			room:broadcastSkillInvoke(self:objectName())
 			room:doLightbox("se_shifeng$", 800)
@@ -12310,7 +12116,7 @@ se_zhiyan_Trigger = sgs.CreateTriggerSkill{
 				player:loseAllMarks("@Yukino_shifeng")
 				if counts == 0 then return end
 				data:setValue(0)
-				if counts >= math.floor(room:getAlivePlayers():length()/ 5) + 1 then
+				if counts >= 2 then
 					player:gainMark("@yukino_zhiyan")
 				end
 			end
@@ -12416,7 +12222,7 @@ sgs.LoadTranslationTable{
 ["$se_shifeng4"] = "你是在说...不想改变呢",
 ["$se_shifeng5"] = "（静）打扰了，有些事情要拜托你们一下。",
 ["$se_shifeng6"] = "不是的...我总是以为自己做的很好，却是自作聪明而已。",
-[":se_shifeng"]="一名角色受到伤害时，若你的“侍奉”标记不超过X，你可以令该伤害值-1。若如此做，你获得一个“侍奉”标记。X为场上存活人数/5，向下取整。", 
+[":se_shifeng"]="一名角色受到伤害时，若你的“侍奉”标记不超过2，你可以令该伤害值-1。若如此做，你获得一个“侍奉”标记。", 
 
 ["se_shifeng$"] = "image=image/animate/se_shifeng.png",
 ["@yukino_zhiyan"] = "直言",
@@ -12425,7 +12231,7 @@ sgs.LoadTranslationTable{
 ["$se_zhiyan2"] = "虽然不知道怎么形容，但我对此感到十分焦躁",
 ["$se_zhiyan3"] = "那你也不用特意去撒那种谎的。",
 ["$se_zhiyan4"] = "也没什么关系，我不可能去干涉你私人的行动，而且也没那种资格。",
-[":se_zhiyan"]="摸牌阶段，若你有“侍奉”标记，你的摸牌数为0，若你的“侍奉”标记数至少为X，直到你的下一个摸牌阶段，当你需要使用【无懈可击】时，你可以视为使用一张【无懈可击】，并获得一个“侍奉”标记。该效果获得后将“侍奉”标记全部弃置。X为场上存活人数/5，向下取整。", 
+[":se_zhiyan"]="摸牌阶段，若你有“侍奉”标记，你的摸牌数为0，若你的“侍奉”标记数至少为2，直到你的下一个摸牌阶段，当你需要使用【无懈可击】时，你可以视为使用一张【无懈可击】，并获得一个“侍奉”标记。该效果获得后将“侍奉”标记全部弃置。", 
 
 ["se_wenchang"] = "稳场",
 ["$se_wenchang1"] = "就是嘛。啊哈哈...哈哈......",
