@@ -25,7 +25,7 @@ public:
                 room->broadcastSkillInvoke(objectName());
                 room->drawCards(target, 2, objectName());
                 int id = room->askForCardChosen(target, target, "h", objectName());
-                target->addToPile("zha", id)
+                target->addToPile("zha", id);
                 if (room->askForChoice(target, objectName(), "RenzhaTurnover+cancel") == "RenzhaTurnover")
                 {
                     room->broadcastSkillInvoke(objectName());
