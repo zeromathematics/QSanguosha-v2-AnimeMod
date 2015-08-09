@@ -396,6 +396,8 @@ bool Client::_getSingleCard(int card_id, CardsMoveStruct move)
     else {
         if (move.to_place == Player::DrawPile)
             pile_num++;
+        else if (move.to_place == Player::DrawPileBottom)
+            pile_num++;
         else if (move.to_place == Player::DiscardPile)
             discarded_list.prepend(card);
     }

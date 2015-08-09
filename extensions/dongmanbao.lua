@@ -112,7 +112,7 @@ Accelerator = sgs.General(extension, "Accelerator", "science", 1, true,true,fals
 Shino = sgs.General(extension, "Shino", "science", 3, false,false,false)
 Misaka_Imouto = sgs.General(extension, "Misaka_Imouto", "science", 3, false,false,false)
 Tukasa = sgs.General(extension, "Tukasa", "real", 3, false,false,false)
-Natsume_Rin = sgs.General(extension, "Natsume_Rin", "real", 99, false,false,false)
+--Natsume_Rin = sgs.General(extension, "Natsume_Rin", "real", 99, false,false,false)
 --Natsume_Rin_sub = sgs.General(extension, "Natsume_Rin_sub", "real", 99, false,true,true)
 Lelouch = sgs.General(extension, "Lelouch", "science", 2, true,true,false)
 Leafa = sgs.General(extension, "Leafa", "science", 3, false,false,false)
@@ -151,7 +151,7 @@ Yuri = sgs.General(extension, "Yuri", "real", 3, false,false,false)
 Setsuna = sgs.General(extension, "Setsuna", "real", 3, false,false,false)
 Yukina = sgs.General(extension, "Yukina", "magic", 3, false,false,false)
 K1 = sgs.General(extension, "K1", "real", 4, true,false,false)
-Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
+--Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
 Batora = sgs.General(extension, "Batora", "magic", 4, true,true,false)
 Shirayuki = sgs.General(extension, "Shirayuki", "science", 4, false,false,false)
 Saki = sgs.General(extension, "Saki", "real", 4, false,false,false)
@@ -4930,11 +4930,9 @@ se_zhilingcard = sgs.CreateSkillCard{
 		local card = sgs.Sanguosha:getCard(id)
 		if card:getSuit() == sgs.Card_Spade and target:getMark("@Neko_S") == 0 then
 			target:gainMark("@Neko_S")
-			room:acquireSkill(target, "se_zhiling_S", false)
 		end
 		if card:getSuit() == sgs.Card_Club and target:getMark("@Neko_C") == 0 then
 			target:gainMark("@Neko_C")
-			room:acquireSkill(target, "se_zhiling_C", false)
 		end
 		if card:getSuit() == sgs.Card_Diamond and target:getMark("@Neko_D") == 0 then
 			target:gainMark("@Neko_D")
@@ -4958,6 +4956,9 @@ se_zhiling_S = sgs.CreateTriggerSkill{
 				local count = data:toInt() - 2
 				data:setValue(count)
 			end
+		end
+		can_trigger = function(self, target)
+			return target
 		end
 	end,
 }
@@ -5075,77 +5076,10 @@ SE_Zhixing = sgs.CreateTriggerSkill{
 	end
 }
 
-Natsume_Rin:addSkill(SE_Pasheng)
-Natsume_Rin:addSkill(SE_Maoqun)
-Natsume_Rin:addSkill(SE_Maoqun_KOF)
-extension:insertRelatedSkills("SE_Maoqun", "#SE_Maoqun_KOF")
-Natsume_Rin:addSkill(SE_Chengzhang)
-
-Natsume_Rin:addSkill(se_zhiling_D)
-Natsume_Rin:addSkill(se_zhiling_H)
+--Natsume_Rin:addWakeTypeSkillForAudio("se_zhiling")
+--Natsume_Rin:addWakeTypeSkillForAudio("SE_Zhixing")
 
 
-
-extension:addToSkills(se_zhiling_S)
-extension:addToSkills(se_zhiling_C)
-extension:addToSkills(se_zhiling)
-extension:addToSkills(SE_Zhixing)
-
-Natsume_Rin:addWakeTypeSkillForAudio("se_zhiling")
-Natsume_Rin:addWakeTypeSkillForAudio("SE_Zhixing")
-
-
-sgs.LoadTranslationTable{
-["SE_Pasheng"] = "怕生「不善交流」",
-[":SE_Pasheng"] = "<font color=\"blue\"><b>锁定技,</b></font>当其他角色与你计算距离时，始终-100；当你计算与其他角色的距离时，始终+100。",
-["SE_Maoqun"] = "猫群「只和猫玩」",
-["Neko"] = "猫",
-["$SE_Maoqun1"] = "就这样就这样~第一只直立行走的猫~",
-["$SE_Maoqun2"] = "烦死了！我没有朋友又怎么样？碍到你了嘛？你会死嘛？",
-["$SE_Maoqun3"] = "很好很好~喵~喵~",
-["$SE_Maoqun4"] = "你...今天也没带信来吗？",
-[":SE_Maoqun"] = "<font color=\"blue\"><b>锁定技,</b></font>每当一名角色造成一次伤害后，你失去1点体力并展示牌堆顶牌，然后将之置于你的武将牌上，称为“猫”。",
-["SE_Chengzhang"] = "成长「Refrain」",
-["SE_Chengzhang$"] = "image=image/animate/SE_Chengzhang.png",
-["$SE_Chengzhang"] = "理树，拉住我的手吧！",
-[":SE_Chengzhang"] = "<font color=\"purple\"><b>觉醒技，</b></font>回合开始时，若“猫”的数量达到12或更多，若你的体力上限小于100，你须将体力上限减少至3；若你的体力上限大于99，你须减96点体力上限。然后失去“怕生”和“猫群”，获得“指令”和“执行”。\n\n<font weight=2><font color=\"brown\"><b>指令「无限猫制~」：</b></font>出牌阶段，你可以将一张“猫”置入弃牌堆并指定一名角色，你令其根据此“猫”的花色获得以下效果：♠：摸牌阶段，你有1/3概率少摸两张牌；♣：你的手牌上限-1；<font color=\"red\"><b>♦</b></font>：每当你受到一次属性伤害时，此伤害+1；<font color=\"red\"><b>♥</b></font>：每当你进入濒死状态时，直到濒死状态结束，有1/2概率令其他角色的【桃】不能指定你为目标。\n\n<font weight=2><font color=\"brown\"><b>执行「果断的执行力」：</b></font>每当一名角色进入濒死状态时，你可以指定一名男性角色，你与其各展示一张手牌：若这些牌的花色相同，其摸两张牌；若这些牌颜色相同，其回复1点体力；若这些牌点数相同，其摸X张牌（X为这些牌的点数）；若这些牌颜色不同，你与其各摸一张牌；若这些牌颜色相同，弃置这些牌。",
-["se_zhiling"] = "指令「无限猫制~」",
-["se_zhiling"] = "指令「无限猫制~」",
-["se_zhilingcard"] = "指令「无限猫制~」",
-["se_zhiling_S"] = "指令·1/3摸牌-2",
-["se_zhiling_C"] = "指令·手牌上限-1",
-["#se_zhiling_D"] = "指令·属性伤害+1",
-["#se_zhiling_H"] = "指令·1/2求桃不能",
-["@Neko_S"] = "指令·1/3摸牌-2",
-["@Neko_C"] = "指令·手牌上限-1",
-["@Neko_D"] = "指令·属性伤害+1",
-["@Neko_H"] = "指令·1/2求桃不能",
-["$se_zhiling1"] = "不许欺负弱小！",
-["$se_zhiling2"] = "（殴打...）",
-["$se_zhiling3"] = "我上了！蛮不讲理的大恶人，天诛！~",
-[":se_zhiling"] = "出牌阶段，你可以弃置一张“猫”对一名角色造成某种永久影响。♠：1/3概率摸牌阶段少摸两张牌。♣：手牌上限-1。<font color=\"red\"><b>♦</b></font>：受到属性伤害+1。<font color=\"red\"><b>♥</b></font>：1/2求桃阶段，其他角色无法对其使用【桃】。每名角色无法重复分配相同花色。",
-["SE_Zhixing"] = "执行「果断的执行力」",
-["SE_Zhixing$"] = "image=image/animate/SE_Zhixing.png",
-["$SE_Zhixing1"] = "没问题的，我相信你。先给警察打个电话比较好吧。",
-["$SE_Zhixing2"] = "小毬，我会让你的愿望实现的。",
-["$SE_Zhixing3"] = "要放在担架上吗？...明白了！",
-[":SE_Zhixing"] = "当一名角色进入濒死阶段时，你可以和另一名男性角色各展示一张手牌。若牌花色相同，濒死角色摸两张牌。若牌颜色相同，濒死角色回复一点体力。若牌点数相同，濒死角色摸点数张牌。若牌颜色不同，你和濒死角色各摸一张牌。若非颜色不同，你需弃置该牌。",
-["Natsume_Rin"] = "棗鈴", 
-["&Natsume_Rin"] = "棗鈴", 
-["@Natsume_Rin"] = "Little Busters!", 
-["#Natsume_Rin"] = "不擅长与他人交流的高贵小猫", 
-["~Natsume_Rin"] = "（被击败）......", 
-["designer:Natsume_Rin"] = "Sword Elucidator",
-["cv:Natsume_Rin"] = "民安ともえ",
-["illustrator:Natsume_Rin"] = "ミステア",
-["Natsume_Rin_sound"] = "----棗鈴台词", 
-["&Natsume_Rin_sound"] = "----棗鈴台词", 
-["#Natsume_Rin_sound"] = "台词向", 
-["~Natsume_Rin_sound"] = "（被击败）......", 
-["designer:Natsume_Rin_sound"] = "Sword Elucidator",
-["cv:Natsume_Rin_sound"] = "民安ともえ",
-["illustrator:Natsume_Rin_sound"] = "节操Staff",
-}
 
 --真·鲁鲁修·V·布列塔尼亚
 
@@ -10825,26 +10759,7 @@ SE_Heimu = sgs.CreateTriggerSkill{
 	end,
 }
 
-Junko:addSkill(SE_Heimu)
-sgs.LoadTranslationTable{
-["SE_Heimu$"] = "image=image/animate/SE_Heimu.png", 
-
-["SE_Heimu"] = "黑幕",
-["$SE_Heimu"] = "",
-[":SE_Heimu"] = "<font color=\"red\"><b>限定技，</b></font>游戏结束前，你可以挑战所有胜者。",
-
-
-
-
-["Junko"] = "江之岛盾子", 
-["&Junko"] = "江之岛盾子", 
-["@Junko"] = "弹丸论破", 
-["#Junko"] = "幕后黑手", 
-["~Junko"] = "", 
-["designer:Junko"] = "萝莉姬",
-["cv:Junko"] = "",
-["illustrator:Junko"] = "",
-}
+--Junko:addSkill(SE_Heimu)
 
 --右代宫战人
 
@@ -12073,7 +11988,7 @@ se_shifeng = sgs.CreateTriggerSkill{
 			if not source then return end
 			local mygod = room:findPlayerBySkillName(self:objectName())
 			if not mygod then return end
-			if mygod:getMark("@Yukino_shifeng") > 2 then return end
+			if mygod:getMark("@Yukino_shifeng") > 1 then return end
 			if not mygod:askForSkillInvoke(self:objectName(), data) then return end
 			room:broadcastSkillInvoke(self:objectName())
 			room:doLightbox("se_shifeng$", 800)
@@ -12486,6 +12401,8 @@ Eugen:addSkill(se_tuodui)
 
 sgs.LoadTranslationTable{
 ["se_linmo"] = "临摹",
+["drawing"] = "原稿",
+["copying"] = "临摹",
 ["$se_linmo1"] = "哎————野崎君是漫画家？（野崎）哎？不知道就涂了四个小时？",
 ["$se_linmo2"] = "（野崎）我在想，能画出边界那么干净的海报的人，一定能帮上忙吧。（千代）原来是看重我的技术么！",
 ["$se_linmo3"] = "（野崎）那边，拜托涂黑了。（千代）嗯？......",
