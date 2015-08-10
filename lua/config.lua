@@ -44,6 +44,8 @@ config = {
 
 
 		"Inovation",
+        
+        "ERCIYUAN",
 --[[
 		"Standard",
 		"Wind",

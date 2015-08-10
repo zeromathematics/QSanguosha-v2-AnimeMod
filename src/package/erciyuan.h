@@ -1,18 +1,15 @@
-#ifndef _ERCIYUAN_H
-#define _ERCIYUAN_H
+#ifndef _ERCIYUAN_PACKAGE_H
+#define _ERCIYUAN_PACKAGE_H
 
 #include "package.h"
 #include "card.h"
-//#include "skill.h"
-//#include "standard.h"
 
-
-class ErciyuanPackage : public Package
+class ERCIYUANPackage : public Package
 {
     Q_OBJECT
 
 public:
-    ErciyuanPackage();
+    ERCIYUANPackage();
 };
 
 class WuxinCard : public SkillCard
@@ -23,7 +20,7 @@ public:
     Q_INVOKABLE WuxinCard();
 
     bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
-    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+    void use(Room *room, ServerPlayer *player, QList<ServerPlayer *> &targets) const;
 };
 
 #endif

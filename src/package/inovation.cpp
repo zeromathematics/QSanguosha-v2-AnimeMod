@@ -1827,7 +1827,7 @@ public:
 
     }
 
-    bool viewFilter(const Card *to_select) const
+    bool viewFilter(const Card *) const
     {
         return true;
     }

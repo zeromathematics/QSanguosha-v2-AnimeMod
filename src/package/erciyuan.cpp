@@ -84,7 +84,15 @@ public:
             QList<ServerPlayer *> ayanamis = room->findPlayersBySkillName(objectName());
             foreach (ServerPlayer *ayanami, ayanamis)
             {
-                if (damage.to != ayanami && damage.damage >= 1 && !damage.transfer && ayanami->askForSkillInvoke(objectName(), data))
+                LogMessage log;
+                log.type = "#Damage";
+                log.from = damage.from;
+                log.to << damage.to;
+                log.arg = QString(damage.damage);
+                log.arg2 = QString(damage.nature);
+                room->sendLog(log);
+
+                if (damage.to != ayanami && damage.damage >= 1 && !damage.transfer && ayanami->askForSkillInvoke(this, data))
                 {
                     room->notifySkillInvoked(ayanami, objectName());
                     room->broadcastSkillInvoke(objectName(), 1);
@@ -104,7 +112,7 @@ public:
                     return true;
                 }
             }
-        } else if (event == DamageComplete) {
+        } else if (event == DamageComplete && damage.transfer && damage.transfer_reason == objectName()) {
             ServerPlayer *slasher = NULL;
             
             foreach (ServerPlayer *tar, room->getAlivePlayers())
@@ -115,15 +123,20 @@ public:
                     break;    
                 }
             }
-            
-            if (slasher)
+
+            if (slasher != NULL)
+            {
                 slasher->setFlags("-chidun_tar");
-                
+            }
+            else {
+                return false;
+            }
+
             QString prompt = "@chidun:" + damage.from->objectName();
             
             while (true)
             {
-                slasher->setFlags("chidun_slasher");
+                slasher->setFlags("chidun_slash");
                 const Card *slash = room->askForUseSlashTo(slasher, damage.from, prompt, false, false, false);
                 if (slash)
                 {
@@ -149,7 +162,6 @@ public:
 WuxinCard::WuxinCard()
 {
     target_fixed = false;
-    mute = true;
 }
 
 bool WuxinCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
@@ -176,16 +188,7 @@ class WuxinVS : public ZeroCardViewAsSkill
 public:
     WuxinVS() : ZeroCardViewAsSkill("wuxin")
     {
-    }
-
-    bool isEnabledAtPlay(const Player *) const
-    {
-        return false;
-    }
-
-    bool isEnabledAtResponse(const Player *player, const QString &pattern) const
-    {
-        return pattern == "@@wuxin" && !player->isKongcheng();
+        response_pattern = "@@wuxin";
     }
 
     const Card *viewAs() const
@@ -203,18 +206,17 @@ public:
         view_as_skill = new WuxinVS;
     }
     
-    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         DamageStruct damage = data.value<DamageStruct>();
         if (damage.damage >= player->getHp() && !player->isKongcheng() && player->isAlive() && player->askForSkillInvoke(objectName(), data))
-        {
-            room->askForUseCard(player, "@@wuxin", "@wuxin_give", -1, Card::MethodUse);
-            return true;
-        }
+            if (room->askForUseCard(player, "@@wuxin", "@wuxin_give", -1, Card::MethodUse))
+                return true;
+        return false;
     }
 };
 
-ErciyuanPackage::ErciyuanPackage() : Package("erciyuan")
+ERCIYUANPackage::ERCIYUANPackage() : Package("ERCIYUAN")
 {
     General *itomakoto = new General(this, "itomakoto", "real", 3, true, false);
     itomakoto->addSkill(new Haochuan);
@@ -223,6 +225,8 @@ ErciyuanPackage::ErciyuanPackage() : Package("erciyuan")
     General *ayanamirei = new General(this, "ayanamirei", "science", 3, false, false);
     ayanamirei->addSkill(new WuxinAya);
     ayanamirei->addSkill(new Chidun);
+
+    addMetaObject<WuxinCard>();
 }
 
-ADD_PACKAGE(Erciyuan)
+ADD_PACKAGE(ERCIYUAN)
