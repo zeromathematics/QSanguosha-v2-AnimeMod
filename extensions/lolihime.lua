@@ -619,7 +619,32 @@ dandiao = sgs.CreateTriggerSkill{
         local phase = player:getPhase()
         if phase == sgs.Player_Draw then
             if room:askForSkillInvoke(player, self:objectName(), data) then
-				local condition = {}
+				local spade=0
+				local heart=0
+				local club=0
+				local diamond=0
+				for _, card in sgs.qlist(player:getHandcards()) do
+					if card:getSuit()==sgs.Card_Spade then  spade=spade+1 end
+					if card:getSuit()==sgs.Card_Heart then  heart=heart+1 end
+					if card:getSuit()==sgs.Card_Club then  club=club+1 end
+					if card:getSuit()==sgs.Card_Diamond then  diamond=diamond+1 end
+				end
+				local onecount=0
+				local whichflu="none"
+				if spade == 1 then onecount=onecount+1 
+				whichflu="spade" end
+				if heart == 1 then onecount=onecount+1 
+				whichflu="heart" end
+				if club == 1 then onecount=onecount+1 
+				whichflu="club" end
+				if diamond == 1 then onecount=onecount+1 
+				whichflu="diamond" end
+				if onecount~=1 then whichflu="none" end
+				
+				
+				--local condition = {}
+				--local conditionrank = {}
+				----储存弃牌堆的花色
 				local spade=0
 				local heart=0
 				local club=0
@@ -632,32 +657,61 @@ dandiao = sgs.CreateTriggerSkill{
 						if sgs.Sanguosha:getCard(room:getDiscardPile():at(i)):getSuit()==sgs.Card_Diamond then  diamond=diamond+1 end
 					end
 				end
-				local Ah = math.max(spade,heart,club,diamond)
-				if spade==Ah then table.insert(condition,"spade")end
-				if heart==Ah then table.insert(condition,"heart") end
-				if club==Ah then table.insert(condition,"club") end
-				if diamond==Ah then table.insert(condition,"diamond") end
-				
-				spade=0
-				heart=0
-				club=0
-				diamond=0
-				for _, card in sgs.qlist(player:getHandcards()) do
-					if card:getSuit()==sgs.Card_Spade then  spade=spade+1 end
-					if card:getSuit()==sgs.Card_Heart then  heart=heart+1 end
-					if card:getSuit()==sgs.Card_Club then  club=club+1 end
-					if card:getSuit()==sgs.Card_Diamond then  diamond=diamond+1 end
+				local rank={}
+				table.insert(rank,spade)
+				table.insert(rank,heart)
+				table.insert(rank,club)
+				table.insert(rank,diamond)
+				table.sort(rank)
+				local aimflu=0
+				local damagewillbedone=0
+				if whichflu=="spade" then aimflu=spade end
+				if whichflu=="heart" then aimflu=heart end
+				if whichflu=="club" then aimflu=club end
+				if whichflu=="diamond" then aimflu=diamond end
+				--if whichflu==0 then return end
+				for i=1,4 do
+					if rank[i]==aimflu then
+						damagewillbedone=i
+					end
 				end
-				if spade == 0 then spade = 1000 end
-				if heart == 0 then heart = 1000 end
-				if club == 0 then club = 1000 end
-				if diamond == 0 then diamond = 1000 end
-				local Ah = math.min(spade,heart,club,diamond)
-				if Ah ~= 1 then return end
-				if spade>Ah and tabcontain(condition, "spade") then table.remove(condition,1)end
+				
+				
+				--[[
+				i=1
+				while math.max(spade,heart,club,diamond)>0 do
+					local Ah = math.max(spade,heart,club,diamond)
+					if spade==Ah then 
+						table.insert(condition,"spade")
+						table.insert(conditionrank,i)
+						spade=-1
+					end
+					if heart==Ah then 
+						table.insert(condition,"heart")
+						table.insert(conditionrank,i)
+						heart=-1
+					end
+					if club==Ah then 
+						table.insert(condition,"club") 
+						table.insert(conditionrank,i)
+						club=-1
+					end
+					if diamond==Ah then 
+						table.insert(condition,"diamond") 
+						table.insert(conditionrank,i)
+						diamond=-1
+					end
+					i=i+1
+				end	
+				]]
+				
+				
+
+				
+				--[[if spade>Ah and tabcontain(condition, "spade") then table.remove(condition,1)end
 				if heart>Ah and tabcontain(condition, "heart") then table.remove(condition,1) end
 				if club>Ah and tabcontain(condition, "club") then table.remove(condition,1) end
-				if diamond>Ah and tabcontain(condition, "diamond") then table.remove(condition,1) end
+				if diamond>Ah and tabcontain(condition, "diamond") then table.remove(condition,1) end]]
 					
 	            local card1 = room:drawCard()
 				local move = sgs.CardsMoveStruct()
@@ -669,7 +723,7 @@ dandiao = sgs.CreateTriggerSkill{
 				local card2 = sgs.Sanguosha:getCard(card1)
 				local suit = card2:getSuitString()
 				
-				if tabcontain(condition,suit) then 
+				if whichflu==suit then 
 					if math.random(1, 2) == 1 then
 						room:broadcastSkillInvoke("dandiao", 1)
 					else
@@ -677,9 +731,9 @@ dandiao = sgs.CreateTriggerSkill{
 					end
 					room:doLightbox("dandiao$", 3000)
 					room:showAllCards(player)
-					local to = room:askForPlayerChosen(player, room:getAlivePlayers(), self:objectName(), self:objectName(), true, true)
-					room:damage(sgs.DamageStruct(self:objectName(), player, to, 3, sgs.DamageStruct_Thunder))
-					room:loseMaxHp(to, 2)
+					local to = room:askForPlayerChosen(player, room:getAlivePlayers(), self:objectName(), "solo", true, true)
+					room:damage(sgs.DamageStruct(self:objectName(), player, to, damagewillbedone, sgs.DamageStruct_Thunder))
+					room:loseMaxHp(to, math.floor(damagewillbedone/2))
 				else
 					if math.random(1, 2) == 1 then
 						room:broadcastSkillInvoke("dandiao", 3)
@@ -710,8 +764,9 @@ sgs.LoadTranslationTable{
 ["$dandiao2"] = "这可不安全哟。点和，立直，一发，宝牌4，12000点。",
 ["$dandiao3"] = "那么，你打算...把仅此一次的人生，也用理论和计算度过吗？",
 ["$dandiao4"] = "和看见了又该生气了吧。",
-["dandiao"] = "单吊",
-[':dandiao'] = "摸牌阶段开始时，你可以放弃摸牌，改为从牌堆顶亮出一张牌，若此牌的花色是弃牌堆中是最多的花色，且是手牌中最少且仅有一张的花色。则可以展示所有手牌，并选择一名角色，对其造成3点雷电伤害并令其减少2点体力上限；然后获得此牌。",
+["dandiao"] = "单吊『将』",
+["solo"] = "選擇一個角色受到傷害和上限失去！",
+[':dandiao'] = "摸牌阶段开始时，你可以放弃摸牌改为从牌堆顶亮出一张牌。若此牌的花色是手牌中唯一的仅一张的花色，则可以展示所有手牌，并选择一名角色，对其造成X点雷电伤害之后失去[X/2]点体力上限，然后获得此牌。 （X为此牌的花色在弃牌堆中花色的从少到多的顺位）。",
 ["designer:ku"] = "帕秋莉·萝莉姬",
 ["cv:ku"] = "伊藤静",
 ["illustrator:ku"] = "",
@@ -791,11 +846,11 @@ sgs.LoadTranslationTable{
 ["&pyuki"] = "片岡優希",
 ["@pyuki"] = "天才麻将少女",
 ["#pyuki"] = "东风王",
-["eastfast"] = "速攻（东风）",
+["eastfast"] = "速攻『东风』",
 ["$eastfast1"] = "这样的话，先锋派最强的出战才是常理。就是说我最强！",
 ["$eastfast2"] = "这场比赛...不会再有东二局！",
 ["~pyuki"] = "墨西哥饼能量耗尽了...",
-["@eastfast-tacos"] = "你可以弃置一张tacos，然后发动速攻（东风）",
+["@eastfast-tacos"] = "你可以弃置一张tacos，然后发动「速攻『东风』」",
 ["drop"] = "弃掉这张牌",
 ["save"] = "保留这张牌",
 [':eastfast'] = '准备阶段开始时，若摸牌堆大于弃牌堆牌数的3倍时，你可以观看牌堆顶的1张牌，然后可以弃置这张牌或者选择将此牌置于保留区，若保留牌数小于于X，则可以继续发动该技能。若摸牌堆不大于弃牌堆牌数的3倍时，你可以使用手牌中的tacos，如此做可以继续发动该技能。技能结束时，将保留区的牌按栈的规则放回牌堆顶。（X为2+你的判定区的牌数。）',
@@ -896,9 +951,9 @@ sgs.LoadTranslationTable{
 ["yehuo"] = "夜祸",
 [":yehuo"] = "<font color=\"blue\"><b>锁定技,</b></font>你的回合开始阶段，如果处于背面朝上，你翻过来行动,并于回合结束阶段翻回背面。回合外，每次被翻回正面，你当收到一点无来源的无属性伤害。",
 ["spring"] = "源头",
-[":spring"] = "游戏开始阶段，你获得【鼠疫】，【鼠疫】对你无效，你无法获得【抗体】。每当你受到【鼠疫】持有角色伤害或对其造成伤害时，可以获得其所拥有的【鼠疫】，或者给予其自己所拥有的【鼠疫】，并防止此次伤害。不能无视抗体",
+[":spring"] = "游戏开始阶段，你获得“鼠疫”，“鼠疫”对你无效，你无法获得“抗体”。每当你受到“鼠疫”持有角色伤害或对其造成伤害时，可以获得其所拥有的“鼠疫”，或者给予其自己所拥有的“鼠疫”，并防止此次伤害。不能无视抗体",
 ["spreadillness"] = "鼠疫",
-[":spreadillness"] = "回合结束的时候，失去1点体力，与你距离为1的角色将以80%获得【鼠疫】，距离为2的角色将以50%获得【鼠疫】，持有者将以50%的几率失去【鼠疫】获得免疫。获得免疫者以50%失去【抗体】",
+[":spreadillness"] = "回合结束的时候，失去1点体力，与你距离为1的角色将以80%获得“鼠疫”，距离为2的角色将以50%获得“鼠疫”，持有者将以50%的几率失去“鼠疫”获得免疫。获得免疫者以50%失去“抗体”",
 ["@spreadDiscard"] = "为新的病原体而弃置一张牌。",
 ["lingti"] = "灵体",
 [":lingti"] = "<font color=\"blue\"><b>锁定技,</b></font>你防止你的任何体力减少，每防止一次摸一张牌。",	
@@ -953,4 +1008,143 @@ sgs.LoadTranslationTable{
 ["designer:jdd"] = "帕秋莉·萝莉姬",
 ["cv:jdd"] = "佐藤聡美",
 ["illustrator:jdd"] = "",
+}
+
+
+--江之岛盾子
+
+Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
+
+SE_Heimu = sgs.CreateTriggerSkill{
+	name = "SE_Heimu",  
+	frequency = sgs.Skill_Limited, 
+	events = {sgs.AskForPeachesDone, sgs.GameStart}, 
+	on_trigger = function(self, event, player, data)
+		local room = player:getRoom()
+		if event == sgs.AskForPeachesDone then
+			--judge
+			local dying = data:toDying()
+			local de = dying.who
+			if de:getHp() > 0 then return end
+			local trig = true
+			if de:getRole() == "rebel" then
+				for _,p in sgs.qlist(room:getOtherPlayers(de)) do
+					if p:getRole() == "rebel" then trig = false end
+					if p:getRole() == "renegade" then trig = false end
+				end
+			elseif de:getRole() == "loyalist" then
+				trig = false
+			elseif de:getRole() == "renegade" then
+				if room:getAlivePlayers():length() > 2 then
+					trig = false
+				end
+			end
+			if not trig then return end
+			local junko
+			for _,p in sgs.qlist(room:getAllPlayers(true)) do
+				if p:getGeneralName()=="Junko" then
+					junko = p
+				end
+			end
+			if not junko then return false end
+			
+			if junko:getMark("SE_Heimu_done") == 2 then return false end
+			if junko:isAlive() then return false end
+			if room:askForSkillInvoke(junko, self:objectName()) then
+				room:revivePlayer(junko)
+				room:setPlayerProperty(junko, "maxhp", sgs.QVariant(4))
+				room:setPlayerProperty(junko, "hp", sgs.QVariant(4))
+				junko:drawCards(4) 
+				local derole = de:getRole()
+				local junkorole = junko:getRole()
+				room:setPlayerProperty(junko, "role", sgs.QVariant("lord"))--设置盾子为主公
+				room:setPlayerProperty(de, "role", sgs.QVariant("loyalist"))--设置死掉的de为忠臣
+				if derole == "lord" then--死者为主公，则胜利者为内奸或反贼
+					local winner
+					for _,p in sgs.qlist(room:getOtherPlayers(junko)) do
+						if p:getRole() == "rebel" then
+							winner = "rebel"
+						end
+					end
+					if not winner then winner = "renegade" end
+					for _,p in sgs.qlist(room:getOtherPlayers(junko)) do
+						if p:getRole() == winner then
+							room:setPlayerProperty(p, "role", sgs.QVariant("rebel"))--设置所有胜利者为反贼
+						else
+							room:killPlayer(p)
+						end
+					end
+				elseif  derole == "rebel" or derole == "renegade" then--死者为反贼或内奸，则胜利者为主公和忠臣
+					for _,p in sgs.qlist(room:getOtherPlayers(junko)) do
+						if p:getRole() == "lord" or p:getRole() == "loyalist" then
+							room:setPlayerProperty(p, "role", sgs.QVariant("rebel"))--设置所有胜利者为反贼
+						else
+							room:killPlayer(p)
+						end
+					end
+				end
+				local da = sgs.DamageStruct()
+				for _,p in sgs.qlist(room:getOtherPlayers(junko)) do
+					da.from = junko
+					da.to = p
+					da.nature = sgs.DamageStruct_Thunder
+					room:damage(da)
+				end
+			end
+			
+			junko:gainMark("SE_Heimu_done")
+			return false
+			--以下忘了干啥用的了......
+		--elseif event == sgs.GameStart then
+		--	for _,p in sgs.qlist(room:getAlivePlayers()) do
+		--		if not p:hasSkill("SE_Heimu") then
+		--			room:acquireSkill(p, "SE_Heimu")
+		--		end
+		--	end
+		end
+	end,
+}
+
+Junko:addSkill(SE_Heimu)
+
+
+ruler = sgs.CreateTriggerSkill{
+	name = "ruler",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.HpChanged},
+	on_trigger = function(self, event, player, data)
+		local room = player:getRoom()
+		local junko = room:findPlayerBySkillName("ruler")
+		if not junko then return false end
+		if player:getHp()>junko:getHandcardNum() then
+			room:setPlayerProperty(player, "hp", sgs.QVariant(junko:getHandcardNum()))
+		end
+		return false
+	end,
+	can_trigger = function(self, target)
+		return target ~= nil
+	end
+}
+Junko:addSkill(ruler)
+--extension:addToSkills(ruler)
+sgs.LoadTranslationTable{
+["SE_Heimu$"] = "image=image/animate/SE_Heimu.png", 
+
+["SE_Heimu"] = "黑幕",
+["$SE_Heimu"] = "",
+[":SE_Heimu"] = "<font color=\"red\"><b>限二技，</b></font>游戏结束前，若你已经阵亡，可以以4体力上限满血复活并摸4张牌并对场上所有角色造成1点雷击伤害，之后把你的身份变为主公，胜者为反贼，败者为内奸，并获得[规定『学级』]。",
+
+["ruler"] = "规定『学级』",
+[":ruler"] = "<font color=\"blue\"><b>锁定技，</b></font>场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",
+
+
+
+["Junko"] = "江之岛盾子", 
+["&Junko"] = "江之岛盾子", 
+["@Junko"] = "弹丸论破", 
+["#Junko"] = "幕后黑手", 
+["~Junko"] = "", 
+["designer:Junko"] = "萝莉姬",
+["cv:Junko"] = "",
+["illustrator:Junko"] = "",
 }

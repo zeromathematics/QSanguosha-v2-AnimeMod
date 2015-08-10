@@ -4224,6 +4224,7 @@ void Room::moveCardsAtomic(QList<CardsMoveStruct> cards_moves, bool forceMoveVis
             case Player::DiscardPile: m_discardPile->prepend(card_id); break;
             case Player::DrawPile: m_drawPile->prepend(card_id); break;
             case Player::PlaceSpecial: table_cards.append(card_id); break;
+            case Player::DrawPileBottom: m_drawPile->append(card_id); break;
             default:
                 break;
             }

@@ -50,7 +50,7 @@ public:
     {
         PlaceHand, PlaceEquip, PlaceDelayedTrick, PlaceJudge,
         PlaceSpecial, DiscardPile, DrawPile, PlaceTable, PlaceUnknown,
-        PlaceWuGu
+        PlaceWuGu, DrawPileBottom
     };
     enum Role
     {

@@ -1900,7 +1900,7 @@ void RoomScene::toggleDiscards()
 GenericCardContainer *RoomScene::_getGenericCardContainer(Player::Place place, Player *player)
 {
     if (place == Player::DiscardPile || place == Player::PlaceJudge
-        || place == Player::DrawPile || place == Player::PlaceTable)
+        || place == Player::DrawPile || place == Player::DrawPileBottom || place == Player::PlaceTable)
         return m_tablePile;
     // @todo: AG must be a pile with name rather than simply using the name special...
     else if (player == NULL && place == Player::PlaceSpecial)
@@ -2063,12 +2063,16 @@ QString RoomScene::_translateMovement(const CardsMoveStruct &move)
                 result.append(Sanguosha->translate("discardPile"));
             else if (move.to_place == Player::DrawPile)
                 result.append(Sanguosha->translate("drawPileTop"));
+            else if (move.to_place == Player::DrawPileBottom)
+                result.append(Sanguosha->translate("drawPileBottom"));
         } else if (reason.m_reason == CardMoveReason::S_REASON_NATURAL_ENTER) {
             result.append(Sanguosha->translate("enter"));
             if (move.to_place == Player::DiscardPile)
                 result.append(Sanguosha->translate("discardPile"));
             else if (move.to_place == Player::DrawPile)
                 result.append(Sanguosha->translate("drawPileTop"));
+            else if (move.to_place == Player::DrawPileBottom)
+                result.append(Sanguosha->translate("drawPileBottom"));
         } else if (reason.m_reason == CardMoveReason::S_REASON_JUDGEDONE) {
             result.append(Sanguosha->translate("judgedone"));
         } else if (reason.m_reason == CardMoveReason::S_REASON_REMOVE_FROM_PILE) {
@@ -2080,7 +2084,7 @@ QString RoomScene::_translateMovement(const CardsMoveStruct &move)
 
 void RoomScene::keepLoseCardLog(const CardsMoveStruct &move)
 {
-    if (move.from && move.to_place == Player::DrawPile) {
+    if (move.from && (move.to_place == Player::DrawPile || move.to_place == Player::DrawPileBottom)) {
         if (move.reason.m_reason == CardMoveReason::S_REASON_PUT && move.reason.m_skillName == "luck_card") return;
         bool hidden = false;
         foreach (int id, move.card_ids) {
@@ -2089,9 +2093,13 @@ void RoomScene::keepLoseCardLog(const CardsMoveStruct &move)
                 break;
             }
         }
-
         QString type = hidden ? "#PutCard" : "$PutCard";
+        if (move.to_place == Player::DrawPileBottom){
+            type = hidden ? "#PutCardBottom" : "PutCardBottom";
+        }
         QString from_general = move.from->objectName();
+
+
         if (hidden)
             log_box->appendLog(type, from_general, QStringList(), QString(), QString::number(move.card_ids.length()));
         else

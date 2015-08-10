@@ -153,3 +153,263 @@ sgs.ai_skill_playerchosen.shengjian_black = function(self, targets)
 	return target
 end
 	
+
+--冈崎朋也
+se_zhuren_skill={}
+se_zhuren_skill.name="zhuren"
+table.insert(sgs.ai_skills,se_zhuren_skill)
+se_zhuren_skill.getTurnUseCard=function(self,inclusive)
+	if #self.friends <= 1 then return end
+	local source = self.player
+	if source:isKongcheng() then return end
+	if source:hasUsed("ZhurenCard") then return end
+	return sgs.Card_Parse("@ZhurenCard=.")
+end
+
+sgs.ai_skill_use_func.ZhurenCard = function(card,use,self)
+	local target
+	local source = self.player
+	local max_num = source:getMaxHp() - source:getHp() + 1
+	local max_x = 0
+	for _,friend in ipairs(self.friends) do
+		local x = 5 - friend:getHandcardNum()
+
+		if x > max_x and friend:objectName() ~= source:objectName() then
+			max_x = x
+			target = friend
+		end
+	end
+	local cards=sgs.QList2Table(self.player:getHandcards())
+	local needed = {}
+	for _,acard in ipairs(cards) do
+		if #needed < max_num then
+			table.insert(needed, acard:getEffectiveId())
+		end
+	end
+	if target and needed then
+		use.card = sgs.Card_Parse("@ZhurenCard="..table.concat(needed,"+"))
+		if use.to then use.to:append(target) end
+		return
+	end
+end
+
+sgs.ai_use_value.ZhurenCard = 4
+sgs.ai_use_priority.ZhurenCard  = 2.4
+sgs.ai_card_intention.ZhurenCard  = -60
+
+sgs.ai_skill_invoke.zhuren = function(self, data)
+	return true
+end
+
+sgs.ai_skill_choice.Daolu = function(self, data)
+	local lord = self.room:getLord()
+	if self.player:getRole() == "lord" then
+		for _,friend in ipairs(self.friends) do
+			if self:isWeak(friend) and friend:objectName() ~= self.player:objectName() then
+				return "Fuko_summoner"
+			end
+		end
+		return "Nagisa_Protector"
+	elseif self.player:getRole() == "loyalist" then
+		return "Tomoyo_Couple"
+	elseif self.player:getRole() == "rebel" then
+		for _,friend in ipairs(self.friends) do
+			if self:isWeak(friend) and self.player:getHp() > 2 and friend:objectName() ~= self.player:objectName() then
+				if #self.friends > #self.enemies then
+					return "Fuko_summoner"
+				end
+			end
+			--TODO
+		end
+		return "Nagisa_Protector"
+	elseif self.player:getRole() == "renegade" then
+		if lord:getHp() <= 2 then
+			return "Fuko_summoner"
+		end
+		return "Nagisa_Protector"
+	end
+end
+
+sgs.ai_skill_playerchosen.Daolu = function(self, targets)
+	local lord = self.room:getLord()
+	if self.player:getRole() == "loyalist" then return lord end
+	if self.player:getRole() == "rebel" then
+		for _,friend in ipairs(self.friends) do
+			if not friend:objectName()~=self.player:objectName() and self:isWeak(friend) and self.player:getHp() > 2 then
+				target = friend
+			end
+		end
+	end
+	if target then return target end
+	for _,friend in ipairs(self.friends) do
+		if not friend:objectName()~=self.player:objectName() then
+			target = friend
+		end
+	end
+	return target
+end
+
+sgs.ai_playerchosen_intention.Daolu = function(from, to)
+	local intention = -100
+	sgs.updateIntention(from, to, intention)
+end
+
+local se_diangong_skill={}
+se_diangong_skill.name="diangong"
+table.insert(sgs.ai_skills,se_diangong_skill)
+se_diangong_skill.getTurnUseCard=function(self,inclusive)
+	local cards = sgs.QList2Table(self.player:getHandcards()) 
+	self:sortByUseValue(cards,true)  
+	for _,enemy in ipairs(self.enemies) do
+		if enemy:hasSkills("se_qidian|suipian|guangyu") then return end
+	end
+	for _,acard in ipairs(cards) do
+		if self:getKeepValue(acard)<5 and acard:isBlack() then    
+			local number = acard:getNumberString()
+			local card_id = acard:getEffectiveId()
+			local suit = acard:getSuitString()
+			return sgs.Card_Parse("@DiangongCard=.")
+		end
+	end
+end
+
+sgs.ai_skill_use_func.DiangongCard = function(card,use,self)
+	local target
+	for _,enemy in sgs.qlist(self.room:getAlivePlayers()) do
+		local pl = true
+		for _,card in sgs.qlist(enemy:getJudgingArea()) do
+			if card:isKindOf("Lightning") then
+				pl = false
+			end
+		end
+		if pl then
+			target = enemy
+		end
+	end
+	local needed
+	local cards = sgs.QList2Table(self.player:getHandcards()) 
+	for _,acard in ipairs(cards) do
+		if self:getKeepValue(acard)<5 and acard:isBlack() then    
+			needed = acard
+		end
+	end
+	if target and needed then
+		use.card = sgs.Card_Parse("@DiangongCard="..needed:getEffectiveId())
+		if use.to then use.to:append(target) end
+		return
+	end
+end
+
+sgs.ai_skill_invoke.huanxing = function(self, data)
+	local use = data:toCardUse()
+	if not use or not use.from then return false end
+	if self:isEnemy(use.from) then return true end
+	return false
+end
+
+sgs.ai_use_value.DiangongCard = 8
+sgs.ai_use_priority.DiangongCard = 2.5
+
+
+sgs.ai_skill_invoke.haixing = function(self, data)
+	local dying_data = data:toDying()
+	local source = dying_data.who
+	if self:isFriend(source) then
+		return true
+	end
+	return false
+end
+
+sgs.ai_skill_invoke.tanyan = function(self, data)
+	return self:isFriend(self.room:getCurrent())
+end
+
+--枣铃
+sgs.ai_need_damaged.SE_Maoqun = function (self, attacker)
+	return self.player:getHp()>10
+end
+
+sgs.SE_Maoqun_keep_value = 
+{
+    Peach 		= 9,
+    Analeptic 	= 8,
+    Jink 		= 9,
+}
+
+
+
+se_zhiling_skill={}
+se_zhiling_skill.name="zhiling"
+table.insert(sgs.ai_skills,se_zhiling_skill)
+se_zhiling_skill.getTurnUseCard=function(self,inclusive)
+	if #self.enemies == 0 then return end
+	if self.player:getPile("Neko"):length() == 0 then return end
+	local can = false
+	for _,enemy in ipairs(self.enemies) do
+		if (enemy:getMark("@Neko_S") == 0 or enemy:getMark("@Neko_C") == 0 or (enemy:getMark("@Neko_D") == 0 and not enemy:hasSkill("Huansha")) or enemy:getMark("@Neko_H") == 0) and not enemy:hasFlag("Can_not") then
+			can = true
+		end
+	end
+	if self.player:getRole() =="renegade" then
+		if #self.enemies - #self.friends <= 0 then
+			can = false
+		end
+		if  self.player:getPile("Neko"):length() <=8 and #self.enemies - #self.friends <= 1 then
+			can = false
+		end
+		if  self.player:getPile("Neko"):length() <=3 and #self.enemies - #self.friends <= 2 then
+			can = false
+		end
+	end
+	if not can then return end
+	return sgs.Card_Parse("@ZhilingCard=.")
+end
+
+sgs.ai_skill_use_func.ZhilingCard = function(card,use,self)
+	local target
+	local lord = self.room:getLord()
+	for _,enemy in ipairs(self.enemies) do
+		if (enemy:getMark("@Neko_S") == 0 or enemy:getMark("@Neko_C") == 0 or (enemy:getMark("@Neko_D") == 0 and not enemy:hasSkill("Huansha")) or enemy:getMark("@Neko_H") == 0) and not enemy:hasFlag("Can_not") then
+			target = enemy
+		end
+	end
+	if self.player:getRole() =="rebel" then
+		if (lord:getMark("@Neko_S") == 0 or lord:getMark("@Neko_C") == 0 or (lord:getMark("@Neko_D") == 0 and not lord:hasSkill("Huansha")) or lord:getMark("@Neko_H") == 0) and not lord:hasFlag("Can_not") then
+			target = lord
+		end
+	end
+	if target then
+		use.card = sgs.Card_Parse("@ZhilingCard=.")
+		if use.to then use.to:append(target) end
+		return
+	end
+end
+
+sgs.ai_use_value.ZhilingCard = 9
+sgs.ai_use_priority.ZhilingCard = 9.8
+sgs.ai_card_intention.ZhilingCard  = 50
+
+sgs.ai_skill_invoke.SE_Zhixing = function(self, data)
+	local source = data:toPlayer()
+	if self:isFriend(source) then return true end
+	return false
+end
+
+sgs.ai_skill_playerchosen.SE_Zhixing = function(self, data)
+for _,p in ipairs(self.friends) do
+		if p:getJudgingArea():length() > 0 then
+			return p
+		end
+	end
+	for _,p in ipairs(self.enemies) do
+		if p:getEquips():length() > 0 then
+			return p
+		end
+	end
+	for _,p in ipairs(self.enemies) do
+		if not p:isNude() then
+			return p
+		end
+	end
+	return self.enemies[1]
+end

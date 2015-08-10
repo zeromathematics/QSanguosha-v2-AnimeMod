@@ -635,6 +635,7 @@ sgs.ai_use_priority["LuaGongqi"] = 6
 sgs.ai_card_intention["LuaGongqi"]  = 100
 
 
+
 luajianyu_skill={}
 luajianyu_skill.name="luajianyu"
 table.insert(sgs.ai_skills,luajianyu_skill)
