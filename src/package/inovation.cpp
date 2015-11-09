@@ -3243,6 +3243,7 @@ void HongzhaCard::use(Room *room, ServerPlayer *kaga, QList<ServerPlayer *> &tar
 {
     Card *sub = Sanguosha->getCard(this->getSubcards().at(0));
     Card *card = Sanguosha->cloneCard("slash", sub->getSuit(), sub->getNumber());
+    card->setSkillName("hongzha");
     room->useCard(CardUseStruct(card, kaga, targets));
 }
 
@@ -3324,6 +3325,93 @@ public:
     }
 };
 
+NuequCard::NuequCard()
+{
+}
+
+bool NuequCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    if (!targets.isEmpty()) return false;
+    QList<const Player *> players = Self->getAliveSiblings();
+    players << Self;
+    int min = 1000;
+    foreach(const Player *p, players) {
+        if (min > p->getHp())
+            min = p->getHp();
+    }
+    return to_select->getHp() == min;
+}
+
+void NuequCard::use(Room *room, ServerPlayer *kongou, QList<ServerPlayer *> &targets) const
+{
+    Card *sub = Sanguosha->getCard(this->getSubcards().at(0));
+    Card *card = Sanguosha->cloneCard("fire_slash", sub->getSuit(), sub->getNumber());
+    card->setSkillName("nuequ");
+    room->useCard(CardUseStruct(card, kongou, targets));
+}
+
+class Nuequ : public ViewAsSkill
+{
+public:
+    Nuequ() : ViewAsSkill("nuequ")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("NuequCard");
+    }
+
+    bool viewFilter(const QList<const Card *> &selected, const Card *to_select) const
+    {
+        return selected.length() == 0 && !to_select->isEquipped();
+    }
+
+    const Card *viewAs(const QList<const Card *> &cards) const
+    {
+        if (cards.isEmpty())
+            return NULL;
+        NuequCard *nqc = new NuequCard();
+        nqc->addSubcards(cards);
+        return nqc;
+    }
+};
+
+
+class BurningLove : public TriggerSkill
+{
+public:
+    BurningLove() : TriggerSkill("BurningLove")
+    {
+        frequency = Compulsory;
+        events << DamageCaused;
+    }
+    int getPriority(TriggerEvent) const
+    {
+        return -2;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *kongou, QVariant &data) const
+    {
+        DamageStruct damage = data.value<DamageStruct>();
+        if (triggerEvent == DamageCaused){
+            if (damage.from->hasSkill(objectName()) && damage.nature == DamageStruct::Fire && damage.from->isAlive() && damage.card->isKindOf("FireSlash")){
+                room->broadcastSkillInvoke(objectName());
+                if (room->askForChoice(kongou, objectName(), "BLRecover+BLDamage", data) == "BLRecover"){
+                    room->recover(damage.to, RecoverStruct(damage.to));
+                    return true;
+                }
+                else{
+                    damage.damage += 1;
+                    data.setValue(damage);
+                }
+            }
+        }
+
+        return false;
+    }
+};
+
 InovationPackage::InovationPackage()
     : Package("inovation")
 {
@@ -3394,6 +3482,10 @@ InovationPackage::InovationPackage()
     nao->addSkill(new Huanxing);
     nao->addSkill(new Fushang);
 
+    General *WSaki = new General(this, "WSaki", "science", 3, false);
+    WSaki->addSkill(new Kuisi);
+    WSaki->addSkill(new Youer);
+
     General *Nanami = new General(this, "Nanami", "real", 3, false);
     Nanami->addSkill(new Shengyou);
     Nanami->addSkill(new Jinqu);
@@ -3421,9 +3513,9 @@ InovationPackage::InovationPackage()
     Kaga->addSkill(new Weishi);
     Kaga->addSkill(new Hongzha);
 
-    General *WSaki = new General(this, "WSaki", "science", 3, false);
-    WSaki->addSkill(new Kuisi);
-    WSaki->addSkill(new Youer);
+    General *Kongou = new General(this, "Kongou", "kancolle", 4, false);
+    Kongou->addSkill(new Nuequ);
+    Kongou->addSkill(new BurningLove);
 
     General *kaori = new General(this, "Kaori", "real", 3, false);
     kaori->addSkill(new Chuangzao);
@@ -3462,6 +3554,7 @@ InovationPackage::InovationPackage()
     addMetaObject<DiangongCard>();
     addMetaObject<ZhilingCard>();
     addMetaObject<HongzhaCard>();
+    addMetaObject<NuequCard>();
 }
 
 ADD_PACKAGE(Inovation)
