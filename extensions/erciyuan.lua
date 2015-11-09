@@ -1,7 +1,7 @@
 module("extensions.erciyuan", package.seeall)
 extension = sgs.Package("erciyuan")
 ------------------------------------------------------------------------武将登陆区
-itomakoto=sgs.General(extension, "itomakoto", "real", 3, true,false) --伊藤誠
+--itomakoto=sgs.General(extension, "itomakoto", "real", 3, true,false) --伊藤誠
 ayanami=sgs.General(extension,"ayanami","science",3,false,false) --綾波レイ
 keima=sgs.General(extension,"keima","real",3,true,false) --桂馬
 SPkirito=sgs.General(extension,"SPkirito","science",4,true,false) --キリト
@@ -1747,7 +1747,7 @@ LuaGongqiTargetMod = sgs.CreateTargetModSkill{
 --------------------------------------------------------------剑咏@redarcher
 LuaJianyong = sgs.CreateTriggerSkill{
 	name = "LuaJianyong",
-	frequency = sgs.Skill_Frequent, 
+	frequency = sgs.Skill_NotFrequent, 
 	events = {sgs.Damage,sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -3195,9 +3195,9 @@ extension:addToSkills(LuaPaoxiao)
 extension:addToSkills(LuaKuangshi)
 extension:addToSkills(LuaXiuluo)
 
-itomakoto:addSkill(luarenzha)
-itomakoto:addSkill(renzha)
-itomakoto:addSkill(haochuantimes)
+--itomakoto:addSkill(luarenzha)
+--itomakoto:addSkill(renzha)
+--itomakoto:addSkill(haochuantimes)
 ayanami:addSkill(weixiao)
 ayanami:addSkill(nvshen)
 keima:addSkill(LuaShenzhi)

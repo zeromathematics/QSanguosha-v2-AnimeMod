@@ -2893,6 +2893,436 @@ public:
     }
 };
 
+//kyou
+
+class TouzhiVS : public OneCardViewAsSkill
+{
+public:
+    TouzhiVS() : OneCardViewAsSkill("touzhi")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *) const
+    {
+        return true;
+    }
+
+    bool viewFilter(const Card *card) const
+    {
+        if (!card->isKindOf("TrickCard") || card->isKindOf("AOE") || card->isKindOf("GodSalvation") || card->isKindOf("AmazingGrace") || card->isKindOf("AmazingGrace") || card->isKindOf("Collateral"))
+            return false;
+        return true;
+    }
+
+    const Card *viewAs(const Card *originalCard) const
+    {
+        Card *slash = new Slash(originalCard->getSuit(), originalCard->getNumber());
+        
+        slash->addSubcard(originalCard->getId());
+        slash->setSkillName("touzhi");
+        return slash;
+    }
+};
+
+class Touzhi : public TriggerSkill
+{
+public:
+    Touzhi() : TriggerSkill("touzhi")
+    {
+        events << SlashHit << SlashMissed << CardUsed;
+        view_as_skill = new TouzhiVS;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
+    {if (triggerEvent == SlashHit) {
+            SlashEffectStruct effect = data.value<SlashEffectStruct>();
+            if (effect.slash->getSkillName() == objectName()){
+                int id = effect.slash->getSubcards().at(0);
+                const Card *card = Sanguosha->getCard(id);
+                CardUseStruct use;
+                use.from = effect.from;
+                use.to.append(effect.to);
+                use.card = card;
+                room->useCard(use, false);
+            }
+        }
+        else if (triggerEvent == SlashMissed) {
+            SlashEffectStruct effect = data.value<SlashEffectStruct>();
+            if (effect.from->hasSkill(objectName()) && effect.slash->getSkillName() == objectName()){
+                Analeptic *a = new Analeptic(Card::NoSuit, 0);
+                a->setSkillName(objectName());
+                CardUseStruct use;
+                use.from = effect.from;
+                use.to.append(effect.from);
+                use.card = a;
+                room->useCard(use, false);
+                effect.from->drawCards(1);
+                effect.from->gainMark("@kyou_fire");
+            }
+        }
+        else if (triggerEvent == CardUsed) {
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.card->isKindOf("Slash") && use.card->getSkillName() == objectName()) {
+                if (use.m_addHistory) {
+                    room->addPlayerHistory(use.from, use.card->getClassName(), -1);
+                    use.m_addHistory = false;
+                    data = QVariant::fromValue(use);
+                }
+            }
+        }
+
+        return false;
+    }
+};
+
+class TouzhiDis : public DistanceSkill
+{
+public:
+    TouzhiDis() : DistanceSkill("#touzhi")
+    {
+    }
+
+    int getCorrect(const Player *from, const Player *) const
+    {
+        if (from->hasSkill(this))
+            return - 1 - from->getMark("@kyou_fire");
+        else
+            return 0;
+    }
+};
+
+class YoujiaoViewAsSkill : public OneCardViewAsSkill
+{
+public:
+    YoujiaoViewAsSkill() : OneCardViewAsSkill("youjiao")
+    {
+        response_pattern = "@@youjiao";
+    }
+
+    bool viewFilter(const Card *to_select) const
+    {
+        return to_select->isKindOf("BasicCard");
+    }
+
+    const Card *viewAs(const Card *originalCard) const
+    {
+        KeyTrick *yj = new KeyTrick(originalCard->getSuit(), originalCard->getNumber());
+        yj->addSubcard(originalCard);
+        yj->setSkillName("youjiao");
+        return yj;
+    }
+};
+
+class Youjiao : public TriggerSkill
+{
+public:
+    Youjiao() : TriggerSkill("youjiao")
+    {
+        frequency = NotFrequent;
+        events << HpLost;
+        view_as_skill = new YoujiaoViewAsSkill;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+    {
+        if (triggerEvent == HpLost){
+            QVariant new_data;
+            new_data.setValue(player);
+            ServerPlayer *kyou = room->findPlayerBySkillName(objectName());
+            if (!kyou || player->getHp() >= kyou->getHp())
+                return false;
+            if (room->askForUseCard(kyou, "@@youjiao", "@youjiao-use")){
+                kyou->drawCards(1);
+                player->drawCards(1);
+            }
+        }
+
+        return false;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+};
+
+class Takamakuri : public TriggerSkill
+{
+public:
+    Takamakuri() : TriggerSkill("Takamakuri")
+    {
+        frequency = NotFrequent;
+        events << Damage;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *akari, QVariant &data) const
+    {
+        if (triggerEvent == Damage){
+            DamageStruct damage = data.value<DamageStruct>();
+            if (damage.from != akari)
+                return false;
+            if (akari->askForSkillInvoke(objectName(), data)){
+                akari->setFlags("TakamakuriUsed");
+                int id = room->getDrawPile().at(0);
+                room->showCard(akari, id);
+                if (Sanguosha->getCard(id)->isKindOf("BasicCard")){
+                    room->broadcastSkillInvoke(objectName(), 1);
+                    room->obtainCard(akari, id);
+                    if (damage.to->getEquips().length() > 0)
+                        room->throwCard(room->askForCardChosen(akari, damage.to, "e", objectName()), damage.to, akari);
+                }
+                else{
+                    room->broadcastSkillInvoke(objectName(), 2);
+                }
+            }
+        }
+        return false;
+    }
+};
+
+class Tobiugachi : public TriggerSkill
+{
+public:
+    Tobiugachi() : TriggerSkill("Tobiugachi")
+    {
+        frequency = NotFrequent;
+        events << CardAsked;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *akari, QVariant &data) const
+    {
+        if (triggerEvent == CardAsked){
+            QString pattern = Sanguosha->currentRoomState()->getCurrentCardUsePattern();
+            if (pattern == "jink" && akari->hasSkill(objectName()) && akari->getHandcardNum() > akari->getHp() && akari->askForSkillInvoke(objectName(), data)){
+                if (room->askForDiscard(akari, objectName(), akari->getHandcardNum() - akari->getHp() + 1, akari->getHandcardNum() - akari->getHp() + 1)){
+                    akari->setFlags("TobiugachiUsed");
+                    Card* jink = Sanguosha->cloneCard("jink", Card::NoSuit, 0);
+                    jink->setSkillName(objectName());
+                    room->provide(jink);
+                    ServerPlayer *target = room->askForPlayerChosen(akari, room->getAlivePlayers(), objectName());
+                    QStringList list = target->getPileNames();
+                    bool hasPile = false;
+                    foreach (QString pile, list){
+                        if (target->getPile(pile).length() > 0){
+                            hasPile = true;
+                        }
+                    }
+                    QString choice = "ToBiGetRegion";
+                    if (hasPile)
+                        choice = room->askForChoice(akari, objectName(), "ToBiGetRegion+TobiGetPile");
+                    if (choice == "TobiGetPile"){
+                        QString choice2 = room->askForChoice(akari, objectName() + "1", list.join("+"));
+                        QList<int> pile = target->getPile(choice2);
+                        room->fillAG(pile, akari);
+                        int id = room->askForAG(akari, pile, false, objectName());
+                        if (id == -1)
+                            return false;
+                        room->obtainCard(akari, id);
+                        room->clearAG(akari);
+                    }
+                    else{
+                        int id =  room->askForCardChosen(akari, target, "hej", objectName());
+                        if (id == -1)
+                            return false;
+                        room->obtainCard(akari, id);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+};
+
+
+class Fukurouza : public TriggerSkill
+{
+public:
+    Fukurouza() : TriggerSkill("Fukurouza")
+    {
+        frequency = NotFrequent;
+        events << EventPhaseEnd;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseEnd && player->getPhase() == Player::Finish){
+            ServerPlayer *akari = room->findPlayerBySkillName(objectName());
+            if (akari->hasFlag("TobiugachiUsed") && room->askForSkillInvoke(akari, objectName() + "Tobi", data)){
+                DamageStruct damage;
+                damage.from = akari;
+                damage.to = player;
+                damage.reason = objectName();
+                room->damage(damage);
+            }
+
+            else if (akari->hasFlag("TakamakuriUsed") && room->askForSkillInvoke(akari, objectName() + "Taka", data)){
+                akari->drawCards(1);
+                akari->setFlags("-TakamakuriUsed");
+            }
+
+            if (akari->hasFlag("TobiugachiUsed"))
+                akari->setFlags("-TobiugachiUsed");
+            if (akari->hasFlag("TakamakuriUsed"))
+                akari->setFlags("-TakamakuriUsed");
+        }
+        return false;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+};
+
+class Weishi : public TriggerSkill
+{
+public:
+    Weishi() : TriggerSkill("weishi")
+    {
+        events << EventPhaseEnd;
+        frequency = NotFrequent;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *kaga, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseEnd)
+            {
+                if (!kaga->hasSkill(objectName()))
+                    return false;
+                if (kaga->getPhase() == Player::Play && !kaga->isKongcheng())
+                {
+                    if (!kaga->askForSkillInvoke(objectName(), data))
+                        return false;
+                    room->broadcastSkillInvoke(objectName());
+                    QList<ServerPlayer *> targets;
+                    foreach(ServerPlayer *player, room->getOtherPlayers(kaga)){
+                        if (player->getPileNames().length() > 0){
+                            targets.append(player);
+                        }
+                    }
+                    targets.append(kaga);
+                    ServerPlayer * target = room->askForPlayerChosen(kaga, targets, objectName());
+                    QStringList list = target->getPileNames();
+                    if (target == kaga){
+                        if (!list.contains("Kansaiki")){
+                            list.append("Kansaiki");
+                        }
+                    }
+                    QString choice = room->askForChoice(kaga, objectName(), list.join("+"));
+                    int id = room->askForCardChosen(kaga, kaga, "h", objectName(), true);
+                    target->addToPile(choice, id, true);
+                    room->recover(target, RecoverStruct(target));
+                }
+            }
+
+        return false;
+    }
+};
+
+
+HongzhaCard::HongzhaCard()
+{
+}
+
+bool HongzhaCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    return to_select != Self && targets.length() < Self->getPile("Kansaiki").length() && Self->getHp() >= 2;
+}
+
+bool HongzhaCard::targetsFeasible(const QList<const Player *> &targets, const Player *) const
+{
+    return targets.length() > 0;
+}
+
+void HongzhaCard::use(Room *room, ServerPlayer *kaga, QList<ServerPlayer *> &targets) const
+{
+    Card *sub = Sanguosha->getCard(this->getSubcards().at(0));
+    Card *card = Sanguosha->cloneCard("slash", sub->getSuit(), sub->getNumber());
+    room->useCard(CardUseStruct(card, kaga, targets));
+}
+
+class Hongzha : public ViewAsSkill
+{
+public:
+    Hongzha() : ViewAsSkill("hongzha")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("HongzhaCard");
+    }
+
+    bool viewFilter(const QList<const Card *> &selected, const Card *) const
+    {
+        return selected.length() == 0;
+    }
+
+    const Card *viewAs(const QList<const Card *> &cards) const
+    {
+        if (cards.isEmpty())
+            return NULL;
+        HongzhaCard *hzc = new HongzhaCard();
+        hzc->addSubcards(cards);
+        return hzc;
+    }
+};
+
+class Kuisi : public TriggerSkill
+{
+public:
+    Kuisi() : TriggerSkill("kuisi")
+    {
+        frequency = NotFrequent;
+        events << Death;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == Death){
+            DeathStruct death = data.value<DeathStruct>();
+            if (!death.damage || !death.damage->from || death.damage->from->isDead())
+                return false;
+            ServerPlayer *saki = room->findPlayerBySkillName(objectName());
+            if (saki){
+                if (!saki->askForSkillInvoke(objectName(), data))
+                    return false;
+                room->loseHp(death.damage->from, death.damage->from->getHp());
+            }
+        }
+        return false;
+    }
+};
+
+class Youer : public TriggerSkill
+{
+public:
+    Youer() : TriggerSkill("youer")
+    {
+        frequency = NotFrequent;
+        events << Dying;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *saki, QVariant &data) const
+    {
+        if (triggerEvent == Dying){
+            DyingStruct dying = data.value<DyingStruct>();
+            if (!dying.damage || !dying.damage->from || dying.who != saki || saki->getMaxHp() == 1 || !saki->askForSkillInvoke(objectName(), data))
+                return false;
+            room->loseMaxHp(saki);
+            room->killPlayer(saki, &DamageStruct(objectName(), dying.damage->from, saki, 0));
+            room->loseHp(dying.damage->from, dying.damage->from->getHp());
+            room->revivePlayer(saki);
+            room->setPlayerProperty(saki, "hp", saki->getMaxHp());
+        }
+        return false;
+    }
+};
 
 InovationPackage::InovationPackage()
     : Package("inovation")
@@ -2946,6 +3376,10 @@ InovationPackage::InovationPackage()
     tomoya->addWakeTypeSkillForAudio("haixing");
     tomoya->addWakeTypeSkillForAudio("tanyan");
 
+    General *kyou = new General(this, "fKyou", "real", 4, false);
+    kyou->addSkill(new Touzhi);
+    kyou->addSkill(new Youjiao);
+
     General *Natsume_Rin = new General(this, "Natsume_Rin", "real", 99, false);
     Natsume_Rin->addSkill(new Pasheng);
     Natsume_Rin->addSkill(new Maoqun);
@@ -2974,9 +3408,22 @@ InovationPackage::InovationPackage()
     akarin->addSkill(new SE_Touming);
     akarin->addSkill(new SE_Tuanzi);
 
+    General *akari = new General(this, "Akari", "science", 3, false);
+    akari->addSkill(new Takamakuri);
+    akari->addSkill(new Tobiugachi);
+    akari->addSkill(new Fukurouza);
+
     General *Koromo = new General(this, "Koromo", "real", 3, false);
     Koromo->addSkill(new Kongdi);
     Koromo->addSkill(new Yixiangting);
+
+    General *Kaga = new General(this, "Kaga", "kancolle", 4, false);
+    Kaga->addSkill(new Weishi);
+    Kaga->addSkill(new Hongzha);
+
+    General *WSaki = new General(this, "WSaki", "science", 3, false);
+    WSaki->addSkill(new Kuisi);
+    WSaki->addSkill(new Youer);
 
     General *kaori = new General(this, "Kaori", "real", 3, false);
     kaori->addSkill(new Chuangzao);
@@ -3014,6 +3461,7 @@ InovationPackage::InovationPackage()
     addMetaObject<ZhurenCard>();
     addMetaObject<DiangongCard>();
     addMetaObject<ZhilingCard>();
+    addMetaObject<HongzhaCard>();
 }
 
 ADD_PACKAGE(Inovation)

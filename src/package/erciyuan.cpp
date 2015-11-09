@@ -147,7 +147,7 @@ public:
             }
             return false;
         } else {
-            if (damage.from->hasFlag("chidun_slash"))
+            if (damage.from && damage.from->hasFlag("chidun_slash"))
             {
                 damage.from->setFlags("-chidun_slash");
                 damage.damage ++;

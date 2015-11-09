@@ -851,11 +851,13 @@ Huansha = sgs.CreateTriggerSkill{
 										end
 										return true
 									else
+										if source:isDead() or to:isDead() then return end
 										local damage2=sgs.DamageStruct()
 										damage2.from = source
 										damage2.to = p
 										damage2.damage = damage.damage
 										room:damage(damage2)
+										if source:isDead() or to:isDead() then return end
 										local damage3=sgs.DamageStruct()
 										damage3.from = p
 										damage3.to = source
@@ -890,7 +892,7 @@ SE_Dapo = sgs.CreateTriggerSkill{
 			if mygod:isAlive() then
 				if mygod:getMaxHp() > source:getMaxHp() and source and source:getRole() ~= "lord" then
 					if mygod:getHp() == 1 then
-						room:broadcastSkillInvoke("$SE_Dapo")
+						room:broadcastSkillInvoke("SE_Dapo")
 						room:doLightbox("SE_Dapo$", 3000)
 						if mygod:getRole() == "lord" then
 							room:setPlayerProperty(source,"role",sgs.QVariant("loyalist"))
@@ -904,10 +906,13 @@ SE_Dapo = sgs.CreateTriggerSkill{
 							end
 						end
 						if right then
-							local death = sgs.DeathStruct()
-							death.who = source
-							death.reason = "SE_Dapo"
-							room:getThread():trigger(46, room, source, death)
+							local winner = room:getLord():objectName()
+							for _,p in sgs.qlist(room:getAllPlayers(true)) do
+								if (p:getRole() == "loyalist") then
+									winner = string.format(winner.."+"..p:objectName())
+								end
+							end
+							room:gameOver(winner)
 						end
 					end
 				end
@@ -3447,8 +3452,7 @@ se_shengjiancard = sgs.CreateSkillCard{
 		--room:broadcastSkillInvoke("se_shengjian")
 		room:setPlayerFlag(source,"se_shengjiancard_used")
 		local force = math.abs(source:getEquips():length() - targets[1]:getEquips():length())
-		if force > 3 then force = 3 end
-		if force == 3 then
+		if force >= 3 then
 			room:doLightbox("se_shengjian$", 3000)
 		end
 		if force > 0 then
