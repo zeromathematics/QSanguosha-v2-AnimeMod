@@ -3699,7 +3699,7 @@ Daolu = sgs.CreateTriggerSkill{
 		if choice == "Nagisa_Protector" then
 			room:broadcastSkillInvoke("DaoluA")
 			room:doLightbox("DaoluA$", 3000)
-			player:gainMark("@Nagisa")
+			player:gainMark("@NagisaMark")
 			room:acquireSkill(player, "se_diangong")
 			local list = room:getAlivePlayers()
 			for i = 1,3,1 do

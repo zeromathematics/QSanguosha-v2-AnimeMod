@@ -3517,6 +3517,38 @@ InovationPackage::InovationPackage()
     Kongou->addSkill(new Nuequ);
     Kongou->addSkill(new BurningLove);
 
+   
+    General *Zuikaku = new General(this, "Zuikaku", "kancolle", 4, false);
+    General *Shigure = new General(this, "Shigure", "kancolle", 3, false);
+    General *Asashio = new General(this, "Asashio", "kancolle", 3, false);
+    General *Nagato = new General(this, "Nagato", "kancolle", 4, false);
+    General *Mogami = new General(this, "Mogami", "kancolle", 4, false);
+    General *SaratogaR = new General(this, "SaratogaR", "kancolle", 4, false);
+    General *FubukiR = new General(this, "FubukiR", "kancolle", 3, false);
+    General *AyanamiR = new General(this, "AyanamiR", "kancolle", 3, false);
+    General *QuincyR = new General(this, "QuincyR", "kancolle", 3, false);
+    General *AobaR = new General(this, "AobaR", "kancolle", 3, false);
+    General *Freyja = new General(this, "Freyja", "diva", 3, false);
+    General *Mikumo = new General(this, "Mikumo", "diva", 3, false);
+    General *Ranka = new General(this, "Ranka", "diva", 3, false);
+    General *Umi = new General(this, "Umi", "diva", 3, false);
+    General *Maki = new General(this, "Maki", "diva", 3, false);
+    General *Minori = new General(this, "Minori", "diva", 3, false);
+    General *Minoru = new General(this, "Minoru", "real", 4, true, true);
+    General *Hiroko = new General(this, "Hiroko", "diva", 3, false);
+    General *Youmu = new General(this, "Youmu", "touhou", 4, false);
+    General *Sanae = new General(this, "Sanae", "touhou", 3, false);
+    General *Yukari = new General(this, "Yukari", "touhou", 4, false);
+    General *KKotori = new General(this, "KKotori", "magic", 3, false);
+    General *Emilia = new General(this, "Emilia", "magic", 3, false);
+    General *Remu = new General(this, "Remu", "magic", 3, false);
+    General *Mumei = new General(this, "Mumei", "science", 3, false);
+    General *Akeno = new General(this, "Akeno", "science", 3, false);
+    General *Ako = new General(this, "Ako", "real", 3, false);
+    General *NMakoto = new General(this, "NMakoto", "real", 3);
+    General *Chiaki = new General(this, "Chiaki", "real", 3, false);
+    
+
     General *kaori = new General(this, "Kaori", "real", 3, false);
     kaori->addSkill(new Chuangzao);
     kaori->addSkill(new Qidao);
