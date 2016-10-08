@@ -4395,7 +4395,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/server/server.cpp" line="735"/>
         <source>Official mode</source>
-        <translation>官方3v3</translation>
+        <translation>动漫MOD标准3v3</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="695"/>

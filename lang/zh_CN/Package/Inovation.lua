@@ -498,4 +498,20 @@ return {
 	["designer:Kongou"] = "Sword Elucidator",
 	["cv:Kongou"] = "東山奈央",
 	["illustrator:Kongou"] = "",
+
+
+	["ruiyun"] = "瑞运",
+	[":ruiyun"] = "当你需要使用或打出一张【闪】时",
+	["luoqi"] = "落旗",
+	[":BurningLove"] = "",
+	["BLRecover"] = "令该伤害改为回复一点体力",
+	["BLDamage"] = "令该伤害+1",
+	["Zuikaku"] = "瑞鶴", 
+	["&Zuikaku"] = "瑞鶴", 
+	["@Zuikaku"] = "艦隊collection", 
+	["#Zuikaku"] = "最后的正规空母", 
+	["~Zuikaku"] = "", 
+	["designer:Zuikaku"] = "Sword Elucidator",
+	["cv:Zuikaku"] = "野水伊織",
+	["illustrator:Zuikaku"] = "",
 }

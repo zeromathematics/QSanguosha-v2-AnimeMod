@@ -22,16 +22,29 @@ QStringList RoomThread3v3::getGeneralsWithoutExtension() const
     QList<const General *> generals;
 
     QStringList list_name;
-    list_name << "nos_caocao" << "nos_simayi" << "nos_xiahoudun" << "nos_zhangliao" << "nos_xuchu" << "nos_guojia" << "zhenji"
-        << "nos_liubei" << "nos_guanyu" << "nos_zhangfei" << "nos_zhaoyun" << "zhugeliang" << "nos_machao" << "nos_huangyueying"
-        << "sunquan" << "nos_ganning" << "nos_lvmeng" << "nos_huanggai" << "nos_zhouyu" << "nos_daqiao" << "nos_luxun" << "sunshangxiang"
-        << "nos_huatuo" << "nos_lvbu" << "nos_diaochan"
-        << "nos_caoren" << "xiahouyuan" << "weiyan" << "huangzhong"
-        << "xiaoqiao" << "nos_zhoutai" << "nos_zhangjiao";
+    list_name << "Touma" << "jdd" << "odanobuna" << "HYui" << "kyouko" << "itomakoto" << "Reki"
+        << "Akagi" << "runaria" << "khntmiku" << "Nanami" << "Louise" << "Okarin"
+        << "hibiki" << "Marisa" << "slsty" << "Kitagami" << "Shino" << "Koishi" << "Yukino" << "yuuta"
+        << "kntsubasa" << "Shirayuki" << "Sugisaki"
+        << "SE_Kirito" << "Hikigaya" << "aoitori" << "Nagisa"
+        << "mao_maoyu" << "ku" << "Eustia"
+        << "SE_Asuna" << "Yuri" << "Kazehaya" << "AiAstin" << "Kuroyukihime" << "Yyui" << "Tomoya"
+        << "Misaka_Imouto" << "Rika" << "rika2" << "Yuudachi" << "Reimu" << "Aria" << "Kirei" << "Kinpika"
+        << "Saki" << "tsukushi" << "Rivaille"
+        << "Kotori" << "Chiyuri" << "Chiyo" << "Leafa"
+        << "redo" << "Kuroko" << "Fubuki"
+        << "Rena" << "sheryl" << "SE_Eren" << "fuwaaika" << "Saber" << "Mikoto" << "Sakura"
+        << "Sakamoto" << "Nagase" << "Honoka" << "Eugeo" << "Tukasa" << "Alice" << "Kanade" << "Taiga"
+        << "Setsuna" << "Shana" << "acc"
+        << "Hakaze" << "Ayase" << "Yukina" << "keima"
+        << "redarcher" << "yukinechris" << "SPkirito"
+        << "Kuroneko" << "Asagi" << "Nico"
+        << "cr" << "MKotori" << "Kurumi" << "diarmuid";
     foreach(QString general_name, list_name)
         generals << Sanguosha->getGeneral(general_name);
 
-    QString rule = Config.value("3v3/OfficialRule", "2013").toString();
+    QString rule = Config.value("3v3/OfficialRule", "2016").toString();
+    /*
     if (rule == "2012") {
         QStringList list_remove, list_add;
         list_remove << "nos_zhangjiao" << "nos_caoren" << "nos_lvmeng" << "nos_xiahoudun" << "weiyan";
@@ -53,6 +66,7 @@ QStringList RoomThread3v3::getGeneralsWithoutExtension() const
         foreach(QString general_name, list_add)
             generals << Sanguosha->getGeneral(general_name);
     }
+    */
 
     QStringList general_names;
     foreach(const General *general, generals)
@@ -152,7 +166,7 @@ void RoomThread3v3::takeGeneral(ServerPlayer *player, const QString &name)
     log.arg2 = name;
     room->sendLog(log);
 
-    QString rule = Config.value("3v3/OfficialRule", "2013").toString();
+    QString rule = Config.value("3v3/OfficialRule", "2016").toString();
     room->doBroadcastNotify(S_COMMAND_TAKE_GENERAL, JsonUtils::toJsonArray(QStringList() << group << name << rule));
 }
 

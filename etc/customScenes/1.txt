@@ -1,2 +1,3 @@
-﻿general:select|role:rebel|starter:true 
-general:zhaoyun|general2:zhangfei|maxhp:5|hp:5|role:lord|draw:5|equip:qinggang_sword,zixing
+
+general:SE_Asuna role:lord 
+general:SE_Kirito role:rebel starter:true maxhp:6 hp:6 acquireSkills:LuaChanshi,LuaZhuan equip:232 

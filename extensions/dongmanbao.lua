@@ -148,7 +148,7 @@ Rika = sgs.General(extension, "Rika", "real", 3, false,false,false)
 Eucliwood = sgs.General(extension, "Eucliwood", "magic", 3, false,false,false)
 Eu_Zombie = sgs.General(extension, "Eu_Zombie", "magic", 5, true,true,true)
 Yuri = sgs.General(extension, "Yuri", "real", 3, false,false,false)
-Setsuna = sgs.General(extension, "Setsuna", "real", 3, false,false,false)
+Setsuna = sgs.General(extension, "Setsuna", "diva", 3, false,false,false)
 Yukina = sgs.General(extension, "Yukina", "magic", 3, false,false,false)
 K1 = sgs.General(extension, "K1", "real", 4, true,false,false)
 --Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
@@ -3736,7 +3736,7 @@ Daolu = sgs.CreateTriggerSkill{
 	end, 
 	can_trigger = function(self, target)
 		if target then
-			return target:getMark("@Nagisa") == 0 and target:getMark("@Tomoyo") == 0 and target:getMark("@Fuko") == 0
+			return target:getMark("@NagisaMark") == 0 and target:getMark("@Tomoyo") == 0 and target:getMark("@Fuko") == 0
 		end
 		return false
 	end

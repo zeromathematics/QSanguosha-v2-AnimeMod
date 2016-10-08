@@ -735,17 +735,20 @@ QGroupBox *ServerDialog::create3v3Box()
     official_3v3_radiobutton = new QRadioButton(tr("Official mode"));
 
     QComboBox *officialComboBox = new QComboBox;
-    officialComboBox->addItem(tr("Classical"), "Classical");
-    officialComboBox->addItem("2012", "2012");
-    officialComboBox->addItem("2013", "2013");
+    //officialComboBox->addItem(tr("Classical"), "Classical");
+    //officialComboBox->addItem("2012", "2012");
+    officialComboBox->addItem("2016", "2016");
 
     official_3v3_ComboBox = officialComboBox;
 
-    QString rule = Config.value("3v3/OfficialRule", "2013").toString();
+    QString rule = Config.value("3v3/OfficialRule", "2016").toString();
+    /*
     if (rule == "2012")
         officialComboBox->setCurrentIndex(1);
     else if (rule == "2013")
         officialComboBox->setCurrentIndex(2);
+        */
+
 
     QRadioButton *extend = new QRadioButton(tr("Extension mode"));
     QPushButton *extend_edit_button = new QPushButton(tr("General selection ..."));
@@ -769,7 +772,7 @@ QGroupBox *ServerDialog::create3v3Box()
     else if (scheme == "AllRoles")
         roleChooseComboBox->setCurrentIndex(2);
 
-    //vlayout->addLayout(HLay(official_3v3_radiobutton, official_3v3_ComboBox));
+    vlayout->addLayout(HLay(official_3v3_radiobutton, official_3v3_ComboBox));
     vlayout->addLayout(HLay(extend, extend_edit_button));
     vlayout->addWidget(exclude_disaster_checkbox);
     vlayout->addLayout(HLay(new QLabel(tr("Role choose")), role_choose_ComboBox));
