@@ -1,3 +1,11 @@
+# QSanguosha-v2-AnimeMod
+
+QSanguosha Anime MOD is an extension MOD of open source Qt game project QSanguosha written by Mogara Team.
+
+* Demo Website (On Develop):  http://swordelucidator.github.io/QSanguosha-v2-AnimeMod
+
+
+
 Open Source Sanguosha
 ==========
 
