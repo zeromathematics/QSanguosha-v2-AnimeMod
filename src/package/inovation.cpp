@@ -3412,6 +3412,265 @@ public:
     }
 };
 
+
+//zuikaku
+EryuCard::EryuCard()
+{
+}
+
+bool EryuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    if (!targets.isEmpty()) return false;
+    return !to_select->isMale() && to_select != Self;
+}
+
+void EryuCard::use(Room *room, ServerPlayer *zuikaku, QList<ServerPlayer *> &targets) const
+{
+    ServerPlayer *target = targets.at(0);
+    target->gainMark("@EryuMark");
+    zuikaku->gainMark("@EryuMark");
+}
+
+
+class EryuVs : public ZeroCardViewAsSkill
+{
+public:
+    EryuVs() : ZeroCardViewAsSkill("eryu")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("EryuCard") && player->getMark("@EryuMark") == 0;
+    }
+
+    const Card *viewAs() const
+    {
+        return new EryuCard();
+    }
+};
+
+class Eryu : public TriggerSkill
+{
+public:
+    Eryu() : TriggerSkill("eryu")
+    {
+        events << CardsMoveOneTime << EventLoseSkill;
+        view_as_skill = new EryuVs;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *zuikaku, QVariant &data) const
+    {
+        if (triggerEvent == CardsMoveOneTime) {
+            if (zuikaku->getMark("@EryuMark") == 0){
+                return false;
+            }
+            ServerPlayer *linked = NULL;
+            foreach(ServerPlayer *player, room->getOtherPlayers(zuikaku)){
+                if (player->getMark("@EryuMark") > 0){
+                    linked = player;
+                }
+            }
+
+            if (!linked){
+                return false;
+            }
+
+
+            CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
+            if (move.reason.m_reason != CardMoveReason::S_REASON_USE || (move.from != zuikaku && move.from != linked)){
+                return false;
+            }
+
+            if (!move.to || move.to != move.from){
+                if (move.from == zuikaku){
+                    foreach(int id, move.card_ids){
+                        linked->obtainCard(Sanguosha->getCard(id));
+                    }
+                }
+                else{
+                    foreach(int id, move.card_ids){
+                        zuikaku->obtainCard(Sanguosha->getCard(id));
+                    }
+                }
+                return true;
+            }
+        }
+        else if (triggerEvent == EventLoseSkill){
+            foreach(ServerPlayer *player, room->getAlivePlayers()){
+                if (player->getMark("@EryuMark") > 0){
+                    player->loseAllMarks("@EryuMark");
+                }
+            }
+        }
+
+        return false;
+    }
+};
+
+class Zheyi : public TriggerSkill
+{
+public:
+    Zheyi() : TriggerSkill("zheyi")
+    {
+        frequency = Wake;
+        events << EnterDying;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EnterDying && player->getMark("@EryuMark") > 0){
+            ServerPlayer *zuikaku = room->findPlayerBySkillName("zheyi");
+            if (!zuikaku){
+                return false;
+            }
+            if (zuikaku->getMark("@waked") == 1 || !zuikaku->hasSkill(objectName()))
+                return false;
+            room->setPlayerProperty(zuikaku, "maxhp", zuikaku->getMaxHp() + 1);
+            room->broadcastSkillInvoke(objectName());
+            room->doLightbox("zheyi$", 3000);
+            room->detachSkillFromPlayer(zuikaku, "eryu");
+            room->acquireSkill(zuikaku, "youdiz");
+            room->recover(zuikaku, RecoverStruct(zuikaku));
+            zuikaku->gainMark("@waked");
+        }
+        return false;
+    }
+};
+
+
+class Youdiz : public TriggerSkill
+{
+public:
+    Youdiz() : TriggerSkill("youdiz")
+    {
+        events << EventPhaseStart << DamageInflicted << EventPhaseEnd;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart) {
+            QList<ServerPlayer *> ins = QList<ServerPlayer *>();
+            foreach(ServerPlayer *p, room->getOtherPlayers(player)){
+                ins.append(p);
+            }
+
+            if (ins.length() == 0){
+                return false;
+            }
+            if (!player->askForSkillInvoke(objectName(), data)){
+                return false;
+            }
+            ServerPlayer *other = room->askForPlayerChosen(player, ins, objectName());
+            other->gainMark("@Youdi");
+            other->gainAnExtraTurn();
+        }
+        else if (triggerEvent == DamageInflicted){
+            DamageStruct damage = data.value<DamageStruct>();
+            if (damage.from && damage.from->getMark("@Youdi") > 0){
+                if (damage.to->hasSkill(objectName())){
+                    room->askForPlayerChosen(damage.to, room->getOtherPlayers(damage.to), "youdi_draw")->drawCards(1);
+                }
+                else{
+                    return true;
+                }
+            }
+        }
+
+        else if (triggerEvent == EventPhaseEnd  && player->getMark("@Youdi") > 0 && player->getPhase() == Player::Finish){
+            player->loseAllMarks("@Youdi");
+            player->turnOver();
+        }
+
+        return false;
+    }
+};
+
+
+//shizuo
+class Baonu : public DrawCardsSkill
+{
+public:
+    Baonu() : DrawCardsSkill("baonu")
+    {
+        frequency = NotFrequent;
+    }
+
+    int getDrawNum(ServerPlayer *shizuo, int n) const
+    {
+        Room *room = shizuo->getRoom();
+
+        if (room->askForSkillInvoke(shizuo, objectName())){
+            room->loseHp(shizuo);
+            room->broadcastSkillInvoke(objectName());
+            shizuo->gainMark("@Baonu");
+            return shizuo->getLostHp();
+        }
+
+        return n;
+    }
+};
+
+JizhanCard::JizhanCard()
+{
+}
+
+bool JizhanCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    if (!targets.isEmpty()) return false;
+    return to_select != Self && Self->inMyAttackRange(to_select) && !to_select->isNude();
+}
+
+void JizhanCard::use(Room *room, ServerPlayer *shizuo, QList<ServerPlayer *> &targets) const
+{
+    ServerPlayer *target = targets.at(0);
+    int id = room->askForCardChosen(shizuo, target, "he", objectName());
+    QList<ServerPlayer *> good_targets = room->getOtherPlayers(target);
+    good_targets.removeOne(shizuo);
+    ServerPlayer *target2 = room->askForPlayerChosen(shizuo, good_targets, objectName());
+    target2->obtainCard(Sanguosha->getCard(id));
+    room->damage(DamageStruct(Sanguosha->getCard(id), shizuo, target2, 1));
+    if (Sanguosha->getCard(id)->isKindOf("EquipCard")){
+        if (target2->getEquips().length() > 0){
+            room->throwCard(room->askForCardChosen(shizuo, target2, "e", objectName()), target2, shizuo);
+        }
+    }
+    shizuo->loseAllMarks("@Baonu");
+}
+
+class Jizhans : public ZeroCardViewAsSkill
+{
+public:
+    Jizhans() : ZeroCardViewAsSkill("jizhans")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("JizhanCard") && player->getMark("@Baonu") > 0;
+    }
+
+    const Card *viewAs() const
+    {
+        return new JizhanCard();
+    }
+};
+
 InovationPackage::InovationPackage()
     : Package("inovation")
 {
@@ -3518,7 +3777,12 @@ InovationPackage::InovationPackage()
     Kongou->addSkill(new BurningLove);
 
    
-    General *Zuikaku = new General(this, "Zuikaku", "kancolle", 4, false);
+    General *Zuikaku = new General(this, "Zuikaku", "kancolle", 3, false);
+    Zuikaku->addSkill(new Eryu);
+    Zuikaku->addSkill(new Zheyi);
+    skills << new Youdiz;
+    Zuikaku->addWakeTypeSkillForAudio("youdiz");
+
     General *Shigure = new General(this, "Shigure", "kancolle", 3, false);
     General *Asashio = new General(this, "Asashio", "kancolle", 3, false);
     General *Nagato = new General(this, "Nagato", "kancolle", 4, false);
@@ -3547,6 +3811,9 @@ InovationPackage::InovationPackage()
     General *Ako = new General(this, "Ako", "real", 3, false);
     General *NMakoto = new General(this, "NMakoto", "real", 3);
     General *Chiaki = new General(this, "Chiaki", "real", 3, false);
+    General *Shizuo = new General(this, "Shizuo", "real", 5);
+    Shizuo->addSkill(new Baonu);
+    Shizuo->addSkill(new Jizhans);
     
 
     General *kaori = new General(this, "Kaori", "real", 3, false);
@@ -3587,6 +3854,8 @@ InovationPackage::InovationPackage()
     addMetaObject<ZhilingCard>();
     addMetaObject<HongzhaCard>();
     addMetaObject<NuequCard>();
+    addMetaObject<EryuCard>();
+    addMetaObject<JizhanCard>();
 }
 
 ADD_PACKAGE(Inovation)

@@ -146,5 +146,27 @@ public:
     void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
 };
 
+class EryuCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE EryuCard();
+
+    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+};
+
+class JizhanCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE JizhanCard();
+
+    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+};
+
 #endif
 

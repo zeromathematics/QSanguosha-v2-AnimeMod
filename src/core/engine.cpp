@@ -49,11 +49,11 @@ void Engine::_loadMiniScenarios()
 
 void Engine::_loadModScenarios()
 {
-    addScenario(new GuanduScenario());
-    addScenario(new CoupleScenario());
-    addScenario(new FanchengScenario());
+    //addScenario(new GuanduScenario());
+    //addScenario(new CoupleScenario());
+    //addScenario(new FanchengScenario());
     addScenario(new ZombieScenario());
-    addScenario(new ImpasseScenario());
+    //addScenario(new ImpasseScenario());
 }
 
 void Engine::addPackage(const QString &name)
@@ -1010,7 +1010,7 @@ QString Engine::getSetupString() const
     if (mode == "02_1v1")
         mode = mode + Config.value("1v1/Rule", "2013").toString();
     else if (mode == "06_3v3")
-        mode = mode + Config.value("3v3/OfficialRule", "2013").toString();
+        mode = mode + Config.value("3v3/OfficialRule", "2016").toString();
     setup_items << server_name
         << mode
         << QString::number(timeout)
@@ -1282,11 +1282,10 @@ QStringList Engine::getRandomGenerals(int count, const QSet<QString> &ban_set, c
 
 QList<int> Engine::getRandomCards() const
 {
-    bool exclude_disaters = false, using_2012_3v3 = false, using_2013_3v3 = false;
+    bool exclude_disaters = false, using_2016_3v3 = false;
 
     if (Config.GameMode == "06_3v3") {
-        using_2012_3v3 = (Config.value("3v3/OfficialRule", "2013").toString() == "2012");
-        using_2013_3v3 = (Config.value("3v3/OfficialRule", "2013").toString() == "2013");
+        using_2016_3v3 = (Config.value("3v3/OfficialRule", "2016").toString() == "2016");
         exclude_disaters = !Config.value("3v3/UsingExtension", false).toBool() || Config.value("3v3/ExcludeDisasters", true).toBool();
     }
 
@@ -1311,9 +1310,9 @@ QList<int> Engine::getRandomCards() const
         if (exclude_disaters && card->isKindOf("Disaster"))
             continue;
 
-        if (card->getPackage() == "New3v3Card" && (using_2012_3v3 || using_2013_3v3))
+        if (card->getPackage() == "New3v3Card" && (using_2016_3v3))
             list << card->getId();
-        else if (card->getPackage() == "New3v3_2013Card" && using_2013_3v3)
+        else if (card->getPackage() == "New3v3_2013Card" && using_2016_3v3)
             list << card->getId();
 
         if (Config.GameMode == "02_1v1" && !Config.value("1v1/UsingCardExtension", false).toBool()) {
@@ -1328,9 +1327,9 @@ QList<int> Engine::getRandomCards() const
         if (!getBanPackages().contains(card->getPackage()))
             list << card->getId();
     }
-    if (using_2012_3v3 || using_2013_3v3)
+    if (using_2016_3v3)
         list.removeOne(98);
-    if (using_2013_3v3) {
+    if (using_2016_3v3) {
         list.removeOne(53);
         list.removeOne(54);
     }
