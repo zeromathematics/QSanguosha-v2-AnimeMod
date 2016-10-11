@@ -1125,14 +1125,14 @@ ruler = sgs.CreateTriggerSkill{
 		return target ~= nil
 	end
 }
-Junko:addSkill(ruler)
---extension:addToSkills(ruler)
+extension:addToSkills(ruler)
+Junko:addWakeTypeSkillForAudio("ruler")
 sgs.LoadTranslationTable{
 ["SE_Heimu$"] = "image=image/animate/SE_Heimu.png", 
 
 ["SE_Heimu"] = "黑幕",
 ["$SE_Heimu"] = "",
-[":SE_Heimu"] = "<font color=\"red\"><b>限二技，</b></font>游戏结束前，若你已经阵亡，可以以4体力上限满血复活并摸4张牌并对场上所有角色造成1点雷击伤害，之后把你的身份变为主公，胜者为反贼，败者为内奸，并获得[规定『学级』]。",
+[":SE_Heimu"] = "<font color=\"red\"><b>限二技，</b></font>游戏结束前，若你已经阵亡，可以以4体力上限满血复活并摸4张牌并对场上所有角色造成1点雷击伤害，之后把你的身份变为主公，胜者为反贼，败者为内奸，并获得[规定『学级』]。\n\n<font weight=2><font color=\"brown\"><b>规定『学级』:</b></font><font color=\"blue\"><b>锁定技，</b></font>场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",
 
 ["ruler"] = "规定『学级』",
 [":ruler"] = "<font color=\"blue\"><b>锁定技，</b></font>场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",

@@ -3645,11 +3645,12 @@ void JizhanCard::use(Room *room, ServerPlayer *shizuo, QList<ServerPlayer *> &ta
     ServerPlayer *target2 = room->askForPlayerChosen(shizuo, good_targets, objectName());
     target2->obtainCard(Sanguosha->getCard(id));
     room->damage(DamageStruct(Sanguosha->getCard(id), shizuo, target2, 1));
+    /*
     if (Sanguosha->getCard(id)->isKindOf("EquipCard")){
         if (target2->getEquips().length() > 0){
             room->throwCard(room->askForCardChosen(shizuo, target2, "e", objectName()), target2, shizuo);
         }
-    }
+    }*/
     shizuo->loseAllMarks("@Baonu");
 }
 
@@ -3670,6 +3671,85 @@ public:
         return new JizhanCard();
     }
 };
+
+//3000
+class Tianzi : public TriggerSkill
+{
+public:
+    Tianzi() : TriggerSkill("tianzi")
+    {
+        events << EventPhaseEnd;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *nagi, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseEnd){
+            if (nagi->getPhase() == Player::Judge || nagi->getPhase() == Player::Draw || nagi->getPhase() == Player::Play || nagi->getPhase() == Player::Discard){
+                if (nagi->isNude()){
+                    return false;
+                }
+                const Card *card = room->askForCard(nagi, "..", "@tianzi-discard", data, objectName());
+                if (card){
+                    //room->throwCard(card, nagi, nagi);
+                    if (card->isKindOf("TrickCard")){
+                        nagi->drawCards(2);
+                    }
+                    else if (card->isKindOf("EquipCard")){
+                        nagi->drawCards(2);
+                    }
+                    else{
+                        nagi->drawCards(1);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+};
+
+class Yuzhai : public TriggerSkill
+{
+public:
+    Yuzhai() : TriggerSkill("yuzhai")
+    {
+        events << EventPhaseStart << CardsMoveOneTime;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *nagi, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart){
+            if (nagi->getPhase() == Player::Finish){
+                if (nagi->getMark("@Yuzhai") > nagi->getHp()){
+                    for (int i = nagi->getHp(); i < nagi->getMark("@Yuzhai"); i++){
+                        if (i > nagi->getHp() + 2){
+                            break;
+                        }
+                        ServerPlayer *p = room->askForPlayerChosen(nagi, room->getOtherPlayers(nagi), objectName());
+                        if (p->isNude()){
+                            continue;
+                        }
+                        int id = room->askForCardChosen(nagi, p, "he", objectName());
+                        if (id != -1){
+                            room->throwCard(id, p, nagi);
+                        }
+                    }
+                    
+
+                    nagi->loseAllMarks("@Yuzhai");
+                }
+            }
+        }
+        else if (triggerEvent == CardsMoveOneTime){
+            CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
+            if (move.from && move.from->hasSkill(objectName()) && nagi->objectName() == move.from->objectName() && (move.reason.m_reason & CardMoveReason::S_MASK_BASIC_REASON) == CardMoveReason::S_REASON_DISCARD){
+                nagi->gainMark("@Yuzhai", move.card_ids.length());
+            }
+        }
+        return false;
+    }
+};
+
+
 
 InovationPackage::InovationPackage()
     : Package("inovation")
@@ -3811,9 +3891,12 @@ InovationPackage::InovationPackage()
     General *Ako = new General(this, "Ako", "real", 3, false);
     General *NMakoto = new General(this, "NMakoto", "real", 3);
     General *Chiaki = new General(this, "Chiaki", "real", 3, false);
-    General *Shizuo = new General(this, "Shizuo", "real", 5);
+    General *Shizuo = new General(this, "Shizuo", "real", 6);
     Shizuo->addSkill(new Baonu);
     Shizuo->addSkill(new Jizhans);
+    General *Nagi = new General(this, "Nagi", "real", 3);
+    Nagi->addSkill(new Tianzi);
+    Nagi->addSkill(new Yuzhai);
     
 
     General *kaori = new General(this, "Kaori", "real", 3, false);
