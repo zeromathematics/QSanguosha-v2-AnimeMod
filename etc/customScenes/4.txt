@@ -1,3 +1,7 @@
-general:select  role:rebel
-general:yuanshao  role:rebel  starter:true
-general:guojia  general2:nos_huatuo  maxhp:3  role:lord  equip:eight_diagram
+
+general:select role:lord starter:true maxhp:8 draw:6 
+general:Rivaille role:rebel 
+general:WalkerA role:rebel maxhp:2 acquireSkills:se_zhanjing draw:2 
+general:WalkerA role:rebel maxhp:2 acquireSkills:se_zhanjing draw:2 
+general:WalkerA role:rebel maxhp:2 acquireSkills:se_zhanjing draw:2 
+general:WalkerA role:rebel maxhp:2 acquireSkills:se_zhanjing draw:2 

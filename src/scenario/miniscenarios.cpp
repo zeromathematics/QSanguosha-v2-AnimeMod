@@ -7,7 +7,7 @@
 const char *MiniScene::S_KEY_MINISCENE = "_mini_%1";
 const char *MiniSceneRule::S_EXTRA_OPTION_RANDOM_ROLES = "randomRoles";
 const char *MiniSceneRule::S_EXTRA_OPTION_REST_IN_DISCARD_PILE = "restInDiscardPile";
-const QString MiniSceneRule::_S_DEFAULT_HERO = "sujiang";
+const QString MiniSceneRule::_S_DEFAULT_HERO = "WalkerA";
 
 MiniSceneRule::MiniSceneRule(Scenario *scenario)
     : ScenarioRule(scenario)

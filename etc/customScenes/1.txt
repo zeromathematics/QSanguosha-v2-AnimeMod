@@ -1,3 +1,3 @@
 
-general:SE_Asuna role:lord 
-general:SE_Kirito role:rebel starter:true maxhp:6 hp:6 acquireSkills:LuaChanshi,LuaZhuan equip:232 
+general:select role:rebel draw:2 
+general:SE_Kirito role:lord starter:true acquireSkills:LuaChanshi,LuaZhuan draw:0 equip:232 hand:110,107,49,231,78 

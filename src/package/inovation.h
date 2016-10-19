@@ -168,5 +168,38 @@ public:
     void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
 };
 
+class TaxianCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE TaxianCard();
+
+    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+    bool targetsFeasible(const QList<const Player *> &targets, const Player *Self) const;
+};
+
+class NingjuCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE NingjuCard();
+
+    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+};
+
+class FanqianCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE FanqianCard();
+
+    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+};
+
 #endif
 

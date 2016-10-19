@@ -2725,13 +2725,16 @@ se_jianwucard = sgs.CreateSkillCard{
 		room:doLightbox("se_jianwu$", 2000)
 		if source:isAlive() then
 			targets[1]:turnOver()
+			room:setEmotion(targets[1], "skills/leaf")
 			room:loseHp(targets[1])
 			if #targets >= 2 then
 				targets[2]:turnOver()
+				room:setEmotion(targets[2], "skills/leaf")
 				room:loseHp(targets[2])
 			end
 			if #targets == 3 then
 				targets[3]:turnOver()
+				room:setEmotion(targets[3], "skills/leaf")
 				room:loseHp(targets[3])
 			end
 		end
@@ -4207,6 +4210,7 @@ SE_Juji = sgs.CreateTriggerSkill{
 			local dest = effect.to
 			if dest:hasFlag("SE_JujiTarget") then
 				room:setPlayerFlag(dest, "-SE_JujiTarget")
+				room:setEmotion(dest, "snipe")
 				room:slashResult(effect, nil)
 				return true
 			end
@@ -6973,6 +6977,7 @@ se_huanyuancard = sgs.CreateSkillCard{
 		local choice = room:askForChoice(source, self:objectName(), "se_huanyuan_Draw+se_huanyuan_Hp")
 		--room:broadcastSkillInvoke("se_huanyuan")
 		room:doLightbox("se_huanyuan$", 1000)
+		room:setEmotion(targets[1], "skills/huanyuan")
 		if choice == "se_huanyuan_Draw" then
 			local card_num = targets[1]:getMark("se_huanyuan_Pre_Handcards")
 			if card_num - targets[1]:getHandcardNum() > 0 then
@@ -7394,7 +7399,7 @@ se_jiejieEffect = sgs.CreateTriggerSkill{
 			local pld = damage.to
 			if pld:getMark("@Kekkai") > 0 then
 				room:broadcastSkillInvoke("se_jiejie")
-				room:doLightbox("se_jiejie$", 800)
+				room:setEmotion(pld, "shield")
 				damage.damage = damage.damage - 1
 				data:setValue(damage)
 				pld:loseMark("@Kekkai")
@@ -7819,6 +7824,7 @@ SE_Juji_Reki = sgs.CreateTriggerSkill{
 			local dest = effect.to
 			if dest:hasFlag("SE_JujiTarget_Reki") then
 				room:setPlayerFlag(dest, "-SE_JujiTarget_Reki")
+				room:setEmotion(dest, "snipe")
 				room:slashResult(effect, nil)
 				return true
 			end
@@ -9273,7 +9279,7 @@ SE_Zhanfang = sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		if event == sgs.DamageCaused then
 			local damage = data:toDamage()
-			if damage.from:getMark("@Frozen_Eu") > 0 and damage.nature == sgs.DamageStruct_Normal then
+			if damage.from and damage.from:getMark("@Frozen_Eu") > 0 and damage.nature == sgs.DamageStruct_Normal then
 				local mygod= room:findPlayerBySkillName("SE_Zhanfang")
 				if mygod then
 					if mygod:isAlive() then
@@ -9282,13 +9288,14 @@ SE_Zhanfang = sgs.CreateTriggerSkill{
 							if p:getMark("@Frozen_Eu") > 0 then
 								damage1.from = nil
 								damage1.to = p
+								room:setEmotion(p, "skills/ice")
 								room:damage(damage1)
 							end
 						end
 					end
 				end
 			end
-			if damage.from:getMark("@Frozen_Eu") > 0 and damage.nature == sgs.DamageStruct_Fire then
+			if damage.from and damage.from:getMark("@Frozen_Eu") > 0 and damage.nature == sgs.DamageStruct_Fire then
 				local mygod = room:findPlayerBySkillName("SE_Zhanfang")
 				if mygod then
 					damage.from:loseMark("@Frozen_Eu")
@@ -11626,6 +11633,7 @@ se_origin_trigger = sgs.CreateTriggerSkill{
 				end
 				room:broadcastSkillInvoke("se_origin", 4)
 				room:doLightbox("se_origin$", 3000)
+				room:setEmotion(sb, "skills/origin")
 				if skill_list then
 	                for _,skill in sgs.qlist(sb:getSkillList(false, false)) do
 	                	if sb:hasSkill(skill:objectName()) and not skill_list:contains(skill) then

@@ -1,2 +1,6 @@
-general:select  role:rebel
-general:caocao  maxhp:5  hp:5  role:lord  equip:qinggang_sword acquireSkills:feiying starter:true
+
+general:select role:lord 
+general:WalkerA role:loyalist maxhp:3 draw:2 
+general:WalkerA role:loyalist maxhp:3 draw:2 
+general:WalkerA role:loyalist maxhp:3 draw:2 
+general:Yuudachi role:rebel starter:true acquireSkills:se_yezhan,LuaBaozou 

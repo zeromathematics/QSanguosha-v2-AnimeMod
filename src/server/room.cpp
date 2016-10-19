@@ -5766,6 +5766,8 @@ void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)
     if (to && akarined_players.contains(to->objectName()))
         return;
 
+    setEmotion(player, "akarin");
+
     JsonArray args;
     args << player->objectName();
     args << true;//to Akarin

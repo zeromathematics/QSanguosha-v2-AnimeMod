@@ -40,8 +40,10 @@ void StartScene::addBGM(QString path)
 {
 #ifdef AUDIO_SUPPORT
     Audio::stopBGM();
-    Audio::playBGM(path);
-    Audio::setBGMVolume(Config.BGMVolume);
+    if (Config.EnableBgMusic){
+        Audio::playBGM(path);
+        Audio::setBGMVolume(Config.BGMVolume);
+    }
 #endif
 }
 
