@@ -167,6 +167,9 @@ RoomScene::RoomScene(QMainWindow *main_window)
     connect(ClientInstance, SIGNAL(assign_asked()), this, SLOT(startAssign()));
     connect(ClientInstance, SIGNAL(start_in_xs()), this, SLOT(startInXs()));
 
+    connect(ClientInstance, SIGNAL(bgm_change(const QString)), SLOT(changeBGM(const QString)));
+    connect(ClientInstance, SIGNAL(bg_change(const QString)), SLOT(changeBG(const QString)));
+
     connect(ClientInstance, &Client::skill_updated, this, &RoomScene::updateSkill);
 
     guanxing_box = new GuanxingBox;
@@ -3880,6 +3883,104 @@ void KOFOrderBox::killPlayer(const QString &general_name)
     }
 }
 
+void RoomScene::changeBGM(const QString bgm)
+{
+    if (Config.EnableBgMusic) {
+        if (bgm == ""){
+            adjustDefaultBgm();
+        }
+        else{
+#ifdef AUDIO_SUPPORT
+            Audio::stopBGM();
+            Audio::playBGM("audio/bgm/" + bgm + ".ogg");
+            Audio::setBGMVolume(Config.BGMVolume);
+#endif
+        }
+    }
+}
+
+
+void RoomScene::adjustDefaultBgm()
+{
+    if (Config.EnableBgMusic) {
+        // start playing background music
+        _m_bgMusicPath = Config.value("BackgroundMusic", "audio/system/background.ogg").toString();
+        if (_m_bgMusicPath == "audio/system/background.ogg"){
+            _m_bgMusicPath = "audio/kingdom/" + getLordKingdom() + ".ogg";
+            QFile *file = new QFile(_m_bgMusicPath);
+            if (!file->exists()){
+                _m_bgMusicPath = "audio/system/background.ogg";
+            }
+        }
+#ifdef AUDIO_SUPPORT
+        Audio::stopBGM();
+        Audio::playBGM(_m_bgMusicPath);
+        Audio::setBGMVolume(Config.BGMVolume);
+#endif
+        _m_bgEnabled = true;
+    }
+    else {
+        _m_bgEnabled = false;
+    }
+}
+
+void RoomScene::changeBG(const QString bg)
+{
+    if (bg == ""){
+        adjustDefaultBg();
+    }
+    else{
+        QPixmap pixmap = G_ROOM_SKIN.getPixmap("tableBg" + bg);
+        if (pixmap.width() == 1 || pixmap.height() == 1) {
+            // we treat this condition as error and do not use it
+        }
+        else {
+            m_tableBgPixmapOrig = pixmap;
+            m_tableBgPixmap = pixmap.scaled(m_tablew, m_tableh + _m_roomLayout->m_photoDashboardPadding, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            m_tableBg->setPixmap(m_tableBgPixmap);
+        }
+    }
+    
+}
+
+void RoomScene::adjustDefaultBg()
+{
+    // for tablebg change
+    QString kingdom = getLordKingdom();
+    if (Config.EnableAutoBackgroundChange && Self != NULL) {
+        if (Sanguosha->getKingdoms().contains(kingdom)) {
+            QPixmap pixmap = G_ROOM_SKIN.getPixmap("tableBg" + kingdom);
+            if (pixmap.width() == 1 || pixmap.height() == 1) {
+                // we treat this condition as error and do not use it
+            }
+            else {
+                m_tableBgPixmapOrig = pixmap;
+                m_tableBgPixmap = pixmap.scaled(m_tablew, m_tableh + _m_roomLayout->m_photoDashboardPadding, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+                m_tableBg->setPixmap(m_tableBgPixmap);
+            }
+        }
+    }
+}
+
+QString RoomScene::getLordKingdom(){
+    const Player *the_player = NULL;
+    if (isNormalGameMode(ServerInfo.GameMode)) {
+        QList<const Player *> sib = Self->getSiblings();
+        sib << Self;
+        foreach(const Player *p, sib) {
+            if (p->isLord()) {
+                the_player = p;
+                break;
+            }
+        }
+    }
+
+    if (the_player == NULL)
+        the_player = Self;
+
+    return the_player->getKingdom();
+}
+
 void RoomScene::onGameStart()
 {
     main_window->activateWindow();
@@ -3905,57 +4006,11 @@ void RoomScene::onGameStart()
     trust_button->setEnabled(true);
     skin_button->setEnabled(true);
 
-    const Player *the_player = NULL;
-    if (isNormalGameMode(ServerInfo.GameMode)) {
-        QList<const Player *> sib = Self->getSiblings();
-        sib << Self;
-        foreach(const Player *p, sib) {
-            if (p->isLord()) {
-                the_player = p;
-                break;
-            }
-        }
-    }
+    adjustDefaultBgm();
 
-    if (the_player == NULL)
-        the_player = Self;
-
-    QString kingdom = the_player->getKingdom();
-
-    if (Config.EnableBgMusic) {
-        // start playing background music
-        _m_bgMusicPath = Config.value("BackgroundMusic", "audio/system/background.ogg").toString();
-        if (_m_bgMusicPath == "audio/system/background.ogg"){
-            _m_bgMusicPath = "audio/kingdom/" + kingdom + ".ogg";
-            QFile *file = new QFile(_m_bgMusicPath);
-            if (!file->exists()){
-                _m_bgMusicPath = "audio/system/background.ogg";
-            }
-        }
-#ifdef AUDIO_SUPPORT
-        Audio::stopBGM();
-        Audio::playBGM(_m_bgMusicPath);
-        Audio::setBGMVolume(Config.BGMVolume);
-#endif
-        _m_bgEnabled = true;
-    } else {
-        _m_bgEnabled = false;
-    }
     game_started = true;
 
-    // for tablebg change
-    if (Config.EnableAutoBackgroundChange && Self != NULL) {
-        if (Sanguosha->getKingdoms().contains(kingdom)) {
-            QPixmap pixmap = G_ROOM_SKIN.getPixmap("tableBg" + kingdom);
-            if (pixmap.width() == 1 || pixmap.height() == 1) {
-                // we treat this condition as error and do not use it
-            } else {
-                m_tableBgPixmapOrig = pixmap;
-                m_tableBgPixmap = pixmap.scaled(m_tablew, m_tableh + _m_roomLayout->m_photoDashboardPadding, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-                m_tableBg->setPixmap(m_tableBgPixmap);
-            }
-        }
-    }
+    adjustDefaultBg();
     // end
 }
 
@@ -4130,10 +4185,14 @@ void RoomScene::doLightboxAnimation(const QString &, const QStringList &args)
     QRect rect = main_window->rect();
     QGraphicsRectItem *lightbox = addRect(rect);
 
-    if (!word.startsWith("skill=")) {
+    if (!word.startsWith("skill=") && !word.startsWith("lani=")) {
         lightbox->setBrush(QColor(32, 32, 32, 204));
         lightbox->setZValue(20001.0);
         word = Sanguosha->translate(word);
+    }
+
+    if (word.startsWith("lani=")){
+        lightbox->setBrush(QColor(32, 32, 32, 100));
     }
 
     if (word.startsWith("image=")) {
@@ -4154,7 +4213,7 @@ void RoomScene::doLightboxAnimation(const QString &, const QStringList &args)
 
         connect(appear, SIGNAL(finished()), line, SLOT(deleteLater()));
         connect(appear, SIGNAL(finished()), this, SLOT(removeLightBox()));
-    } else if (word.startsWith("anim=")) {
+    } else if (word.startsWith("anim=") || word.startsWith("lani=")) {
         PixmapAnimation *pma = PixmapAnimation::GetPixmapAnimation(lightbox, word.mid(5));
         if (pma) {
             pma->setZValue(20002.0);

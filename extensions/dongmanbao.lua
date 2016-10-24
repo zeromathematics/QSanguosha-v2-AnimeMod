@@ -692,10 +692,11 @@ jinghua = sgs.CreateTriggerSkill{
 			if room:askForSkillInvoke(player, self:objectName()) then
 				local list = room:getAlivePlayers()
 				local dest = room:askForPlayerChosen(player, list, "jinghua")
-				room:broadcastSkillInvoke("jinghua")
 				local card = room:askForCard(player, ".", "@jinghua", data)
 				--KOF
 				if room:getAllPlayers(true):length() == 2 and not card then return end
+				room:broadcastSkillInvoke("jinghua")
+				room:setEmotion(dest, "skills/purify")
 				if room:getAllPlayers(true):length() > 2 then
 					room:obtainCard(dest, card, false)
 				end
@@ -7349,8 +7350,10 @@ SE_Gongpin = sgs.CreateTriggerSkill{
 				end
 			end
 		elseif event == sgs.EventLoseSkill then
-			for _,p in sgs.qlist(room:getAlivePlayers()) do
-				p:loseAllMarks("@Kekkai")
+			if data:toString() == self:objectName() then
+				for _,p in sgs.qlist(room:getAlivePlayers()) do
+					p:loseAllMarks("@Kekkai")
+				end
 			end
 		end
 		return false

@@ -4437,6 +4437,22 @@ void Room::doAnimate(QSanProtocol::AnimateType type, const QString &arg1, const 
     doBroadcastNotify(players, S_COMMAND_ANIMATE, arg);
 }
 
+void Room::changeBGM(QString bgm)
+{
+    //use bgm="" to change to original bgm
+    JsonArray arg;
+    arg << bgm;
+    doBroadcastNotify(getAllPlayers(true), S_COMMAND_CHANGE_BGM, arg);
+}
+
+void Room::changeBG(QString bg)
+{
+    //use bg="" to change to original bg
+    JsonArray arg;
+    arg << bg;
+    doBroadcastNotify(getAllPlayers(true), S_COMMAND_CHANGE_BG, arg);
+}
+
 void Room::preparePlayers()
 {
     foreach (ServerPlayer *player, m_players) {
@@ -4630,6 +4646,10 @@ void Room::removeTag(const QString &key)
 
 void Room::setEmotion(ServerPlayer *target, const QString &emotion)
 {
+    if (!target){
+        doAnimate(QSanProtocol::S_ANIMATE_LIGHTBOX, emotion, QString("%1:%2").arg(2000).arg(0));
+        return;
+    }
     JsonArray arg;
     arg << target->objectName();
     arg << (emotion.isEmpty() ? QString(".") : emotion);
@@ -5755,6 +5775,74 @@ void Room::showAllCards(ServerPlayer *player, ServerPlayer *to)
 
         doBroadcastNotify(getOtherPlayers(player), S_COMMAND_SHOW_ALL_CARDS, gongxinArgs);
     }
+}
+
+void Room::setAura(ServerPlayer* player, QString aura)
+{
+    if (hasAura(aura)){
+        return;
+    }
+
+    bool first = true;
+    if (hasAura()){
+        first = false;
+    }
+
+    setTag("aura", QVariant::fromValue(aura));
+    setTag("aura_player", QVariant::fromValue(player));
+    //change BGM, background
+    changeBGM(aura);
+    changeBG(aura);
+    //play Animation
+    
+    //set emotion
+    doAnimate(QSanProtocol::S_ANIMATE_LIGHTBOX, "lani=aura", QString("%1:%2").arg(3000).arg(0));
+}
+
+void Room::redoEmotion(){
+    if (!hasAura()){
+        return;
+    }
+    setEmotion(getAuraPlayer(), "aura");
+    QTimer::singleShot(1000, this, SLOT(redoEmotion()));
+}
+
+bool Room::hasAura(){
+    return getTag("aura").value<QString>().length() > 0;
+}
+
+bool Room::hasAura(QString aura){
+    return getTag("aura").value<QString>() == aura;
+    
+}
+
+QString Room::getAura(){
+    return getTag("aura").value<QString>();
+}
+
+void Room::clearAura(){
+    //change BGM, background back
+    changeBGM("");
+    changeBG("");
+    //clear emotion
+    if (!hasAura()){
+        return;
+    }
+    removeTag("aura");
+    removeTag("aura_player");
+}
+
+bool Room::doAura(ServerPlayer* player, QString aura){
+    //return value means success or not
+    if (hasAura(aura)){
+        return false;
+    }
+    setAura(player, aura);
+    return true;
+}
+
+ServerPlayer* Room::getAuraPlayer(){
+    return getTag("aura_player").value<ServerPlayer *>();
 }
 
 void Room::akarinPlayer(ServerPlayer *player, ServerPlayer *to)

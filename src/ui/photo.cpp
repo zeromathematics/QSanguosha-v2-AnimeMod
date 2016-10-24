@@ -129,7 +129,8 @@ void Photo::setEmotion(const QString &emotion, bool permanent)
         if (permanent) {
             appear->setEndValue(1.0);
             appear->setDuration(500);
-        } else {
+        }
+        else {
             appear->setKeyValueAt(0.25, 1.0);
             appear->setKeyValueAt(0.75, 1.0);
             appear->setEndValue(0.0);

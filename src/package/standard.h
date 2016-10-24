@@ -105,6 +105,7 @@ class GodSalvation : public GlobalEffect
 public:
     Q_INVOKABLE GodSalvation(Card::Suit suit = Heart, int number = 1);
     bool isCancelable(const CardEffectStruct &effect) const;
+    void onUse(Room *room, const CardUseStruct &card_use) const;
     void onEffect(const CardEffectStruct &effect) const;
 };
 
@@ -142,6 +143,7 @@ class SavageAssault :public AOE
 
 public:
     Q_INVOKABLE SavageAssault(Card::Suit suit, int number);
+    void onUse(Room *room, const CardUseStruct &card_use) const;
     void onEffect(const CardEffectStruct &effect) const;
 };
 
@@ -151,6 +153,7 @@ class ArcheryAttack : public AOE
 
 public:
     Q_INVOKABLE ArcheryAttack(Card::Suit suit = Heart, int number = 1);
+    void onUse(Room *room, const CardUseStruct &card_use) const;
     void onEffect(const CardEffectStruct &effect) const;
 };
 

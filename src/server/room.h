@@ -118,6 +118,15 @@ public:
     void akarinPlayer(ServerPlayer *player, ServerPlayer *to = NULL);
     void removeAkarinEffect(ServerPlayer *player, ServerPlayer *to = NULL);
     bool isAkarin(ServerPlayer *player, ServerPlayer *to = NULL);
+    void changeBGM(QString bgm);
+    void changeBG(QString bg);
+    void setAura(ServerPlayer* player, QString aura);
+    bool hasAura();
+    bool hasAura(QString aura);
+    QString getAura();
+    ServerPlayer* getAuraPlayer();
+    void clearAura();
+    bool doAura(ServerPlayer* player, QString aura);
     void retrial(const Card *card, ServerPlayer *player, JudgeStruct *judge,
         const QString &skill_name, bool exchange = false);
 
@@ -590,6 +599,7 @@ private slots:
     void processClientPacket(const QString &packet);
     void assignRoles();
     void startGame();
+    void redoEmotion();
     void slotSetProperty(ServerPlayer *player, const char *property_name, const QVariant &value);
 
 signals:

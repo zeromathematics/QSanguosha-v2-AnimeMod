@@ -218,9 +218,9 @@ public:
 
 ERCIYUANPackage::ERCIYUANPackage() : Package("ERCIYUAN")
 {
-    General *itomakoto = new General(this, "itomakoto", "real", 3, true, false);
-    itomakoto->addSkill(new Haochuan);
-    itomakoto->addSkill(new Renzha);
+    //General *itomakoto = new General(this, "itomakoto", "real", 3, true, false);
+    //itomakoto->addSkill(new Haochuan);
+    //itomakoto->addSkill(new Renzha);
     
     General *ayanamirei = new General(this, "ayanamirei", "science", 3, false, false);
     ayanamirei->addSkill(new WuxinAya);

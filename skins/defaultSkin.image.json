@@ -51,6 +51,13 @@
 "tableBgshu": "image/system/backdrop/shu.jpg",
 "tableBgwu" : "image/system/backdrop/wu.jpg",
 "tableBgqun": "image/system/backdrop/qun.jpg",
+"tableBgdiva": "image/system/backdrop/diva.jpg",
+"tableBgkancolle": "image/system/backdrop/kancolle.jpg",
+"tableBgmagic" : "image/system/backdrop/magic.jpg",
+"tableBgreal": "image/system/backdrop/real.jpg",
+"tableBgscience": "image/system/backdrop/science.jpg",
+"tableBgtouhou": "image/system/backdrop/touhou.jpg",
+"tableBgxingjian" : "image/system/backdrop/xingjian.jpg",
 "photoExtraSkillBg": "image/system/huashenSkillBg.png",
 "dashboardExtraSkillBg": "image/system/huashenSkillBg.png",
 

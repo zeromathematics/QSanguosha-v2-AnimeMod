@@ -201,5 +201,15 @@ public:
     void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
 };
 
+class JiguanCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE JiguanCard();
+
+    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+};
+
 #endif
 

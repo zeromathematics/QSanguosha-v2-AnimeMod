@@ -15,7 +15,15 @@
    "weapon/guding_blade", "weapon/halberd",
    "weapon/ice_sword", "weapon/kylin_bow",
    "weapon/qinggang_sword", "weapon/moonspear",
-   "weapon/spear"],
+   "weapon/spear",
+   //cards
+   "cards/archery_attack", "cards/god_salvation", "cards/savage_assault", 
+   //effect
+   "akarin", "aura", "fire_caused",
+   //skill
+   "shield", "snipe"
+
+],
 
 "huashen": [
 7000,

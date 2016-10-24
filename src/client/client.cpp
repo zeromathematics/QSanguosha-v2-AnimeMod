@@ -71,6 +71,8 @@ Client::Client(QObject *parent, const QString &filename)
     m_callbacks[S_COMMAND_GET_CARD] = &Client::getCards;
     m_callbacks[S_COMMAND_LOSE_CARD] = &Client::loseCards;
     m_callbacks[S_COMMAND_SET_PROPERTY] = &Client::updateProperty;
+    m_callbacks[S_COMMAND_CHANGE_BGM] = &Client::changeBGM;
+    m_callbacks[S_COMMAND_CHANGE_BG] = &Client::changeBG;
     m_callbacks[S_COMMAND_RESET_PILE] = &Client::resetPiles;
     m_callbacks[S_COMMAND_UPDATE_PILE] = &Client::setPileNumber;
     m_callbacks[S_COMMAND_SYNCHRONIZE_DISCARD_PILE] = &Client::synchronizeDiscardPile;
@@ -360,6 +362,26 @@ void Client::updateProperty(const QVariant &arg)
     ClientPlayer *player = getPlayer(object_name);
     if (!player) return;
     player->setProperty(args[1].toString().toLatin1().constData(), args[2].toString());
+}
+
+void Client::changeBGM(const QVariant &arg)
+{
+    JsonArray args = arg.value<JsonArray>();
+    if (args.size() != 1) return;
+
+    QString new_bgm = args[0].toString();
+    emit bgm_change(new_bgm);
+    
+}
+
+void Client::changeBG(const QVariant &arg)
+{
+    JsonArray args = arg.value<JsonArray>();
+    if (args.size() != 1) return;
+
+    QString new_bg = args[0].toString();
+    emit bg_change(new_bg);
+
 }
 
 void Client::removePlayer(const QVariant &player_name)

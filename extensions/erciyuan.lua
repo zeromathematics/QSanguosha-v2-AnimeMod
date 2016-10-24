@@ -1,7 +1,7 @@
 module("extensions.erciyuan", package.seeall)
 extension = sgs.Package("erciyuan")
 ------------------------------------------------------------------------武将登陆区
---itomakoto=sgs.General(extension, "itomakoto", "real", 3, true,false) --伊藤誠
+itomakoto=sgs.General(extension, "itomakoto", "real", 3, true,false) --伊藤誠
 ayanami=sgs.General(extension,"ayanami","science",3,false,false) --綾波レイ
 keima=sgs.General(extension,"keima","real",3,true,false) --桂馬
 SPkirito=sgs.General(extension,"SPkirito","science",4,true,false) --キリト
@@ -3152,12 +3152,14 @@ LuaDikai=sgs.CreateTriggerSkill{
 		if not room:askForSkillInvoke(player, self:objectName(), data) then return end
 		room:broadcastSkillInvoke("LuaJingming",math.random(1,2))
 		room:drawCards(yukine,1)
-		local card_id = room:askForCardChosen(yukine,damage.from,"he",self:objectName())
-		room:throwCard(card_id,damage.from,yukine)
-		if yukine:objectName() ~= player:objectName() then
-			local prompt = string.format("@dikai:%s:%s",yukine:getGeneralName(),player:objectName())
-			local card = room:askForCard(yukine,"EquipCard,Slash|.|.",prompt,data,self:objectName())
-			player:obtainCard(card,true)
+		if not damage.from:isNude() then
+			local card_id = room:askForCardChosen(yukine,damage.from,"he",self:objectName())
+			room:throwCard(card_id,damage.from,yukine)
+			if yukine:objectName() ~= player:objectName() then
+				local prompt = string.format("@dikai:%s:%s",yukine:getGeneralName(),player:objectName())
+				local card = room:askForCard(yukine,"EquipCard,Slash|.|.",prompt,data,self:objectName())
+				player:obtainCard(card,true)
+			end
 		end
 	end,
 	can_trigger = function(self, target)
@@ -3195,9 +3197,9 @@ extension:addToSkills(LuaPaoxiao)
 extension:addToSkills(LuaKuangshi)
 extension:addToSkills(LuaXiuluo)
 
---itomakoto:addSkill(luarenzha)
---itomakoto:addSkill(renzha)
---itomakoto:addSkill(haochuantimes)
+itomakoto:addSkill(luarenzha)
+itomakoto:addSkill(renzha)
+itomakoto:addSkill(haochuantimes)
 ayanami:addSkill(weixiao)
 ayanami:addSkill(nvshen)
 keima:addSkill(LuaShenzhi)

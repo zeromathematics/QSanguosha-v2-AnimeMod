@@ -854,6 +854,12 @@ bool GodSalvation::isCancelable(const CardEffectStruct &effect) const
     return effect.to->isWounded() && TrickCard::isCancelable(effect);
 }
 
+void GodSalvation::onUse(Room *room, const CardUseStruct &card_use) const
+{
+    room->doAnimate(QSanProtocol::S_ANIMATE_LIGHTBOX, "lani=cards/god_salvation", QString("%1:%2").arg(2000).arg(0));
+    GlobalEffect::onUse(room, card_use);
+}
+
 void GodSalvation::onEffect(const CardEffectStruct &effect) const
 {
     Room *room = effect.to->getRoom();
@@ -867,6 +873,12 @@ SavageAssault::SavageAssault(Suit suit, int number)
     : AOE(suit, number)
 {
     setObjectName("savage_assault");
+}
+
+void SavageAssault::onUse(Room *room, const CardUseStruct &card_use) const
+{
+    room->doAnimate(QSanProtocol::S_ANIMATE_LIGHTBOX, "lani=cards/savage_assault", QString("%1:%2").arg(2000).arg(0));
+    AOE::onUse(room, card_use);
 }
 
 void SavageAssault::onEffect(const CardEffectStruct &effect) const
@@ -890,6 +902,12 @@ ArcheryAttack::ArcheryAttack(Card::Suit suit, int number)
     : AOE(suit, number)
 {
     setObjectName("archery_attack");
+}
+
+void ArcheryAttack::onUse(Room *room, const CardUseStruct &card_use) const
+{
+    room->doAnimate(QSanProtocol::S_ANIMATE_LIGHTBOX, "lani=cards/archery_attack", QString("%1:%2").arg(2000).arg(0));
+    AOE::onUse(room, card_use);
 }
 
 void ArcheryAttack::onEffect(const CardEffectStruct &effect) const

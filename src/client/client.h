@@ -135,6 +135,9 @@ public:
     void updateCard(const QVariant &arg);
     void updateBossLevel(const QVariant &arg);
 
+    void changeBGM(const QVariant &arg);
+    void changeBG(const QVariant &arg);
+
     void fillAG(const QVariant &cards_str);
     void takeAG(const QVariant &take_str);
     void clearAG(const QVariant &);
@@ -323,6 +326,9 @@ signals:
     void player_speak(const QString &who, const QString &text);
     void line_spoken(const QString &line);
     void card_used();
+
+    void bgm_change(const QString &name);
+    void bg_change(const QString &name);
 
     void game_started();
     void game_over();

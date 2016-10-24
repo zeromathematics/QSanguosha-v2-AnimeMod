@@ -401,6 +401,11 @@ private slots:
     void onSkillDeactivated();
     void doTimeout();
     void startInXs();
+    void changeBGM(const QString bgm);
+    void changeBG(const QString bg);
+    void adjustDefaultBgm();
+    void adjustDefaultBg();
+    QString getLordKingdom();
     void hideAvatars();
     void changeHp(const QString &who, int delta, DamageStruct::Nature nature, bool losthp);
     void changeMaxHp(const QString &who, int delta);
