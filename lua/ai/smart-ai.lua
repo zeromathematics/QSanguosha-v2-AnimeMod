@@ -32,6 +32,7 @@ sgs.ai_role =               {}
 sgs.ai_keep_value =         {}
 sgs.ai_use_value =          {}
 sgs.ai_use_priority =       {}
+sgs.ai_use_priority_slash_remake =       {}
 sgs.ai_suit_priority =      {}
 sgs.ai_chaofeng =           {} -- obsolete
 sgs.ai_global_flags =       {}
@@ -725,6 +726,13 @@ function SmartAI:getUsePriority(card)
 	end
 
 	v = sgs.ai_use_priority[class_name] or 0
+	if card:isKindOf("Slash") then
+		for _, askill in sgs.qlist(self.player:getVisibleSkillList(true)) do
+			if sgs.ai_use_priority_slash_remake[askill] then
+				v = sgs.ai_use_priority_slash_remake[askill]
+			end
+		end
+	end
 	if class_name == "LuaSkillCard" and card:isKindOf("LuaSkillCard") then
 		v = sgs.ai_use_priority[card:objectName()] or 0
 	end
@@ -5202,6 +5210,15 @@ function SmartAI:getCardsNum(class_name, flag, selfonly)
 		end
 	end
 	return n
+end
+
+function SmartAI:getCardInHand(className)
+	for _,card in sgs.qlist(self.player:getHandcards()) do
+		if card:isKindOf(className) then
+			return card
+		end
+	end
+	return nil
 end
 
 function SmartAI:getAllPeachNum(player)

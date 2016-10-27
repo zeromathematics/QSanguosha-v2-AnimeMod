@@ -413,3 +413,57 @@ for _,p in ipairs(self.friends) do
 	end
 	return self.enemies[1]
 end
+
+--藤林杏
+sgs.ai_view_as.touzhi = function(card, player, card_place)
+	local suit = card:getSuitString()
+	local number = card:getNumberString()
+	local card_id = card:getEffectiveId()
+	if card:isKindOf("TrickCard") and not card:isKindOf("AOE") and not card:isKindOf("GodSalvation") and not card:isKindOf("AmazingGrace")  and not card:isKindOf("Collateral") then
+		return ("slash:touzhi[%s:%s]=%d"):format(suit, number, card_id)
+	end
+end
+
+touzhi_skill={}
+touzhi_skill.name="touzhi"
+table.insert(sgs.ai_skills,touzhi_skill)
+touzhi_skill.getTurnUseCard=function(self,inclusive)
+	if #self.enemies < 1 then return end
+	local cardToUse
+	for _,card in sgs.qlist(self.player:getHandcards()) do 
+		if card:isKindOf("TrickCard") and not card:isKindOf("AOE") and not card:isKindOf("GodSalvation") and not card:isKindOf("AmazingGrace")  and not card:isKindOf("Collateral") then
+			cardToUse = card
+		end
+	end
+	if not cardToUse then
+		return
+	end
+	local suit = cardToUse:getSuitString()
+	local number = cardToUse:getNumberString()
+	local card_id = cardToUse:getEffectiveId()
+	local card_str = ("slash:touzhi[%s:%s]=%d"):format(suit, number, card_id)
+	return sgs.Card_Parse(card_str)
+end
+
+sgs.ai_use_priority_slash_remake["touzhi"] = 8
+
+sgs.ai_skill_use["@@youjiao"] = function(self, prompt, method)
+	local cardToUse
+	for _,card in sgs.qlist(self.player:getHandcards()) do 
+		if card:isKindOf("BasicCard") and not card:isKindOf("Peach") then
+			cardToUse = card
+		end
+	end
+	if cardToUse then
+		local suit = cardToUse:getSuitString()
+		local number = cardToUse:getNumberString()
+		local card_id = cardToUse:getEffectiveId()
+		local card_str = ("key_trick:youjiao[%s:%s]=%d"):format(suit, number, card_id)
+		local ss = sgs.Card_Parse(card_str)
+		local dummy_use = { isDummy = true , to = sgs.SPlayerList() }
+		self:useCardKeyTrick(ss, dummy_use)
+		if dummy_use.card and not dummy_use.to:isEmpty() then
+			return card_str .. "->" .. dummy_use.to:first():objectName()
+		end
+	end
+end

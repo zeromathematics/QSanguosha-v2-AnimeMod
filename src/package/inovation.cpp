@@ -2909,7 +2909,7 @@ public:
 
     bool viewFilter(const Card *card) const
     {
-        if (!card->isKindOf("TrickCard") || card->isKindOf("AOE") || card->isKindOf("GodSalvation") || card->isKindOf("AmazingGrace") || card->isKindOf("AmazingGrace") || card->isKindOf("Collateral"))
+        if (!card->isKindOf("TrickCard") || card->isKindOf("AOE") || card->isKindOf("GodSalvation") || card->isKindOf("AmazingGrace") || card->isKindOf("Collateral"))
             return false;
         return true;
     }
@@ -3066,18 +3066,20 @@ public:
             DamageStruct damage = data.value<DamageStruct>();
             if (damage.from != akari)
                 return false;
-            if (akari->askForSkillInvoke(objectName(), data)){
+            if (akari && akari->isAlive() && akari->askForSkillInvoke(objectName(), data)){
                 akari->setFlags("TakamakuriUsed");
                 int id = room->getDrawPile().at(0);
-                room->showCard(akari, id);
+                QList<int> ids;
+                ids.append(id);
+                room->fillAG(ids);
+                room->getThread()->delay(800);
+
+                room->clearAG();
                 if (Sanguosha->getCard(id)->isKindOf("BasicCard")){
-                    room->broadcastSkillInvoke(objectName(), 1);
+                    room->broadcastSkillInvoke(objectName());
                     room->obtainCard(akari, id);
                     if (damage.to->getEquips().length() > 0)
                         room->throwCard(room->askForCardChosen(akari, damage.to, "e", objectName()), damage.to, akari);
-                }
-                else{
-                    room->broadcastSkillInvoke(objectName(), 2);
                 }
             }
         }
@@ -3152,7 +3154,10 @@ public:
     {
         if (triggerEvent == EventPhaseEnd && player->getPhase() == Player::Finish){
             ServerPlayer *akari = room->findPlayerBySkillName(objectName());
-            if (akari->hasFlag("TobiugachiUsed") && room->askForSkillInvoke(akari, objectName() + "Tobi", data)){
+            bool broad = true;
+            if (akari && akari->isAlive() && akari->hasFlag("TobiugachiUsed") && room->askForSkillInvoke(akari, objectName() + "Tobi", data)){
+                room->broadcastSkillInvoke(objectName());
+                broad = false;
                 DamageStruct damage;
                 damage.from = akari;
                 damage.to = player;
@@ -3160,7 +3165,9 @@ public:
                 room->damage(damage);
             }
 
-            else if (akari->hasFlag("TakamakuriUsed") && room->askForSkillInvoke(akari, objectName() + "Taka", data)){
+            if (akari && akari->isAlive() && akari->hasFlag("TakamakuriUsed") && room->askForSkillInvoke(akari, objectName() + "Taka", data)){
+                if (broad)
+                    room->broadcastSkillInvoke(objectName());
                 akari->drawCards(1);
                 akari->setFlags("-TakamakuriUsed");
             }
@@ -3227,6 +3234,7 @@ public:
 
 HongzhaCard::HongzhaCard()
 {
+    mute = true;
 }
 
 bool HongzhaCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
@@ -3327,6 +3335,7 @@ public:
 
 NuequCard::NuequCard()
 {
+    mute = true;
 }
 
 bool NuequCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
@@ -3396,12 +3405,13 @@ public:
         DamageStruct damage = data.value<DamageStruct>();
         if (triggerEvent == DamageCaused){
             if (damage.from->hasSkill(objectName()) && damage.nature == DamageStruct::Fire && damage.from->isAlive() && damage.card->isKindOf("FireSlash")){
-                room->broadcastSkillInvoke(objectName());
                 if (room->askForChoice(kongou, objectName(), "BLRecover+BLDamage", data) == "BLRecover"){
+                    room->broadcastSkillInvoke(objectName(), 2);
                     room->recover(damage.to, RecoverStruct(damage.to));
                     return true;
                 }
                 else{
+                    room->broadcastSkillInvoke(objectName(), 1);
                     damage.damage += 1;
                     data.setValue(damage);
                 }
@@ -3416,6 +3426,7 @@ public:
 //zuikaku
 EryuCard::EryuCard()
 {
+    mute = true;
 }
 
 bool EryuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
@@ -3427,6 +3438,7 @@ bool EryuCard::targetFilter(const QList<const Player *> &targets, const Player *
 void EryuCard::use(Room *room, ServerPlayer *zuikaku, QList<ServerPlayer *> &targets) const
 {
     ServerPlayer *target = targets.at(0);
+    room->broadcastSkillInvoke("eryu", 1);
     target->gainMark("@EryuMark");
     zuikaku->gainMark("@EryuMark");
 }
@@ -3488,12 +3500,15 @@ public:
             }
 
             if (!move.to || move.to != move.from){
+                
                 if (move.from == zuikaku){
+                    room->broadcastSkillInvoke("eryu", 2);
                     foreach(int id, move.card_ids){
                         linked->obtainCard(Sanguosha->getCard(id));
                     }
                 }
                 else{
+                    room->broadcastSkillInvoke("eryu", 3);
                     foreach(int id, move.card_ids){
                         zuikaku->obtainCard(Sanguosha->getCard(id));
                     }
@@ -3576,6 +3591,7 @@ public:
             if (!player->askForSkillInvoke(objectName(), data)){
                 return false;
             }
+            room->broadcastSkillInvoke(objectName());
             ServerPlayer *other = room->askForPlayerChosen(player, ins, objectName());
             other->gainMark("@Youdi");
             other->gainAnExtraTurn();
@@ -3691,6 +3707,7 @@ public:
                 const Card *card = room->askForCard(nagi, "..", "@tianzi-discard", data, objectName());
                 if (card){
                     //room->throwCard(card, nagi, nagi);
+                    room->broadcastSkillInvoke(objectName());
                     if (card->isKindOf("TrickCard")){
                         nagi->drawCards(2);
                     }
@@ -3719,7 +3736,8 @@ public:
     {
         if (triggerEvent == EventPhaseStart){
             if (nagi->getPhase() == Player::Finish){
-                if (nagi->getMark("@Yuzhai") > nagi->getHp()){
+                if (nagi->getMark("@Yuzhai") > nagi->getHp() && room->askForSkillInvoke(nagi, objectName(), data)){
+                    room->broadcastSkillInvoke(objectName());
                     for (int i = nagi->getHp(); i < nagi->getMark("@Yuzhai"); i++){
                         if (i > nagi->getHp() + 2){
                             break;
@@ -3768,6 +3786,7 @@ public:
         }
         else if (triggerEvent == EventPhaseEnd){
             if (mumei->getPhase() == Player::Finish){
+                room->broadcastSkillInvoke(objectName());
                 room->loseHp(mumei, 1);
             }
         }
@@ -3775,6 +3794,7 @@ public:
             DeathStruct death = data.value<DeathStruct>();
             if (!death.damage || !death.damage->from || !death.damage->from->hasSkill(objectName()))
                 return false;
+            room->broadcastSkillInvoke(objectName());
             room->recover(death.damage->from, RecoverStruct(death.damage->from));
         }
         return false;
@@ -3802,6 +3822,7 @@ public:
 
                 if (mumei && mumei->isAlive() && !mumei->hasFlag("kangfen_damaged")){
                     if (room->askForSkillInvoke(mumei, objectName(), data)){
+                        room->broadcastSkillInvoke(objectName());
                         mumei->gainAnExtraTurn();
                     }
                 }
@@ -3840,7 +3861,7 @@ public:
 
     const Card *viewAs(const QList<const Card *> &cards) const
     {
-        if (cards.isEmpty())
+        if (cards.length() < Self->getHandcardNum() - Self->getEquips().length())
             return NULL;
         Duel *duel = new Duel(cards.at(0)->getSuit(), cards.at(0)->getNumber());
         duel->addSubcards(cards);
@@ -3974,6 +3995,7 @@ public:
                 if (!damage.from->askForSkillInvoke(objectName(), data)){
                     return false;
                 }
+                room->broadcastSkillInvoke(objectName());
                 damage.to->gainMark("@FireCaused");
                 room->setEmotion(damage.to, "fire_caused");
             }
@@ -4101,6 +4123,7 @@ public:
                     sl.append(damage.from);
                 if (damage.to)
                     sl.append(damage.to);
+                room->broadcastSkillInvoke(objectName());
                 room->askForPlayerChosen(iroha, sl, objectName())->drawCards(iroha->getMark("@Jianjin_damage_recovery"));
             }
         }
@@ -4167,6 +4190,7 @@ public:
             new_move.to_place = Player::PlaceHand;
             new_move.reason.m_reason = CardMoveReason::S_REASON_GIVE;
             room->moveCardsAtomic(new_move, true);
+            room->broadcastSkillInvoke(objectName());
             room->damage(DamageStruct(NULL, iroha, goodman, new_move.card_ids.length()));
         }
         else if (triggerEvent == HpRecover){
@@ -4191,6 +4215,7 @@ public:
 
 NingjuCard::NingjuCard()
 {
+    mute = true;
 }
 bool NingjuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
 {
@@ -4243,10 +4268,14 @@ void NingjuCard::use(Room *room, ServerPlayer *chiaki, QList<ServerPlayer *> &ta
     }
     if (colors.length() == 1){
         Slash *slash = new Slash(Card::NoSuit, 0);
-        slash->setSkillName("ningju");
+        //slash->setSkillName("ningju");
+        room->broadcastSkillInvoke("ningju", 1);
         if (chiaki->canSlash(target, false)){
             room->useCard(CardUseStruct(slash, chiaki, target));
         }
+    }
+    else{
+        room->broadcastSkillInvoke("ningju", 2);
     }
 }
 
@@ -4318,12 +4347,13 @@ public:
         if (triggerEvent == DamageInflicted){
             DamageStruct damage = data.value<DamageStruct>();
             if (damage.to->hasSkill(objectName())){
+                room->broadcastSkillInvoke(objectName());
                 return true;
             }
         }
         else if (triggerEvent == EventPhaseEnd){
             if (player->hasSkill(objectName()) && player->getPhase()==Player::Finish){
-                
+                room->broadcastSkillInvoke(objectName());
                 room->loseMaxHp(player);
             }
         }
@@ -4371,7 +4401,7 @@ public:
 
     bool viewFilter(const Card *to_select) const
     {
-        return true;
+        return !to_select->isKindOf("Collateral");
     }
 
     const Card *viewAs(const Card *originalCard) const
@@ -4434,11 +4464,13 @@ public:
             if (use.from->hasSkill(objectName())){
                 foreach(ServerPlayer *p, use.to){
                     if (p->getMark("@Buyu") > 0){
+                        room->broadcastSkillInvoke(objectName(), 1);
                         use.from->drawCards(1);
                         return false;
                     }
                 }
                 if (!use.from->isNude()){
+                    room->broadcastSkillInvoke(objectName(), 2);
                     room->askForDiscard(use.from, objectName(), 1, 1, false, true);
                 }
             }
@@ -4533,6 +4565,7 @@ public:
             if (!ranka->askForSkillInvoke(objectName(), data)){
                 return false;
             }
+            room->broadcastSkillInvoke(objectName());
             room->recover(from, RecoverStruct(from));
             room->recover(to, RecoverStruct(to));
             from->drawCards(1);
@@ -4856,6 +4889,7 @@ public:
             int id = room->askForAG(makoto, list, true, objectName());
             room->clearAG(makoto);
             if (id != -1){
+                room->broadcastSkillInvoke(objectName());
                 makoto->addToPile("Yandan", id);
             }
         }
@@ -4897,6 +4931,7 @@ public:
     {
         if (event == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart){
             if (player->getPile("Yandan").count() > player->getHp() && player->getMark("@waked") == 0){
+                room->broadcastSkillInvoke(objectName());
                 room->loseMaxHp(player);
                 player->drawCards(1);
                 player->gainMark("@waked");
@@ -4949,7 +4984,7 @@ public:
                         room->throwCard(id, player, player);
                     }
                 }
-                
+                room->broadcastSkillInvoke(objectName(), 1);
                 foreach(ServerPlayer *p, room->getOtherPlayers(player)){
                     p->addMark("lunpo");
                     room->addPlayerMark(p, "@skill_invalidity");
@@ -4985,6 +5020,7 @@ public:
             room->clearAG(makoto);
             if (id != -1){
                 room->throwCard(id, makoto, makoto);
+                room->broadcastSkillInvoke(objectName(), 2);
                 if (use.card->isKindOf("DelayedTrick")){
                     room->throwCard(use.card->getId(), makoto, makoto);
                 }
@@ -5387,8 +5423,8 @@ InovationPackage::InovationPackage()
     KKotori->addSkill(new Jianshi);
     KKotori->addSkill(new Qiyue);
 
-    General *Shizuru = new General(this, "Shizuru", "science", 3, false);
-    General *Saya = new General(this, "Saya", "real", 4, false);
+    //General *Shizuru = new General(this, "Shizuru", "science", 3, false);
+    //General *Saya = new General(this, "Saya", "real", 4, false);
 
     General *nao = new General(this, "Nao", "science", 3, false);
     nao->addSkill(new Huanxing);
@@ -5436,40 +5472,40 @@ InovationPackage::InovationPackage()
     skills << new Youdiz;
     Zuikaku->addWakeTypeSkillForAudio("youdiz");
 
-    General *Shigure = new General(this, "Shigure", "kancolle", 3, false);
+    //General *Shigure = new General(this, "Shigure", "kancolle", 3, false);
     General *Asashio = new General(this, "Asashio", "kancolle", 4, false);
     Asashio->addSkill(new Fanqian);
     Asashio->addSkill(new Buyu);
-    General *Nagato = new General(this, "Nagato", "kancolle", 4, false);
+    //General *Nagato = new General(this, "Nagato", "kancolle", 4, false);
     General *Mogami = new General(this, "Mogami", "kancolle", 4, false);
     Mogami->addSkill(new Fanghuo);
     Mogami->addSkill(new Jianhun);
     Mogami->addSkill(new JianhunTargetMod);
     related_skills.insertMulti("jianhun", "#jianhun-target");
-    General *SaratogaR = new General(this, "SaratogaR", "kancolle", 4, false);
-    General *FubukiR = new General(this, "FubukiR", "kancolle", 3, false);
+    //General *SaratogaR = new General(this, "SaratogaR", "kancolle", 4, false);
+    //General *FubukiR = new General(this, "FubukiR", "kancolle", 3, false);
     General *AyanamiR = new General(this, "AyanamiR", "kancolle", 4, false);
     AyanamiR->addSkill(new Taxian);
     AyanamiR->addSkill(new Guishen);
-    General *QuincyR = new General(this, "QuincyR", "kancolle", 3, false);
-    General *AobaR = new General(this, "AobaR", "kancolle", 3, false);
-    General *Freyja = new General(this, "Freyja", "diva", 3, false);
-    General *Mikumo = new General(this, "Mikumo", "diva", 3, false);
+    //General *QuincyR = new General(this, "QuincyR", "kancolle", 3, false);
+    //General *AobaR = new General(this, "AobaR", "kancolle", 3, false);
+    //General *Freyja = new General(this, "Freyja", "diva", 3, false);
+    //General *Mikumo = new General(this, "Mikumo", "diva", 3, false);
     General *Ranka = new General(this, "Ranka", "diva", 3, false);
     Ranka->addSkill(new Xingjian);
     Ranka->addSkill(new Goutong);
-    General *Umi = new General(this, "Umi", "diva", 3, false);
-    General *Maki = new General(this, "Maki", "diva", 3, false);
+    //General *Umi = new General(this, "Umi", "diva", 3, false);
+    //General *Maki = new General(this, "Maki", "diva", 3, false);
     //General *Minori = new General(this, "Minori", "diva", 3, false);
     //General *Minoru = new General(this, "Minoru", "real", 4, true, true);
     //General *Hiroko = new General(this, "Hiroko", "diva", 3, false);
-    General *Youmu = new General(this, "Youmu", "touhou", 4, false);
+    //General *Youmu = new General(this, "Youmu", "touhou", 4, false);
     General *Sanae = new General(this, "Sanae", "touhou", 3, false);
     Sanae->addSkill(new Xinyang);
     Sanae->addSkill(new Fengzhu);
-    General *Yukari = new General(this, "Yukari", "touhou", 4, false);
-    General *Emilia = new General(this, "Emilia", "magic", 3, false);
-    General *Remu = new General(this, "Remu", "magic", 3, false);
+    //General *Yukari = new General(this, "Yukari", "touhou", 4, false);
+    //General *Emilia = new General(this, "Emilia", "magic", 3, false);
+    //General *Remu = new General(this, "Remu", "magic", 3, false);
     General *Mumei = new General(this, "Mumei", "science", 2, false);
     Mumei->addSkill(new Qinshi);
     Mumei->addSkill(new Kangfen);
@@ -5477,8 +5513,8 @@ InovationPackage::InovationPackage()
     General *Mine = new General(this, "Mine", "science", 3, false);
     Mine->addSkill(new Nangua);
     Mine->addSkill(new Jixian);
-    General *Akeno = new General(this, "Akeno", "science", 3, false);
-    General *Ako = new General(this, "Ako", "real", 3, false);
+    //General *Akeno = new General(this, "Akeno", "science", 3, false);
+    //General *Ako = new General(this, "Ako", "real", 3, false);
     General *NMakoto = new General(this, "NMakoto", "real", 4);
     NMakoto->addSkill(new Yandan);
     NMakoto->addSkill(new YandanMaxCards);

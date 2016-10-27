@@ -1052,6 +1052,7 @@ SE_Heimu = sgs.CreateTriggerSkill{
 			if junko:isAlive() then return false end
 			if room:askForSkillInvoke(junko, self:objectName()) then
 				room:revivePlayer(junko)
+				room:broadcastSkillInvoke(self:objectName())
 				room:setPlayerProperty(junko, "maxhp", sgs.QVariant(4))
 				room:setPlayerProperty(junko, "hp", sgs.QVariant(4))
 				junko:drawCards(4) 
@@ -1117,6 +1118,7 @@ ruler = sgs.CreateTriggerSkill{
 		local junko = room:findPlayerBySkillName("ruler")
 		if not junko then return false end
 		if player:getHp()>junko:getHandcardNum() then
+			room:broadcastSkillInvoke(self:objectName())
 			room:setPlayerProperty(player, "hp", sgs.QVariant(junko:getHandcardNum()))
 		end
 		return false
@@ -1131,10 +1133,15 @@ sgs.LoadTranslationTable{
 ["SE_Heimu$"] = "image=image/animate/SE_Heimu.png", 
 
 ["SE_Heimu"] = "黑幕",
-["$SE_Heimu"] = "",
-[":SE_Heimu"] = "<font color=\"red\"><b>限二技，</b></font>游戏结束前，若你已经阵亡，可以以4体力上限满血复活并摸4张牌并对场上所有角色造成1点雷击伤害，之后把你的身份变为主公，胜者为反贼，败者为内奸，并获得[规定『学级』]。\n\n<font weight=2><font color=\"brown\"><b>规定『学级』:</b></font><font color=\"blue\"><b>锁定技，</b></font>场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",
+["$SE_Heimu1"] = "真是让我久等了，让本大爷久等了啊。我就等待着像你们这样的人出现。",
+["$SE_Heimu2"] = "设定为拥有超强体力的姐姐就是战刃骸，设定为既可爱又聪明的妹妹...那就是我...江之岛盾子妹妹！哈哈哈哈哈哈哈！我们姐妹两个放在一起就是【超高校级的绝望】！绝望Sisters！！",
+[":SE_Heimu"] = "<font color=\"red\"><b>限二技，</b></font>游戏结束前，若你已经阵亡，可以以4体力上限满血复活并摸4张牌并对场上所有角色造成1点雷击伤害，之后把你的身份变为主公，胜者为反贼，败者为内奸，并获得[规定『学级』]。\n\n<font weight=2><font color=\"brown\"><b>绝望学园 规定『学级』:</b></font><font color=\"blue\"><b>锁定技，</b></font>场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",
 
-["ruler"] = "规定『学级』",
+["ruler"] = "绝望学园 规定『学级』",
+["$ruler1"] = "绝望  是会传染的。",
+["$ruler2"] = "是个人都会绝望。",
+["$ruler3"] = "嗯，就是这么回事，将作为希望象征的希望峰学园内发生的互相残杀向世界直播这件事....正是人类绝望计划的高潮啊！！",
+["$ruler4"] = "我只是单纯的在追求绝望而已，这之中并没有任何其他理由了，正因为没有理由，所以也无法找到对策，而无法应对无法理解的这份蛮横，这正是【超高校级绝望】啦！",
 [":ruler"] = "<font color=\"blue\"><b>锁定技，</b></font>场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",
 
 
@@ -1143,8 +1150,8 @@ sgs.LoadTranslationTable{
 ["&Junko"] = "江之岛盾子", 
 ["@Junko"] = "弹丸论破", 
 ["#Junko"] = "幕后黑手", 
-["~Junko"] = "", 
+["~Junko"] = "噗噗~唔噗噗噗~啊~真是太棒了，这就是死亡的绝望呢，好想将整个世界都染上这份美妙的绝望~", 
 ["designer:Junko"] = "萝莉姬",
-["cv:Junko"] = "",
+["cv:Junko"] = "豊口めぐみ",
 ["illustrator:Junko"] = "",
 }

@@ -69,7 +69,7 @@ se_zhikong=sgs.CreateTriggerSkill{
 		if event == sgs.EventPhaseChanging then
 			local change = data:toPhaseChange()
 			if change.to == sgs.Player_Start and not player:hasFlag("se_zhikong_on") then
-				if Akagi:getHp() > 1 and Akagi:getPile("akagi_lv"):length() > 0 and Akagi:getMark("@FireCaused") == 0 then
+				if Akagi and Akagi:isAlive() and Akagi:getHp() > 1 and Akagi:getPile("akagi_lv"):length() > 0 and Akagi:getMark("@FireCaused") == 0 then
 					local newdata = sgs.QVariant()
 					newdata:setValue(player)
 					if not Akagi:askForSkillInvoke(self:objectName(), newdata) then return end
