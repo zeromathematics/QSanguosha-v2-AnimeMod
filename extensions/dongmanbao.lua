@@ -3057,7 +3057,9 @@ se_qiyuancard = sgs.CreateSkillCard{
 		room:revivePlayer(player)
 		local skill_list = player:getVisibleSkillList()
 		for _,skill in sgs.qlist(skill_list) do
-			room:detachSkillFromPlayer(player, skill:objectName())
+			if player:hasSkill(skill) then
+				room:detachSkillFromPlayer(player, skill:objectName())
+			end
 		end
 		local maxhp = player:getMaxHp()
 		room:setPlayerProperty(player, "hp", sgs.QVariant(maxhp))

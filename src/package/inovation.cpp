@@ -2830,12 +2830,12 @@ public:
             }
             if (!to)
                 return false;
-            room->broadcastSkillInvoke(objectName());
             int id = room->askForCardChosen(koromo, to, "h", objectName(), true);
             if (id == -1)
                 return false;
             room->showCard(to, id);
             QString choice = room->askForChoice(koromo, objectName(), "kongdi_di+kongdi_discard");
+            room->broadcastSkillInvoke(objectName());
             if (choice == "kongdi_di"){
                 CardsMoveStruct move;
                 move.card_ids.append(id);
@@ -2886,7 +2886,9 @@ public:
                 move.from_pile_names.append(NULL);
                 move.open.append(false);
             }
-            room->broadcastSkillInvoke(objectName());
+            if (move.to->getPhase() != Player::Draw && rand() % 3 == 1){
+                room->broadcastSkillInvoke(objectName());
+            }
             data.setValue(move);
         }
         return false;
@@ -4704,7 +4706,7 @@ public:
             DyingStruct dying = data.value<DyingStruct>();
             if (dying.who){
                 ServerPlayer *kotori = room->findPlayerBySkillName(objectName());
-                if (!kotori->isAlive() || !kotori->askForSkillInvoke(objectName(), data)){
+                if (!kotori || !kotori->isAlive() || !kotori->askForSkillInvoke(objectName(), data)){
                     return false;
                 }
                 
@@ -4737,7 +4739,7 @@ public:
                 return false;
             }
             ServerPlayer *kotori = room->findPlayerBySkillName(objectName());
-            if (kotori->hasFlag("qiyue_calculate") && !kotori->hasFlag("qiyue_return_max")){
+            if (kotori && kotori->isAlive() && kotori->hasFlag("qiyue_calculate") && !kotori->hasFlag("qiyue_return_max")){
                 if (room->getDrawPile().count() - move.card_ids.count() <= 0){
                     if (kotori->isLord() && room->getAllPlayers(true).count() > 4){
                         room->setPlayerProperty(kotori, "maxhp", QVariant::fromValue(4));
@@ -4811,11 +4813,11 @@ public:
                 int num = player->getLostHp() + 1;
                 if (num > 2){
                     //TODO
-                    room->broadcastSkillInvoke(objectName());
+                    room->broadcastSkillInvoke(objectName(), 1);
                 }
                 else{
                     //TODO
-                    room->broadcastSkillInvoke(objectName());
+                    room->broadcastSkillInvoke(objectName(), 2);
                 }
                 room->damage(DamageStruct(objectName(), player, p, num));
                 if (num > 2){
@@ -5169,6 +5171,9 @@ public:
             CardUseStruct use = data.value<CardUseStruct>();
             foreach(ServerPlayer *p, use.to){
                 if (p->hasSkill(objectName()) && p == player && p!=use.from){
+                    if (use.from->getMark("@zuzhou") == 0){
+                        room->broadcastSkillInvoke(objectName());
+                    }
                     if (p->getLostHp() == 0){
                         use.from->gainMark("@zuzhou", 1);
                     }
@@ -5179,12 +5184,13 @@ public:
             }
         }
         else if (triggerEvent == EventPhaseEnd){
-            
+            if (player->getPhase() != Player::Discard){
+                return false;
+            }
             bool will_turen = false;
-            if (player->getPhase() != Player::Discard || player->getMaxCards() > 0)
+            if (player->getMaxCards() > 0)
                 will_turen = true;
 
-            int num = player->getMark("@zuzhou");
             player->loseAllMarks("@zuzhou");
 
             if (will_turen){
@@ -5336,8 +5342,10 @@ public:
         room->showCard(fear, tid);
         if (use.from == fear){
             room->loseHp(room->askForPlayerChosen(fear, room->getAlivePlayers(), objectName()));
+            room->broadcastSkillInvoke(objectName());
         }
         else{
+            room->broadcastSkillInvoke(objectName());
             room->throwCard(tid, fear, fear);
             room->loseHp(use.from);
         }

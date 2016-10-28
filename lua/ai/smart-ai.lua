@@ -134,6 +134,7 @@ function setInitialTables()
 	sgs.weak_killer_skill = "SE_Shouzang|se_qianlei|SE_Mishi|se_shouren|Xianhai"
 	sgs.key_use_skill = "guangyu"
 	sgs.akarin_skill = "SE_Touming|huanxing"
+	sgs.immune_skill = "lingti"
 
 
 	sgs.Friend_All = 0

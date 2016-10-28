@@ -467,3 +467,55 @@ sgs.ai_skill_use["@@youjiao"] = function(self, prompt, method)
 		end
 	end
 end
+
+--间宫明里
+sgs.ai_skill_invoke.Takamakuri = function(self, data)
+	local damage = data:toDamage()
+	if not damage or not damage.to then return false end
+	if self:isEnemy(damage.to) and not damage.to:hasSkills(sgs.lose_equip_skill) then return true end
+	return false
+end
+
+sgs.ai_skill_invoke.Tobiugachi = function(self, data)
+	if self:isFriend(self.room:getCurrent()) then
+		if self.player:getHandcardNum() - self.player:getHp() + 1 <= 3 and (self:isWeak() or self:getCardsNum("Jink") == 0) then return true end
+		return false
+	end
+	if self.player:getHandcardNum() - self.player:getHp() + 1 <= 5 then return true end
+	return false
+end
+
+sgs.ai_skill_playerchosen.Tobiugachi = function(self, targets)
+	local target = self:findPlayerToDiscard()
+	if target then return target end
+	return self.enemies[0]
+end
+
+
+sgs.ai_skill_invoke.FukurouzaTobi = function(self, data)
+	if self:isEnemy(self.room:getCurrent()) and not self.room:getCurrent():hasSkills(sgs.immune_skill) then return true end
+	return false
+end
+
+sgs.ai_skill_invoke.FukurouzaTaka = true
+
+--天江衣
+sgs.ai_skill_invoke.kongdi = function(self, data)
+	local move = data:toMoveOneTime()
+	if move.to and not self:isFriend(move.to) then return true end
+	return false
+end
+
+--加贺
+sgs.ai_skill_invoke.weishi = function(self, data)
+	local targets = {}
+	if self:isWeak() and self.player:getHandcardNum() < self.player:getHp() then return false end
+	for _,p in sgs.qlist(room:getOtherPlayers(self.player)) do
+		if p:getPileNames():length() > 0 and self:isFriend(p) then
+			table.insert(targets, p)
+		end
+	end
+	if #targets > 0 then return true end
+	if #self.enemies > self.player:getPile("Kansaiki"):length() then return true end
+	return false
+end
