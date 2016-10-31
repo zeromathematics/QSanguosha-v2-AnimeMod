@@ -425,7 +425,7 @@ se_qianlei = sgs.CreateTriggerSkill{
 		if not damage then return end
 		if not damage.from then return end
 		if not buki:askForSkillInvoke(self:objectName(), data) then return end
-		local choice = room:askForChoice(buki, self:objectName(), "se_qianlei_first+se_qianlei_second")
+		local choice = room:askForChoice(buki, self:objectName(), "se_qianlei_first+se_qianlei_second", data)
 		if choice == "se_qianlei_first" then
 			if buki:isNude() then return end
 			local cardid = room:askForCardChosen(buki, buki, "he", self:objectName())

@@ -368,11 +368,15 @@ function SmartAI:slashIsEffective(slash, to, from, ignore_armor)
 	if to:hasSkill("Tianhuo") and (nature == sgs.DamageStruct_Fire or nature == sgs.DamageStruct_Thunder) then
 		 return false
 	end
+	if to:hasSkill("chengxu") then return false end
 	if to:hasSkill("SE_Maoqun") then return false end
 	if to:hasSkill("xiaoshi") then return false end
 	if (to:hasSkill("SE_Touming") or to:hasSkill("Sixu")) and not to:faceUp() then return false end
 	if to:hasSkill("SE_Rennai") and to:getMark("@Patience") > 0 then return false end
 	if to:hasSkill("#LuaRedoNoSlash") and to:getMark("@Chamber") == 0 then return false end
+
+	--还有奏。。
+	if to:hasSkill("Lichang") and to:getHp() < from:getHp() then return false end
 
 	if not ignore_armor and from:objectName() == self.player:objectName() then
 		if to:getArmor() and from:hasSkill("moukui") then

@@ -2378,13 +2378,13 @@ end
 sgs.ai_skill_use_func["#se_jianyucard"] = function(card,use,self)
 	local targets = sgs.SPlayerList()
 	for _,enemy in ipairs(self.enemies) do
-		if targets:length() < self.player:getMaxHp() - self.player:getHp()+1 and not enemy:inMyAttackRange(self.player) and not isEquip("Vine",enemy) then
+		if targets:length() < self.player:getMaxHp() - self.player:getHp()+1 and not enemy:inMyAttackRange(self.player) and not isEquip("Vine",enemy) and self:slashIsEffective(sgs.Sanguosha:cloneCard("slash"), enemy, self.player) then
 			targets:append(enemy)
 		end
 	end
 	if targets:length() < self.player:getMaxHp() - self.player:getHp()+1 then
 		for _,enemy1 in ipairs(self.enemies) do
-			if targets:length() < self.player:getMaxHp() - self.player:getHp() +1 and enemy1:inMyAttackRange(self.player) and not isEquip("Vine",enemy1) then
+			if targets:length() < self.player:getMaxHp() - self.player:getHp() +1 and enemy1:inMyAttackRange(self.player) and not isEquip("Vine",enemy1) and self:slashIsEffective(sgs.Sanguosha:cloneCard("slash"), enemy1, self.player) then
 				targets:append(enemy1)
 			end
 		end
@@ -3195,7 +3195,7 @@ sgs.ai_skill_playerchosen.SE_Kurimu = function(self, targets)
 			return friend
 		end
 	end
-	return targets[1]
+	return targets:at(0)
 end
 
 sgs.ai_skill_playerchosen.SE_Minatsu = function(self, targets)

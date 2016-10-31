@@ -2579,7 +2579,8 @@ public:
                 room->loseMaxHp(player, 96);
             else
                 room->loseMaxHp(player, player->getMaxHp() - 3);
-            room->broadcastSkillInvoke(objectName());
+            room->broadcastSkillInvoke(objectName()); 
+            player->gainMark("@waked");
             room->doLightbox("SE_Chengzhang$", 3000);
             room->detachSkillFromPlayer(player, "SE_Pasheng");
             room->detachSkillFromPlayer(player, "SE_Maoqun");
@@ -3546,7 +3547,11 @@ public:
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (triggerEvent == EnterDying && player->getMark("@EryuMark") > 0){
+        if (triggerEvent == EnterDying){
+            DyingStruct dying = data.value<DyingStruct>();
+            if (dying.who->getMark("@EryuMark") == 0){
+                return false;
+            }
             ServerPlayer *zuikaku = room->findPlayerBySkillName("zheyi");
             if (!zuikaku){
                 return false;
@@ -3584,7 +3589,9 @@ public:
         if (triggerEvent == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart) {
             QList<ServerPlayer *> ins = QList<ServerPlayer *>();
             foreach(ServerPlayer *p, room->getOtherPlayers(player)){
-                ins.append(p);
+                if (p->inMyAttackRange(player)){
+                    ins.append(p);
+                }
             }
 
             if (ins.length() == 0){
@@ -3621,26 +3628,32 @@ public:
 
 
 //shizuo
-class Baonu : public DrawCardsSkill
+
+class Baonu : public TriggerSkill
 {
 public:
-    Baonu() : DrawCardsSkill("baonu")
+    Baonu() : TriggerSkill("baonu")
     {
-        frequency = NotFrequent;
+        events << DrawNCards << EventPhaseEnd;
     }
 
-    int getDrawNum(ServerPlayer *shizuo, int n) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *shizuo, QVariant &data) const
     {
-        Room *room = shizuo->getRoom();
-
-        if (room->askForSkillInvoke(shizuo, objectName())){
-            room->loseHp(shizuo);
-            room->broadcastSkillInvoke(objectName());
-            shizuo->gainMark("@Baonu");
-            return shizuo->getLostHp();
+        if (triggerEvent == DrawNCards) {
+            if (room->askForSkillInvoke(shizuo, objectName())){
+                room->loseHp(shizuo);
+                room->broadcastSkillInvoke(objectName());
+                shizuo->gainMark("@Baonu");
+                data.setValue(shizuo->getLostHp());
+            }
+        }
+        else if (triggerEvent == EventPhaseEnd){
+            if (shizuo->getPhase() == Player::Finish){
+                shizuo->loseAllMarks("@Baonu");
+            }
         }
 
-        return n;
+        return false;
     }
 };
 
@@ -3660,7 +3673,7 @@ void JizhanCard::use(Room *room, ServerPlayer *shizuo, QList<ServerPlayer *> &ta
     int id = room->askForCardChosen(shizuo, target, "he", objectName());
     QList<ServerPlayer *> good_targets = room->getOtherPlayers(target);
     good_targets.removeOne(shizuo);
-    ServerPlayer *target2 = room->askForPlayerChosen(shizuo, good_targets, objectName());
+    ServerPlayer *target2 = room->askForPlayerChosen(shizuo, good_targets, "jizhanshiz");
     target2->obtainCard(Sanguosha->getCard(id));
     room->damage(DamageStruct(Sanguosha->getCard(id), shizuo, target2, 1));
     /*
@@ -3669,13 +3682,12 @@ void JizhanCard::use(Room *room, ServerPlayer *shizuo, QList<ServerPlayer *> &ta
             room->throwCard(room->askForCardChosen(shizuo, target2, "e", objectName()), target2, shizuo);
         }
     }*/
-    shizuo->loseAllMarks("@Baonu");
 }
 
-class Jizhans : public ZeroCardViewAsSkill
+class Jizhanshiz : public ZeroCardViewAsSkill
 {
 public:
-    Jizhans() : ZeroCardViewAsSkill("jizhans")
+    Jizhanshiz() : ZeroCardViewAsSkill("jizhanshiz")
     {
     }
 
@@ -3829,7 +3841,9 @@ public:
                     }
                 }
                 else{
-                    room->setPlayerFlag(mumei, "-kangfen_damaged");
+                    if (mumei && mumei->isAlive()){
+                        room->setPlayerFlag(mumei, "-kangfen_damaged");
+                    }
                 }
             }
         }
@@ -3952,6 +3966,7 @@ public:
     Guishen() : TriggerSkill("guishen")
     {
         events << EventPhaseEnd << Damage;
+        frequency = Compulsory;
     }
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
@@ -4235,29 +4250,56 @@ void NingjuCard::use(Room *room, ServerPlayer *chiaki, QList<ServerPlayer *> &ta
         }
     }
     int num = 0;
+
+    QString status = "None";
+    room->setTag("ningju_color", QVariant(status));
+
+
     foreach(ServerPlayer *player, room->getAlivePlayers()){
         if (player->inMyAttackRange(target)){
-            int id = room->askForCardChosen(player, player, "he", objectName());
+            int id = room->askForCardChosen(player, player, "he", "ningju");
             if (chiaki->getMark("@waked") > 0){
                 room->obtainCard(chiaki, id);
                 num += 1;
             }
             else{
+                if (status == "None"){
+                    status = Sanguosha->getCard(id)->isRed() ? "Red" : "Black";
+                }
+                else if (status == "Red"){
+                    status = Sanguosha->getCard(id)->isRed() ? "Red" : "Mix";
+                }
+                else if (status == "Black"){
+                    status = Sanguosha->getCard(id)->isRed() ? "Mix" : "Black";
+                }
+                room->setTag("ningju_color", QVariant(status));
                 room->throwCard(id, player, player);
                 card_ids.append(id);
             }
             
         }
     }
+    
     if (chiaki->getMark("@waked") > 0){
+        status = "None";
         for (int i = 0; i < num; i++){
-            int id2 = room->askForCardChosen(chiaki, chiaki, "he", objectName());
+            int id2 = room->askForCardChosen(chiaki, chiaki, "he", "ningju");
+            if (status == "None"){
+                status = Sanguosha->getCard(id2)->isRed() ? "Red" : "Black";
+            }
+            else if (status == "Red"){
+                status = Sanguosha->getCard(id2)->isRed() ? "Red" : "Mix";
+            }
+            else if (status == "Black"){
+                status = Sanguosha->getCard(id2)->isRed() ? "Mix" : "Black";
+            }
+            room->setTag("ningju_color", QVariant(status));
             room->throwCard(id2, chiaki, chiaki);
             card_ids.append(id2);
         }
     }
 
-
+    room->setTag("ningju_color", QVariant("None"));
     if (card_ids.length() == 0){
         return;
     }
@@ -4270,7 +4312,7 @@ void NingjuCard::use(Room *room, ServerPlayer *chiaki, QList<ServerPlayer *> &ta
     }
     if (colors.length() == 1){
         Slash *slash = new Slash(Card::NoSuit, 0);
-        //slash->setSkillName("ningju");
+        slash->setSkillName("ningju_slash");
         room->broadcastSkillInvoke("ningju", 1);
         if (chiaki->canSlash(target, false)){
             room->useCard(CardUseStruct(slash, chiaki, target));
@@ -4376,7 +4418,7 @@ void FanqianCard::use(Room *room, ServerPlayer *asashio, QList<ServerPlayer *> &
     foreach(ServerPlayer *p, all){
         string.append(p->getGeneralName());
     }
-    QString targetName = room->askForChoice(asashio, objectName(), string.join("+"));
+    QString targetName = room->askForChoice(asashio, "fanqian", string.join("+"));
     ServerPlayer *target;
     foreach(ServerPlayer *p, all){
         if (p->getGeneralName() == targetName){
@@ -4450,6 +4492,7 @@ public:
     {
         if (event == EventPhaseStart){
             if (asashio->getPhase() == Player::Play && asashio->askForSkillInvoke(objectName(), data)){
+                room->broadcastSkillInvoke(objectName(), 1);
                 ServerPlayer *target = room->askForPlayerChosen(asashio, room->getAlivePlayers(), objectName());
                 if (target){
                     target->gainMark("@Buyu");
@@ -5538,7 +5581,7 @@ InovationPackage::InovationPackage()
     Chiaki->addWakeTypeSkillForAudio("chengxu");
     General *Shizuo = new General(this, "Shizuo", "real", 6);
     Shizuo->addSkill(new Baonu);
-    Shizuo->addSkill(new Jizhans);
+    Shizuo->addSkill(new Jizhanshiz);
     General *Nagi = new General(this, "Nagi", "real", 3, false);
     Nagi->addSkill(new Tianzi);
     Nagi->addSkill(new Yuzhai);

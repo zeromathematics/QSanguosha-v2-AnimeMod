@@ -2587,20 +2587,14 @@ se_tianming = sgs.CreateViewAsSkill{
 		local pattern = sgs.TianmingPattern[1]
 		if pattern == "slash" then
 			local slash = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit,0)
-			local slash_e = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit,0)
-			slash:addSubcard(slash_e)
 			slash:setSkillName(self:objectName())
 			return slash
 		elseif pattern == "jink" then
 			local jink = sgs.Sanguosha:cloneCard("jink", sgs.Card_NoSuit,0)
-			local jink_e = sgs.Sanguosha:cloneCard("jink", sgs.Card_NoSuit,0)
-			jink:addSubcard(jink_e)
 			jink:setSkillName(self:objectName())
 			return jink
 		elseif pattern == "nullification" then
 			local nullification = sgs.Sanguosha:cloneCard("nullification", sgs.Card_NoSuit,0)
-			local nullification_e = sgs.Sanguosha:cloneCard("nullification", sgs.Card_NoSuit,0)
-			nullification:addSubcard(nullification_e)
 			nullification:setSkillName(self:objectName())
 			return nullification
 		end

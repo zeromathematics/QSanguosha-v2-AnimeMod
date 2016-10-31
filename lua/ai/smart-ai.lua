@@ -121,7 +121,7 @@ function setInitialTables()
 						"nosshangshi|ytchengxiang|buqu|miji|quji|se_emeng"
 	sgs.use_lion_skill =         "longhun|duanliang|qixi|guidao|noslijian|lijian|jujian|nosjujian|zhiheng|mingce|yongsi|fenxun|gongqi|" ..
 						"yinling|jilve|qingcheng|neoluoyi|diyyicong|se_zhifu"
-	sgs.need_equip_skill =      "shensu|mingce|jujian|beige|yuanhu|huyuan|gongqi|nosgongqi|yanzheng|qingcheng|neoluoyi|longhun|shuijian|yinbing|SE_Erdao|se_gate"
+	sgs.need_equip_skill =      "shensu|mingce|jujian|beige|yuanhu|huyuan|gongqi|nosgongqi|yanzheng|qingcheng|neoluoyi|longhun|shuijian|yinbing|SE_Erdao|se_gate|xiedou"
 	sgs.judge_reason =      "bazhen|EightDiagram|wuhun|supply_shortage|tuntian|nosqianxi|nosmiji|indulgence|lightning|baonue"..
 									"|nosleiji|leiji|caizhaoji_hujia|tieji|luoshen|ganglie|neoganglie|vsganglie|kofkuanggu"
 	sgs.straight_damage_skill = "qiangxi|nosxuanfeng|duwu|danshou"
@@ -4526,7 +4526,9 @@ function SmartAI:damageIsEffective_(damageStruct)
 	end
 
 	--SE 伤害无效
+	if from:getMark("@Youdi") > 0 and not to:hasSkill("youdiz") then return false end
 	if to:hasSkill("xiaoshi") then return false end
+	if to:hasSkill("chengxu") then return false end
 	if to:hasSkill("Tianhuo") and nature ~= sgs.DamageStruct_Normal then
 		return false
 	end
