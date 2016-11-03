@@ -86,11 +86,23 @@ int main(int argc, char *argv[])
 
         return qApp->exec();
     }
-
+    /*
     QFile file("qss/sanguosha.qss");
     if (file.open(QIODevice::ReadOnly)) {
         QTextStream stream(&file);
         qApp->setStyleSheet(stream.readAll());
+    }*/
+
+    QFile f("qdarkstyle/style.qss");
+    if (!f.exists())
+    {
+        printf("Unable to set stylesheet, file not found\n");
+    }
+    else
+    {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
     }
 
 #ifdef AUDIO_SUPPORT

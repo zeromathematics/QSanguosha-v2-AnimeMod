@@ -11502,7 +11502,7 @@ SE_Tiansuo = sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		if event == sgs.TargetConfirmed then
 			local use = data:toCardUse()
-			if use.to:length() == 1 and use.from:hasSkill(self:objectName()) and not use.to:at(0):isChained() and use.to:at(0):objectName() ~= use.from:objectName() then
+			if use.to:length() == 1 and use.from and use.from:hasSkill(self:objectName()) and not use.to:at(0):isChained() and use.to:at(0):objectName() ~= use.from:objectName() then
 				if not use.from:askForSkillInvoke(self:objectName(), data) then return end
 				room:broadcastSkillInvoke(self:objectName())
 				room:setPlayerProperty(use.to:at(0), "chained", sgs.QVariant(true))

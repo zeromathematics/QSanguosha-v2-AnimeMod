@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>780</width>
-    <height>268</height>
+    <height>354</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <x>10</x>
      <y>10</y>
      <width>271</width>
-     <height>221</height>
+     <height>291</height>
     </rect>
    </property>
    <property name="title">
@@ -32,7 +32,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>82</y>
+      <y>130</y>
       <width>42</width>
       <height>16</height>
      </rect>
@@ -45,9 +45,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>108</y>
-      <width>100</width>
-      <height>100</height>
+      <y>160</y>
+      <width>111</width>
+      <height>111</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -67,9 +67,9 @@
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>188</y>
+      <y>240</y>
       <width>121</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -80,9 +80,9 @@
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>80</y>
+      <y>120</y>
       <width>121</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -93,9 +93,9 @@
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>109</y>
+      <y>160</y>
       <width>121</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -106,9 +106,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>17</y>
+      <y>30</y>
       <width>251</width>
-      <height>51</height>
+      <height>76</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -122,9 +122,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="nameLineEdit"/>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="hostLabel">
        <property name="text">
@@ -134,8 +131,24 @@
      </item>
      <item row="1" column="1">
       <widget class="QComboBox" name="hostComboBox">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="editable">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="nameLineEdit">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -145,9 +158,9 @@
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>140</y>
+      <y>200</y>
       <width>121</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -161,7 +174,7 @@
      <x>290</x>
      <y>10</y>
      <width>481</width>
-     <height>251</height>
+     <height>331</height>
     </rect>
    </property>
    <property name="iconSize">
@@ -181,9 +194,9 @@
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>238</y>
+     <y>310</y>
      <width>71</width>
-     <height>23</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -194,9 +207,9 @@
    <property name="geometry">
     <rect>
      <x>120</x>
-     <y>238</y>
+     <y>310</y>
      <width>75</width>
-     <height>23</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -206,10 +219,10 @@
   <widget class="QCheckBox" name="reconnectionCheckBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>241</y>
-     <width>95</width>
-     <height>16</height>
+     <x>10</x>
+     <y>310</y>
+     <width>101</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">

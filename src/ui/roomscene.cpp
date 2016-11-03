@@ -244,6 +244,7 @@ RoomScene::RoomScene(QMainWindow *main_window)
     // chat edit
     chat_edit = new QLineEdit;
     chat_edit->setObjectName("chat_edit");
+    chat_edit->setStyleSheet("padding: 0px;");
     chat_edit->setMaxLength(500);
     chat_edit_widget = addWidget(chat_edit);
     chat_edit_widget->setObjectName("chat_edit_widget");
@@ -271,7 +272,7 @@ RoomScene::RoomScene(QMainWindow *main_window)
     log_box_widget->setParent(this);
     connect(ClientInstance, SIGNAL(log_received(QStringList)), log_box, SLOT(appendLog(QStringList)));
 
-    prompt_box = new Window(tr("QSanguosha"), QSize(480, 200));
+    prompt_box = new Window("", QSize(480, 200));
     prompt_box->setOpacity(0);
     prompt_box->setFlag(QGraphicsItem::ItemIsMovable);
     prompt_box->shift();
