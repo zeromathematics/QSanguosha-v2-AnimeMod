@@ -1316,3 +1316,139 @@ sgs.ai_skill_invoke.goutong =  function(self, data)
 	end
 	return false
 end
+
+--小鸟
+sgs.ai_skill_playerchosen.jianshi = function(self, targets)
+	for _, friend in ipairs(self.friends_noself) do
+		if friend:getHp() == 0 then return friend end
+	end
+	for _, friend in ipairs(self.friends_noself) do
+		if friend:getHp() <=2 and friend:isLord() then return friend end
+	end
+	for _, friend in ipairs(self.friends_noself) do
+		if self:isWeak(friend) then return friend end
+	end
+end
+
+sgs.ai_skill_invoke.qiyue = function(self, data)
+	local dying = data:toDying()
+	if not self:isFriend(dying.who) then return false end
+
+	if self.player:objectName() == dying.who:objectName() then return true end
+	local aggregate_num = 0
+	for i=1, self.player:getMaxHp() do
+		aggregate_num = aggregate_num + (5 - i) * self.room:getAlivePlayers():length()
+	end
+	if aggregate_num >= self.room:getDrawPile():length() then return true end
+
+	if dying.who:isLord() then return true end
+
+	if self.player:getMaxHp() >= 3 then return true end
+	if self:getCardsNum("Jink") > 0 or self:getCardsNum("Analeptic") > 0 and self.player:getMaxHp() >= 2 then return true end
+
+
+	return false
+end
+
+--玛茵
+sgs.ai_skill_invoke.jixian = function(self, data)
+	if #self.enemies == 0 then return false end
+	if self.player:getLostHp() == 1 then return true end
+	if self.player:getLostHp() > 1 then
+		if self.player:getRole() == "rebel" and self:isWeak(self.room:getLord()) then return true end
+		if self.room:getAlivePlayers():length() == 2 then return true end
+		if self.player:getHp() == 1 and self:getCardsNum("Peach") == 0 and self:getCardsNum("Analeptic") == 0 then return true end
+	end
+	for _,p in ipairs(self.friends) do
+		if p:hasSkills("SE_Shuanglang|SE_Mengfeng")then return true end
+	end
+	for _,p in ipairs(self.enemies) do
+		if p:getHp() == 1 and self:isWeak(p) and p:getRole() == "rebel" then return true end
+	end
+	return false
+end
+
+sgs.ai_skill_playerchosen.jixian = function(self, targets)
+	return self:getPriorTarget()
+end
+
+--诚哥
+sgs.ai_skill_invoke.lunpo_inturn = function(self, data)
+	if #self.enemies == 0 then return false end
+	local min = 100
+	for _,p in sgs.qlist(self.room:getAlivePlayers()) do
+		if p:getHp() < min then min = p:getHp() end
+	end
+	local num = self.player:getPile("Yandan"):length()
+	if min == 1 and num >= 3 then return true end
+	if min <= 2 then
+		local toFight = self:getPriorTarget()
+		if toFight:getHp() <= 1 then return true end
+		if toFight:hasSkills(sgs.masochism_skill) then return true end
+		if toFight:hasSkill("Lichang") then return true end
+	end
+	return false
+end
+
+sgs.ai_skill_invoke.lunpo = function(self, data)
+	local use = data:toCardUse()
+	if self:isEnemy(use.from) then
+		if use.card:isKindOf("SingleTargetTrick") and use.to:length() > 0 and self:isFriend(use.to:at(0)) then
+			if use.card:isKindOf("Snatch") or use.card:isKindOf("Duel") then return true end
+			--if use.card:isKindOf("Dismantlement") and use.to:at(0):getEquips():length() > 0 then return true end
+			if use.card:isKindOf("DelayedTrick") and not use.card:isKindOf("KeyTrick") then return true end
+		end
+		if use.card:isKindOf("Slash") and self:isWeak(use.to:at(0)) and self:isFriend(use.to:at(0)) then return true end
+		if use.card:isKindOf("Jink") or use.card:isKindOf("Peach") then return true end
+		if use.card:isKindOf("AOE") or use.card:isKindOf("GlobalEffect") then
+			for _,p in ipairs(self.friends) do
+				if self:isWeak(p) then
+					return true
+				end
+			end
+		end
+	end
+
+	return false
+end
+
+--菲娅
+jiguan_skill={}
+jiguan_skill.name="jiguan"
+table.insert(sgs.ai_skills,jiguan_skill)
+jiguan_skill.getTurnUseCard=function(self,inclusive)
+	if self.player:hasUsed("JiguanCard") then return end
+	 return sgs.Card_Parse("@JiguanCard=.") 
+end
+
+sgs.ai_skill_use_func.JiguanCard = function(card,use,self)
+	use.card = card
+	return
+end
+
+sgs.ai_use_value["JiguanCard"] = 5
+sgs.ai_use_priority["JiguanCard"]  = 8
+sgs.ai_card_intention["JiguanCard"] = 0
+
+sgs.ai_skill_choice["jiguan"] = "jiguan_put"
+
+sgs.ai_skill_invoke.jiguan = function(self, data)
+	if #self.enemies == 0 then return false end
+	local use = data:toCardUse()
+	if use.from:objectName() == self.player:objectName() then return true end
+	if self:isEnemy(use.from) then
+		if use.from:getHp() == 1 then return true end
+		local num = 0
+		for _, id in sgs.qlist(self.player:getPile("jiguan")) do
+			if sgs.Sanguosha:getCard(id):getNumber() == use.card:getNumber() then
+				num = num + 1
+			end
+		end
+		if num > 1 then return true end
+	end
+	return false
+end
+
+sgs.ai_skill_playerchosen.jiguan = function(self, targets)
+	return self:getPriorTarget()
+end

@@ -141,7 +141,7 @@ CixiongSkill = sgs.CreateTriggerSkill{
 				if source:isMale() ~= target:isMale() then
 					if not target:isSexLess() then
 						if use.card:isKindOf("Slash") then
-							if source:askForSkillInvoke(self:objectName()) then
+							if source:askForSkillInvoke(self:objectName(), data) then
 								room:setEmotion(source, "weapon/double_sword")
 								local draw_card = false
 								if target:isKongcheng() then
@@ -183,7 +183,7 @@ HuoshanSkill = sgs.CreateTriggerSkill{
 			local use=data:toCardUse()
 			local card=use.card
 			if not card:isKindOf("Slash") or card:isKindOf("ThunderSlash")or card:isKindOf("FireSlash") then return false end
-			if not room:askForSkillInvoke(player, self:objectName()) then return end
+			if not room:askForSkillInvoke(player, self:objectName(), data) then return end
 			local newslash=sgs.Sanguosha:cloneCard("fire_slash",card:getSuit(),card:getNumber())
 			newslash:addSubcard(card:getId())
 			newslash:setSkillName("HuoshanSkill")
@@ -404,7 +404,7 @@ LuaXiuluo = sgs.CreateTriggerSkill{ --修罗
 		local once_success = false
 		repeat
 			once_success = false
-			if not player:askForSkillInvoke(self:objectName()) then return false end
+			if not player:askForSkillInvoke(self:objectName(), data) then return false end
 			local card_id = room:askForCardChosen(player, player, "j", self:objectName())
 			local card = sgs.Sanguosha:getCard(card_id)
 			local suit_str = card:getSuitString()
@@ -569,7 +569,7 @@ renzha = sgs.CreateTriggerSkill{
 				room:drawCards(player,2,self:objectName())
 				local ida = room:askForCardChosen(player,player,"h",self:objectName())
 				player:addToPile("zha",ida)
-					if room:askForSkillInvoke(player, self:objectName()) then
+					if room:askForSkillInvoke(player, self:objectName(), data) then
 					    room:broadcastSkillInvoke("renzha")
 						player:turnOver()
 						room:drawCards(player,1,self:objectName())
@@ -815,7 +815,7 @@ LuaChigui=sgs.CreateTriggerSkill{
 			for _,p in sgs.qlist(others) do
 				local weapon = p:getWeapon()
 				if weapon then
-					if room:askForSkillInvoke(player,weapon:objectName()) then
+					if room:askForSkillInvoke(player,weapon:objectName(), data) then
 						room:broadcastSkillInvoke("LuaChigui")
 						room:loseHp(player)
 						player:obtainCard(weapon)
@@ -960,7 +960,7 @@ LuaGqset = sgs.CreateTriggerSkill{
 				local gang = player:getPile("gang")
 				local gangnum = gang:length()
 				if gangnum == 0 then
-					if room:askForSkillInvoke(player, self:objectName()) then
+					if room:askForSkillInvoke(player, self:objectName(), data) then
 						local idn = room:askForCardChosen(player,player,"h",self:objectName())
 						player:addToPile("gang",idn)
 					end
@@ -1060,7 +1060,7 @@ LuaBuqi = sgs.CreateTriggerSkill{
 			end
 		end
 		if getcard then
-				if player:askForSkillInvoke(self:objectName()) then
+				if player:askForSkillInvoke(self:objectName(), data) then
 					local targets = room:getOtherPlayers(player)
 					for _,p in sgs.qlist(targets) do
 						if not p:isKongcheng() then
@@ -1235,7 +1235,7 @@ LuaLuowang=sgs.CreateTriggerSkill{
 	local phase=player:getPhase()
 	local room=player:getRoom()
 	if phase == sgs.Player_Draw then
-		if room:askForSkillInvoke(player, self:objectName()) then
+		if room:askForSkillInvoke(player, self:objectName(), data) then
 			room:broadcastSkillInvoke("LuaLuowang")
 			room:doLightbox("LuaLuowang$", 1200)
 			room:showAllCards(player)
@@ -1284,7 +1284,7 @@ LuaLuoshen = sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		if event == sgs.EventPhaseStart then
 			if player:getPhase() == sgs.Player_Start then
-				while player:askForSkillInvoke(self:objectName()) do
+				while player:askForSkillInvoke(self:objectName(), data) do
 					local judge = sgs.JudgeStruct()
 					judge.who = player
 					judge.negative = false
@@ -1412,7 +1412,7 @@ LuaBaozou = sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		if event == sgs.AskForPeachesDone then
 				if player:hasFlag("BaozouTurn") then return end
-				if not room:askForSkillInvoke(player, self:objectName()) then return end
+				if not room:askForSkillInvoke(player, self:objectName(), data) then return end
 				if not player:hasSkill("LuaPaoxiao") then
 					room:acquireSkill(player, LuaPaoxiao)
 				end
@@ -1760,12 +1760,12 @@ LuaJianyong = sgs.CreateTriggerSkill{
 			local phase = player:getPhase()
 			if phase == sgs.Player_Discard then
 				if player:getMark("yongdamage") == 0 then
-					if not player:askForSkillInvoke(self:objectName()) then return end
+					if not player:askForSkillInvoke(self:objectName(), data) then return end
 					room:drawCards(player, math.max(1, player:getLostHp()))
 					if not player:isKongcheng() then
 						local card_id = -1
 						local handcards = player:handCards()
-						while (not player:isKongcheng()) and player:getMark("turnyong") < math.max(1, player:getLostHp()) and player:askForSkillInvoke(self:objectName()) do
+						while (not player:isKongcheng()) and player:getMark("turnyong") < math.max(1, player:getLostHp()) and player:askForSkillInvoke(self:objectName(), data) do
 							room:setPlayerMark(player, "turnyong", player:getMark("turnyong")+1)
 							if handcards:length() == 1 then
 								room:getThread():delay(800)
@@ -2331,7 +2331,7 @@ LuaLiansuo = sgs.CreateTriggerSkill{
 			if topc ~= sgs.Player_DiscardPile then return end
 			for _,id in sgs.qlist(move.card_ids) do
 				if aika:getMark("aikadraw") < 2 then
-					if aika:askForSkillInvoke(self:objectName()) then
+					if aika:askForSkillInvoke(self:objectName(), data) then
 						aika:drawCards(1)
 						if aika:getMark("aikadraw") == 0 then
 							room:broadcastSkillInvoke("LuaLiansuo")

@@ -2936,6 +2936,10 @@ public:
         view_as_skill = new TouzhiVS;
     }
 
+    int getEffectIndex(const ServerPlayer*, const Card*){
+        return 0;
+    }
+
     bool triggerable(const ServerPlayer *target) const
     {
         return target != NULL;
@@ -2951,12 +2955,14 @@ public:
                 use.from = effect.from;
                 use.to.append(effect.to);
                 use.card = card;
+                room->broadcastSkillInvoke(objectName(), rand() % 2 + 4);
                 room->useCard(use, false);
             }
         }
         else if (triggerEvent == SlashMissed) {
             SlashEffectStruct effect = data.value<SlashEffectStruct>();
             if (effect.from->hasSkill(objectName()) && effect.slash->getSkillName() == objectName()){
+                room->broadcastSkillInvoke(objectName(), rand() % 3 + 1);
                 Analeptic *a = new Analeptic(Card::NoSuit, 0);
                 a->setSkillName(objectName());
                 CardUseStruct use;
@@ -3304,6 +3310,7 @@ public:
             if (saki){
                 if (!saki->askForSkillInvoke(objectName(), data))
                     return false;
+                room->broadcastSkillInvoke(objectName());
                 room->loseHp(death.damage->from, death.damage->from->getHp());
             }
         }
@@ -3327,6 +3334,7 @@ public:
             if (!dying.damage || !dying.damage->from || dying.who != saki || saki->getMaxHp() == 1 || !saki->askForSkillInvoke(objectName(), data))
                 return false;
             room->loseMaxHp(saki);
+            room->broadcastSkillInvoke(objectName());
             room->killPlayer(saki, &DamageStruct(objectName(), dying.damage->from, saki, 0));
             room->loseHp(dying.damage->from, dying.damage->from->getHp());
             room->revivePlayer(saki);
@@ -4631,6 +4639,11 @@ public:
         frequency = Compulsory;
     }
 
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL && target->hasSkill(this);
+    }
+
     bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (event == CardsMoveOneTime){
@@ -4735,7 +4748,7 @@ class Qiyue : public TriggerSkill
 public:
     Qiyue() : TriggerSkill("qiyue")
     {
-        events << EnterDying << BeforeCardsMove;
+        events << AskForPeachesDone << BeforeCardsMove;
     }
 
     bool triggerable(const ServerPlayer *target) const
@@ -4745,9 +4758,9 @@ public:
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (triggerEvent == EnterDying){
+        if (triggerEvent == AskForPeachesDone){
             DyingStruct dying = data.value<DyingStruct>();
-            if (dying.who){
+            if (dying.who && dying.who->getHp() <= 0){
                 ServerPlayer *kotori = room->findPlayerBySkillName(objectName());
                 if (!kotori || !kotori->isAlive() || !kotori->askForSkillInvoke(objectName(), data)){
                     return false;
@@ -4783,8 +4796,8 @@ public:
             }
             ServerPlayer *kotori = room->findPlayerBySkillName(objectName());
             if (kotori && kotori->isAlive() && kotori->hasFlag("qiyue_calculate") && !kotori->hasFlag("qiyue_return_max")){
-                if (room->getDrawPile().count() - move.card_ids.count() <= 0){
-                    if (kotori->isLord() && room->getAllPlayers(true).count() > 4){
+                if (room->getDrawPile().length() - move.card_ids.length() <= 0){
+                    if (kotori->isLord() && room->getAllPlayers(true).length() > 4){
                         room->setPlayerProperty(kotori, "maxhp", QVariant::fromValue(4));
                     }
                     else{
@@ -4896,7 +4909,7 @@ public:
                 return false;
             }
 
-            if (move.card_ids.count() == 0){
+            if (move.card_ids.length() == 0){
                 return false;
             }
 
@@ -4954,7 +4967,7 @@ public:
     int getExtra(const Player *target) const
     {
         if (target->hasSkill("yandan")){
-            int i = target->getPile("Yandan").count() > 0 ? 1 : 0;
+            int i = target->getPile("Yandan").length() > 0 ? 1 : 0;
             return  i + target->getMark("yandan_death");
         }
         else
@@ -4975,7 +4988,7 @@ public:
     bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (event == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart){
-            if (player->getPile("Yandan").count() > player->getHp() && player->getMark("@waked") == 0){
+            if (player->getPile("Yandan").length() > player->getHp() && player->getMark("@waked") == 0){
                 room->broadcastSkillInvoke(objectName());
                 room->loseMaxHp(player);
                 player->drawCards(1);
@@ -5011,10 +5024,10 @@ public:
                         minHp = p->getHp();
                     }
                 }
-                if (player->getPile("Yandan").count() < minHp){
+                if (player->getPile("Yandan").length() < minHp){
                     return false;
                 }
-                if (!player->askForSkillInvoke(objectName(), data)){
+                if (!player->askForSkillInvoke("lunpo_inturn", data)){
                     return false;
                 }
                
@@ -5046,7 +5059,7 @@ public:
             if (!makoto || !makoto->isAlive()){
                 return false;
             }
-            if (makoto->getPile("Yandan").count() == 0){
+            if (makoto->getPile("Yandan").length() == 0){
                 return false;
             }
             QList<int> list;
@@ -5056,7 +5069,7 @@ public:
                 }
             }
 
-            if (list.count() == 0 || !makoto->askForSkillInvoke(objectName(), data)){
+            if (list.length() == 0 || !makoto->askForSkillInvoke(objectName(), data)){
                 return false;
             }
             
@@ -5117,7 +5130,7 @@ public:
             if (!sanae || player == sanae || sanae->isDead()){
                 return false;
             }
-            if (room->getDrawPile().count() < 2){
+            if (room->getDrawPile().length() < 2){
                 return false;
             }
             int zero = room->getDrawPile().at(0);
@@ -5133,7 +5146,7 @@ public:
                     QList<const Card*> all = player->getHandcards();
                     all.append(player->getEquips());
                     all.append(player->getJudgingArea());
-                    room->obtainCard(sanae, all.at(rand() % all.count())->getId());
+                    room->obtainCard(sanae, all.at(rand() % all.length())->getId());
                 }
             }
             else{
@@ -5141,7 +5154,7 @@ public:
                     QList<const Card*> all = sanae->getHandcards();
                     all.append(sanae->getEquips());
                     all.append(sanae->getJudgingArea());
-                    room->obtainCard(player, all.at(rand() % all.count())->getId());
+                    room->obtainCard(player, all.at(rand() % all.length())->getId());
                 }
             }
         }
@@ -5166,7 +5179,7 @@ public:
                 return false;
             }
 
-            if (move.card_ids.count() == 0){
+            if (move.card_ids.length() == 0){
                 return false;
             }
 
@@ -5179,8 +5192,8 @@ public:
                 return false;
             }
             QList<int> all;
-            all.append(room->getDrawPile().at(room->getDrawPile().count() - 2));
-            all.append(room->getDrawPile().at(room->getDrawPile().count() - 1));
+            all.append(room->getDrawPile().at(room->getDrawPile().length() - 2));
+            all.append(room->getDrawPile().at(room->getDrawPile().length() - 1));
             foreach(int id, all){
                 int r = rand() % 3;
                 if (r == 0){
@@ -5308,17 +5321,23 @@ void JiguanCard::use(Room *room, ServerPlayer *fear, QList<ServerPlayer *> &) co
     }
    
     for (int i = 0; i < 2; i++){
-        if (ids.count() > 0){
-            room->fillAG(ids, fear);
-            int id = room->askForAG(fear, ids, true, objectName());
-            room->clearAG(fear);
-            if (id != -1){
-                ids.removeOne(id);
-                fear->addToPile("jiguan", id, false);
+        if (ids.length() > 0){
+            if (room->askForChoice(fear, "jiguan", "jiguan_put+jiguan_pass") == "jiguan_put"){
+                room->fillAG(ids, fear);
+                int id = room->askForAG(fear, ids, true, objectName());
+                room->clearAG(fear);
+                if (id != -1){
+                    ids.removeOne(id);
+                    fear->addToPile("jiguan", id, false);
+                }
+                else{
+                    break;
+                }
             }
             else{
                 break;
             }
+            
         }
     }
     
@@ -5355,7 +5374,7 @@ public:
     {
         CardUseStruct use = data.value<CardUseStruct>();
         ServerPlayer *fear = room->findPlayerBySkillName(objectName());
-        if (!fear || fear->isDead() || fear->getPile("jiguan").count() == 0){
+        if (!fear || fear->isDead() || fear->getPile("jiguan").length() == 0){
             return false;
         }
         if (use.from->isDead()){
@@ -5368,7 +5387,7 @@ public:
             }
         }
 
-        if (ava.count() == 0){
+        if (ava.length() == 0){
             return false;
         }
 

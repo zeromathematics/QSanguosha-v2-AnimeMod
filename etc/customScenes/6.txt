@@ -1,0 +1,3 @@
+
+general:select role:lord starter:true 
+general:Aria general2:Akari role:rebel maxhp:5 hp:5 hand:78,77 
