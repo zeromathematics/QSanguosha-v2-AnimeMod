@@ -123,13 +123,6 @@
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="changeHeroSkinButton">
-          <property name="text">
-           <string>changeHeroSkin</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLabel" name="skillLabel">
           <property name="text">
            <string>Skill</string>

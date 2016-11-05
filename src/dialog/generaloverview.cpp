@@ -279,7 +279,7 @@ GeneralOverview::GeneralOverview(QWidget *parent)
         ui->changeGeneralButton->hide();
         ui->changeGeneral2Button->hide();
     }
-    connect(ui->changeHeroSkinButton, SIGNAL(clicked()), this, SLOT(askChangeSkin()));
+    //connect(ui->changeHeroSkinButton, SIGNAL(clicked()), this, SLOT(askChangeSkin()));
 
     general_search = new GeneralSearch(this);
     connect(ui->searchButton, SIGNAL(clicked()), general_search, SLOT(show()));
@@ -543,7 +543,7 @@ void GeneralOverview::on_tableWidget_itemSelectionChanged()
     QString general_name = ui->tableWidget->item(row, 0)->data(Qt::UserRole).toString();
     const General *general = Sanguosha->getGeneral(general_name);
     ui->generalPhoto->setPixmap(G_ROOM_SKIN.getCardMainPixmap(general->objectName()));
-    ui->changeHeroSkinButton->setVisible(hasSkin(general_name));
+    //ui->changeHeroSkinButton->setVisible(hasSkin(general_name));
 
     QList<const Skill *> skills = general->getVisibleSkillList();
     foreach (QString skill_name, general->getRelatedSkillNames()) {

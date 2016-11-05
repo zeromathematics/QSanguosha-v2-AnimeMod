@@ -628,7 +628,8 @@ QPixmap IQSanComponentSkin::getPixmap(const QString &key, const QString &arg, bo
 
     // Hero skin?
     QString general_name = fileName.split("/").last().split(".").first();
-    if (Sanguosha->getGeneral(general_name)) {
+    QString isAvator = fileName.split("/").at(fileName.split("/").length() - 2);
+    if (Sanguosha->getGeneral(general_name) && isAvator == "full") {
         int skin_index = Config.value(QString("skin/%1").arg(general_name), 0).toInt();
         if (skin_index > 0) {
             fileName.replace(general_name, QString("%1%2").arg(general_name).arg(skin_index));

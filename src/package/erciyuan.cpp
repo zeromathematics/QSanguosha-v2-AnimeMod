@@ -222,9 +222,9 @@ ERCIYUANPackage::ERCIYUANPackage() : Package("ERCIYUAN")
     //itomakoto->addSkill(new Haochuan);
     //itomakoto->addSkill(new Renzha);
     
-    General *ayanamirei = new General(this, "ayanamirei", "science", 3, false, false);
-    ayanamirei->addSkill(new WuxinAya);
-    ayanamirei->addSkill(new Chidun);
+    //General *ayanamirei = new General(this, "ayanamirei", "science", 3, false, false);
+    //ayanamirei->addSkill(new WuxinAya);
+    //ayanamirei->addSkill(new Chidun);
 
     addMetaObject<WuxinCard>();
 }

@@ -9,6 +9,7 @@
 #include "exppattern.h"
 #include "roomthread.h"
 #include "wrapped-card.h"
+#include "json.h"
 
 //standard
 class Yingzi : public DrawCardsSkill
@@ -4453,7 +4454,7 @@ public:
 
     bool viewFilter(const Card *to_select) const
     {
-        return !to_select->isKindOf("Collateral");
+        return !to_select->isKindOf("Collateral") && !to_select->isKindOf("Jink") && !to_select->isKindOf("Nullification") && !to_select->isKindOf("DelayedTrick");
     }
 
     const Card *viewAs(const Card *originalCard) const
@@ -4917,6 +4918,14 @@ public:
 
             ServerPlayer *makoto = room->findPlayerBySkillName(objectName());
 
+            if (!makoto || !makoto->isAlive()){
+                return false;
+            }
+
+            if (makoto->getPile("Yandan").length() > 7){
+                return false;
+            }
+
             if (!makoto->askForSkillInvoke(objectName(), data)){
                 return false;
             }
@@ -5048,7 +5057,11 @@ public:
                 foreach(ServerPlayer *p, room->getOtherPlayers(player)){
                     p->addMark("lunpo");
                     room->addPlayerMark(p, "@skill_invalidity");
+
                 }
+                JsonArray args;
+                args << QSanProtocol::S_GAME_EVENT_UPDATE_SKILL;
+                room->doBroadcastNotify(QSanProtocol::S_COMMAND_LOG_EVENT, args);
             }
         }
         else if (event == CardUsed){
@@ -5095,6 +5108,9 @@ public:
                 player->removeMark("lunpo");
                 room->removePlayerMark(player, "@skill_invalidity");
             }
+            JsonArray args;
+            args << QSanProtocol::S_GAME_EVENT_UPDATE_SKILL;
+            room->doBroadcastNotify(QSanProtocol::S_COMMAND_LOG_EVENT, args);
         }
         else if (event == Death){
             DeathStruct death = data.value<DeathStruct>();
@@ -5105,6 +5121,9 @@ public:
                     player->removeMark("lunpo");
                     room->removePlayerMark(player, "@skill_invalidity");
                 }
+                JsonArray args;
+                args << QSanProtocol::S_GAME_EVENT_UPDATE_SKILL;
+                room->doBroadcastNotify(QSanProtocol::S_COMMAND_LOG_EVENT, args);
             }
         }
         return false;
@@ -5545,7 +5564,7 @@ InovationPackage::InovationPackage()
     Zuikaku->addWakeTypeSkillForAudio("youdiz");
 
     //General *Shigure = new General(this, "Shigure", "kancolle", 3, false);
-    General *Asashio = new General(this, "Asashio", "kancolle", 4, false);
+    General *Asashio = new General(this, "Asashio", "kancolle", 3, false);
     Asashio->addSkill(new Fanqian);
     Asashio->addSkill(new Buyu);
     //General *Nagato = new General(this, "Nagato", "kancolle", 4, false);
@@ -5590,8 +5609,8 @@ InovationPackage::InovationPackage()
     General *NMakoto = new General(this, "NMakoto", "real", 4);
     NMakoto->addSkill(new Yandan);
     NMakoto->addSkill(new YandanMaxCards);
-    NMakoto->addSkill(new Xiwang);
     related_skills.insertMulti("yandan", "#yandan");
+    NMakoto->addSkill(new Xiwang);
     skills << new Lunpo;
     NMakoto->addWakeTypeSkillForAudio("lunpo");
 
@@ -5615,7 +5634,7 @@ InovationPackage::InovationPackage()
     Fear->addSkill(new Jiguan);
     related_skills.insertMulti("zuzhou", "#zuzhou");
     
-
+    /*
     General *kaori = new General(this, "Kaori", "real", 3, false);
     kaori->addSkill(new Chuangzao);
     kaori->addSkill(new Qidao);
@@ -5623,7 +5642,7 @@ InovationPackage::InovationPackage()
     skills << new Guangmang << new Shuohuang;
     kaori->addWakeTypeSkillForAudio("guangmang");
     kaori->addWakeTypeSkillForAudio("shuohuang");
-
+    */
     General *sakura = new General(this, "DarkSakura1", "magic", 8, false, true);
     sakura->addSkill(new Xushu);
     sakura->addSkill(new Xishou);
