@@ -25,7 +25,7 @@ CardOverview::CardOverview(QWidget *parent)
     roundCorners();
 
     ui->tableWidget->setColumnWidth(0, 80);
-    ui->tableWidget->setColumnWidth(1, 60);
+    ui->tableWidget->setColumnWidth(1, 70);
     ui->tableWidget->setColumnWidth(2, 30);
     ui->tableWidget->setColumnWidth(3, 60);
     ui->tableWidget->setColumnWidth(4, 70);

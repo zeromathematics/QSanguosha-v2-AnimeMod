@@ -48,9 +48,15 @@ void Settings::init()
         TinyFont.setPixelSize(tiny_font);
 
         SmallFont.setWeight(QFont::Bold);
-
-        AppFont = value("AppFont", QApplication::font("QMainWindow")).value<QFont>();
-        UIFont = value("UIFont", QApplication::font("QTextEdit")).value<QFont>();
+        
+        int id = QFontDatabase::addApplicationFont("font/youyuan.ttf");
+        QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+        QFont youyuan(family);
+        youyuan.setPixelSize(13);
+        youyuan.setBold(true);
+        AppFont = value("AppFont", youyuan).value<QFont>();
+        
+        UIFont = value("UIFont", youyuan).value<QFont>();
         TextEditColor = QColor(value("TextEditColor", "white").toString());
     }
 

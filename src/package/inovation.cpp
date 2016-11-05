@@ -4523,8 +4523,10 @@ public:
                     }
                 }
                 if (!use.from->isNude()){
-                    room->broadcastSkillInvoke(objectName(), 2);
-                    room->askForDiscard(use.from, objectName(), 1, 1, false, true);
+                    if (use.from->getMark("@Buyu") > 0){
+                        room->broadcastSkillInvoke(objectName(), 2);
+                        room->askForDiscard(use.from, objectName(), 1, 1, false, true);
+                    }
                 }
             }
         }

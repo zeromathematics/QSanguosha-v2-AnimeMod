@@ -2873,22 +2873,17 @@ void RoomScene::doSkinChangeButton()
 {
     if (!skin_button->isEnabled()) return;
     //TODO
-    int num = Self->getMark("avator_num");
-    if (num == 2)
-        Self->setMark("avator_num", 0);
-    else
-        Self->setMark("avator_num", num + 1);
-    if (num == 0)
-        ClientInstance->changeSkin(Self->getAvatarGeneral()->objectName());
+    int next = Self->getMark("avator_num") + 1;
+    Self->setMark("avator_num", next);
+    QFile *file = new QFile("image/fullskin/generals/full/" + Self->getAvatarGeneral()->objectName() + QString::number(next) + ".png");
+    if (file->exists()){
+        ClientInstance->changeSkin(Self->getAvatarGeneral()->objectName() + QString::number(next));
+        Config.setValue("skin/" + Self->getAvatarGeneral()->objectName(), QString::number(next));
+    }
     else{
-        QFile *file = new QFile("image/fullskin/generals/full/" + Self->getAvatarGeneral()->objectName() + QString::number(num) + ".png");
-        if (file->exists())
-            ClientInstance->changeSkin(Self->getAvatarGeneral()->objectName() + QString::number(num));
-        else{
-            Self->setMark("avator_num", 0);
-            if (num != 1)
-                ClientInstance->changeSkin(Self->getAvatarGeneral()->objectName());
-        }
+        Self->setMark("avator_num", 0);
+        ClientInstance->changeSkin(Self->getAvatarGeneral()->objectName());     
+        Config.setValue("skin/" + Self->getAvatarGeneral()->objectName(), QString::number(0));
     }
     /*
     PlayerCardContainer *container = (PlayerCardContainer*)_getGenericCardContainer(Player::PlaceHand, Self);

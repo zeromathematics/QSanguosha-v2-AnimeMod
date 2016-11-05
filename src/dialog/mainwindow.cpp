@@ -141,6 +141,8 @@ MainWindow::MainWindow(QWidget *parent)
     restoreFromConfig();
 
     roundCorners();
+    //se add
+    QApplication::setFont(Config.AppFont);
 
     BackLoader::preload();
     gotoScene(start_scene);
@@ -735,21 +737,13 @@ void MainWindow::on_actionAbout_triggered()
     // Cao Cao's pixmap
     QString content = "<center> <br/> <img src='image/system/shencc.png'> <br/> </center>";
 
-    // Cao Cao' poem
-    QString poem = tr("Disciples dressed in blue, my heart worries for you. You are the cause, of this song without pause <br/>"
-        "\"A Short Song\" by Cao Cao");
-    content.append(QString("<p align='right'><i>%1</i></p>").arg(poem));
-
-    // Cao Cao's signature
-    QString signature = tr("\"A Short Song\" by Cao Cao");
-    content.append(QString("<p align='right'><i>%1</i></p>").arg(signature));
-
-    QString email = "moligaloo@gmail.com";
-    content.append(tr("This is the open source clone of the popular <b>Sanguosha</b> game,"
-        "totally written in C++ Qt GUI framework <br/>"
+    QString email = "nagisa940216@gmail.com";
+    content.append(tr("This is the Anime MOD developed on open source project QSanguosha by Mogara Team.You can visit the official website https://github.com/Mogara<br/>"
         "My Email: <a href='mailto:%1' style = \"color:#0072c1; \">%1</a> <br/>"
-        "My QQ: 365840793 <br/>"
-        "My Weibo: http://weibo.com/moligaloo <br/>").arg(email));
+        "My QQ: 457639904 <br/>"
+        "My Weibo: http://weibo.com/seFight <br/>").arg(email));
+
+    content.append(tr("Programmer: SE, ACG-Killer, Lolihime<br/>UI:Alie, SE<br/>Card Maker: dingzi, Misaka, Programmers<br/>Sound: dingzi, clannadlove, wangjiu, SE, ACG-Killer<br/>moeKing: Hongbao<br\>Special Thanks: Fsu, Slob, Dancheo<br\>"));
 
     QString config;
 
@@ -768,13 +762,13 @@ void MainWindow::on_actionAbout_triggered()
     const char *time = __TIME__;
     content.append(tr("Compilation time: %1 %2 <br/>").arg(date).arg(time));
 
-    QString project_url = "http://github.com/Mogara/QSanguosha-v2";
+    QString project_url = "https://github.com/SwordElucidator/QSanguosha-v2-AnimeMod";
     content.append(tr("Source code: <a href='%1' style = \"color:#0072c1; \">%1</a> <br/>").arg(project_url));
 
-    QString forum_url = "http://mogara.org";
+    QString forum_url = "http://swordelucidator.github.io/QSanguosha-v2-AnimeMod  (developing)";
     content.append(tr("Forum: <a href='%1' style = \"color:#0072c1; \">%1</a> <br/>").arg(forum_url));
 
-    Window *window = new Window(tr("About QSanguosha"), QSize(420, 470));
+    Window *window = new Window(tr("About QSanguosha Anime MOD"), QSize(600, 700));
     scene->addItem(window);
     window->setZValue(32766);
 

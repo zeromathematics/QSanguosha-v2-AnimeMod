@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
     Sanguosha = new Engine;
     Config.init();
-    qApp->setFont(Config.AppFont);
+    QApplication::setFont(Config.AppFont);
     BanPair::loadBanPairs();
 
     if (qApp->arguments().contains("-server")) {
