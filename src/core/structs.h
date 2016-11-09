@@ -526,6 +526,9 @@ enum TriggerEvent
     BeforeCardsMove, // sometimes we need to record cards before the move
     CardsMoveOneTime,
 
+
+    CardShown,
+
     PreCardUsed, // for AI to filter events only.
     CardUsed,
     TargetSpecifying,

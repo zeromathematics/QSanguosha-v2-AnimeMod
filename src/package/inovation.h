@@ -4,6 +4,7 @@
 #include "package.h"
 #include "card.h"
 #include "standard.h"
+#include "wind.h"
 
 class InovationPackage : public Package
 {
@@ -213,3 +214,27 @@ public:
 
 #endif
 
+class FengzhuDialog : public GuhuoDialog
+{
+    Q_OBJECT
+
+public:
+    static FengzhuDialog *getInstance();
+
+protected:
+    explicit FengzhuDialog();
+    virtual bool isButtonEnabled(const QString &button_name) const;
+};
+
+class FengzhuCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE FengzhuCard();
+    bool targetFixed() const;
+    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+    bool targetsFeasible(const QList<const Player *> &targets, const Player *Self) const;
+    const Card *validate(CardUseStruct &cardUse) const;
+    const Card *validateInResponse(ServerPlayer *user) const;
+};

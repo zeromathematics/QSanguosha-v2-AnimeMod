@@ -1192,7 +1192,7 @@ sgs.ai_skill_use_func.FanqianCard = function(card,use,self)
 		local target
 
 		for _,p in sgs.qlist(self.room:getAlivePlayers()) do
-			if p:getMark("@Buyu") then target = p end
+			if p:getMark("@Buyu") > 0 then target = p end
 		end
 		if not target then target = self.enemies[1] end
 
@@ -1452,3 +1452,150 @@ end
 sgs.ai_skill_playerchosen.jiguan = function(self, targets)
 	return self:getPriorTarget()
 end
+
+--炮姐
+sgs.ai_skill_invoke.paoji = true
+sgs.ai_skill_playerchosen.paoji = function(self, targets)
+	local target = self:getPriorTarget()
+	if target and not target:hasSkill("se_nitian") then return target end
+	if #self.enemies > 0 then
+		for _,p in ipairs(self.enemies) do
+			if p:isChained() and self:isWeak(p) and not target:hasSkill("se_nitian") then return p end
+		end
+		return self.enemies[1]
+	end
+	for _,p in sgs.qlist(room:getAlivePlayers()) do
+		if not self:isFriend(p) then return p end
+	end
+end
+
+sgs.ai_skill_choice["paoji"] = function(self, choices, data)
+	local target = self:getPriorTarget()
+	for _,p in ipairs(self.friends) do
+		if p:hasSkills("guicai|se_qidian") then return "4" end
+	end
+	if target and self:isWeak(target) then return "1" end
+	for _,p in ipairs(self.enemies) do
+		if p:hasSkills("guicai|se_qidian") then return "1" end
+	end
+	return "4"
+end
+
+sgs.ai_skill_invoke.dianci = function(self, data)
+	if #self.enemies == 0 then return false end
+	return true
+end
+
+sgs.ai_skill_playerchosen.dianci = function(self, targets)
+	if self:getPriorTarget() and not self:getPriorTarget().isChained() then return self:getPriorTarget() end
+	if #self.enemies > 0 then
+		for _,p in ipairs(self.enemies) do
+			if not p:isChained() and self:isWeak(p) then return p end
+		end
+		return self.enemies[1]
+	end
+	for _,p in sgs.qlist(room:getAlivePlayers()) do
+		if not self:isFriend(p) then return p end
+	end
+end
+
+sgs.ai_skill_invoke.xinyang = true
+
+sgs.ai_skill_invoke.xinyang_judge = function(self, data)
+	local judge = data:toJudge()
+
+	if self:needRetrial(judge) then
+		if self.player:getPile("xinyang"):length() == 0 then return false end
+		local cards_ids = sgs.QList2Table(self.player:getPile("xinyang"))
+		local newList = {}
+		for _,card_id in ipairs(cards_ids) do
+			table.insert(newList, sgs.Sanguosha:getCard(card_id))
+		end
+		local card_id = self:getRetrialCardId(newList, judge)
+
+		if card_id ~= -1 then
+			self.room:setTag("xinyang_judge_card",sgs.QVariant(card_id))
+			return true
+		end
+	end
+
+	return false
+end
+
+sgs.ai_skill_askforag.xinyang = function(self, card_ids)
+	local card_id = self.room:getTag("xinyang_judge_card"):toInt()
+	self.room:setTag("xinyang_judge_card",sgs.QVariant(-1))
+	if card_id ~= -1 then return card_ids[0] end
+	for _, id in sgs.qlist(card_ids) do
+		if card_id == id then return card_id end
+	end
+	
+	return card_ids[0]
+end
+
+
+sgs.ai_cardsview_valuable.fengzhu = function(self, class_name, player) 
+    local pattern = nil
+    if class_name == "Slash" and not player:hasFlag("fengzhu_used") then
+        pattern = "slash"
+    elseif class_name == "Jink" and not player:hasFlag("fengzhu_used") then
+        pattern = "jink"
+    elseif class_name == "Peach" and not player:hasFlag("fengzhu_used") then
+        pattern = "peach"
+    elseif class_name == "Analeptic" and not player:hasFlag("fengzhu_used") then
+        pattern = "analeptic"
+    end
+    if pattern then
+	    local card_str = "@FengzhuCard=.:"..pattern
+	    return card_str
+	end
+end
+
+fengzhu_skill = {name = "fengzhu"}
+table.insert(sgs.ai_skills, fengzhu_skill)
+fengzhu_skill.getTurnUseCard = function(self)
+    if not self.player:hasFlag("fengzhu_used") and self.player:getLostHp() > 0 then
+        return sgs.Card_Parse("@FengzhuCard=.:peach")
+    elseif not self.player:hasFlag("fengzhu_used") and self:getCardsNum("Slash") > 0 and sgs.Analeptic_IsAvailable(self.player) then
+        return sgs.Card_Parse("@FengzhuCard=.:analeptic")
+    elseif not self.player:hasFlag("fengzhu_used") and sgs.Slash_IsAvailable(self.player) and self:getCardsNum("Slash") == 0 then
+        return sgs.Card_Parse("@FengzhuCard=.:slash")
+    elseif not self.player:hasFlag("fengzhu_used") then
+        return sgs.Card_Parse("@FengzhuCard=.:tacos")
+    end
+end
+
+sgs.ai_skill_use_func.FengzhuCard = function(card, use, self) 
+    
+    local pattern = nil
+    
+    if not self.player:hasFlag("fengzhu_used") then
+        if self.player:getLostHp() > 0 and self:isWeak() then
+             pattern = "peach"
+        end
+    end
+    
+    if not pattern and not self.player:hasFlag("fengzhu_used") then
+        if sgs.Analeptic_IsAvailable(self.player) and self:getCardsNum("Slash") > 0 then
+            pattern = "analeptic"
+        end
+    end
+    
+    if not to_use and not self.player:hasFlag("fengzhu_used") then
+        if sgs.Slash_IsAvailable(self.player) and self:getCardsNum("Slash") == 0 then
+            pattern = "slash"
+        end
+    end
+
+    if not to_use and not self.player:hasFlag("fengzhu_used") then
+        pattern = "tacos"
+    end
+    
+    if to_use and pattern then
+        local card_str = "@FengzhuCard=.:"..pattern
+        local acard = sgs.Card_Parse(card_str)
+        use.card = acard
+    end
+end
+sgs.ai_use_value["FengzhuCard"] = 6
+sgs.ai_use_priority["FengzhuCard"] = 3.5

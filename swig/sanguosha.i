@@ -721,6 +721,8 @@ enum TriggerEvent {
     TrickCardCanceling,
     TrickEffect,
 
+    CardShown,
+
     ChoiceMade,
 
     StageChange, // For hulao pass only
@@ -1251,6 +1253,14 @@ public:
     void akarinPlayer(ServerPlayer *player, ServerPlayer *to);
     void removeAkarinEffect(ServerPlayer *player, ServerPlayer *to);
     bool isAkarin(ServerPlayer *player, ServerPlayer *to);
+
+    bool hasAura();
+    bool hasAura(QString aura);
+    QString getAura();
+    void clearAura();
+    bool doAura(ServerPlayer* player, QString aura);
+    ServerPlayer *getAuraPlayer();
+
 };
 
 %extend Room {

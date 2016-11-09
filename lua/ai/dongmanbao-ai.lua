@@ -2415,7 +2415,7 @@ sgs.ai_skill_playerchosen["se_qidian"] = function(self, targets)
 		end
 	end
 	if target then return target end
-	return false
+	return self.enemies[1]
 end
 
 sgs.ai_playerchosen_intention.se_qidian = function(from, to)
@@ -3552,15 +3552,18 @@ sgs.ai_skill_playerchosen.SE_Xiuse = function(self, targets)
 end
 
 sgs.ai_skill_invoke.SE_Shuanglang = function(self, data)
-	local target = self.room:getCurrent()
-	local Godsan=self.room:findPlayerBySkillName("SE_Shuanglang")
 	if data:toDamage() then
 		local victim = data:toDamage().to
-		if Godsan and self:isFriend(victim) then
+		if self:isFriend(victim) then
 			return true
 		end
 	end
-	if Godsan and self:isFriend(target) then
+	return false
+end
+
+sgs.ai_skill_invoke.SE_Shuanglang_start = function(self, data)
+	local target = self.room:getCurrent()
+	if self:isFriend(target) then
 		return true
 	end
 	return false
@@ -4730,21 +4733,32 @@ table.insert(sgs.ai_skills,se_tongling_skill)
 se_tongling_skill.getTurnUseCard = function(self,inclusive)
 	if #self.enemies == 0 then return end
 	if self.player:getMark("@se_tongling") == 0 then return end
-	return sgs.Card_Parse("#se_tonglingcard:.:")
+	for _,p in sgs.qlist(self.room:getAlivePlayers()) do
+		if self:isFriend(p) and p:getHp() < 2 then sgs.Card_Parse("#se_tonglingcard:.:") end
+	end
+	return
 end
 sgs.ai_skill_use_func["#se_tonglingcard"] = function(card, use, self)
-
-	use.card = card
+	for _,p in sgs.qlist(self.room:getAlivePlayers()) do
+		if self:isFriend(p) and p:getHp() < 2 then 
+			use.to:append(p)
+			use.card = card
+			return
+		end
+	end
 	return
 end
 sgs.ai_use_value["se_tonglingcard"] = 10
 sgs.ai_use_priority["se_tonglingcard"] = 10
 
-sgs.ai_skill_choice["se_tongling_kd"] = "se_tongling_kill"
+sgs.ai_skill_choice["se_tongling_k"] = "se_tongling_kill"
 
 sgs.ai_skill_playerchosen["se_tongling_k"] = function(self, targets)
 	--if 待补充
-	return self.enemies[1]
+	for _,target in ipairs(targets) do
+		if self:isFriend(target) and self:isWeak(target) then return target end
+	end
+	return targets[1]
 end
 
 --由理

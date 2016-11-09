@@ -5703,6 +5703,8 @@ void Room::showCard(ServerPlayer *player, int card_id, ServerPlayer *only_viewer
     show_arg << player->objectName();
     show_arg << card_id;
 
+    thread->trigger(CardShown, this, player, QVariant(card_id));
+
     WrappedCard *card = Sanguosha->getWrappedCard(card_id);
     bool modified = card->isModified();
     if (only_viewer) {
@@ -5739,6 +5741,7 @@ void Room::showAllCards(ServerPlayer *player, ServerPlayer *to)
 
     foreach (int cardId, player->handCards()) {
         WrappedCard *card = Sanguosha->getWrappedCard(cardId);
+        thread->trigger(CardShown, this, player, QVariant(cardId));
         if (card->isModified()) {
             if (isUnicast)
                 notifyUpdateCard(to, cardId, card);
