@@ -177,7 +177,7 @@ se_wuyi = sgs.CreateTriggerSkill{
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:getPhase() == sgs.Player_Finish and player:hasSkill(self:objectName()) then
-			local wore = math.random(2,10)
+			local wore = math.random(1,10)
 			local hp = player:getHp()
 			local maxhp = player:getMaxHp() 
 			if hp - wore > 3 then
@@ -387,7 +387,7 @@ sgs.LoadTranslationTable{
 
 	["se_mingqie"] = "明窃「魔理沙偷走了重要的东西」",
 	["$se_mingqie"] = "",
-	[":se_mingqie"] = "每阶段每角色限一次，你指定一名其他角色为唯一目标时，若该角色有装备牌，你可以获得其一张装备区的牌或获得一张手牌并展示：若此牌为黑色，你获得一个P点。你的【过河拆桥】和【顺手牵羊】均视为无视距离限制的【顺手牵羊】",
+	[":se_mingqie"] = "每阶段每角色限一次，你指定一名其他角色为唯一目标时，若该角色有装备牌，你可以获得其一张装备区的牌或获得一张手牌并展示：若此牌为黑色，你获得一个P点。你的【无形之手】和【临堂窃书】均视为无视距离限制的【临堂窃书】",
 
 	["se_mopao"] = "魔炮「终极火花」",
 	["$se_mopao"] = "",
@@ -413,7 +413,7 @@ sgs.LoadTranslationTable{
 
 	["se_wuyi"] = "无意「无意识的花火」",
 	["$se_wuyi"] = "",
-	[":se_wuyi"] = "<font color=\"blue\"><b>锁定技,</b></font>回合结束时你的最大血量随机变为2-10，以此法失去体力时，你令一名角色摸等同于失去的体力值*2的牌。以此法失去体力上限时，你令一名角色失去一点体力；以此法增长体力上限时，你令一名角色回复一点体力。",
+	[":se_wuyi"] = "<font color=\"blue\"><b>锁定技,</b></font>回合结束时你的最大血量随机变为1-10，以此法失去体力时，你令一名角色摸等同于失去的体力值*2的牌。以此法失去体力上限时，你令一名角色失去一点体力；以此法增长体力上限时，你令一名角色回复一点体力。",
 	["se_wuyi_losehp"] = "选择一名角色失去一点体力",
 	["se_wuyi_draw"] = "选择一名角色摸牌",
 	["se_wuyi_recover"] = "选择一名角色回复一点体力",

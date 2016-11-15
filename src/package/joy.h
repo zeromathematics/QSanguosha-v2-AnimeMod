@@ -95,7 +95,7 @@ class Monkey : public OffensiveHorse
 public:
     Q_INVOKABLE Monkey(Card::Suit suit, int number);
 };
-
+/*
 class GaleShell :public Armor
 {
     Q_OBJECT
@@ -123,5 +123,5 @@ public:
 
     void onInstall(ServerPlayer *player) const;
 };
-
+*/
 #endif // JOYPACKAGE_H

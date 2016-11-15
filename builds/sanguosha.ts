@@ -736,12 +736,12 @@
     <message>
         <location filename="../src/client/client.cpp" line="999"/>
         <source>Do you want to use nullification to trick card %1 from %2?</source>
-        <translation>是否对 %2 的 %1 使用【无懈可击】？</translation>
+        <translation>是否对 %2 的 %1 使用【金色宣言】？</translation>
     </message>
     <message>
         <location filename="../src/client/client.cpp" line="1003"/>
         <source>%1 used trick card %2 to %3 &lt;br&gt;Do you want to use nullification?</source>
-        <translation>%1 对 %3 使用锦囊【%2】 &lt;br&gt;是否使用【无懈可击】？</translation>
+        <translation>%1 对 %3 使用锦囊【%2】 &lt;br&gt;是否使用【金色宣言】？</translation>
     </message>
     <message>
         <location filename="../src/client/client.cpp" line="1185"/>
@@ -1063,7 +1063,7 @@
     <message>
         <location filename="../src/dialog/configdialog.ui" line="514"/>
         <source>Never nullify my single target trick</source>
-        <translation>从不对自己使用的单目标锦囊使用【无懈可击】</translation>
+        <translation>从不对自己使用的单目标锦囊使用【金色宣言】</translation>
     </message>
     <message>
         <location filename="../src/dialog/configdialog.ui" line="527"/>
@@ -1917,7 +1917,7 @@
     <message>
         <location filename="../src/core/engine.cpp" line="1034"/>
         <source>%1 [Scenario mode]</source>
-        <translation type="unfinished">剧情模式</translation>
+        <translation>剧情模式</translation>
     </message>
 </context>
 <context>
@@ -2022,38 +2022,37 @@
         <translation>替换为副将</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.ui" line="128"/>
         <source>changeHeroSkin</source>
-        <translation>更换人物皮肤</translation>
+        <translation type="vanished">更换人物皮肤</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.ui" line="135"/>
+        <location filename="../src/dialog/generaloverview.ui" line="128"/>
         <source>Skill</source>
         <translation>技能</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.ui" line="216"/>
+        <location filename="../src/dialog/generaloverview.ui" line="209"/>
         <source>Designer</source>
         <translation>设计</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.ui" line="196"/>
+        <location filename="../src/dialog/generaloverview.ui" line="189"/>
         <source>Illustrator</source>
         <translation>插画</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.ui" line="262"/>
+        <location filename="../src/dialog/generaloverview.ui" line="255"/>
         <location filename="../src/dialog/generaloverview.cpp" line="736"/>
         <source>Search...</source>
         <translation>搜索...</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.ui" line="276"/>
+        <location filename="../src/dialog/generaloverview.ui" line="269"/>
         <source>Exit</source>
         <translation>关闭窗口</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.ui" line="176"/>
+        <location filename="../src/dialog/generaloverview.ui" line="169"/>
         <source>CV</source>
         <translation>配音</translation>
     </message>
@@ -2142,7 +2141,7 @@
         <translation>未找到符合要求的人物</translation>
     </message>
     <message>
-        <location filename="../src/dialog/generaloverview.ui" line="269"/>
+        <location filename="../src/dialog/generaloverview.ui" line="262"/>
         <source>Return...</source>
         <translation>返回...</translation>
     </message>
@@ -3471,7 +3470,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../src/server/room.cpp" line="6156"/>
+        <location filename="../src/server/room.cpp" line="6159"/>
         <source>&lt;font color=#EEB422&gt;The network delay of player &lt;b&gt;%1&lt;/b&gt; is %2 milliseconds.&lt;/font&gt;</source>
         <translation>&lt;font color=#EEB422&gt;玩家 &lt;b&gt;%1&lt;/b&gt; 的网络延迟为 %2 毫秒&lt;/font&gt;</translation>
     </message>
@@ -4245,7 +4244,7 @@ P = 你自己, R = 你所在的房间</translation>
     <message>
         <location filename="../src/server/server.cpp" line="445"/>
         <source>Nullification count down</source>
-        <translation>【无懈可击】等待时长</translation>
+        <translation>【金色宣言】等待时长</translation>
     </message>
     <message>
         <location filename="../src/server/server.cpp" line="688"/>

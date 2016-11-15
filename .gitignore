@@ -53,6 +53,8 @@ tags
 /image/system/button/back.png
 /image/system/button/back_shade.png
 /extension-doc
+/extensions/touhouproject.lua
+/lua/ai/touhouproject-ai.lua
 card_intention.txt
 ai.html
 *.sh

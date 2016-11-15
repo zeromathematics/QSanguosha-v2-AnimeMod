@@ -2103,7 +2103,7 @@ YitianCardPackage::YitianCardPackage()
     skills << new YitianSwordSkill;
 }
 
-ADD_PACKAGE(YitianCard)
+//ADD_PACKAGE(YitianCard)
 
 YitianPackage::YitianPackage()
 :Package("yitian")
@@ -2206,4 +2206,4 @@ YitianPackage::YitianPackage()
     addMetaObject<TouduCard>();
 }
 
-ADD_PACKAGE(Yitian)
+//ADD_PACKAGE(Yitian)

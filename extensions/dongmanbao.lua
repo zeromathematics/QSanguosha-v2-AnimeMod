@@ -110,7 +110,7 @@ Kirei = sgs.General(extension, "Kirei", "magic", 4, true,false,false)
 --Tomoya_sub = sgs.General(extension, "Tomoya_sub", "real", 4, true,true,true)
 Accelerator = sgs.General(extension, "Accelerator", "science", 1, true,true,false)
 Shino = sgs.General(extension, "Shino", "science", 3, false,false,false)
-Misaka_Imouto = sgs.General(extension, "Misaka_Imouto", "science", 3, false,false,false)
+Misaka_Imouto = sgs.General(extension, "Misaka_Imouto", "science", 2, false,false,false)
 Tukasa = sgs.General(extension, "Tukasa", "real", 3, false,false,false)
 --Natsume_Rin = sgs.General(extension, "Natsume_Rin", "real", 99, false,false,false)
 --Natsume_Rin_sub = sgs.General(extension, "Natsume_Rin_sub", "real", 99, false,true,true)
@@ -449,7 +449,7 @@ Louise:addSkill(Beizeng)
 sgs.LoadTranslationTable{
 ["dongmanbao"] = "动漫包-SE",
 ["Xuwu"] = "虚无「零成功率」",
-[":Xuwu"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你使用非延时类锦囊牌时 ，若此牌不是【无懈可击】，你取消之并摸一张牌，然后将牌堆顶牌置于你的武将牌上，称为“魔力”；当其他角色与你计算距离时，始终+X（X为“魔力”数量的一半，向下取整）。",
+[":Xuwu"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你使用非延时类锦囊牌时 ，若此牌不是【金色宣言】，你取消之并摸一张牌，然后将牌堆顶牌置于你的武将牌上，称为“魔力”；当其他角色与你计算距离时，始终+X（X为“魔力”数量的一半，向下取整）。",
 ["moli"] = "魔力",
 ["$Xuwu"] = "好像稍微有点失败了呐。",
 ["se_cairen"] = "才人「唤来才人」",
@@ -2021,12 +2021,12 @@ sgs.LoadTranslationTable{
 ["se_chouyuan"] = "仇怨",
 ["se_chouyuan"] = "仇怨",
 ["se_chouyuancard"] = "仇怨",
-[":se_chouyuan"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段你可以令一名角色获得1枚“巨人”标记。当除该角色外的角色于该角色计算距离时，始终为1。<font color=\"brown\"><b>【齐心】</b></font>直到游戏结束；场上所有角色对其结算距离时始终为1。\n\n<font weight=2><b>齐心：</b></font>每当你使用【杀】或【决斗】指定拥有“巨人”标记的角色时，你可以令所有角色依次选择一项：对拥有“巨人”标记的角色使用一张【杀】（无距离限制），或你令一名角色摸一张牌。",
+[":se_chouyuan"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段你可以令一名角色获得1枚“巨人”标记。当除该角色外的角色于该角色计算距离时，始终为1。<font color=\"brown\"><b>【齐心】</b></font>直到游戏结束；场上所有角色对其结算距离时始终为1。\n\n<font weight=2><b>齐心：</b></font>每当你使用【杀】或【相爱相杀】指定拥有“巨人”标记的角色时，你可以令所有角色依次选择一项：对拥有“巨人”标记的角色使用一张【杀】（无距离限制），或你令一名角色摸一张牌。",
 ["$se_chouyuan"] = "...我要把你们全都驱逐掉！...一匹也不留！",
 ["SE_Qixin"] = "齐心",
 ["se_chouyuan$"] = "image=image/animate/se_chouyuan.png",
 ["SE_Qixin$"] = "image=image/animate/SE_Qixin.png",
-[":SE_Qixin"] = "你每对拥有“巨人”标记的角色打出一张【杀】或【决斗】，你可以使场上所有你以外的角色依次选择一项：1、对该角色打出一张【杀】。2、让你选择一名你以外的角色摸一张牌。",
+[":SE_Qixin"] = "你每对拥有“巨人”标记的角色打出一张【杀】或【相爱相杀】，你可以使场上所有你以外的角色依次选择一项：1、对该角色打出一张【杀】。2、让你选择一名你以外的角色摸一张牌。",
 ["Qixin_setcard"] = "让来源选择一名角色摸一张牌。",
 ["Qixin_slashto"] = "对目标打出一张【杀】",
 ["$SE_Qixin1"] = "人类的反击...现在才要开始呢！",
@@ -2765,7 +2765,7 @@ sgs.LoadTranslationTable{
 ["se_tianming"] = "天命「天命运算」",
 ["$se_tianming"] = "呼叫窗口！剩下的天命...",
 ["@Tianming"] = "天命",
-[":se_tianming"] = "游戏开始时，你获得100枚“天命”标记；回合开始前，你获得32枚“天命”标记。每当你需使用或打出一张【杀】时，你可以弃置12枚“天命”标记，视为你使用或打出一张【杀】；每当你需使用或打出一张【闪】时，你可以弃置17枚“天命”标记，视为你使用或打出一张【闪】；每当你需使用一张【无懈可击】时，你可以弃置23枚“天命”标记，视为你使用一张【无懈可击】。",
+[":se_tianming"] = "游戏开始时，你获得100枚“天命”标记；回合开始前，你获得32枚“天命”标记。每当你需使用或打出一张【杀】时，你可以弃置12枚“天命”标记，视为你使用或打出一张【杀】；每当你需使用或打出一张【闪】时，你可以弃置17枚“天命”标记，视为你使用或打出一张【闪】；每当你需使用一张【金色宣言】时，你可以弃置23枚“天命”标记，视为你使用一张【金色宣言】。",
 ["se_jianwu"] = "剑舞「金木犀之剑·ReleaseRellection」",
 ["jianwu"] = "剑舞「金木犀之剑·ReleaseRellection」",
 ["se_jianwu$"] = "image=image/animate/se_jianwu.png",
@@ -2809,58 +2809,22 @@ SE_Xianjing = sgs.CreateTriggerSkill{
 				judge.time_consuming = true
 				room:judge(judge)
 				local suit = judge.card:getSuit()
-				if suit == sgs.Card_Spade then
-					if source and source:isAlive() and not source:hasSkill("benghuai") then
-						room:acquireSkill(source, "benghuai")
-					elseif source and source:isAlive() and source:hasSkill("benghuai") then
-						if not player:hasSkill("yingzi") then
-							room:acquireSkill(player, "yingzi")
-						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("tiaoxin") then
-							room:acquireSkill(player, "tiaoxin")
-						elseif player:isAlive() and  player:hasSkill("tiaoxin") and not player:hasSkill("fankui") then
-							room:acquireSkill(player, "fankui")
-						elseif player:isAlive() and  player:hasSkill("fankui") and not player:hasSkill("longdan") then
-							room:acquireSkill(player, "longdan")
-						elseif player:isAlive() and  player:hasSkill("longdan") and not player:hasSkill("paoxiao") then
-							room:acquireSkill(player, "paoxiao") 
-						elseif player:isAlive()	and player:hasSkill("paoxiao") and not player:hasSkill("guicai") then
-							room:acquireSkill(player, "guicai") 
-						end
-					end
-				elseif suit == sgs.Card_Heart then
+				if suit == sgs.Card_Spade or suit == sgs.Card_Club then
+					source:turnOver()
+				else
 					if not player:hasSkill("yingzi") then
 							room:acquireSkill(player, "yingzi")
-						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("tiaoxin") then
-							room:acquireSkill(player, "tiaoxin")
-						elseif player:isAlive() and  player:hasSkill("tiaoxin") and not player:hasSkill("fankui") then
-							room:acquireSkill(player, "fankui")
-						elseif player:isAlive() and  player:hasSkill("fankui") and not player:hasSkill("longdan") then
-							room:acquireSkill(player, "longdan")
-						elseif player:isAlive() and  player:hasSkill("longdan") and not player:hasSkill("paoxiao") then
-							room:acquireSkill(player, "paoxiao") 
-						elseif player:isAlive()	and player:hasSkill("paoxiao") and not player:hasSkill("guicai") then
-							room:acquireSkill(player, "guicai") 
+						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("zhuren") then
+							room:acquireSkill(player, "zhuren")
+						elseif player:isAlive() and  player:hasSkill("zhuren") and not player:hasSkill("paoxiao") then
+							room:acquireSkill(player, "paoxiao")
+						elseif player:isAlive() and  player:hasSkill("paoxiao") and not player:hasSkill("luagonglue") then
+							room:acquireSkill(player, "luagonglue")
+						elseif player:isAlive() and  player:hasSkill("luagonglue") and not player:hasSkill("SE_Zishang") then
+							room:acquireSkill(player, "SE_Zishang") 
+						elseif player:isAlive()	and player:hasSkill("SE_Zishang") and not player:hasSkill("LuaBaozou") then
+							room:acquireSkill(player, "LuaBaozou") 
 					end
-				elseif suit == sgs.Card_Club then
-					if source and source:isAlive() and not source:hasSkill("wumou") then
-						room:acquireSkill(source, "wumou")
-					elseif source and source:isAlive() and source:hasSkill("wumou") then
-						if not player:hasSkill("yingzi") then
-							room:acquireSkill(player, "yingzi")
-						elseif player:isAlive() and  player:hasSkill("yingzi") and not player:hasSkill("tiaoxin") then
-							room:acquireSkill(player, "tiaoxin")
-						elseif player:isAlive() and  player:hasSkill("tiaoxin") and not player:hasSkill("fankui") then
-							room:acquireSkill(player, "fankui")
-						elseif player:isAlive() and  player:hasSkill("fankui") and not player:hasSkill("longdan") then
-							room:acquireSkill(player, "longdan")
-						elseif player:isAlive() and  player:hasSkill("longdan") and not player:hasSkill("paoxiao") then
-							room:acquireSkill(player, "paoxiao") 
-						elseif player:isAlive()	and player:hasSkill("paoxiao") and not player:hasSkill("guicai") then
-							room:acquireSkill(player, "guicai") 
-						end
-					end
-				elseif suit == sgs.Card_Diamond then
-					source:turnOver()
 				end
 			end
 		end
@@ -2886,25 +2850,25 @@ SE_Boming = sgs.CreateTriggerSkill{
 						i = i + 1
 						room:detachSkillFromPlayer(mygod, "yingzi")
 					end
-					if mygod:hasSkill("tiaoxin") then
+					if mygod:hasSkill("zhuren") then
 						i = i + 1
-						room:detachSkillFromPlayer(mygod, "tiaoxin")
-					end
-					if mygod:hasSkill("fankui") then
-						i = i + 1
-						room:detachSkillFromPlayer(mygod, "fankui")
-					end
-					if mygod:hasSkill("longdan") then
-						i = i + 1
-						room:detachSkillFromPlayer(mygod, "longdan")
+						room:detachSkillFromPlayer(mygod, "zhuren")
 					end
 					if mygod:hasSkill("paoxiao") then
 						i = i + 1
 						room:detachSkillFromPlayer(mygod, "paoxiao")
 					end
-					if mygod:hasSkill("guicai") then
+					if mygod:hasSkill("luagonglue") then
 						i = i + 1
-						room:detachSkillFromPlayer(mygod, "guicai")
+						room:detachSkillFromPlayer(mygod, "luagonglue")
+					end
+					if mygod:hasSkill("SE_Zishang") then
+						i = i + 1
+						room:detachSkillFromPlayer(mygod, "SE_Zishang")
+					end
+					if mygod:hasSkill("LuaBaozou") then
+						i = i + 1
+						room:detachSkillFromPlayer(mygod, "LuaBaozou")
 					end
 					if i > 0 and room:askForSkillInvoke(mygod, "SE_Boming", data) then
 						mygod:loseMark("@HIMIKO")
@@ -2953,7 +2917,7 @@ extension:insertRelatedSkills("SE_Boming", "#SE_Boming_KOF")
 
 sgs.LoadTranslationTable{
 ["SE_Xianjing"] = "陷阱「坂本の计谋」",
-[":SE_Xianjing"] = "每当你受到一次伤害后，你可以进行一次判定：若结果为<font color=\"red\"><b>♥</b></font>，你获得1枚“陷阱”标记；若结果为<font color=\"red\"><b>♦</b></font>，你令伤害来源的武将牌翻面；若结果为♠且伤害来源没有“崩坏”，你令伤害来源获得“崩坏”；若结果为♣且伤害来源没有“无谋”，你令伤害来源获得“无谋 ”；若结果无法执行以上效果，你获得1枚“陷阱”标记。若你的“陷阱”标记数量大于0，你获得“英姿”；大于1，你获得“挑衅”；大于2，你获得“反馈”；大于3，你获得 “龙胆”；大于4，你获得“咆哮”；大于5，你获得“鬼才 ”。",
+[":SE_Xianjing"] = "每当你受到一次伤害后，你可以进行一次判定：若结果为红色，你获得1枚“陷阱”标记；若结果为黑色，你令伤害来源翻面。若你的“陷阱”标记数量大于0，你获得“英姿”；大于1，你获得“助人”；大于2，你获得“咆哮”；大于3，你获得 “攻略”；大于4，你获得“自伤”；大于5，你获得“暴走”。",
 ["$SE_Xianjing1"] = "...别动！敢动一下我就用撞击型砸你了。",
 ["$SE_Xianjing2"] = "你果然很厉害！但是...玩BTOOOM我可不会输！",
 ["$SE_Xianjing3"] = "真是个惨痛的教训...是该和之前天真的自己告别的时候了！",
@@ -8576,6 +8540,12 @@ se_poyicard = sgs.CreateSkillCard{
 		log3.arg = target1:getGeneralName()
 		log3.type = "#se_poyi_Reset"
 		room:sendLog(log3)
+		local use = sgs.CardUseStruct()
+		local card = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0)
+		use.from = target1
+		use.to:append(target2)
+		use.card = card
+		room:useCard(use, false)
 	end
 }
 
@@ -8635,7 +8605,7 @@ sgs.LoadTranslationTable{
 ["$se_poyi1"] = "那又怎么了，光是启动而不能控制的话...",
 ["$se_poyi2"] = "摩古歪，这家伙的形态要素解析已经可以了。",
 ["$se_poyi3"] = "（摩古歪）还真是一如既往的爱滥用AI的大小姐呢。",
-[":se_poyi"] = "<font color=\"green\"><b>出牌阶段限一次,</b></font>你可以指定一名AI角色X和另一名角色Y，令X的AI重置后对你减少仇恨值，并使X和Y互相产生仇恨值。",
+[":se_poyi"] = "<font color=\"green\"><b>出牌阶段限一次,</b></font>你可以指定一名AI角色X和另一名角色Y，令X的AI重置，然后令X视为对Y使用一张【杀】。 ",
 ["SE_Guanli"] = "管理",
 ["$SE_Guanli1"] = "好吧，我稍微有点兴趣，就陪你查一下吧。",
 ["$SE_Guanli2"] = "缓冲器都用上也无所谓，给我撑住！",
@@ -9021,69 +8991,69 @@ local function searchBaibianForSkill(card)
 	local suit = card:getSuit()
 	local number = card:getNumber()
 	if suit == sgs.Card_Spade then
-		--[[
-		if number == 1 then return "longdan"
-		elseif number == 2 then return "lianying"
-		elseif number == 3 then return "weimu"
-		elseif number == 4 then return "lihuo"
-		elseif number == 5 then return "gongxin"
-		elseif number == 6 then return "kongcheng"
-		elseif number == 7 then return "shuiyong"
-		elseif number == 8 then return "duanliang"
-		elseif number == 9 then return "xuanfeng"
-		elseif number == 10 then return "leiji"
-		elseif number == 11 then return "shuijian"
-		elseif number == 12 then return "qingguo"
-		elseif number == 13 then return "tuxi" end
-		]]
+		
+		if number == 1 then return "zhuren"
+		elseif number == 2 then return "haixing"
+		elseif number == 3 then return "SE_Zhixing"
+		elseif number == 4 then return "huanxing"
+		elseif number == 5 then return "kuisi"
+		elseif number == 6 then return "paoji"
+		elseif number == 7 then return "kongdi"
+		elseif number == 8 then return "nuequ"
+		elseif number == 9 then return "fanqian"
+		elseif number == 10 then return "fanghuo"
+		elseif number == 11 then return "taxian"
+		elseif number == 12 then return "goutong"
+		elseif number == 13 then return "kangfen" end
+		
 	elseif suit == sgs.Card_Club then
-		--[[
-		if number == 1 then return "manjuan"
-		elseif number == 2 then return "quhu"
-		elseif number == 3 then return "anxian"
-		elseif number == 4 then return "lijian"
-		elseif number == 5 then return "mashu"
-		elseif number == 6 then return "tiaoxin"
-		elseif number == 7 then return "luoyi"
-		elseif number == 8 then return "guihan"
-		elseif number == 9 then return "qiaobian"
-		elseif number == 10 then return "jujian"
-		elseif number == 11 then return "luanji"
-		elseif number == 12 then return "guose"
-		elseif number == 13 then return "qixi" end
-		]]
+		
+		if number == 1 then return "nangua"
+		elseif number == 2 then return "jixian"
+		elseif number == 3 then return "ningju"
+		elseif number == 4 then return "tianzi"
+		elseif number == 5 then return "se_nitian"
+		elseif number == 6 then return "se_guwu"
+		elseif number == 7 then return "se_qiangjing"
+		elseif number == 8 then return "se_zhifu"
+		elseif number == 9 then return "se_nike"
+		elseif number == 10 then return "se_kuangquan"
+		elseif number == 11 then return "se_qianlei"
+		elseif number == 12 then return "se_shuacun"
+		elseif number == 13 then return "jinghua" end
+		
 	elseif suit == sgs.Card_Heart then
-		--[[
-		if number == 1 then return "liuli"
-		elseif number == 2 then return "zuixiang"
-		elseif number == 3 then return "guanxing"
-		elseif number == 4 then return "guhuo"
-		elseif number == 5 then return "tianxiang"
-		elseif number == 6 then return "xuanhuo"
-		elseif number == 7 then return "wushuang"
-		elseif number == 8 then return "yanxiao"
-		elseif number == 9 then return "beige"
-		elseif number == 10 then return "ganlu"
-		elseif number == 11 then return "pojun"
-		elseif number == 12 then return "shuangxiong"
-		elseif number == 13 then return "qinyin" end
-		]]
+		
+		if number == 1 then return "Huansha"
+		elseif number == 2 then return "SE_Shanguang"
+		elseif number == 3 then return "SE_Dixian"
+		elseif number == 4 then return "shouren"
+		elseif number == 5 then return "se_shengjian"
+		elseif number == 6 then return "se_qidian"
+		elseif number == 7 then return "SE_Zhuzhen"
+		elseif number == 8 then return "SE_Huifu"
+		elseif number == 9 then return "SE_Mengfeng"
+		elseif number == 10 then return "SE_Nagong"
+		elseif number == 11 then return "se_dushe"
+		elseif number == 12 then return "SE_Qifen"
+		elseif number == 13 then return "SE_Feiti" end
+		
 	elseif suit == sgs.Card_Diamond then
-		--[[
-		if number == 1 then return "anjian"
-		elseif number == 2 then return "niepan"
-		elseif number == 3 then return "buqu"
-		elseif number == 4 then return "luoying"
-		elseif number == 5 then return "zhiheng"
-		elseif number == 6 then return "lianhuan"
-		elseif number == 7 then return "lianpo"
-		elseif number == 8 then return "lexue"
-		elseif number == 9 then return "huangtian"
-		elseif number == 10 then return "feiying"
-		elseif number == 11 then return "bazhen"
-		elseif number == 12 then return "lieren"
-		elseif number == 13 then return "qingnang" end
-		]]
+		
+		if number == 1 then return "SE_Zishang"
+		elseif number == 2 then return "SE_Shouzang"
+		elseif number == 3 then return "SE_Shuangqiang"
+		elseif number == 4 then return "se_poyi"
+		elseif number == 5 then return "SE_Guanli"
+		elseif number == 6 then return "SE_Zhandan"
+		elseif number == 7 then return "LuaShenzhi"
+		elseif number == 8 then return "LuaZhuan"
+		elseif number == 9 then return "LuaBuwu"
+		elseif number == 10 then return "LuaWangxiang"
+		elseif number == 11 then return "LLJ_reality"
+		elseif number == 12 then return "LuaJingming"
+		elseif number == 13 then return "luasaoshe" end
+		
 	end
 end
 
@@ -9108,7 +9078,7 @@ SE_Baibian = sgs.CreateTriggerSkill{
 					local cards = room:getDrawPile()
 					room:broadcastSkillInvoke("SE_Baibian")
 					room:doLightbox("SE_Baibian$", 1200)
-					for i = 1, num * 2, 1 do
+					for i = 1, num , 1 do
 						local cardsid1=cards:at(i-1)
 						room:showCard(player,cardsid1)
 						local card=sgs.Sanguosha:getCard(cardsid1)
@@ -9150,7 +9120,7 @@ sgs.LoadTranslationTable{
 ["$SE_Baibian7"] = "【力】",
 ["$SE_Baibian8"] = "【水】",
 ["$SE_Baibian9"] = "【雨】",
-[":SE_Baibian"] = "准备阶段开始时，你需失去所有“百变”和“库洛”以外的技能；若你的体力上限大于6，将你的体力上限设定为6；若你的体力上限小于3，将你的体力上限设定为3。你可以翻开牌堆顶X张牌（X为你失去的你的体力值*2），根据翻开的牌获得技能，然后获得这些手牌。",--\n<font color=\"red\"><b>♠</b></font>：A，无双，2，烈弓，3，再起，4，奸雄，5，急智，6，奇袭，7，铁骑，8，遗计，9，咆哮，10，死战，J，青囊，Q，绝境，K，八阵\n♥：A，火计，2，空城，3，天香，4，流离，5，节命，6，放逐，7，天义，8，英魂，9，帷幕，10，挑衅，J，享乐，Q，激昂，K，悲歌\n♣：A，龙魂，2，连破，3，枭姬，4，离间，5，据守，6，断粮，7，智迟，8，甘露，9，疠火，10，弓骑，J，当先，Q，智愚，K，称象\n<font color=\"red\"><b>♦</b></font>：A，求援，2，御策，3，缓释，4，血祭，5，离魂，6，漫卷，7，昭烈，8，扶乱，9，倾城，10，裸衣，J，绝汲，Q，争功，K，固守。",
+[":SE_Baibian"] = "准备阶段开始时，你需失去所有“百变”和“库洛”以外的技能；若你的体力上限大于6，将你的体力上限设定为6；若你的体力上限小于3，将你的体力上限设定为3。你可以翻开牌堆顶X张牌（X为你失去的你的体力值），根据翻开的牌获得技能，然后获得这些手牌。",--\n<font color=\"red\"><b>♠</b></font>：A，无双，2，烈弓，3，再起，4，奸雄，5，急智，6，奇袭，7，铁骑，8，遗计，9，咆哮，10，死战，J，青囊，Q，绝境，K，八阵\n♥：A，火计，2，空城，3，天香，4，流离，5，节命，6，放逐，7，天义，8，英魂，9，帷幕，10，挑衅，J，享乐，Q，激昂，K，悲歌\n♣：A，龙魂，2，连破，3，枭姬，4，离间，5，据守，6，断粮，7，智迟，8，甘露，9，疠火，10，弓骑，J，当先，Q，智愚，K，称象\n<font color=\"red\"><b>♦</b></font>：A，求援，2，御策，3，缓释，4，血祭，5，离魂，6，漫卷，7，昭烈，8，扶乱，9，倾城，10，裸衣，J，绝汲，Q，争功，K，固守。",
 ["SE_Kuluo"] = "库洛",
 ["$SE_Kuluo"] = "",
 [":SE_Kuluo"] = "<font color=\"blue\"><b>锁定技,</b></font>你的手牌上限为52。",
@@ -9565,12 +9535,39 @@ se_mipacard = sgs.CreateSkillCard{
 SE_Mipa_ed = sgs.CreateTriggerSkill{
 	name = "#SE_Mipa_ed", 
 	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.EventPhaseStart},  
+	events = {sgs.EventPhaseStart, sgs.EventLoseSkill, sgs.Death},  
 	on_trigger = function(self, event, player, data) 
 		local room = player:getRoom()
 		if player:isAlive() then
 			if event == sgs.EventPhaseStart then
 				if player:getPhase() == sgs.Player_RoundStart then
+					for _,p in sgs.qlist(room:getAlivePlayers()) do
+						if p:getMark("@mipa_basic") > 0 then
+							p:loseMark("@mipa_basic")
+							room:removePlayerCardLimitation(p, "use,response", "BasicCard")
+						end
+						if p:getMark("@mipa_notbasic") > 0 then
+							p:loseMark("@mipa_notbasic")
+							room:removePlayerCardLimitation(p, "use,response", "^BasicCard")
+						end
+					end
+				end
+			elseif event == sgs.EventLoseSkill then
+				if data:toString() == "se_mipa" then
+					for _,p in sgs.qlist(room:getAlivePlayers()) do
+						if p:getMark("@mipa_basic") > 0 then
+							p:loseMark("@mipa_basic")
+							room:removePlayerCardLimitation(p, "use,response", "BasicCard")
+						end
+						if p:getMark("@mipa_notbasic") > 0 then
+							p:loseMark("@mipa_notbasic")
+							room:removePlayerCardLimitation(p, "use,response", "^BasicCard")
+						end
+					end
+				end
+			elseif event == sgs.Death then
+				local death = data:toDeath()
+				if death.who:hasSkill("se_mipa") then
 					for _,p in sgs.qlist(room:getAlivePlayers()) do
 						if p:getMark("@mipa_basic") > 0 then
 							p:loseMark("@mipa_basic")
@@ -10302,7 +10299,7 @@ sgs.LoadTranslationTable{
 ["$SE_Gaoling1"] = "十分感谢您的聆听！~",
 ["$SE_Gaoling2"] = "听了这个以后，小木曽雪菜的秘密就一个不剩了。全部都被你知道了。",
 ["$SE_Gaoling3"] = "（春希）抱歉，我要更正一点，小木曽雪菜，毫无疑问，是一位完美无缺的偶像。",
-[":SE_Gaoling"] = "每当你需要使用一张【无懈可击】或【闪】时，若你的手牌数为双数，你可以视为使用一张【无懈可击】或【闪】，然后摸一张牌。",
+[":SE_Gaoling"] = "每当你需要使用一张【金色宣言】或【闪】时，若你的手牌数为双数，你可以视为使用一张【金色宣言】或【闪】，然后摸一张牌。",
 ["@SE_Shengmu"]="%src 技能【圣母】生效，你须弃置一张牌才能令其恢复1点体力。",
 ["SE_Shengmu"] = "圣母",
 ["$SE_Shengmu1"] = "直接叫我、雪菜就可以了。",
@@ -12150,7 +12147,7 @@ sgs.LoadTranslationTable{
 ["$se_zhiyan2"] = "虽然不知道怎么形容，但我对此感到十分焦躁",
 ["$se_zhiyan3"] = "那你也不用特意去撒那种谎的。",
 ["$se_zhiyan4"] = "也没什么关系，我不可能去干涉你私人的行动，而且也没那种资格。",
-[":se_zhiyan"]="摸牌阶段，若你有“侍奉”标记，你的摸牌数为0，若你的“侍奉”标记数至少为2，直到你的下一个摸牌阶段，当你需要使用【无懈可击】时，你可以视为使用一张【无懈可击】，并获得一个“侍奉”标记。该效果获得后将“侍奉”标记全部弃置。", 
+[":se_zhiyan"]="摸牌阶段，若你有“侍奉”标记，你的摸牌数为0，若你的“侍奉”标记数至少为2，直到你的下一个摸牌阶段，当你需要使用【金色宣言】时，你可以视为使用一张【金色宣言】，并获得一个“侍奉”标记。该效果获得后将“侍奉”标记全部弃置。", 
 
 ["se_wenchang"] = "稳场",
 ["$se_wenchang1"] = "就是嘛。啊哈哈...哈哈......",

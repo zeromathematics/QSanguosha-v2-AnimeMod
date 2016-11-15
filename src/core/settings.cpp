@@ -52,7 +52,7 @@ void Settings::init()
         int id = QFontDatabase::addApplicationFont("font/youyuan.ttf");
         QString family = QFontDatabase::applicationFontFamilies(id).at(0);
         QFont youyuan(family);
-        youyuan.setPixelSize(13);
+        youyuan.setPixelSize(12);
         youyuan.setBold(true);
         AppFont = value("AppFont", youyuan).value<QFont>();
         

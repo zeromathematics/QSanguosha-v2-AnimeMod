@@ -1102,7 +1102,7 @@ public:
                 return false;
             if (!use.to.at(0)->hasSkill(objectName()))
                 return false;
-            if (!use.to.at(0)->askForSkillInvoke(objectName(), data))
+            if (use.to.at(0)->getMark("huanxing_used") > 3 || !use.to.at(0)->askForSkillInvoke(objectName(), data))
                 return false;
             foreach(ServerPlayer* p, room->getAlivePlayers()){
                 if (p->getMark("@huanxing_target") > 0){
@@ -1111,6 +1111,9 @@ public:
                 }
             }
             use.from->gainMark("@huanxing_target");
+            if (room->getAlivePlayers().length() == 2){
+                use.to.at(0)->addMark("huanxing_used");
+            }
             room->broadcastSkillInvoke(objectName(), rand() % 4 + 1);
             room->doLightbox("huanxing$", 300);
             room->akarinPlayer(use.to.at(0), use.from);
@@ -1236,8 +1239,9 @@ void KeyTrick::onEffect(const CardEffectStruct &) const
 {
 }
 
-void KeyTrick::onNullified(ServerPlayer *) const
+void KeyTrick::onNullified(ServerPlayer *player) const
 {
+    player->getRoom()->throwCard(this, NULL, player);
 }
 
 void KeyTrick::onUse(Room *room, const CardUseStruct &card_use) const
@@ -2837,7 +2841,9 @@ public:
                 return false;
             room->showCard(to, id);
             QString choice = room->askForChoice(koromo, objectName(), "kongdi_di+kongdi_discard");
-            room->broadcastSkillInvoke(objectName());
+            if (rand() % 5 == 1){
+                room->broadcastSkillInvoke(objectName());
+            }
             if (choice == "kongdi_di"){
                 CardsMoveStruct move;
                 move.card_ids.append(id);
@@ -3312,6 +3318,7 @@ public:
                 if (!saki->askForSkillInvoke(objectName(), data))
                     return false;
                 room->broadcastSkillInvoke(objectName());
+                room->doLightbox("kuisi$", 2000);
                 room->loseHp(death.damage->from, death.damage->from->getHp());
             }
         }
@@ -4324,6 +4331,7 @@ void NingjuCard::use(Room *room, ServerPlayer *chiaki, QList<ServerPlayer *> &ta
         slash->setSkillName("ningju_slash");
         room->broadcastSkillInvoke("ningju", 1);
         if (chiaki->canSlash(target, false)){
+            room->doAnimate(QSanProtocol::S_ANIMATE_LIGHTBOX, "lani=skills/zhinian", QString("%1:%2").arg(1000).arg(0));
             room->useCard(CardUseStruct(slash, chiaki, target));
         }
     }
@@ -4372,6 +4380,7 @@ public:
             DyingStruct dying = data.value<DyingStruct>();
             if (dying.who->hasSkill(objectName()) && dying.who->getMaxHp() > 0 && dying.who->getHp() < 1 && dying.who->getMark("@waked") == 0 && dying.who == player){
                 room->broadcastSkillInvoke(objectName());
+                room->doLightbox("zhinian$", 2500);
                 room->setPlayerProperty(player, "hp", 3);
                 player->gainMark("@waked");
                 room->acquireSkill(player, "chengxu");
@@ -4519,13 +4528,20 @@ public:
             if (use.from->hasSkill(objectName())){
                 foreach(ServerPlayer *p, use.to){
                     if (p->getMark("@Buyu") > 0){
-                        room->broadcastSkillInvoke(objectName(), 1);
+                        if (!use.from->hasFlag("Buyu_sdraw_played")){
+                            room->broadcastSkillInvoke(objectName(), 1);
+                            use.from->setFlags("Buyu_sdraw_played");
+                        }
+                        
                         use.from->drawCards(1);
                         return false;
                     }
                 }
                 if (!use.from->isNude() && use.from->hasFlag("buyu_used")){
-                    room->broadcastSkillInvoke(objectName(), 2);
+                    if (!use.from->hasFlag("Buyu_sdis_played")){
+                        room->broadcastSkillInvoke(objectName(), 2);
+                        use.from->setFlags("Buyu_sdis_played");
+                    }
                     room->askForDiscard(use.from, objectName(), 1, 1, false, true);
                 }
             }
@@ -4558,13 +4574,15 @@ public:
                 if (!player->askForSkillInvoke(objectName(), data)){
                     return false;
                 }
-                room->broadcastSkillInvoke(objectName());
+                room->broadcastSkillInvoke(objectName(), rand() % 2 * 2 + 1);
                 room->doAura(player, objectName());
             }
             else if (player->getPhase() == Player::RoundStart && room->hasAura() && room->getAura() == objectName() && player != room->getAuraPlayer() && player->getEquips().length() > 0){
                 QString choice = room->askForChoice(player, objectName(), "xingjian_skip+xingjian_throw", data);
                 ServerPlayer * ranka = room->getAuraPlayer();
+                room->broadcastSkillInvoke(objectName(), 2);
                 if (choice == "xingjian_throw"){
+                   
                     room->obtainCard(ranka, room->askForCardChosen(ranka, player, "e", objectName()));
                 }
                 else{
@@ -4767,8 +4785,11 @@ public:
                 if (!kotori || !kotori->isAlive() || !kotori->askForSkillInvoke(objectName(), data)){
                     return false;
                 }
+
+                
                 
                 room->broadcastSkillInvoke(objectName());
+                room->doLightbox("qiyue$", 2000);
                 room->setPlayerFlag(kotori, "qiyue_calculate");
                 
                 int num = 5 - kotori->getMaxHp();
@@ -4921,7 +4942,7 @@ public:
                 return false;
             }
 
-            if (makoto->getPile("Yandan").length() > 7){
+            if (makoto->getPile("Yandan").length() >= makoto->getMaxHp()){
                 return false;
             }
 
@@ -5000,6 +5021,7 @@ public:
         if (event == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart){
             if (player->getPile("Yandan").length() > player->getHp() && player->getMark("@waked") == 0){
                 room->broadcastSkillInvoke(objectName());
+                room->doLightbox("lunpo$", 2000);
                 room->loseMaxHp(player);
                 player->drawCards(1);
                 player->gainMark("@waked");
@@ -5053,6 +5075,7 @@ public:
                     }
                 }
                 room->broadcastSkillInvoke(objectName(), 1);
+                room->doLightbox("lunpo$", 500);
                 foreach(ServerPlayer *p, room->getOtherPlayers(player)){
                     p->addMark("lunpo");
                     room->addPlayerMark(p, "@skill_invalidity");
@@ -5093,6 +5116,7 @@ public:
             if (id != -1){
                 room->throwCard(id, makoto, makoto);
                 room->broadcastSkillInvoke(objectName(), 2);
+                room->doLightbox("lunpo$", 300);
                 if (use.card->isKindOf("DelayedTrick")){
                     room->throwCard(use.card->getId(), makoto, makoto);
                 }
@@ -5126,6 +5150,19 @@ public:
             }
         }
         return false;
+    }
+};
+
+class LunpoInvalidity : public InvaliditySkill
+{
+public:
+    LunpoInvalidity() : InvaliditySkill("#lunpo-inv")
+    {
+    }
+
+    bool isSkillValid(const Player *player, const Skill *skill) const
+    {
+        return player->getMark("lunpo") == 0 || skill->isAttachedLordSkill();
     }
 };
 
@@ -5762,12 +5799,12 @@ public:
             return false;
         }
         room->showCard(fear, tid);
+        room->broadcastSkillInvoke(objectName());
+        room->doAnimate(QSanProtocol::S_ANIMATE_LIGHTBOX, "lani=skills/jiguan", QString("%1:%2").arg(1000).arg(0));
         if (use.from == fear){
-            room->loseHp(room->askForPlayerChosen(fear, room->getAlivePlayers(), objectName()));
-            room->broadcastSkillInvoke(objectName());
+            room->loseHp(room->askForPlayerChosen(fear, room->getAlivePlayers(), objectName()));   
         }
         else{
-            room->broadcastSkillInvoke(objectName());
             room->throwCard(tid, fear, fear);
             room->loseHp(use.from);
         }
@@ -5818,6 +5855,9 @@ public:
                 if (!colors.contains(judge.card->getColor())){
                     colors.append(judge.card->getColor());
                 }
+                if (i == 0){
+                    room->setTag("paoji_first_color", QVariant(judge.card->isRed()));
+                }
             }
             if (colors.length() == 1){
                 room->damage(DamageStruct(objectName(), mikoto, target, 1, DamageStruct::Thunder));
@@ -5862,6 +5902,300 @@ public:
             }
         }
 
+        return false;
+    }
+
+
+};
+
+
+class Shuji : public TriggerSkill
+{
+public:
+    Shuji() : TriggerSkill("shuji")
+    {
+        events << CardsMoveOneTime << EventPhaseStart << EventPhaseEnd;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == CardsMoveOneTime){
+            CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
+            if (move.reason.m_reason != CardMoveReason::S_REASON_USE && move.reason.m_reason != CardMoveReason::S_REASON_LETUSE){
+                return false;
+            }
+
+            if (move.card_ids.length() == 0 || move.to_place != Player::DiscardPile){
+                return false;
+            }
+
+            ServerPlayer *dalian = room->findPlayerBySkillName(objectName());
+
+            if (!dalian || !dalian->isAlive() || dalian->isKongcheng()){
+                return false;
+            }
+            foreach(int card_id, move.card_ids){
+                Card *card = Sanguosha->getCard(card_id);
+                if (card->isKindOf("TrickCard")){
+
+                    QList<int> list = dalian->getPile("huanshu");
+                    if (list.length() > 8){
+                        return false;
+                    }
+                    bool has_same = false;
+                    foreach(int id, list){
+                        if (Sanguosha->getCard(id)->getClassName() == card->getClassName()){
+                            has_same = true;
+                            break;
+                        }
+                    }
+
+                    if (has_same){
+                        continue;
+                    }
+
+                    room->setTag("shuji-card", QVariant(card_id));
+                    if (room->askForDiscard(dalian, objectName(), 1, 1, true, false, "@shuji-discard")){
+                        if (dalian->getGeneral2Name() == "Hugh"){
+                            room->broadcastSkillInvoke(objectName(), 3);
+                        }
+                        else{
+                            room->broadcastSkillInvoke(objectName(), rand() % 2 + 1);
+                        }
+                        
+                        dalian->addToPile("huanshu", card_id);
+                    }
+                    room->removeTag("shuji-card");
+                }
+            }
+        }
+        else if (triggerEvent == EventPhaseStart){
+            if (player->hasSkill(objectName()) && player->getPhase() == Player::Discard){
+                QString _type = "TrickCard|.|.|hand"; // Handcards only
+                room->setPlayerCardLimitation(player, "discard", _type, true);
+            }
+        }
+        else if (triggerEvent == EventPhaseEnd){
+            if (player->hasSkill(objectName()) && player->getPhase() == Player::Discard){
+                QString _type = "TrickCard|.|.|hand"; // Handcards only
+                room->removePlayerCardLimitation(player, "discard", _type);
+            }
+        }
+        return false;
+    }
+};
+
+class ShujiMaxCards : public MaxCardsSkill
+{
+public:
+    ShujiMaxCards() : MaxCardsSkill("#shuji")
+    {
+    }
+
+    int getExtra(const Player *target) const
+    {
+        if (target->hasSkill("shuji")){
+            int num = 0;
+            foreach (const Card* card, target->getHandcards()){
+                num += card->isKindOf("TrickCard") ? 1 : 0;
+            }
+            return  num;
+        }
+        else
+            return 0;
+    }
+};
+
+class Jicheng : public TriggerSkill
+{
+public:
+    Jicheng() : TriggerSkill("jicheng")
+    {
+        events << EventPhaseStart;
+        frequency = Wake;
+    }
+
+    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (event == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart){
+            if (player->getHandcardNum() == 0 && player->getMark("@waked") == 0){
+                room->broadcastSkillInvoke(objectName());
+                room->doLightbox("jicheng$", 3000);
+                room->setPlayerProperty(player, "maxhp", QVariant(player->getMaxHp() + 1));
+                if (room->askForChoice(player, objectName(), "jicheng_recover+jicheng_draw") == "jicheng_recover"){
+                    room->recover(player, RecoverStruct(player));
+                }
+                else{
+                    player->drawCards(2);
+                }
+                player->gainMark("@waked");
+                room->changeHero(player, "Hugh", false, false, true);
+            }
+        }
+        return false;
+    }
+};
+
+class ShoushiProhibit : public ProhibitSkill
+{
+public:
+    ShoushiProhibit() : ProhibitSkill("#shoushi")
+    {
+    }
+
+    bool isProhibited(const Player *, const Player *to, const Card *card, const QList<const Player *> &) const
+    {
+        if (!to->hasSkill(this)){
+            return false;
+        }
+        foreach(int card_id, to->getPile("huanshu")){
+            if (Sanguosha->getCard(card_id)->getClassName() == card->getClassName()){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+class Shoushi : public TriggerSkill
+{
+public:
+    Shoushi() : TriggerSkill("shoushi")
+    {
+        events << PreCardUsed << TrickCardCanceling;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *jianyong, QVariant &data) const
+    {
+        if (triggerEvent == TrickCardCanceling){
+            CardEffectStruct effect = data.value<CardEffectStruct>();
+            if (effect.from && effect.from->hasSkill(objectName())
+                && effect.to){
+                if (!effect.card || !effect.card->isNDTrick()){
+                    return false;
+                }
+                int num = 0;
+                foreach(int card_id, jianyong->getPile("huanshu")){
+                    num += Sanguosha->getCard(card_id)->getSuit() == effect.card->getSuit() ? 1 : 0;
+                }
+                if (num == 0){
+                    return false;
+                }
+                if (!jianyong->hasFlag("Shoushi_sound_used")){
+                    room->broadcastSkillInvoke(objectName());
+                    jianyong->setFlags("Shoushi_sound_used");
+                }
+                
+                return true;
+            }
+                
+        }
+        else{
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.card->isNDTrick()) {
+                int num = 0;
+                foreach(int card_id, jianyong->getPile("huanshu")){
+                    num += Sanguosha->getCard(card_id)->getSuit() == use.card->getSuit() ? 1 : 0;
+                }
+
+
+                //1
+                if (num < 2){
+                    return false;
+                }
+
+                jianyong->drawCards(1);
+
+                // 2
+
+                if (num < 3){
+                    return false;
+                }
+                if (use.card->isKindOf("Collateral")){
+                    return false;
+                }
+                QList<ServerPlayer *> available_targets;
+                if (!use.card->isKindOf("AOE") && !use.card->isKindOf("GlobalEffect")) {
+                    room->setPlayerFlag(jianyong, "ShoushiExtraTarget");
+                    foreach(ServerPlayer *p, room->getAlivePlayers()) {
+                        if (use.to.contains(p) || room->isProhibited(jianyong, p, use.card)) continue;
+                        if (use.card->targetFixed()) {
+                            if (!use.card->isKindOf("Peach") || p->isWounded())
+                                available_targets << p;
+                        }
+                        else {
+                            if (use.card->targetFilter(QList<const Player *>(), p, jianyong))
+                                available_targets << p;
+                        }
+                    }
+                    room->setPlayerFlag(jianyong, "-ShoushiExtraTarget");
+                }
+                QStringList choices;
+                choices << "cancel";
+                if (use.to.length() > 1) choices.prepend("remove");
+                if (!available_targets.isEmpty()) choices.prepend("add");
+                if (choices.length() == 1) return false;
+
+                QString choice = room->askForChoice(jianyong, "shoushi", choices.join("+"), data);
+                if (choice == "cancel")
+                    return false;
+                else if (choice == "add") {
+                    ServerPlayer *extra = NULL;
+                    extra = room->askForPlayerChosen(jianyong, available_targets, "shoushi", "@shoushi-add:::" + use.card->objectName());
+                    use.to.append(extra);
+                    room->sortByActionOrder(use.to);
+                }
+                else {
+                    ServerPlayer *removed = room->askForPlayerChosen(jianyong, use.to, "shoushi", "@shoushi-remove:::" + use.card->objectName());
+                    use.to.removeOne(removed);
+                }
+            }
+            data = QVariant::fromValue(use);
+        
+        }
+
+        return false;
+    }
+};
+
+
+class Kaiqi : public TriggerSkill
+{
+public:
+    Kaiqi() : TriggerSkill("kaiqi")
+    {
+        events << EventPhaseStart;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart){
+            QList<ServerPlayer *> left = room->getAlivePlayers();
+            if (player->hasSkill(objectName()) && player->getPhase() == Player::Play){
+                int i = 0;
+                while (player->getPile("huanshu").length() > 0 && left.length() > 0 && !player->isNude()){
+                    if (room->askForDiscard(player, objectName(), 1, 1, true, true, "@kaiqi-discard")){
+                        if (i == 0){
+                            room->broadcastSkillInvoke(objectName());
+                            room->doLightbox("kaiqi$", 800);
+                        }
+                        ServerPlayer *target = room->askForPlayerChosen(player, left, objectName());
+                        left.removeOne(target);
+                        QList<int> card_ids = player->getPile("huanshu");
+                        room->fillAG(card_ids, player);
+                        int id = room->askForAG(player, card_ids, false, objectName());
+                        room->clearAG(player);
+                        if (id == -1){
+                            return false;
+                        }
+                        room->obtainCard(target, id);
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+        }
         return false;
     }
 };
@@ -6038,7 +6372,8 @@ InovationPackage::InovationPackage()
     NMakoto->addSkill(new YandanMaxCards);
     related_skills.insertMulti("yandan", "#yandan");
     NMakoto->addSkill(new Xiwang);
-    skills << new Lunpo;
+    skills << new Lunpo << new LunpoInvalidity;
+    related_skills.insertMulti("lunpo", "#lunpo-inv");
     NMakoto->addWakeTypeSkillForAudio("lunpo");
 
     General *Chiaki = new General(this, "Chiaki", "real", 3, false);
@@ -6060,6 +6395,20 @@ InovationPackage::InovationPackage()
     Fear->addSkill(new ZuzhouMaxCards);
     Fear->addSkill(new Jiguan);
     related_skills.insertMulti("zuzhou", "#zuzhou");
+
+    General *Dalian = new General(this, "Dalian", "magic", 3, false);
+    Dalian->addSkill(new Shuji);
+    Dalian->addSkill(new ShujiMaxCards);
+    related_skills.insertMulti("shuji", "#shuji");
+    Dalian->addSkill(new Jicheng);
+
+    General *Hugh = new General(this, "Hugh", "magic", 4, true, true);
+    Hugh->addSkill(new Shoushi);
+    Hugh->addSkill(new ShoushiProhibit);
+    related_skills.insertMulti("shoushi", "#shoushi");
+    Hugh->addSkill(new Kaiqi);
+
+
     
     /*
     General *kaori = new General(this, "Kaori", "real", 3, false);

@@ -302,7 +302,7 @@ Monkey::Monkey(Card::Suit suit, int number)
     setObjectName("monkey");
 }
 
-
+/*
 class GaleShellSkill : public ArmorSkill
 {
 public:
@@ -340,13 +340,13 @@ bool GaleShell::targetFilter(const QList<const Player *> &targets, const Player 
     return targets.isEmpty() && Self->distanceTo(to_select) <= 1;
 }
 
-/*
+
 1.rende
 2.jizhi
 3.jieyin
 4.guose
 5.kurou
-*/
+
 
 class FiveLinesVS : public ViewAsSkill
 {
@@ -518,7 +518,7 @@ void FiveLines::onInstall(ServerPlayer *player) const
 
     Armor::onInstall(player);
 }
-
+*/
 DisasterPackage::DisasterPackage()
     :Package("Disaster")
 {
@@ -550,7 +550,7 @@ DisasterPackage::DisasterPackage()
     card->setParent(this);
 
     type = CardPack;
-    }*/
+    }
 
 class YxSwordSkill : public WeaponSkill
 {
@@ -596,16 +596,17 @@ YxSword::YxSword(Suit suit, int number)
 {
     setObjectName("yx_sword");
 }
-
+*/
 JoyEquipPackage::JoyEquipPackage()
     : Package("JoyEquip")
 {
     (new Monkey(Card::Diamond, 5))->setParent(this);
-    (new GaleShell(Card::Heart, 1))->setParent(this);
-    (new YxSword(Card::Club, 9))->setParent(this);
+    //(new GaleShell(Card::Heart, 1))->setParent(this);
+    //(new YxSword(Card::Club, 9))->setParent(this);
 
     type = CardPack;
-    skills << new GaleShellSkill << new YxSwordSkill << new GrabPeach;
+    // << new GaleShellSkill << new YxSwordSkill
+    skills << new GrabPeach;
 }
 
 //ADD_PACKAGE(Joy)

@@ -1525,12 +1525,12 @@ end
 sgs.ai_skill_askforag.xinyang = function(self, card_ids)
 	local card_id = self.room:getTag("xinyang_judge_card"):toInt()
 	self.room:setTag("xinyang_judge_card",sgs.QVariant(-1))
-	if card_id ~= -1 then return card_ids[0] end
+	if card_id ~= -1 then return card_ids:at(0) end
 	for _, id in sgs.qlist(card_ids) do
 		if card_id == id then return card_id end
 	end
 	
-	return card_ids[0]
+	return card_ids:at(0)
 end
 
 
@@ -1599,3 +1599,256 @@ sgs.ai_skill_use_func.FengzhuCard = function(card, use, self)
 end
 sgs.ai_use_value["FengzhuCard"] = 6
 sgs.ai_use_priority["FengzhuCard"] = 3.5
+
+sgs.ai_skill_discard["shuji"] = function(self, discard_num, min_num, optional, include_equip)
+	local card_id = self.room:getTag("shuji-card"):toInt()
+	if not card_id or card_id == -1 then return end
+
+	if self.player:getHandcardNum() == 0 then return end
+
+	--土豪
+	if self.player:getHandcardNum() == 1 and not self:isWeak() and self.player:getMark("@waked") == 0 then return self:askForDiscard("discard", discard_num, min_num, false, include_equip) end
+	if self.player:getPile("huanshu"):length() <= 3 and self.player:getHandcardNum() >= 2 then return self:askForDiscard("discard", discard_num, min_num, false, include_equip) end
+
+	-- 达利安需要考虑的一些情况： 1.尽可能收束需要的锦囊花色  2.依据类型而定，最有价值的主要是顺手牵羊 无中生有 无懈可击 3.根据情况而怂，比如自己快死了
+	if self:isWeak() and self.player:getHandcardNum() <= 1 and (self:getCardsNum("Peach") > 0 or self:getCardsNum("Jink") > 0 or self:getCardsNum("Analeptic") > 0) then return end
+
+
+	local rcard = sgs.Sanguosha:getCard(card_id)
+
+	if self:getUseValue(rcard) >= 6 then return self:askForDiscard("discard", discard_num, min_num, false, include_equip) end
+
+	local same = 0
+	for _, id in sgs.qlist(self.player:getPile("huanshu")) do
+		local card = sgs.Sanguosha:getCard(id)
+		if card:getSuit() == rcard:getSuit() then same = same + 1 end
+	end
+
+	if same >= 1 then return self:askForDiscard("discard", discard_num, min_num, false, include_equip) end
+
+	return
+end
+
+sgs.ai_skill_choice["jicheng"] = function(self, choices, data)
+	if self:isWeak() and self:getCardsNum("Peach") == 0 and self.player:getHp() == 1 then return "jicheng_recover" end
+	return "jicheng_draw"
+end
+
+sgs.ai_skill_choice.shoushi = function(self, choices, data)
+	local use = data:toCardUse()
+	if use.card:isKindOf("ExNihilo") then
+		local friend = self:findPlayerToDraw(false, 2)
+		if friend then
+			self.shoushi_extra_target = friend
+			return "add"
+		end
+	elseif use.card:isKindOf("GodSalvation") then
+		self:sort(self.enemies, "hp")
+		for _, enemy in ipairs(self.enemies) do
+			if enemy:isWounded() and self:hasTrickEffective(use.card, enemy, self.player) then
+				self.shoushi_remove_target = enemy
+				return "remove"
+			end
+		end
+	elseif use.card:isKindOf("AmazingGrace") then
+		self:sort(self.enemies)
+		for _, enemy in ipairs(self.enemies) do
+			if self:hasTrickEffective(use.card, enemy, self.player) and not hasManjuanEffect(enemy)
+				and not self:needKongcheng(enemy, true) then
+				self.shoushi_remove_target = enemy
+				return "remove"
+			end
+		end
+	elseif use.card:isKindOf("AOE") then
+		self:sort(self.friends_noself)
+		local lord = self.room:getLord()
+		if lord and lord:objectName() ~= self.player:objectName() and self:isFriend(lord) and self:isWeak(lord) then
+			self.shoushi_remove_target = lord
+			return "remove"
+		end
+		for _, friend in ipairs(self.friends_noself) do
+			if self:hasTrickEffective(use.card, friend, self.player) then
+				self.shoushi_remove_target = friend
+				return "remove"
+			end
+		end
+	elseif use.card:isKindOf("Snatch") or use.card:isKindOf("Dismantlement") then
+		local trick = sgs.Sanguosha:cloneCard(use.card:objectName(), use.card:getSuit(), use.card:getNumber())
+		trick:setSkillName("shoushi")
+		local dummy_use = { isDummy = true, to = sgs.SPlayerList(), current_targets = {} }
+		for _, p in sgs.qlist(use.to) do
+			table.insert(dummy_use.current_targets, p:objectName())
+		end
+		self:useCardSnatchOrDismantlement(trick, dummy_use)
+		if dummy_use.card and dummy_use.to:length() > 0 then
+			self.shoushi_extra_target = dummy_use.to:first()
+			return "add"
+		end
+	elseif use.card:isKindOf("Slash") then
+		local slash = sgs.Sanguosha:cloneCard(use.card:objectName(), use.card:getSuit(), use.card:getNumber())
+		slash:setSkillName("shoushi")
+		local dummy_use = { isDummy = true, to = sgs.SPlayerList(), current_targets = {} }
+		for _, p in sgs.qlist(use.to) do
+			table.insert(dummy_use.current_targets, p:objectName())
+		end
+		self:useCardSlash(slash, dummy_use)
+		if dummy_use.card and dummy_use.to:length() > 0 then
+			self.shoushi_extra_target = dummy_use.to:first()
+			return "add"
+		end
+	else
+		local dummy_use = { isDummy = true, to = sgs.SPlayerList(), current_targets = {} }
+		for _, p in sgs.qlist(use.to) do
+			table.insert(dummy_use.current_targets, p:objectName())
+		end
+		self:useCardByClassName(use.card, dummy_use)
+		if dummy_use.card and dummy_use.to:length() > 0 then
+			self.shoushi_extra_target = dummy_use.to:first()
+			return "add"
+		end
+	end
+	self.shoushi_extra_target = nil
+	self.shoushi_remove_target = nil
+	return "cancel"
+end
+
+sgs.ai_skill_playerchosen.shoushi = function(self, targets)
+	if not self.shoushi_extra_target and not self.shoushi_remove_target then self.room:writeToConsole("shoushi player chosen error!!") end
+	return self.shoushi_extra_target or self.shoushi_remove_target
+end
+
+
+sgs.kaiqi_ag_type = ""
+sgs.ai_skill_discard["kaiqi"] = function(self, discard_num, min_num, optional, include_equip)
+	--先测评一下有没有人要给
+
+	--开启的一些逻辑
+	--尽量保证剩余的书里有3个的花色
+	--可以把一些其他的花色的牌分给队友
+	--如果是红桃且有队友的话自己拿无中生有的效果很好
+	--如果黑桃且队友基本没有的情况下可以考虑拿顺手牵羊
+	local heart, diamond, spade, club = 0,0,0,0
+	local ex, sn, need = nil, nil, nil, nil, nil, nil
+
+	for _, id in sgs.qlist(self.player:getPile("huanshu")) do
+		local card = sgs.Sanguosha:getCard(id)
+		if card:getSuit() == sgs.Card_Heart then heart = heart + 1 end
+		if card:getSuit() == sgs.Card_Diamond then diamond = diamond + 1 end
+		if card:getSuit() == sgs.Card_Spade then spade = spade + 1 end
+		if card:getSuit() == sgs.Card_Club then club = club + 1 end
+		if card:isKindOf("ExNihilo") then ex = card end
+		if card:isKindOf("Snatch") then sn = card end
+		if self:getUseValue(card) >= 6 then need = card end
+	end
+
+	if not self.player:hasFlag("kaiqi_self_used") then
+		if heart > 3 then
+			sgs.kaiqi_ag_type = "heart"
+			return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+		end
+		if diamond > 3 then
+			sgs.kaiqi_ag_type = "diamond"
+			return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+		end
+		if spade > 3 then
+			sgs.kaiqi_ag_type = "spade"
+			return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+		end
+		if club > 3 then
+			sgs.kaiqi_ag_type = "club"
+			return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+		end
+		if heart > 2 and ((ex and ex:getSuit() == sgs.Card_Heart) or (need and need:getSuit() == sgs.Card_Heart)) then
+			sgs.kaiqi_ag_type = "heart"
+			return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+		end
+		if diamond > 2 and need and need:getSuit() == sgs.Card_Diamond then
+			sgs.kaiqi_ag_type = "diamond"
+			return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+		end
+		if spade > 2 and need and need:getSuit() == sgs.Card_Spade then
+			sgs.kaiqi_ag_type = "spade"
+			return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+		end
+		if club > 2 and need and need:getSuit() == sgs.Card_Club then
+			sgs.kaiqi_ag_type = "club"
+			return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+		end
+	else
+		--是否有人可送
+		local has = false
+		for _,p in ipairs(self.friends_noself) do
+			if not p:hasFlag("kaiqi_used") then has = true end
+		end
+
+		if has then
+			if self:isWeak() or self.player:getPile("huanshu"):length() <= 5 or self.player:getHandcardNum() < 2 then return "." end
+			if heart > 3 then
+				sgs.kaiqi_ag_type = "heart"
+				return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+			end
+			if diamond > 3 then
+				sgs.kaiqi_ag_type = "diamond"
+				return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+			end
+			if spade > 3 then
+				sgs.kaiqi_ag_type = "spade"
+				return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+			end
+			if club > 3 then
+				sgs.kaiqi_ag_type = "club"
+				return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+			end
+			if diamond == 1 then
+				sgs.kaiqi_ag_type = "diamond"
+				return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+			end
+			if spade == 1 then
+				sgs.kaiqi_ag_type = "spade"
+				return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+			end
+			if club == 1 then
+				sgs.kaiqi_ag_type = "club"
+				return self:askForDiscard("discard", discard_num, min_num, false, include_equip)
+			end
+		end
+	end
+	return 
+end
+
+--get AG
+sgs.ai_skill_askforag.kaiqi = function(self, card_ids)
+	local sel = {}
+	for _,card_id in sgs.qlist(card_ids) do
+		local card = sgs.Sanguosha:getCard(card_id)
+		if card:getSuitString() == sgs.kaiqi_ag_type then
+			if card:isKindOf("ExNihilo") then return card_id end
+			table.insert(sel, card)
+		end
+	end
+
+	self:sortByUseValue(sel)
+	return sel[1]:getId()
+end
+
+
+
+sgs.ai_skill_playerchosen.kaiqi = function(self, targets)
+	if not self.player:hasFlag("kaiqi_self_used") then
+		self.player:setFlags("kaiqi_self_used")
+		return self.player 
+	end
+	for _, target in sgs.qlist(targets) do
+		if self:isFriend(target) and not self:isWeak(target) then
+			target:setFlags("kaiqi_used")
+			return target 
+		end
+	end
+
+	for _, target in sgs.qlist(targets) do
+		if self:isFriend(target) then 
+			target:setFlags("kaiqi_used")
+			return target 
+		end
+	end
+end

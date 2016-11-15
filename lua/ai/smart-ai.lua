@@ -4442,7 +4442,7 @@ function SmartAI:getRetrialCardId(cards, judge, self_card)
 			local damage = self.room:getTag("CurrentDamageStruct"):toDamage()
 			if damage.from then
 				if self:isFriend(damage.from) then
-					if not self:toTurnOver(damage.from, 0) and judge.card:getSuit() ~= sgs.Card_Spade and card_x:getSuit() == sgs.Card_Spade then
+					if judge.card:getSuit() ~= sgs.Card_Spade and card_x:getSuit() == sgs.Card_Spade then
 						table.insert(can_use, card)
 						hasSpade = true
 					elseif (not self_card or self:getOverflow() > 0) and judge.card:getSuit() ~= card_x:getSuit() then
@@ -4454,12 +4454,12 @@ function SmartAI:getRetrialCardId(cards, judge, self_card)
 						if retr
 							and ((self:isFriend(who) and card_x:getSuit() == sgs.Card_Heart and who:isWounded())
 								or (card_x:getSuit() == sgs.Card_Club and (self:needToThrowArmor(damage.from) or damage.from:isNude())))
-								or (judge.card:getSuit() == sgs.Card_Spade and self:toTurnOver(damage.from, 0)) then
+								or judge.card:getSuit() == sgs.Card_Spade then
 							table.insert(other_suit, card)
 						end
 					end
 				else
-					if not self:toTurnOver(damage.from, 0) and card_x:getSuit() ~= sgs.Card_Spade and judge.card:getSuit() == sgs.Card_Spade then
+					if card_x:getSuit() ~= sgs.Card_Spade and judge.card:getSuit() == sgs.Card_Spade then
 						table.insert(can_use, card)
 					end
 				end

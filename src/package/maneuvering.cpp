@@ -312,8 +312,10 @@ void FireAttack::onEffect(const CardEffectStruct &effect) const
     QString prompt = QString("@fire-attack:%1::%2").arg(effect.to->objectName()).arg(suit_str);
     if (effect.from->isAlive()) {
         const Card *card_to_throw = room->askForCard(effect.from, pattern, prompt);
-        if (card_to_throw)
+        if (card_to_throw){
+            room->doAnimate(QSanProtocol::S_ANIMATE_LIGHTBOX, "lani=cards/fire_attack", QString("%1:%2").arg(2000).arg(0));
             room->damage(DamageStruct(this, effect.from, effect.to, 1, DamageStruct::Fire));
+        }
         else
             effect.from->setFlags("FireAttackFailed_" + effect.to->objectName()); // For AI
     }

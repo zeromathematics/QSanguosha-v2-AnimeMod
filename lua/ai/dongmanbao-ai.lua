@@ -2445,7 +2445,7 @@ function sgs.ai_cardneed.se_qidian(to, card, self)
 	end
 end
 
-sgs.ai_skill_cardask["#se_qidian"]=function(self, data)
+sgs.ai_skill_cardask["#se_qidian"]=function(self, data, pattern, target, target2, arg, arg2)
 	local judge = data:toJudge()
 	local all_cards = sgs.QList2Table(self.player:getCards("he"))
 	if #all_cards==0 then return "." end
@@ -2454,23 +2454,23 @@ sgs.ai_skill_cardask["#se_qidian"]=function(self, data)
 		table.insert(cards, card)
 	end
 	if #cards == 0 then return "." end
-	if judge.who:hasSkill("se_paoji") and self:isFriend(judge.who) and self:getAllPeachNum()> 0  then
+	if judge.who:hasSkill("se_paoji") and self:isFriend(judge.who)  then
 		self:sortByKeepValue(cards)
 		for _,bcard in ipairs(cards) do
-			if bcard:getSuit() == sgs.Card_Spade then
+			if bcard:isRed() == self.room:getTag("paoji_first_color"):toBool() then
 				return "#se_qidiancard:"..bcard:getEffectiveId()..":"
 			end
 		end
 	end
-	if judge.who:hasSkill("se_paoji") and self:isEnemy(judge.who) and self:getAllPeachNum()> 0  then
+	if judge.who:hasSkill("se_paoji") and self:isEnemy(judge.who)  then
 		self:sortByKeepValue(cards)
 		for _,bcard in ipairs(cards) do
-			if bcard:getSuit() ~= sgs.Card_Spade then
+			if bcard:getSuit() ~= self.room:getTag("paoji_first_color"):toBool() then
 				return "#se_qidiancard:"..bcard:getEffectiveId()..":"
 			end
 		end
 	end
-	if judge.who:hasSkill("Haixing") and self:isFriend(judge.who) and self:getAllPeachNum()> 0  then
+	if judge.who:hasSkill("Haixing") and self:isFriend(judge.who)  then
 		self:sortByKeepValue(cards)
 		for _,bcard in ipairs(cards) do
 			if bcard:getSuit() == sgs.Card_Diamond or bcard:getSuit() == sgs.Card_Heart or bcard:getNumber() > 8 then

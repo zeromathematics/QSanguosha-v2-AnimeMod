@@ -17,7 +17,7 @@
    "weapon/qinggang_sword", "weapon/moonspear",
    "weapon/spear",
    //cards
-   "cards/archery_attack", "cards/god_salvation", "cards/savage_assault", 
+   "cards/archery_attack", "cards/god_salvation", "cards/savage_assault",  "cards/fire_attack", 
    //effect
    "akarin", "aura", "fire_caused",
    //skill

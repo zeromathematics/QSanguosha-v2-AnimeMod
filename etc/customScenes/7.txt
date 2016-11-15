@@ -1,0 +1,4 @@
+
+general:Nico role:lord starter:true 
+general:Honoka role:rebel 
+general:MKotori role:rebel 
