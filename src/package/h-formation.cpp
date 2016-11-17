@@ -764,7 +764,7 @@ public:
 HFormationPackage::HFormationPackage()
     : Package("h_formation")
 {
-    /*
+
     General *heg_dengai = new General(this, "heg_dengai", "wei"); // WEI 015 G
     heg_dengai->addSkill("tuntian");
     heg_dengai->addSkill(new Ziliang);
@@ -794,8 +794,7 @@ HFormationPackage::HFormationPackage()
     General *hetaihou = new General(this, "hetaihou", "qun", 3, false, true); // QUN 020
     hetaihou->addSkill(new Zhendu);
     hetaihou->addSkill(new Qiluan);
-    */
-    skills << new Ziliang << new Huyuan << new Heyi << new Tianfu << new Shengxi << new Shoucheng << new Shangyi << new Niaoxiang << new Yicheng << new Qianhuan << new Zhendu << new Qiluan;
+
     addMetaObject<ZiliangCard>();
     addMetaObject<HuyuanCard>();
     addMetaObject<HeyiCard>();

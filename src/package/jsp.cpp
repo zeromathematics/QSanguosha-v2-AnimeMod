@@ -674,7 +674,7 @@ public:
 JSPPackage::JSPPackage()
     : Package("jiexian_sp")
 {
-    /*
+    
     General *jsp_sunshangxiang = new General(this, "jsp_sunshangxiang", "shu", 3, false); // JSP 001
     jsp_sunshangxiang->addSkill(new Liangzhu);
     jsp_sunshangxiang->addSkill(new Fanxiang);
@@ -704,9 +704,6 @@ JSPPackage::JSPPackage()
     jsp_huangyy->addSkill(new LinglongMax);
     related_skills.insertMulti("linglong", "#linglong-horse");
     related_skills.insertMulti("linglong", "#linglong-treasure");
-    */
-    skills << new Nuzhan << new Liangzhu << new Fanxiang << new Cihuai << new JspDanqi << new Kunfen << new ChixinTrigger << new Suiren 
-        << new Jiqiao << new Linglong << new LinglongTreasure << new LinglongMax;
 
     addMetaObject<JiqiaoCard>();
 }

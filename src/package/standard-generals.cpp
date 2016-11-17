@@ -2676,15 +2676,15 @@ public:
 
 void StandardPackage::addGenerals()
 {
-    /*
+    
     // Wei
     General *caocao = new General(this, "caocao$", "wei"); // WEI 001
     caocao->addSkill(new Jianxiong);
     caocao->addSkill(new Hujia);
 
     General *simayi = new General(this, "simayi", "wei", 3); // WEI 002
-    simayi->addSkill(new Fankui);
-    simayi->addSkill(new Guicai);
+    simayi->addSkill("fankui");
+    simayi->addSkill("guicai");
 
     General *xiahoudun = new General(this, "xiahoudun", "wei"); // WEI 003
     xiahoudun->addSkill(new Ganglie);
@@ -2724,7 +2724,7 @@ void StandardPackage::addGenerals()
     guanyu->addSkill(new Yijue);
 
     General *zhangfei = new General(this, "zhangfei", "shu"); // SHU 003
-    zhangfei->addSkill(new Paoxiao);
+    zhangfei->addSkill("paoxiao");
     zhangfei->addSkill(new Tishen);
 
     General *zhugeliang = new General(this, "zhugeliang", "shu", 3); // SHU 004
@@ -2734,7 +2734,7 @@ void StandardPackage::addGenerals()
     related_skills.insertMulti("kongcheng", "#kongcheng-effect");
 
     General *zhaoyun = new General(this, "zhaoyun", "shu"); // SHU 005
-    zhaoyun->addSkill(new Longdan);
+    zhaoyun->addSkill("longdan");
     zhaoyun->addSkill(new Yajiao);
 
     General *machao = new General(this, "machao", "shu"); // SHU 006
@@ -2762,7 +2762,7 @@ void StandardPackage::addGenerals()
     ganning->addSkill(new Fenwei);
 
     General *lvmeng = new General(this, "lvmeng", "wu"); // WU 003
-    lvmeng->addSkill(new Keji);
+    lvmeng->addSkill("keji");
     lvmeng->addSkill(new Qinxue);
 
     General *huanggai = new General(this, "huanggai", "wu"); // WU 004
@@ -2774,7 +2774,7 @@ void StandardPackage::addGenerals()
     related_skills.insertMulti("zhaxiang", "#zhaxiang-target");
 
     General *zhouyu = new General(this, "zhouyu", "wu", 3); // WU 005
-    zhouyu->addSkill(new Yingzi);
+    zhouyu->addSkill("yingzi");
     zhouyu->addSkill(new YingziMaxCards);
     zhouyu->addSkill(new Fanjian);
     related_skills.insertMulti("yingzi", "#yingzi");
@@ -2816,7 +2816,7 @@ void StandardPackage::addGenerals()
     General *st_gongsunzan = new General(this, "st_gongsunzan", "qun"); // QUN 026
     st_gongsunzan->addSkill(new Qiaomeng);
     st_gongsunzan->addSkill("yicong");
-    */
+    
     // for skill cards
     addMetaObject<ZhihengCard>();
     addMetaObject<RendeCard>();

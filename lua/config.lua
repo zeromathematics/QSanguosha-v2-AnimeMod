@@ -46,7 +46,7 @@ config = {
 		"Inovation",
         
         "ERCIYUAN",
---[[
+
 		"Standard",
 		"Wind",
 		"Fire",
@@ -81,11 +81,11 @@ config = {
 		"NostalYJCM",
 		"NostalYJCM2012",
 		"NostalYJCM2013",
-		"JianGeDefense",]]
-		--"BossMode",
-		--"Yitian" ,
-		--"Wisdom" ,
-		--"Test"
+		"JianGeDefense",
+		"BossMode",
+		"Yitian" ,
+		"Wisdom" ,
+		"Test"
 	},
 
 	hulao_generals = {

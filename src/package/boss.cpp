@@ -661,7 +661,7 @@ Extra: madoka
 BossModePackage::BossModePackage()
     : Package("BossMode")
 {
-    /*
+
     General *chi = new General(this, "boss_chi", "god", 5, true, true);
     chi->addSkill(new BossGuimei);
     chi->addSkill(new BossDidong);
@@ -717,7 +717,7 @@ BossModePackage::BossModePackage()
     yecha->addSkill(new BossMojian);
     yecha->addSkill("bazhen");
     yecha->addSkill(new BossDanshu);
-    */
+
 }
 
 ADD_PACKAGE(BossMode)

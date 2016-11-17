@@ -603,7 +603,7 @@ public:
         return false;
     }
 };
-
+/*
 class Wumou : public TriggerSkill
 {
 public:
@@ -630,7 +630,7 @@ public:
         return false;
     }
 };
-
+*/
 class Shenfen : public ZeroCardViewAsSkill
 {
 public:
@@ -1566,7 +1566,7 @@ int Longhun::getEffHp(const Player *zhaoyun) const
 GodPackage::GodPackage()
     : Package("god")
 {
-    /*
+
     General *shenguanyu = new General(this, "shenguanyu", "god", 5); // LE 001
     shenguanyu->addSkill(new Wushen);
     shenguanyu->addSkill(new WushenTargetMod);
@@ -1603,7 +1603,7 @@ GodPackage::GodPackage()
     General *shenlvbu = new General(this, "shenlvbu", "god", 5); // LE 006
     shenlvbu->addSkill(new Kuangbao);
     shenlvbu->addSkill(new MarkAssignSkill("@wrath", 2));
-    shenlvbu->addSkill(new Wumou);
+    shenlvbu->addSkill("wumou");
     shenlvbu->addSkill(new Wuqian);
     shenlvbu->addSkill(new Shenfen);
     related_skills.insertMulti("kuangbao", "#@wrath-2");
@@ -1622,10 +1622,6 @@ GodPackage::GodPackage()
     shensimayi->addSkill(new Lianpo);
     shensimayi->addSkill(new LianpoCount);
     related_skills.insertMulti("lianpo", "#lianpo-count");
-    */
-    skills << new Renjie << new Baiyin << new Lianpo << new LianpoCount << new JuejingKeep << new Juejing << new Longhun << new Kuangbao << new MarkAssignSkill("@wrath", 2)
-        << new Wumou << new Wuqian << new Shenfen << new Guixin << new Feiying << new Qixing << new QixingStart << new QixingAsk << new QixingClear << new FakeMoveSkill("qixing") << new Kuangfeng << new Dawu
-        << new Qinyin << new Yeyan << new Shelie << new Gongxin << new Wushen << new WushenTargetMod << new Wuhun << new WuhunRevenge;
 
     addMetaObject<GongxinCard>();
     addMetaObject<YeyanCard>();

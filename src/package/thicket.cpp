@@ -844,7 +844,7 @@ public:
         return false;
     }
 };
-
+/*
 class Benghuai : public PhaseChangeSkill
 {
 public:
@@ -890,7 +890,7 @@ public:
         return false;
     }
 };
-
+*/
 class Baonue : public TriggerSkill
 {
 public:
@@ -988,7 +988,7 @@ ThicketPackage::ThicketPackage()
     General *dongzhuo = new General(this, "dongzhuo$", "qun", 8); // QUN 006
     dongzhuo->addSkill(new Jiuchi);
     dongzhuo->addSkill(new Roulin);
-    dongzhuo->addSkill(new Benghuai);
+    dongzhuo->addSkill("benghuai");
     dongzhuo->addSkill(new Baonue);
 
     General *jiaxu = new General(this, "jiaxu", "qun", 3); // QUN 007
