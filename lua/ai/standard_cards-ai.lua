@@ -855,6 +855,7 @@ sgs.ai_skill_cardask["slash-jink"] = function(self, data, pattern, target)
 	if slash:isKindOf("NatureSlash") and self.player:isChained() and self:isGoodChainTarget(self.player, target, nil, nil, slash) then return "." end
 	if self:isFriend(target) then
 		if target:hasSkill("jieyin") and not self.player:isWounded() and self.player:isMale() and not self.player:hasSkills("leiji|nosleiji") then return "." end
+		if target:hasSkill("nuequ") and self.player:isWounded() then return "." end
 		if not target:hasSkill("jueqing") then
 			if (target:hasSkill("nosrende") or (target:hasSkill("rende") and not target:hasUsed("RendeCard"))) and self.player:hasSkill("jieming") then return "." end
 			if target:hasSkill("pojun") and not self.player:faceUp() then return "." end
@@ -2273,7 +2274,8 @@ function SmartAI:useCardSnatchOrDismantlement(card, use)
 					if addTarget(friend, cardchosen) then return end
 				end
 			end
-			if (friend:containsTrick("key_trick") and friend:getLostHp() > 0) then
+			if friend:containsTrick("key_trick") and friend:isWounded() then
+				tricks = friend:getJudgingArea()
 				for _,p in ipairs(self.friends) do
 					if p:hasSkill("guangyu") then break end
 				end

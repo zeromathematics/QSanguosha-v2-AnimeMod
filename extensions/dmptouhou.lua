@@ -264,9 +264,11 @@ se_huixiang = sgs.CreateTriggerSkill{
 			local id
 			if use.card:getSubcards():length() > 0 then
 				for _,id in sgs.qlist(use.card:getSubcards()) do
-					if not satori:askForSkillInvoke(self:objectName(), data) then return end
-					room:broadcastSkillInvoke(self:objectName())
-					satori:addToPile("satori_memory", id)
+					if id ~= -1 then
+						if not satori:askForSkillInvoke(self:objectName(), data) then return end
+						room:broadcastSkillInvoke(self:objectName())
+						satori:addToPile("satori_memory", id)
+					end
 				end
 			else
 				id = use.card:getEffectiveId()
@@ -285,7 +287,18 @@ se_huixiang = sgs.CreateTriggerSkill{
 			if not use.m_card:isKindOf("BasicCard") and not use.m_card:isKindOf("TrickCard") then return end
 			if not satori:askForSkillInvoke(self:objectName(), data) then return end
 			room:broadcastSkillInvoke(self:objectName())
-			satori:addToPile("satori_memory", use.m_card:getEffectiveId())
+			local id = use.m_card:getEffectiveId()
+			if use.m_card:getSubcards():length() > 0 then
+				for _,id in sgs.qlist(use.m_card:getSubcards()) do
+					if id ~= -1 then
+						if not satori:askForSkillInvoke(self:objectName(), data) then return end
+						room:broadcastSkillInvoke(self:objectName())
+						satori:addToPile("satori_memory", id)
+					end
+				end
+			elseif use.m_card:getEffectiveId() ~= 0-1 then
+				satori:addToPile("satori_memory", use.m_card:getEffectiveId())
+			end
 		end
 	end,
 	can_trigger = function(self, target)

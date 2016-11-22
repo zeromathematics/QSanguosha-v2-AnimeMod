@@ -4525,7 +4525,7 @@ public:
         }
         else if (event == TargetConfirmed){
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.from->hasSkill(objectName())){
+            if (use.from && use.from->hasSkill(objectName())){
                 foreach(ServerPlayer *p, use.to){
                     if (p->getMark("@Buyu") > 0){
                         if (!use.from->hasFlag("Buyu_sdraw_played")){
@@ -5427,6 +5427,11 @@ public:
     const Card *viewAs() const
     {
         QString pattern;
+
+        if (Self->getHandcardNum() == 0){
+            return NULL;
+        }
+
         if (Sanguosha->currentRoomState()->getCurrentCardUseReason() == CardUseStruct::CARD_USE_REASON_PLAY) {
             const Card *c = Self->tag["fengzhu"].value<const Card *>();
             if (c == NULL || Self->hasFlag("fengzhu_used"))
@@ -5469,6 +5474,14 @@ public:
 
     bool isEnabledAtPlay(const Player *player) const
     {
+        if (player->isKongcheng()){
+            return false;
+        }
+
+        if (player->hasFlag("fengzhu_used")){
+            return false;
+        }
+
         QList<const Player *> sib = player->getAliveSiblings();
         if (player->isAlive())
             sib << player;

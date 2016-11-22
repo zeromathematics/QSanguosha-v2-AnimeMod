@@ -3148,7 +3148,7 @@ LuaDikai=sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		local yukine = room:findPlayerBySkillName(self:objectName())
-		if yukine:isDead() then return end
+		if not yukine or yukine:isDead() then return end
 		if not room:askForSkillInvoke(player, self:objectName(), data) then return end
 		room:broadcastSkillInvoke("LuaJingming",math.random(1,2))
 		room:drawCards(yukine,1)

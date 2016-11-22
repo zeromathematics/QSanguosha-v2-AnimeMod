@@ -165,7 +165,7 @@ end
 
 sgs.ai_skill_invoke.se_jifeng = true
 
-sgs.ai_skill_choice["se_huibi"] = function(self, data)
+sgs.ai_skill_choice["se_huibi"] = function(self, choices, data)
 	if self.player:getMark("@shimakaze_speed") > 4 then return "se_huibi_move" end
 	return "se_huibi_plus"
 end
@@ -177,7 +177,7 @@ sgs.ai_skill_invoke.se_qianlei = function(self, data)
 	return self:isEnemy(der) or self:isEnemy(damage.from)
 end
 
-sgs.ai_skill_choice["se_qianlei"] = function(self, data)
+sgs.ai_skill_choice["se_qianlei"] = function(self, choices, data)
 	local dying_data = data:toDying()
 	local damage = dying_data.damage
 	local der = dying_data.who

@@ -978,10 +978,10 @@ sgs.ai_skill_cardchosen.Zhudao = function(self, who, flags)
 	return nil
 end
 
-sgs.ai_playerchosen_intention.Zhudao = function(from, to)
-	local intention = 60
-	sgs.updateIntention(from, to, intention)
-end
+-- sgs.ai_playerchosen_intention.Zhudao = function(from, to)
+-- 	local intention = 60
+-- 	sgs.updateIntention(from, to, intention)
+-- end
 
 --给予
 sgs.ai_skill_playerchosen.Quxiang = function(self, targets)
@@ -1142,10 +1142,10 @@ sgs.ai_skill_playerchosen.Quxiang = function(self, targets)
 	return source
 end
 
-sgs.ai_playerchosen_intention.Quxiang = function(from, to)
-	local intention = -60
-	sgs.updateIntention(from, to, intention)
-end
+-- sgs.ai_playerchosen_intention.Quxiang = function(from, to)
+-- 	local intention = -60
+-- 	sgs.updateIntention(from, to, intention)
+-- end
 
 --思绪，准备复制粘贴就好。。
 
@@ -1500,10 +1500,10 @@ sgs.ai_skill_playerchosen.SE_Dixian = function(self, targets)
 	return self.enemies[1]
 end
 
-sgs.ai_playerchosen_intention.SE_Dixian = function(from, to)
-	local intention = 80
-	sgs.updateIntention(from, to, intention)
-end
+-- sgs.ai_playerchosen_intention.SE_Dixian = function(from, to)
+-- 	local intention = 80
+-- 	sgs.updateIntention(from, to, intention)
+-- end
 
 sgs.ai_skill_invoke.SE_Shanguang = function(self, data)
 	local damage = data:toDamage()
@@ -1697,10 +1697,10 @@ sgs.ai_skill_playerchosen.se_shunshan = function(self, targets)
 	return
 end
 
-sgs.ai_playerchosen_intention.se_shunshan = function(from, to)
-	local intention = 100
-	sgs.updateIntention(from, to, intention)
-end
+-- sgs.ai_playerchosen_intention.se_shunshan = function(from, to)
+-- 	local intention = 100
+-- 	sgs.updateIntention(from, to, intention)
+-- end
 
 --[[
 sgs.ai_skill_invoke.se_shunshan_Another = function(self, data)
@@ -1895,11 +1895,6 @@ sgs.ai_skill_playerchosen.dai = function(self, targets)
 	end
 	if target then return target end
 	return self.player
-end
-
-sgs.ai_playerchosen_intention.dai = function(from, to)
-	local intention = -60
-	sgs.updateIntention(from, to, intention)
 end
 
 sgs.ai_skill_invoke.daiVS = function(self, data)
@@ -2416,11 +2411,6 @@ sgs.ai_skill_playerchosen["se_qidian"] = function(self, targets)
 	end
 	if target then return target end
 	return self.enemies[1]
-end
-
-sgs.ai_playerchosen_intention.se_qidian = function(from, to)
-	local intention = 80
-	sgs.updateIntention(from, to, intention)
 end
 
 sgs.se_qidian_suit_value = {
@@ -4397,17 +4387,17 @@ sgs.ai_skill_playerchosen["se_poyi2"] = function(self, targets)
 	return self.enemies[1]
 end
 
-sgs.ai_card_intention["se_poyicard"] = function(card, from, to)
-	if sgs.SE_se_poyi1 then
-		sgs.updateIntention(sgs.SE_se_poyi1, from, -50)
-		if sgs.SE_se_poyi2 then
-			sgs.updateIntention(sgs.SE_se_poyi2, sgs.SE_se_poyi1, 200)
-			sgs.updateIntention(sgs.SE_se_poyi1, sgs.SE_se_poyi2, 200)
-			sgs.SE_se_poyi2 = nil
-		end
-		sgs.SE_se_poyi1 = nil
-	end
-end
+-- sgs.ai_card_intention["se_poyicard"] = function(card, from, to)
+-- 	if sgs.SE_se_poyi1 then
+-- 		sgs.updateIntention(sgs.SE_se_poyi1, from, -50)
+-- 		if sgs.SE_se_poyi2 then
+-- 			sgs.updateIntention(sgs.SE_se_poyi2, sgs.SE_se_poyi1, 200)
+-- 			sgs.updateIntention(sgs.SE_se_poyi1, sgs.SE_se_poyi2, 200)
+-- 			sgs.SE_se_poyi2 = nil
+-- 		end
+-- 		sgs.SE_se_poyi1 = nil
+-- 	end
+-- end
 
 --理子
 sgs.ai_skill_choice["SE_Yirong"] = function(self, choices, data)

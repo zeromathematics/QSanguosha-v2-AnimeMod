@@ -38,7 +38,7 @@ end
 sgs.ai_skill_cardchosen.renzha = function(self, who, flags)
 	local cards = who:getHandcards()
 	self:sortByUseValue(cards, true)
-	return cards:first()
+	return cards:first():getEffectiveId()
 end
 
 sgs.ai_skill_invoke.renzha = function(self, data)
@@ -336,6 +336,7 @@ LuaWangxiang_skill.getTurnUseCard=function(self,inclusive)
 	cards=sgs.QList2Table(cards)
 	self:sortByUseValue(cards,true)
 	local card_nd = cards[1]
+	if not card_nd then return end
 	return sgs.Card_Parse(("ex_nihilo:LuaWangxiang[%s:%s]=%d"):format(card_nd:getSuitString(),card_nd:getNumberString(),card_nd:getEffectiveId()))
 end
 
