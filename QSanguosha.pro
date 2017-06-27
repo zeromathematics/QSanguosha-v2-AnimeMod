@@ -15,6 +15,8 @@ CONFIG += precompile_header
 PRECOMPILED_HEADER = src/pch.h
 DEFINES += USING_PCH
 
+RESOURCES += qdarkstyle/style.qrc
+
 SOURCES += \
     src/main.cpp \
     src/client/aux-skills.cpp \
@@ -54,6 +56,8 @@ SOURCES += \
     src/package/standard-cards.cpp \
     src/package/standard-generals.cpp \
     src/package/standard-skillcards.cpp \
+    src/package/inovation.cpp \
+    src/package/erciyuan.cpp \
     src/package/thicket.cpp \
     src/package/wind.cpp \
     src/scenario/boss-mode-scenario.cpp \
@@ -82,6 +86,7 @@ SOURCES += \
     src/ui/indicatoritem.cpp \
     src/ui/magatamas-item.cpp \
     src/ui/photo.cpp \
+    src/ui/super-button.cpp \
     src/ui/pixmapanimation.cpp \
     src/ui/qsanbutton.cpp \
     src/ui/rolecombobox.cpp \
@@ -172,6 +177,8 @@ HEADERS += \
     src/package/standard.h \
     src/package/standard-equips.h \
     src/package/standard-skillcards.h \
+    src/package/inovation.h \
+    src/package/erciyuan.h \
     src/scenario/boss-mode-scenario.h \
     src/scenario/couple-scenario.h \
     src/scenario/guandu-scenario.h \
@@ -198,6 +205,7 @@ HEADERS += \
     src/ui/indicatoritem.h \
     src/ui/magatamas-item.h \
     src/ui/photo.h \
+    src/ui/super-button.h \
     src/ui/pixmapanimation.h \
     src/ui/qsanbutton.h \
     src/ui/rolecombobox.h \
@@ -285,6 +293,7 @@ win32{
 
 macx{
     ICON = resource/icon/sgs.icns
+    QMAKE_MAC_SDK = macosx10.12
 }
 
 LIBS += -L.

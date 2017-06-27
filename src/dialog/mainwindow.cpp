@@ -39,7 +39,7 @@ public:
 #endif
     }
 
-#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
+#if defined(Q_OS_WIN) ||defined(Q_OS_OSX) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
     virtual void mousePressEvent(QMouseEvent *event)
     {
         MainWindow *parent = qobject_cast<MainWindow *>(parentWidget());
@@ -218,7 +218,7 @@ MainWindow::~MainWindow()
 
 
 
-#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
+#if defined(Q_OS_WIN) || defined(Q_OS_OSX) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     if (windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen))

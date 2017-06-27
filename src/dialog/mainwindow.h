@@ -51,11 +51,11 @@ public:
     void roundCorners();
 
 #if defined(Q_OS_WIN) || defined(Q_OS_OSX) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
+    virtual void changeEvent(QEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
     virtual void mouseDoubleClickEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
-    virtual void changeEvent(QEvent *event);
 #endif
 
     bool isLeftPressDown;
@@ -74,6 +74,7 @@ public:
 
 protected:
     virtual void closeEvent(QCloseEvent *);
+
 
 private:
     FitView *view;

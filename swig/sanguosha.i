@@ -1125,7 +1125,7 @@ public:
     void broadcastSkillInvoke(const char *skillName, bool isMale, int type);
     void doLightbox(const char *lightboxName, int duration = 2000, int pixelSize = 0);
     void doAnimate(int type, const char *arg1 = NULL, const char *arg2 = NULL, QList<ServerPlayer *> players = QList<ServerPlayer *>());
-    
+
     void doSuperLightbox(const char *heroName, const char *skillName);
 
     bool notifyMoveCards(bool isLostPhase, QList<CardsMoveStruct> &cards_moves, bool forceVisible, QList<ServerPlayer *> players = QList<ServerPlayer *>());
@@ -1239,7 +1239,7 @@ public:
     bool doNotify(ServerPlayer *player, int command, const char *arg);
     bool doBroadcastNotify(int command, const char *arg);
     bool doBroadcastNotify(const QList<ServerPlayer *> &players, int command, const char *arg);
-    
+
     bool doNotify(ServerPlayer *player, int command, const QVariant &arg);
     bool doBroadcastNotify(int command, const QVariant &arg);
     bool doBroadcastNotify(const QList<ServerPlayer *> &players, int command, const QVariant &arg);
@@ -1255,10 +1255,10 @@ public:
     bool isAkarin(ServerPlayer *player, ServerPlayer *to);
 
     bool hasAura();
-    bool hasAura(QString aura);
+    bool hasAura(const char *aura);
     QString getAura();
     void clearAura();
-    bool doAura(ServerPlayer* player, QString aura);
+    bool doAura(ServerPlayer* player, const char *aura);
     ServerPlayer *getAuraPlayer();
 
 };

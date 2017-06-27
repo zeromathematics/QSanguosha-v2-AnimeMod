@@ -2131,7 +2131,6 @@ public:
                     return false;
                 room->detachSkillFromPlayer(player, objectName());
                 room->changeHero(player, "Nanami", false, false, room->getTag("shengyou_isSecond").toBool(), true);
-                room->setTag("shengyou_isSecond", NULL);
             }
         }
         return false;
@@ -3343,7 +3342,8 @@ public:
                 return false;
             room->loseMaxHp(saki);
             room->broadcastSkillInvoke(objectName());
-            room->killPlayer(saki, &DamageStruct(objectName(), dying.damage->from, saki, 0));
+            DamageStruct damage = DamageStruct(objectName(), dying.damage->from, saki, 0);
+            room->killPlayer(saki, &damage);
             room->loseHp(dying.damage->from, dying.damage->from->getHp());
             room->revivePlayer(saki);
             room->setPlayerProperty(saki, "hp", saki->getMaxHp());
