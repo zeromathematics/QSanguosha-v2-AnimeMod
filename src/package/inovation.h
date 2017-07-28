@@ -212,8 +212,6 @@ public:
     void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
 };
 
-#endif
-
 class FengzhuDialog : public GuhuoDialog
 {
     Q_OBJECT
@@ -238,3 +236,7 @@ public:
     const Card *validate(CardUseStruct &cardUse) const;
     const Card *validateInResponse(ServerPlayer *user) const;
 };
+
+
+#endif
+

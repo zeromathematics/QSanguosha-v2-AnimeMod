@@ -3521,24 +3521,38 @@ public:
             if (!move.to || move.to != move.from){
                 
                 if (move.from == zuikaku){
-                    room->broadcastSkillInvoke("eryu", 2);
+                    bool done = false;
                     foreach(int id, move.card_ids){
-                        linked->obtainCard(Sanguosha->getCard(id));
+                        if (id != -1 && !Sanguosha->getCard(id)->isKindOf("Nullification")){
+                            linked->obtainCard(Sanguosha->getCard(id));
+                            done = true;
+                        }
+                        
                     }
+                    if (done)
+                        room->broadcastSkillInvoke("eryu", 2);
                 }
                 else{
-                    room->broadcastSkillInvoke("eryu", 3);
+                    bool done = false;
                     foreach(int id, move.card_ids){
-                        zuikaku->obtainCard(Sanguosha->getCard(id));
+                        if (id != -1 && !Sanguosha->getCard(id)->isKindOf("Nullification")){
+                            zuikaku->obtainCard(Sanguosha->getCard(id));
+                            done = true;
+                        }
+
                     }
+                    if (done)
+                        room->broadcastSkillInvoke("eryu", 3);
                 }
                 return true;
             }
         }
         else if (triggerEvent == EventLoseSkill){
-            foreach(ServerPlayer *player, room->getAlivePlayers()){
-                if (player->getMark("@EryuMark") > 0){
-                    player->loseAllMarks("@EryuMark");
+            if (data.toString() == objectName()){
+                foreach(ServerPlayer *player, room->getAlivePlayers()){
+                    if (player->getMark("@EryuMark") > 0){
+                        player->loseAllMarks("@EryuMark");
+                    }
                 }
             }
         }

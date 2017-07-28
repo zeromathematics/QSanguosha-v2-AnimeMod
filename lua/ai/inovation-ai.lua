@@ -1,5 +1,5 @@
 
-function getMostWeakEnemyToDamage(self, targets, nature)
+function SmartAI:getMostWeakEnemyToDamage(self, targets, nature)
 	local min = 100
 	local target
 	if not nature then nature = sgs.DamageStruct_Normal end
@@ -834,7 +834,7 @@ end
 
 
 sgs.ai_skill_playerchosen.jizhanshiz = function(self, targets)
-	return getMostWeakEnemyToDamage(self, targets)
+	return self:getMostWeakEnemyToDamage(self, targets)
 end
 
 sgs.ai_use_value["JizhanCard"] = 5

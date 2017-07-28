@@ -1,7 +1,7 @@
 -- translation for inovation Package
 
 return {
-	["inovation"] = "新规Pack",
+	["inovation"] = "心言Pack",
 	["SE_Touming"] = "透明",
 	["SE_Touming$"] = "image=image/animate/SE_Touming.png",
 	["$SE_Touming1"] = "即使变为空气，主角之位也绝对不会让给你！",
@@ -539,7 +539,7 @@ return {
 	["$eryu2"] = "翔鹤姐姐还好吗？",
 	["$eryu3"] = "感觉很好呀♪",
 	["@EryuMark"] = "二羽",
-	[":eryu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>若你未拥有“羽”标记，你可以与一名女性角色各获得一个“羽”标记。若如此做，你或该角色的牌因使用从各自的区域离开时，对方获得之。",
+	[":eryu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>若你未拥有“羽”标记，你可以与一名女性角色各获得一个“羽”标记。若如此做，你或该角色【金色宣言】以外的牌因使用从各自的区域离开时，对方获得之。",
 	["zheyi"] = "折翼",
 	["$zheyi1"] = "翔鹤姐，没事吗？总觉得，有点担心…",
 	[":zheyi"] = "<font color=\"purple\"><b>觉醒技，</b></font>拥有“羽”标记的角色进入濒死状态时，你回复一点体力上限和体力，失去技能“二羽”并获得技能“诱敌”",

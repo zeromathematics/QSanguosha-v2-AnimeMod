@@ -21,7 +21,7 @@ return {
 	["#GudingBladeEffect"] = "%from 的【<font color=\"yellow\"><b>米斯特汀</b></font>】效果被触发， %to 没有手牌，伤害从 %arg 增加至 %arg2",
 
 	["vine"] = "移动教会",
-	[":vine"] = "装备牌·防具<br /><b>防具技能</b>：锁定技。【南蛮入侵】、【万箭齐发】和普通【杀】对你无效。每当你受到火焰伤害时，此伤害+1。",
+	[":vine"] = "装备牌·防具<br /><b>防具技能</b>：锁定技。【深海舰袭】、【无限剑制】和普通【杀】对你无效。每当你受到火焰伤害时，此伤害+1。",
 	["#VineDamage"] = "%from 的防具【<font color=\"yellow\"><b>移动教会</b></font>】效果被触发，火焰伤害由 %arg 点增加至 %arg2 点",
 
 	["silver_lion"] = "王玉",

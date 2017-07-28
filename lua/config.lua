@@ -44,6 +44,7 @@ config = {
 
 
 		"Inovation",
+		"Hayate",
         
         "ERCIYUAN",
 --[[

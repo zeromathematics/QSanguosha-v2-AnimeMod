@@ -1754,6 +1754,8 @@ end
 
 function SmartAI:isFriend(other, another)
 	if not other then self.room:writeToConsole(debug.traceback()) return end
+	--SE for hei
+	if other:hasSkill("yingdi") and self.player:getMark("@real_hei") == 0 then return true end
 	if another then
 		local of, af = self:isFriend(other), self:isFriend(another)
 		return of ~= nil and af ~= nil and of == af
@@ -1769,6 +1771,8 @@ end
 
 function SmartAI:isEnemy(other, another)
 	if not other then self.room:writeToConsole(debug.traceback()) return end
+	--SE for hei
+	if other:hasSkill("yingdi") and self.player:getMark("@real_hei") == 0 then return false end
 	if another then
 		local of, af = self:isFriend(other), self:isFriend(another)
 		return of ~= nil and af ~= nil and of ~= af
@@ -1858,6 +1862,12 @@ function SmartAI:updatePlayers(clear_flags, update)
 		self.friends = {}
 		self.friends_noself = {}
 		local friends = sgs.QList2Table(self.lua_ai:getFriends())
+
+		--SE for hei
+		local hei = self.room:findPlayerBySkillName("yingdi")
+		if hei and self.player:getMark("@real_hei") == 0 and not table.contains(friends, hei) then table.insert(friends, hei) end
+
+
 		for i = 1, #friends, 1 do
 			if friends[i]:isAlive() and friends[i]:objectName() ~= self.player:objectName() then
 				table.insert(self.friends, friends[i])
@@ -1867,8 +1877,10 @@ function SmartAI:updatePlayers(clear_flags, update)
 		table.insert(self.friends, self.player)
 
 		local enemies = sgs.QList2Table(self.lua_ai:getEnemies())
+
+		--SE for hei
 		for i = 1, #enemies, 1 do
-			if enemies[i]:isDead() or enemies[i]:objectName() == self.player:objectName() then table.remove(enemies, i) end
+			if enemies[i]:isDead() or enemies[i]:objectName() == self.player:objectName() or (hei and self.player:getMark("@real_hei") == 0 and enemies[i]:objectName() == hei:objectName()) then table.remove(enemies, i) end
 		end
 		self.enemies = enemies
 
@@ -1888,7 +1900,7 @@ function SmartAI:updatePlayers(clear_flags, update)
 		return
 	end
 
-	if update and not sgs.isRolePredictable() then sgs.evaluateAlivePlayersRole() end
+	if update and not sgs.isRolePredictable() then sgs.evaluateAlivePlayersRole(self) end
 	self.enemies = {}
 	self.friends = {}
 	self.friends_noself = {}
@@ -1908,7 +1920,7 @@ function SmartAI:updatePlayers(clear_flags, update)
 	table.insert(self.friends, self.player)
 end
 
-function sgs.evaluateAlivePlayersRole()
+function sgs.evaluateAlivePlayersRole(smartai)
 	local players = sgs.QList2Table(global_room:getAlivePlayers())
 	sgs.explicit_renegade = false
 	local cmp = function(a, b)
@@ -1920,28 +1932,58 @@ function sgs.evaluateAlivePlayersRole()
 
 	local l_count, R_count, r_count = sgs.current_mode_players["loyalist"], sgs.current_mode_players["renegade"], sgs.current_mode_players["rebel"]
 	local renegade, loyalist, rebel = 0, 0, 0
-
+	--SE hei change
 	for i = 1, #players, 1 do
 		local p = players[i]
-		if i <= sgs.current_mode_players["renegade"] and sgs.role_evaluation[p:objectName()]["renegade"] >= 10
-			and not (sgs.role_evaluation[p:objectName()]["renegade"] <= 10 and sgs.role_evaluation[p:objectName()]["loyalist"] <= -50) then
-			renegade = renegade + 1
-			sgs.ai_role[p:objectName()] = "renegade"
-			sgs.explicit_renegade = sgs.role_evaluation[p:objectName()]["renegade"] >= (sgs.current_mode_players["rebel"] == 0 and 10 or 20)
-		else
-			if sgs.role_evaluation[p:objectName()]["loyalist"] > 0 and sgs.current_mode_players["loyalist"] > 0 or p:isLord() then
+		if p:hasSkill("yingdi") and smartai.player:getMark("@real_hei") == 0 and not p:isLord() then
+			if smartai.player:isLord() then
 				sgs.ai_role[p:objectName()] = "loyalist"
 				loyalist = loyalist + 1
-			elseif sgs.role_evaluation[p:objectName()]["loyalist"] < 0 and sgs.current_mode_players["rebel"] > 0 then
+				l_count = l_count + 1
+				
+			elseif smartai.player:getRole() == "rebel" then
 				sgs.ai_role[p:objectName()] = "rebel"
 				rebel = rebel + 1
+				r_count = r_count + 1
+			elseif smartai.player:getRole() == "renegade" then
+				sgs.ai_role[p:objectName()] = "renegade"
+				renegade = renegade + 1
+				R_count = R_count + 1
+			elseif smartai.player:getRole() == "loyalist" then
+				sgs.ai_role[p:objectName()] = "loyalist"
+				loyalist = loyalist + 1
+				l_count = l_count + 1
+			end
+
+
+			if p:getRole() == "loyalist" then
+				l_count = l_count - 1
+			elseif p:getRole() == "rebel" then
+				r_count = r_count - 1
+			elseif p:getRole() == "renegade" then
+				R_count = R_count - 1
+			end
+		else
+			if i <= sgs.current_mode_players["renegade"] and sgs.role_evaluation[p:objectName()]["renegade"] >= 10
+				and not (sgs.role_evaluation[p:objectName()]["renegade"] <= 10 and sgs.role_evaluation[p:objectName()]["loyalist"] <= -50) then
+				renegade = renegade + 1
+				sgs.ai_role[p:objectName()] = "renegade"
+				sgs.explicit_renegade = sgs.role_evaluation[p:objectName()]["renegade"] >= (sgs.current_mode_players["rebel"] == 0 and 10 or 20)
 			else
-				if sgs.current_mode_players["renegade"] > renegade and (sgs.role_evaluation[p:objectName()]["loyalist"] > 0 or sgs.role_evaluation[p:objectName()]["loyalist"] < 0) then
-					sgs.ai_role[p:objectName()] = "renegade"
-					sgs.explicit_renegade = true
-					renegade = renegade + 1
+				if sgs.role_evaluation[p:objectName()]["loyalist"] > 0 and sgs.current_mode_players["loyalist"] > 0 or p:isLord() then
+					sgs.ai_role[p:objectName()] = "loyalist"
+					loyalist = loyalist + 1
+				elseif sgs.role_evaluation[p:objectName()]["loyalist"] < 0 and sgs.current_mode_players["rebel"] > 0 then
+					sgs.ai_role[p:objectName()] = "rebel"
+					rebel = rebel + 1
 				else
-					sgs.ai_role[p:objectName()] = "neutral"
+					if sgs.current_mode_players["renegade"] > renegade and (sgs.role_evaluation[p:objectName()]["loyalist"] > 0 or sgs.role_evaluation[p:objectName()]["loyalist"] < 0) then
+						sgs.ai_role[p:objectName()] = "renegade"
+						sgs.explicit_renegade = true
+						renegade = renegade + 1
+					else
+						sgs.ai_role[p:objectName()] = "neutral"
+					end
 				end
 			end
 		end
