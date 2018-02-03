@@ -1071,7 +1071,7 @@
     <ClCompile Include="GeneratedFiles\qrc_style.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="hayate.cpp">
+    <ClCompile Include="..\..\src\package\hayate.cpp">
       <Filter>package</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_hayate.cpp">
@@ -1427,7 +1427,7 @@
     <CustomBuild Include="..\..\qdarkstyle\style.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="hayate.h">
+    <CustomBuild Include="..\..\src\package\hayate.h">
       <Filter>package</Filter>
     </CustomBuild>
   </ItemGroup>

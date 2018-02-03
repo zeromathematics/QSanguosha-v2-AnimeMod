@@ -3804,7 +3804,7 @@ Haixing = sgs.CreateTriggerSkill{
 								theRecover.who = source
 								room:recover(source,theRecover)
 							end
-							if judge.card:isRed() then
+							if judge.card and judge.card:isRed() then
 								local theRecover = sgs.RecoverStruct()
 								theRecover.who = source
 								room:recover(source,theRecover)

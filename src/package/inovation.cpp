@@ -4870,7 +4870,7 @@ public:
         }
         else if (event == HpRecover){
             RecoverStruct re = data.value<RecoverStruct>();
-            if (re.who->getHp() < 2 && re.who->hasSkill(objectName()) && room->askForSkillInvoke(re.who, objectName(), data)){
+            if (re.who && re.who->getHp() < 2 && re.who->hasSkill(objectName()) && room->askForSkillInvoke(re.who, objectName(), data)){
                 if (room->askForChoice(re.who, objectName(), "nangua_recover+nangua_turnover", data) == "nangua_recover"){
                     if (re.who->getHp() < 1){
                         room->recover(re.who, RecoverStruct(re.who, NULL, 1 - re.who->getHp()));
@@ -4905,11 +4905,9 @@ public:
             if (p){
                 int num = player->getLostHp() + 1;
                 if (num > 2){
-                    //TODO
                     room->broadcastSkillInvoke(objectName(), 1);
                 }
                 else{
-                    //TODO
                     room->broadcastSkillInvoke(objectName(), 2);
                 }
                 room->damage(DamageStruct(objectName(), player, p, num));
