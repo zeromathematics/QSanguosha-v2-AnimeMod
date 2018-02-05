@@ -9083,7 +9083,7 @@ SE_Baibian = sgs.CreateTriggerSkill{
 						room:showCard(player,cardsid1)
 						local card=sgs.Sanguosha:getCard(cardsid1)
 						local skillName = searchBaibianForSkill(card)
-						room:attachSkillToPlayer(player,skillName)
+						room:acquireSkill(player,skillName)
 						room:obtainCard(player, card)
 					end
 				end

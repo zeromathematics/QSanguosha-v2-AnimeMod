@@ -23,4 +23,6 @@ return {
 	["designer:Hei"] = "Sword Elucidator",
 	["cv:Hei"] = "木内秀信",
 	["illustrator:Hei"] = "",
+	["#diansuo_effect"] = "%from 受到「电锁」的影响， 代替 %arg 成为 %arg2 的目标。",
+	["#diansuo_source_change"] = "%from 受到「电锁」的影响， 代替 黑 成为 伤害的来源。",
 }

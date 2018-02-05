@@ -66,7 +66,7 @@ public:
                 }
                 if (lst.length() <= 2){
                     room->detachSkillFromPlayer(player, objectName());
-                    room->attachSkillToPlayer(player, "jiesha");
+                    room->acquireSkill(player, "jiesha");
                 }
             }
         }
@@ -157,6 +157,11 @@ public:
                     damage.from = a;
                     damage.nature = DamageStruct::Thunder;
                     data.setValue(damage);
+
+                    LogMessage log;
+                    log.type = "#diansuo_source_change";
+                    log.from = a;
+                    room->sendLog(log);
                 }
             }
         }
@@ -170,7 +175,7 @@ public:
                 }
 
                 ServerPlayer *old = use.to.first();
-                if (old->isDead()){
+                if (!old || old->isDead()){
                     return false;
                 }
                 ServerPlayer *a;
@@ -261,6 +266,14 @@ public:
                     use.to.removeOne(old);
                     use.to.append(a);
                     data.setValue(use);
+
+                    // need a broadcast
+                    LogMessage log;
+                    log.type = "#diansuo_effect";
+                    log.from = a;
+                    log.arg = old->getGeneralName();
+                    log.arg2 = use.card->objectName();
+                    room->sendLog(log);
                 }
                 
             }
@@ -282,15 +295,6 @@ public:
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (triggerEvent == SlashProceed) {
-            QStringList lst;
-            foreach(ServerPlayer *p, room->getAlivePlayers()){
-                if (!lst.contains(p->getRole())){
-                    lst.append(p->getRole());
-                }
-            }
-            if (lst.length() > 2){
-                return false;
-            }
             SlashEffectStruct effect = data.value<SlashEffectStruct>();
             if (effect.from && effect.from->hasSkill(objectName()) && effect.from->getWeapon() && effect.from->getWeapon()->isKindOf("DoubleSword") && effect.to){
                 LogMessage log;

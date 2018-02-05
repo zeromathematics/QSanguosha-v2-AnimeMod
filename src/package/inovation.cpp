@@ -2236,7 +2236,7 @@ public:
     bool trigger(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data) const
     {
         if (triggerEvent == EventPhaseEnd){
-            if (player->isAlive() && player->hasSkill(objectName()) && player->getPhase() == Player::Discard && player->getHandcardNum() < 4 && player->askForSkillInvoke("zhuren", data))
+            if (player->isAlive() && player->hasSkill("zhuren") && player->getPhase() == Player::Discard && player->getHandcardNum() < 4 && player->askForSkillInvoke("zhuren", data))
                 player->drawCards(4 - player->getHandcardNum());
         }
         return false;
