@@ -310,11 +310,29 @@ public:
     }
 };
 
+// for oumashu
+class LonelinessInvalidity : public InvaliditySkill
+{
+public:
+    LonelinessInvalidity() : InvaliditySkill("#loneliness-inv")
+    {
+    }
+
+    bool isSkillValid(const Player *player, const Skill *skill) const
+    {
+        return player->getMark("Loneliness" + skill->objectName()) == 0;
+    }
+};
+
+
+// akame
+
+
 HayatePackage::HayatePackage()
     : Package("hayate")
 {
     General *Hei = new General(this, "Hei", "science", 4);
-    skills << new Jiesha;
+    skills << new Jiesha << new LonelinessInvalidity;
     Hei->addSkill(new Yingdi);
     Hei->addSkill(new Diansuo);
     Hei->addWakeTypeSkillForAudio("jiesha");
