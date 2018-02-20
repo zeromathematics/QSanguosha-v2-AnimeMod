@@ -4,7 +4,7 @@ extension=sgs.Package("dmpdiva")--增加拓展包
 --势力
 --[[
 do
-    require  "lua.config" 
+    require  "lua.config"
 	local config = config
 	local kingdoms = config.kingdoms
             table.insert(kingdoms,"diva")
@@ -79,33 +79,94 @@ se_nitian = sgs.CreateTriggerSkill{
 
 --鼓舞
 se_guwu = sgs.CreateTriggerSkill{
-	name = "se_guwu", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.QuitDying},
+	name = "se_guwu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.GameStart, sgs.EventAcquireSkill, sgs.QuitDying, sgs.HpRecover, sgs.Death},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		local dying_data = data:toDying()
-		local source = dying_data.who
-		local mygod= room:findPlayerBySkillName("se_guwu")
-		if mygod then
-			if mygod:isAlive() and source:isAlive() then
-				if room:askForSkillInvoke(mygod, "se_guwu", data) then
-					room:broadcastSkillInvoke(self:objectName())
-					local judge = sgs.JudgeStruct()
-					judge.pattern = "."
-					judge.reason = self:objectName()
-					judge.who = source
-					judge.time_consuming = true
-					room:judge(judge)
-					if judge.card:isRed() then
-						room:doLightbox("se_guwu$", 3000)
-						local re = sgs.RecoverStruct()
-						re.who = judge.who
-						room:recover(judge.who,re,true)
-					else
-						room:doLightbox("se_guwu$", 1200)
-						judge.who:drawCards(1)
-						mygod:drawCards(1)
+		if event == sgs.GameStart then
+			-- game start
+			if player:hasSkill(self:objectName()) then
+				player:gainMark("@club_mus")
+			end
+		elseif event == sgs.EventAcquireSkill then
+			-- acquire
+			if player:hasSkill(self:objectName()) then
+				for _,name in sgs.qlist(player:getMarkNames()) do
+					if string.sub(name,1,5)=="@club" then
+						player:loseAllMarks(name)
+					end
+				end
+				player:gainMark("@club_mus")
+			end
+		elseif event == sgs.Death then
+			-- death
+			local death = data:toDeath()
+			if death.who:hasSkill(self:objectName()) then
+				for _,p in sgs.qlist(room:getAlivePlayers()) do
+					if p:getMark("@club_mus") > 0 then
+						p:loseAllMarks("@club_mus")
+					end
+				end
+			end
+		elseif event == sgs.HpRecover then
+
+			local toAsk = player
+
+			local mygod= room:findPlayerBySkillName("se_guwu")
+			if not mygod then return false end
+			local hasClub = false
+			for _,name in ipairs(player:getMarkNames()) do
+				if string.sub(name,1,5)=="@club" then
+					hasClub = true
+
+				end
+			end
+
+			if toAsk and not hasClub and toAsk:getPhase() == sgs.Player_NotActive and toAsk:getMark("se_guwu_ban") == 0 then
+				-- join
+
+				local toAskData = sgs.QVariant()
+				toAskData:setValue(toAsk)
+				local choice = room:askForChoice(mygod, self:objectName() , "se_guwu_invite+cancel+no_more", toAskData)
+				if choice == "se_guwu_invite" then
+					local myGodData = sgs.QVariant()
+					myGodData:setValue(mygod)
+					if room:askForChoice(toAsk, self:objectName(), "se_guwu_accept+cancel", myGodData) == "se_guwu_accept" then
+						toAsk:gainMark("@club_mus")
+					end
+				elseif choice == "no_more" then
+					toAsk:setMark("se_guwu_ban", 1)
+				end
+			end
+		elseif event == sgs.QuitDying then
+			-- effect
+			local dying_data = data:toDying()
+			local source = dying_data.who
+			local mygod= room:findPlayerBySkillName("se_guwu")
+			if mygod then
+				if mygod:isAlive() and source:isAlive() and source:getMark("@club_mus") > 0 then
+					if room:askForSkillInvoke(mygod, "se_guwu", data) then
+						room:broadcastSkillInvoke(self:objectName())
+						local judge = sgs.JudgeStruct()
+						judge.pattern = "."
+						judge.reason = self:objectName()
+						judge.who = source
+						judge.time_consuming = true
+						room:judge(judge)
+						if judge.card:isRed() then
+							room:doLightbox("se_guwu$", 3000)
+							local re = sgs.RecoverStruct()
+							re.who = mygod
+							room:recover(judge.who,re,true)
+						else
+							room:doLightbox("se_guwu$", 1200)
+							for _,p in sgs.qlist(room:getAlivePlayers()) do
+								if p:getMark("@club_mus") > 0 then
+									p:drawCards(1)
+								end
+							end
+						end
 					end
 				end
 			end
@@ -241,8 +302,8 @@ se_zhifu = sgs.CreateViewAsSkill{
 --nico
 se_nikecard = sgs.CreateSkillCard{
 	name = "se_nikecard",
-	target_fixed = false, 
-	will_throw = true, 
+	target_fixed = false,
+	will_throw = true,
 	filter = function(self, targets, to_select)
 		return to_select:objectName() ~= sgs.Self:objectName() and #targets < (sgs.Self:getHandcardNum() + sgs.Self:getEquips():length()) * 2
 	end,
@@ -278,10 +339,10 @@ se_nike = sgs.CreateViewAsSkill{
 
 
 se_yanyi = sgs.CreateTriggerSkill{
-	name = "se_yanyi",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.Damaged, sgs.PreHpRecover}, 
-	on_trigger = function(self, event, player, data) 
+	name = "se_yanyi",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.Damaged, sgs.PreHpRecover},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Damaged then
 			local damage = data:toDamage()
@@ -295,7 +356,7 @@ se_yanyi = sgs.CreateTriggerSkill{
 					for i=1, #all_generals do
 						if all_generals[i]=="Tukasa" or all_generals[i]=="mianma" or all_generals[i]=="Sakura" or all_generals[i]=="Riko" or all_generals[i]=="Nanami" or all_generals[i]=="Koishi" or all_generals[i]=="Mikoto" or all_generals[i]=="Natsume_Rin" or all_generals[i]=="Kazehaya" or all_generals[i]=="AiAstin" or all_generals[i]=="Reimu" or all_generals[i]=="Louise" then
 							table.remove(all_generals, i)
-							i = i - 1 
+							i = i - 1
 						end
 					end
 
@@ -369,12 +430,16 @@ sgs.LoadTranslationTable{
 	[":se_nitian"] = "一名角色判定结束时，你可以弃置一张手牌，令其回复一点体力。延时锦囊进入弃牌堆时，若你的手牌数小于你的体力上限，你可以获得之，否则你摸一张牌。",
 
 	["se_guwu"] = "鼓舞「Fightだよ」",
+	["@club_mus"] = "μ’ｓ",
 	["$se_guwu1"] = "好的，就和穗乃果一起来唱歌吧！",
 	["$se_guwu2"] = "嘿，打起精神来挑战一下吧！",
 	["$se_guwu3"] = "哦？好像还可以继续进行练习！那只好继续加油了！",
 	["$se_guwu4"] = "穂乃果来支援你了~",
+	["se_guwu_invite"] = "邀请回复体力的角色加入「μ’ｓ」",
+	["no_more"] = "不再邀请这名角色加入",
+	["se_guwu_accept"] = "接受邀请加入「μ’ｓ」",
 	["se_guwu$"] = "image=image/animate/se_guwu.png",
-	[":se_guwu"] = "每当一名角色离开濒死阶段时，你可以令其进行一次判定。若为红色，其回复一点体力，否则你和其各摸一张牌。",
+	[":se_guwu"] = "\n<font color=\"Pink\"><b>社团技，</b></font>「μ’ｓ」\n<font color=\"Pink\"><b>加入条件：</b></font>一名角色于回合外回复体力时，你可以询问其是否加入「μ’ｓ」。\n<font color=\"Pink\"><b>效果：</b></font>每当一名「μ’ｓ」角色离开濒死阶段时，其进行一次判定。若为红色，其回复一点体力，否则所有「μ’ｓ」的角色各摸一张牌。",
 
 	["se_qiangjing"] = "抢镜「抢镜头的大头小鸟」",
 	["$se_qiangjing1"] = "哇，吓我一跳…",
@@ -417,29 +482,29 @@ sgs.LoadTranslationTable{
 	["#se_zhifu_use"] = "小鸟给 %from 穿上了 %arg 。",
 	["#se_yanyi_use"] = "妮可获得了技能 %arg 。",
 
-	["Honoka"] = "高坂穗乃果", 
-	["&Honoka"] = "高坂穗乃果", 
-	["#Honoka"] = "果皇", 
+	["Honoka"] = "高坂穗乃果",
+	["&Honoka"] = "高坂穗乃果",
+	["#Honoka"] = "果皇",
 	["@Honoka"] = "Love Live!",
-	["~Honoka"] = "不甘心！但是，不会放弃的！", 
+	["~Honoka"] = "不甘心！但是，不会放弃的！",
 	["designer:Honoka"] = "Sword Elucidator",
 	["cv:Honoka"] = "新田惠海",
 	["illustrator:Honoka"] = "伍長",
 
-	["MKotori"] = "南小鸟", 
-	["&MKotori"] = "南小鸟", 
-	["#MKotori"] = "小鸟神教主", 
+	["MKotori"] = "南小鸟",
+	["&MKotori"] = "南小鸟",
+	["#MKotori"] = "小鸟神教主",
 	["@MKotori"] = "Love Live!",
-	["~MKotori"] = "才刚开始！", 
+	["~MKotori"] = "才刚开始！",
 	["designer:MKotori"] = "Sword Elucidator",
 	["cv:MKotori"] = "内田彩",
 	["illustrator:MKotori"] = "りも",
 
-	["Nico"] = "矢澤妮可", 
-	["&Nico"] = "矢澤妮可", 
-	["#Nico"] = "妮可妮可妮", 
+	["Nico"] = "矢澤妮可",
+	["&Nico"] = "矢澤妮可",
+	["#Nico"] = "妮可妮可妮",
 	["@Nico"] = "Love Live!",
-	["~Nico"] = "......真不甘心", 
+	["~Nico"] = "......真不甘心",
 	["designer:Nico"] = "Sword Elucidator",
 	["cv:Nico"] = "德井青空",
 	["illustrator:Nico"] = "ゆらん@C88三日目東ノ04a",

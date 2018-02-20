@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>989</width>
-    <height>611</height>
+    <width>1160</width>
+    <height>680</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -133,7 +133,7 @@
          <widget class="QTextEdit" name="skillTextEdit">
           <property name="maximumSize">
            <size>
-            <width>211</width>
+            <width>800</width>
             <height>16777215</height>
            </size>
           </property>
@@ -242,8 +242,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>241</width>
-             <height>351</height>
+             <width>256</width>
+             <height>420</height>
             </rect>
            </property>
           </widget>

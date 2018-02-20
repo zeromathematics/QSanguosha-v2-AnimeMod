@@ -99,6 +99,15 @@ sgs.ai_skill_invoke.se_guwu = function(self, data)
 	return false
 end
 
+sgs.ai_skill_choice.se_guwu = function(self, choices, data)
+	local player = data:toPlayer()
+	if self:isFriend(player) then
+		if self.player:hasSkill("se_guwu") then return "se_guwu_invite" end
+		return "se_guwu_accept"
+	end
+	return "cancel"
+end
+
 --鸟神
 se_zhifu_skill ={}
 se_zhifu_skill.name = "se_zhifu"
@@ -165,13 +174,13 @@ sgs.ai_skill_use_func["#se_zhifucard"] = function(card, use, self)
 	if not target then return end
 
 
-	for _, acard in sgs.qlist(self.player:getHandcards()) do			
+	for _, acard in sgs.qlist(self.player:getHandcards()) do
 		if not acard:isKindOf("BasicCard") then
 			card = acard
 		end
 	end
 	if not card then
-		for _, acard in sgs.qlist(self.player:getHandcards()) do			
+		for _, acard in sgs.qlist(self.player:getHandcards()) do
 			if not acard:isKindOf("Peach") then
 				card = acard
 			end
@@ -179,7 +188,7 @@ sgs.ai_skill_use_func["#se_zhifucard"] = function(card, use, self)
 	end
 	if not card then card = self.player:getHandcards():first() end
 	if card and target then
-		use.card = sgs.Card_Parse("#se_zhifucard:"..card:getEffectiveId()..":") 
+		use.card = sgs.Card_Parse("#se_zhifucard:"..card:getEffectiveId()..":")
 		if use.to then use.to:append(target) end
 		return
 	end
@@ -213,7 +222,7 @@ se_nike_skill.getTurnUseCard = function(self,inclusive)
 	end
 	if hurtF > 0 then return sgs.Card_Parse("#se_nikecard:.:") end
 	if notHurtE > 0 then return sgs.Card_Parse("#se_nikecard:.:") end
-	return 
+	return
 end
 
 sgs.ai_skill_use_func["#se_nikecard"] = function(card, use, self)
@@ -263,7 +272,7 @@ sgs.ai_skill_use_func["#se_nikecard"] = function(card, use, self)
 	if targets:length() == 0 then return end
 
 	if targets:length() > 0 then
-		use.card = sgs.Card_Parse("#se_nikecard:.:") 
+		use.card = sgs.Card_Parse("#se_nikecard:.:")
 		if use.to then use.to = targets end
 		return
 	end

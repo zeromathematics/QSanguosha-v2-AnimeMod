@@ -325,18 +325,129 @@ public:
 };
 
 
+
+
+
 // akame
+
+
+// diarmuid
+class Pomo : public TriggerSkill
+{
+public:
+    Pomo() : TriggerSkill("pomo")
+    {
+        frequency = Compulsory;
+        events << TargetConfirmed << CardFinished << TargetSpecified;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == TargetConfirmed) 
+        {
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.from && use.from->hasSkill(objectName()) && use.card->isKindOf("Slash") && use.from == player){
+                room->setPlayerFlag(use.from, "PomoArmor");
+                room->broadcastSkillInvoke(objectName());
+                foreach(ServerPlayer *p, use.to){
+                    room->setPlayerMark(p, "Armor_Nullified", 1);
+                }
+            }
+        }
+        else if (triggerEvent == TargetSpecified && TriggerSkill::triggerable(player)){
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (!use.card->isKindOf("Slash"))
+                return false;
+            foreach(ServerPlayer *p, use.to) {
+                if (!player->isAlive()) break;
+                p->addMark("pomo");
+                room->addPlayerMark(p, "@skill_invalidity");
+
+                foreach(ServerPlayer *pl, room->getAllPlayers())
+                    room->filterCards(pl, pl->getCards("he"), true);
+                JsonArray args;
+                args << QSanProtocol::S_GAME_EVENT_UPDATE_SKILL;
+                room->doBroadcastNotify(QSanProtocol::S_COMMAND_LOG_EVENT, args);
+            }
+        }
+        else if (triggerEvent == CardFinished)
+        {
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.card->isKindOf("Slash") && use.from->hasFlag("PomoArmor")){
+                foreach(ServerPlayer *p, use.to){
+                    room->setPlayerMark(p, "Armor_Nullified", 0);
+                    if (p->getMark("pomo") == 0) continue;
+                    room->removePlayerMark(p, "@skill_invalidity", p->getMark("pomo"));
+                    p->setMark("pomo", 0);
+                }
+            }
+        }
+        return false;
+    }
+};
+
+
+class Bimie : public TriggerSkill
+{
+public:
+    Bimie() : TriggerSkill("bimie")
+    {
+        frequency = NotFrequent;
+        events << Damage << PreHpRecover << Death;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == Damage)
+        {
+            DamageStruct damage = data.value<DamageStruct>();
+            if (damage.card && damage.card->isKindOf("Slash") && damage.from == player && damage.from->hasSkill(objectName()) && damage.to->getMark("@zhou") == 0 && damage.to->isAlive()){
+                if (room->askForSkillInvoke(player, objectName(), data)){
+                    room->broadcastSkillInvoke(objectName());
+                    room->doLightbox("LuaBimie$", 1500);
+                    damage.to->gainMark("@zhou", 1);
+                }
+            }
+        }
+        else if (triggerEvent == PreHpRecover){
+            return player->getMark("@zhou") > 0;
+        }
+        else if (triggerEvent == Death)
+        {
+            DeathStruct death = data.value<DeathStruct>();
+            if (player == death.who && death.who->hasSkill(objectName())){
+                foreach(ServerPlayer *p, room->getAlivePlayers()){
+                    room->setPlayerMark(p, "@zhou", 0);
+                }
+            }
+        }
+        return false;
+    }
+};
+
+
+
+
+
 
 
 HayatePackage::HayatePackage()
     : Package("hayate")
 {
-    General *Hei = new General(this, "Hei", "science", 4);
+    General *hei = new General(this, "hei", "science", 4);
     skills << new Jiesha << new LonelinessInvalidity;
-    Hei->addSkill(new Yingdi);
-    Hei->addSkill(new Diansuo);
-    Hei->addWakeTypeSkillForAudio("jiesha");
-    
+    hei->addSkill(new Yingdi);
+    hei->addSkill(new Diansuo);
+    hei->addWakeTypeSkillForAudio("jiesha");
+
+    General * diarmuid = new General(this, "diarmuid", "magic", 4);
+    diarmuid->addSkill(new Pomo);
+    diarmuid->addSkill(new Bimie);
 }
 
 ADD_PACKAGE(Hayate)

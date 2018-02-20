@@ -207,21 +207,21 @@ sgs.ai_skill_playerchosen.weixiao = function(self, targets)
 	if target then return target end
 	return self.player
 end
-			
+
 --SP桐人
 sgs.ai_skill_invoke.LuaChanshi = function(self, data)
 	local use=data:toCardUse()
 	local target1
 	self:sort(self.enemies,"defense")
 	for _, enemy in ipairs(self.enemies) do
-		if self.player:canSlash(enemy, use.card, true) and self:slashIsEffective(use.card, enemy) and not use.to:contains(enemy) then 
+		if self.player:canSlash(enemy, use.card, true) and self:slashIsEffective(use.card, enemy) and not use.to:contains(enemy) then
 			target1 = enemy
 			break
 		end
 	end
 	if target1 then self.room:setPlayerFlag(target1, "LuaChanshi_target") return true end
 	return
-end		
+end
 
 sgs.ai_skill_playerchosen.LuaChanshi = function(self, targets)
 	for _, ap in sgs.qlist(targets) do
@@ -231,16 +231,16 @@ sgs.ai_skill_playerchosen.LuaChanshi = function(self, targets)
 		end
 	end
 	return targets:first()
-end	
+end
 
 sgs.ai_playerchosen_intention.LuaChanshi = function(from, to)
 	local intention = 55
-	if to:hasSkill("leiji") or to:hasSkill("liuli") or to:hasSkill("tianxiang") then 
+	if to:hasSkill("leiji") or to:hasSkill("liuli") or to:hasSkill("tianxiang") then
 		intention = 0
 	end
 	sgs.updateIntention(from, to, intention)
 end
-				
+
 --神大人
 luagonglue_skill={}
 luagonglue_skill.name="luagonglue"
@@ -253,7 +253,7 @@ end
 
 sgs.ai_skill_use_func["#luagongluecard"] = function(card,use,self)
 	local target
-	self:sort(self.enemies, "defense") 
+	self:sort(self.enemies, "defense")
 	local lord = self.room:getLord()
 	if self.player:getRole() =="rebel" then
 		if not lord:isKongcheng() then
@@ -332,7 +332,7 @@ LuaWangxiang_skill.getTurnUseCard=function(self,inclusive)
 	local wxhcn = self.player:getHandcardNum()
 	local losehp = self.player:getMaxHp() - self.player:getHp()
 	if wxhcn > losehp then return end
-	local cards = self.player:getCards("h")	
+	local cards = self.player:getCards("h")
 	cards=sgs.QList2Table(cards)
 	self:sortByUseValue(cards,true)
 	local card_nd = cards[1]
@@ -392,7 +392,7 @@ sgs.ai_skill_invoke.LuaGqset = function(self, data)
 end
 
 sgs.ai_skill_cardchosen.LuaGqset = function(self, who, flags)
-	local cards = self.player:getCards("h")	
+	local cards = self.player:getCards("h")
 	cards=sgs.QList2Table(cards)
 	self:sortByUseValue(cards,true)
 	for _,card in ipairs(cards) do
@@ -550,16 +550,6 @@ sgs.ai_skill_playerchosen.LuaLuowang = function(self, targets)
 	return self.friends[1]
 end]]
 
---枪兵
-sgs.ai_skill_invoke.LuaBimie = function(self, data)
-	local damage = data:toDamage()
-	local target = damage.to
-	if self:isEnemy(target) then
-		return true
-	end
-	return false
-end
-
 --真嗣乖乖
 sgs.ai_skill_invoke.LuaBaozou = true
 
@@ -615,7 +605,7 @@ sgs.ai_skill_choice.luatouyingVS= function(self, choices)
 				return "qinggang_sword"
 			end
 		end
-	end	
+	end
 	return "double_sword"
 end
 
@@ -966,7 +956,7 @@ sgs.ai_view_as.LuaCangshan = function(card, player, card_place)
 	if not has_equip then return end
 	local pattern = sgs.Sanguosha:getCurrentCardUsePattern()
 	if pattern == "true" then
-		local cards = player:getCards("h")	
+		local cards = player:getCards("h")
 		cards=sgs.QList2Table(cards)
 		for _,card in ipairs(cards)  do
 			if card:isKindOf("Jink") then
@@ -975,7 +965,7 @@ sgs.ai_view_as.LuaCangshan = function(card, player, card_place)
 		end
 		return ("jink:LuaCangshan[%s:%s]=%d"):format(equip:getSuitString(),equip:getNumberString(),equip:getEffectiveId())
 	elseif pattern == "true" then
-		local cards = player:getCards("h")	
+		local cards = player:getCards("h")
 		cards=sgs.QList2Table(cards)
 		for _,card in ipairs(cards)  do
 			if card:isKindOf("Slash") then

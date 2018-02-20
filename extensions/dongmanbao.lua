@@ -4,7 +4,7 @@ extension=sgs.Package("dongmanbao")--增加拓展包
 --势力
 --[[
 do
-    require  "lua.config" 
+    require  "lua.config"
 	local config = config
 	local kingdoms = config.kingdoms
             table.insert(kingdoms,"real")
@@ -31,7 +31,7 @@ local function touhou_logmessage(logtype,logfrom,logarg,logto,logarg2)
 	alog.type = logtype
 	alog.from = logfrom
 	if logto then
-		alog.to:append(logto)	
+		alog.to:append(logto)
 	end
 	if logarg then
 		alog.arg = logarg
@@ -48,7 +48,7 @@ local function doLog(logtype,logfrom,logarg,logto,logarg2)
 	alog.type = logtype
 	alog.from = logfrom
 	if logto then
-		alog.to:append(logto)	
+		alog.to:append(logto)
 	end
 	if logarg then
 		alog.arg = logarg
@@ -70,7 +70,7 @@ local function touhou_shuffle(atable)
 end
 
 
-local function anime_playersbyskillname(roomplayer,skillname)	
+local function anime_playersbyskillname(roomplayer,skillname)
 	if not skillname then roomplayer:speak("anime_playersbyskillname-skillname is nil") return end
 	local room = roomplayer:getRoom()
 	local splist = sgs.SPlayerList()
@@ -78,8 +78,8 @@ local function anime_playersbyskillname(roomplayer,skillname)
 		if pp:hasSkill(skillname) then
 			splist:append(pp)
 		end
-	end	
-	return splist	
+	end
+	return splist
 end
 
 
@@ -105,7 +105,7 @@ Kanade = sgs.General(extension, "Kanade", "real", 3, false,false,false)
 Rena = sgs.General(extension, "Rena", "real", 3, false,false,false)
 Rena_black = sgs.General(extension, "Rena_black", "real", 3, false,true,true)
 Saber = sgs.General(extension, "Saber", "magic", 4, false,false,false)
-Kirei = sgs.General(extension, "Kirei", "magic", 4, true,false,false)
+Kirei = sgs.General(extension, "Kirei", "magic", 3, true,false,false)
 --Tomoya = sgs.General(extension, "Tomoya", "real", 4, true,false,false)
 --Tomoya_sub = sgs.General(extension, "Tomoya_sub", "real", 4, true,true,true)
 Accelerator = sgs.General(extension, "Accelerator", "science", 1, true,true,false)
@@ -134,7 +134,7 @@ Kotori = sgs.General(extension, "Kotori", "magic", 3, false,false,false)
 --Kotori_sub = sgs.General(extension, "Kotori_sub", "magic", 3, true,true,true)
 Kotori_white = sgs.General(extension, "Kotori_white", "magic", 3, false,true,true)
 Aria = sgs.General(extension, "Aria", "science", 3, false,false,false)
-Reki = sgs.General(extension, "Reki", "science", 3, false,false,false)		
+Reki = sgs.General(extension, "Reki", "science", 3, false,false,false)
 Ange = sgs.General(extension, "Ange", "magic", 3, false,false,false)
 --Ange2 = sgs.General(extension, "Ange2", "magic", 3, true,true,true)
 Rivaille = sgs.General(extension, "Rivaille", "science", 3, true,false,false)
@@ -157,7 +157,7 @@ Shirayuki = sgs.General(extension, "Shirayuki", "science", 4, false,false,false)
 Saki = sgs.General(extension, "Saki", "real", 4, false,false,false)
 Sayaka = sgs.General(extension, "Sayaka", "magic", 3, false,false,false)
 Majyo = sgs.General(extension, "Majyo", "magic", 4, false,true,true)
-Kinpika = sgs.General(extension, "Kinpika", "magic", 4, true,false,false)
+Kinpika = sgs.General(extension, "Kinpika", "magic", 3, true,false,false)
 Kiritsugu = sgs.General(extension, "Kiritsugu", "magic", 4, true,false,false)
 Yakumo = sgs.General(extension, "Yakumo", "magic", 4, true,true,false)
 Yukino = sgs.General(extension, "Yukino", "real", 3, false,false,false)
@@ -168,10 +168,10 @@ Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
 
 
 -- YingbiGet = sgs.CreateTriggerSkill{
--- 	name = "#YingbiGet", 
--- 	frequency = sgs.Skill_Compulsory, 
--- 	events = {sgs.EventPhaseStart},  
--- 	on_trigger = function(self, event, player, data) 
+-- 	name = "#YingbiGet",
+-- 	frequency = sgs.Skill_Compulsory,
+-- 	events = {sgs.EventPhaseStart},
+-- 	on_trigger = function(self, event, player, data)
 -- 		if player:isAlive() then
 -- 			if event == sgs.EventPhaseStart then
 -- 				if player:getPhase() == sgs.Player_Start then
@@ -212,9 +212,9 @@ Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
 -- }
 
 -- Dianci = sgs.CreateTriggerSkill{
--- 	name = "Dianci", 
--- 	frequency = sgs.Skill_Wake, 
--- 	events = {sgs.EventPhaseStart}, 
+-- 	name = "Dianci",
+-- 	frequency = sgs.Skill_Wake,
+-- 	events = {sgs.EventPhaseStart},
 -- 	on_trigger = function(self, event, player, data)
 -- 		local room = player:getRoom()
 -- 		player:gainMark("@waked")
@@ -223,7 +223,7 @@ Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
 -- 		room:broadcastSkillInvoke("Dianci")
 -- 		room:doLightbox("Dianci$", 3000)
 -- 		return false
--- 	end, 
+-- 	end,
 -- 	can_trigger = function(self, target)
 -- 		if target then
 -- 			if target:isAlive() and target:hasSkill(self:objectName()) then
@@ -240,10 +240,10 @@ Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
 -- }
 
 -- se_paojicard = sgs.CreateSkillCard{
--- 	name = "se_paojicard", 
--- 	target_fixed = false, 
--- 	will_throw = true, 
--- 	filter = function(self, targets, to_select) 
+-- 	name = "se_paojicard",
+-- 	target_fixed = false,
+-- 	will_throw = true,
+-- 	filter = function(self, targets, to_select)
 -- 		return #targets == 0
 -- 	end,
 -- 	on_use = function(self, room, source, targets)
@@ -261,7 +261,7 @@ Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
 -- 		local judge = sgs.JudgeStruct()
 -- 		judge.pattern = ".|spade"
 -- 		judge.good = true
--- 		judge.negative = false	
+-- 		judge.negative = false
 -- 		judge.reason = self:objectName()
 -- 		judge.who = source
 -- 		judge.play_animation = true
@@ -288,14 +288,14 @@ Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
 -- }
 
 -- se_paoji = sgs.CreateViewAsSkill{
--- 	name = "se_paoji", 
--- 	n = 0, 
--- 	view_as = function(self, cards) 
+-- 	name = "se_paoji",
+-- 	n = 0,
+-- 	view_as = function(self, cards)
 -- 		return se_paojicard:clone()
--- 	end, 
+-- 	end,
 -- 	enabled_at_play = function(self, player)
 -- 		return player:getMark("@ying") > 0 and not player:hasUsed("#se_paojicard")
--- 	end, 
+-- 	end,
 -- }
 
 
@@ -328,10 +328,10 @@ XuwuDistance = sgs.CreateDistanceSkill{
 
 
 Xuwu = sgs.CreateTriggerSkill{
-	name = "Xuwu", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.CardUsed, sgs.EventLoseSkill},  
-	on_trigger = function(self, event, player, data) 
+	name = "Xuwu",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.CardUsed, sgs.EventLoseSkill},
+	on_trigger = function(self, event, player, data)
 		if player:isAlive() then
 			if event == sgs.CardUsed then
 				if player:getPhase() == sgs.Player_Play then
@@ -363,21 +363,21 @@ Xuwu = sgs.CreateTriggerSkill{
 }
 
 se_cairen = sgs.CreateViewAsSkill{
-	name = "se_cairen", 
+	name = "se_cairen",
 	n = 0,
 	view_as = function(self, cards)
 		return se_cairencard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getPile("moli"):length() > 3
 	end,
 }
 
 se_cairencard = sgs.CreateSkillCard{
-	name = "se_cairencard", 
+	name = "se_cairencard",
 	target_fixed = true,
 	will_throw = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		return true
 	end,
 	on_use = function(self, room, source, targets)
@@ -399,7 +399,7 @@ se_cairencard = sgs.CreateSkillCard{
 		--room:broadcastSkillInvoke("se_cairen")
 		room:doLightbox("se_cairen$", 2000)
 		--room:setPlayerMark(source,"se_cairen",source:getMaxHp())
-		
+
 		if source:getGeneralName() == "Louise" then
 			room:changeHero(source,"Saito",true, false, false, true)
 		else
@@ -414,9 +414,9 @@ se_cairencard = sgs.CreateSkillCard{
 
 
 Beizeng = sgs.CreateTriggerSkill{
-	name = "Beizeng",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseStart}, 
+	name = "Beizeng",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local count = player:getMark("@shouhu")
@@ -435,7 +435,7 @@ Beizeng = sgs.CreateTriggerSkill{
 				end
 			end
 		end
-	end, 
+	end,
 }
 
 
@@ -462,11 +462,11 @@ sgs.LoadTranslationTable{
 ["beizeng"] = "倍增「explosion」",
 [":Beizeng"] = "弃牌阶段开始时，你可以弃置2枚“守护”标记，指定一名角色并令其减1点体力上限并失去1点体力。",
 ["$Beizeng"] = "「explosion」！",
-["Louise"] = "露易丝", 
-["&Louise"] = "露易丝", 
-["@Louise"] = "零之使魔", 
-["#Louise"] = "零之", 
-["~Louise"] = "...不要！...", 
+["Louise"] = "露易丝",
+["&Louise"] = "露易丝",
+["@Louise"] = "零之使魔",
+["#Louise"] = "零之",
+["~Louise"] = "...不要！...",
 ["designer:Louise"] = "Sword Elucidator",
 ["cv:Louise"] = "钉宫理惠",
 ["illustrator:Louise"] = "节操Staff",
@@ -482,18 +482,18 @@ sgs.LoadTranslationTable{
 ["@shouhu"] = "守护",
 ["huanhui"] = "唤回「继续被虐待-。-」",
 [":huanhui"] = "结束阶段开始时，你须变身为露易丝并回复体力至体力上限。",
-["Saito"] = "平賀才人", 
-["&Saito"] = "平賀才人", 
-["@Saito"] = "零之使魔", 
-["#Saito"] = "零之使魔", 
-["~Saito"] = "露易丝...果然我还是不想死啊...", 
+["Saito"] = "平賀才人",
+["&Saito"] = "平賀才人",
+["@Saito"] = "零之使魔",
+["#Saito"] = "零之使魔",
+["~Saito"] = "露易丝...果然我还是不想死啊...",
 ["designer:Saito"] = "Sword Elucidator",
 ["cv:Saito"] = "日野聪",
 ["illustrator:Saito"] = "节操Staff",
-["Saito_sound"] = "----平賀才人台词", 
-["&Saito_sound"] = "----平賀才人台词", 
-["#Saito_sound"] = "台词向", 
-["~Saito_sound"] = "露易丝...果然我还是不想死啊...", 
+["Saito_sound"] = "----平賀才人台词",
+["&Saito_sound"] = "----平賀才人台词",
+["#Saito_sound"] = "台词向",
+["~Saito_sound"] = "露易丝...果然我还是不想死啊...",
 ["designer:Saito_sound"] = "Sword Elucidator",
 ["cv:Saito_sound"] = "日野聪",
 ["illustrator:Saito_sound"] = "节操Staff",
@@ -501,21 +501,21 @@ sgs.LoadTranslationTable{
 
 
 se_zhijian = sgs.CreateViewAsSkill{
-	name = "se_zhijian", 
+	name = "se_zhijian",
 	n = 0,
 	view_as = function(self, cards)
 		return se_zhijiancard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getPile("moli"):length() > 0 and not sgs.Self:hasFlag("se_zhijiancard_used")
 	end,
 }
 
 se_zhijiancard = sgs.CreateSkillCard{
-	name = "se_zhijiancard", 
+	name = "se_zhijiancard",
 	target_fixed = true,
 	will_throw = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		return #targets == 0
 	end,
 	on_use = function(self, room, source, targets)
@@ -584,7 +584,7 @@ se_hengsaocard = sgs.CreateSkillCard{
 	feasible = function(self, targets)
 		return #targets > 0
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		--KOF
 		if room:getAllPlayers(true):length() == 2 then
 			room:loseHp(source, 1)
@@ -624,9 +624,9 @@ se_hengsaocard = sgs.CreateSkillCard{
 }
 
 huanhui = sgs.CreateTriggerSkill{
-	name = "huanhui", --必须 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.EventPhaseChanging}, --必须 
+	name = "huanhui", --必须
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.EventPhaseChanging}, --必须
 	on_trigger = function(self, event, player, data) --必须
 		local change = data:toPhaseChange()
 		local phase = change.to
@@ -639,8 +639,8 @@ huanhui = sgs.CreateTriggerSkill{
 			end
 			--room:setPlayerProperty(player, "maxhp", player:getMark("se_cairen"))
 			--room:setPlayerProperty(player, "hp", player:getMark("se_cairen"))
-		end	
-	end, 
+		end
+	end,
 }
 
 
@@ -655,9 +655,9 @@ Saito:addSkill(huanhui)
 
 
 jinghua = sgs.CreateTriggerSkill{
-	name = "jinghua", --必须 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TurnStart}, --必须 
+	name = "jinghua", --必须
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.TurnStart}, --必须
 	on_trigger = function(self, event, player, data) --必须
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			local room = player:getRoom()
@@ -689,14 +689,14 @@ jinghua = sgs.CreateTriggerSkill{
 				end
 			end
 		end
-	end, 
+	end,
 }
 
 
 
 jiushu = sgs.CreateTriggerSkill{
 	name = "jiushu",
-	frequency = sgs.Skill_Limited, 
+	frequency = sgs.Skill_Limited,
 	events = {sgs.AskForPeachesDone, sgs.EventLoseSkill},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -728,7 +728,7 @@ jiushu = sgs.CreateTriggerSkill{
 			end
 		end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		local room = target:getRoom()
 		local mygod= room:findPlayerBySkillName("jiushu")
@@ -775,11 +775,11 @@ sgs.LoadTranslationTable{
 ["$jiushu"] = "凯伊姆先生...请您保重身体...我会为...凯伊姆先生的幸福...永远、永远地...祈祷...",
 [":jiushu"] = "<font color=\"red\"><b>限定技，</b></font>一名角色求桃阶段结束时，若该角色仍处于濒死状态，你可以使其回复体力至X，然后令其补充手牌至X张（X不超过8）。X为该角色的体力上限。",
 ["@tsubasa"] = "净化之翼",
-["Eustia"] = "尤斯蒂娅", 
-["&Eustia"] = "尤斯蒂娅", 
-["@Eustia"] = "秽翼的尤斯蒂娅", 
-["#Eustia"] = "圣子", 
-["~Eustia"] = "我并没有牺牲自己哦，所以今后也永远都会和您在一起。", 
+["Eustia"] = "尤斯蒂娅",
+["&Eustia"] = "尤斯蒂娅",
+["@Eustia"] = "秽翼的尤斯蒂娅",
+["#Eustia"] = "圣子",
+["~Eustia"] = "我并没有牺牲自己哦，所以今后也永远都会和您在一起。",
 ["designer:Eustia"] = "Sword Elucidator",
 ["cv:Eustia"] = "南條愛乃",
 ["illustrator:Eustia"] = "瀬菜モナコ",
@@ -789,10 +789,10 @@ sgs.LoadTranslationTable{
 
 
 Huansha = sgs.CreateTriggerSkill{
-	name = "Huansha",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageInflicted},  
-	on_trigger = function(self, event, player, data) 
+	name = "Huansha",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageInflicted},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageInflicted then
@@ -824,13 +824,13 @@ Huansha = sgs.CreateTriggerSkill{
 										end
 										return true
 									else
-										if source:isDead() or to:isDead() then return end
+										if source:isDead() then return end
 										local damage2=sgs.DamageStruct()
 										damage2.from = source
 										damage2.to = p
 										damage2.damage = damage.damage
 										room:damage(damage2)
-										if source:isDead() or to:isDead() then return end
+										if source:isDead() then return end
 										local damage3=sgs.DamageStruct()
 										damage3.from = p
 										damage3.to = source
@@ -854,8 +854,8 @@ Huansha = sgs.CreateTriggerSkill{
 }
 
 SE_Dapo = sgs.CreateTriggerSkill{
-	name = "SE_Dapo", 
-	frequency = sgs.Skill_Compulsory, 
+	name = "SE_Dapo",
+	frequency = sgs.Skill_Compulsory,
 	events = {sgs.Dying,sgs.GameStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -914,11 +914,11 @@ sgs.LoadTranslationTable{
 [":SE_Dapo"] = "<font color=\"blue\"><b>锁定技,</b></font>每当体力上限少于你的一名角色濒死时，若你为主公且你的体力为1，其将身份改变为忠臣；若你与其均不为主公且你的体力为1，其将身份改变为与你相同。",
 ["$SE_Dapo"] = "那就没办法了...我要杀掉啊...你那无聊的幻想！",
 ["SE_Dapo$"] = "image=image/animate/SE_Dapo.png",
-["Touma"] = "上条当麻", 
-["&Touma"] = "上条当麻", 
-["@Touma"] = "魔法禁书目录", 
-["#Touma"] = "把妹之手", 
-["~Touma"] = "...不幸啊！...", 
+["Touma"] = "上条当麻",
+["&Touma"] = "上条当麻",
+["@Touma"] = "魔法禁书目录",
+["#Touma"] = "把妹之手",
+["~Touma"] = "...不幸啊！...",
 ["designer:Touma"] = "Sword Elucidator",
 ["cv:Touma"] = "阿部敦",
 ["illustrator:Touma"] = "悠理なゆた",
@@ -962,14 +962,14 @@ se_tiaoyuecard = sgs.CreateSkillCard{
 
 
 se_tiaoyue = sgs.CreateViewAsSkill{
-	name = "se_tiaoyue", 
-	n = 0, 
-	view_as = function(self, cards) 
+	name = "se_tiaoyue",
+	n = 0,
+	view_as = function(self, cards)
 		if #cards == 0 then
 			local se_tiaoyue_Card = se_tiaoyuecard:clone()
 			return se_tiaoyue_Card
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@time") > 0 and player:getMark("@timepoint") > 0
 	end
@@ -977,12 +977,12 @@ se_tiaoyue = sgs.CreateViewAsSkill{
 
 
 se_shixian = sgs.CreateViewAsSkill{
-	name = "se_shixian", 
-	n = 999, 
+	name = "se_shixian",
+	n = 999,
 	view_filter = function(self, selected, to_select)
 		return true
 	end,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		if #cards > 0 then
 			local se_shixian_Card = se_shixiancard:clone()
 			for i=1, #cards, 1 do
@@ -991,7 +991,7 @@ se_shixian = sgs.CreateViewAsSkill{
 			end
 			return se_shixian_Card
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@time") > 0 and player:getMark("Benhuihe") == 0 and player:getMark("@timepoint") == 0
 	end
@@ -1053,8 +1053,8 @@ se_shixianMark = sgs.CreateTriggerSkill{
 }
 
 se_shixianKeep = sgs.CreateMaxCardsSkill{
-	name = "#se_shixianKeep", 
-	extra_func = function(self, target) 
+	name = "#se_shixianKeep",
+	extra_func = function(self, target)
 		if target:hasSkill(self:objectName()) then
 			local powers = target:getPile("shikongcundang")
 			local hp = target:getHp()
@@ -1091,11 +1091,11 @@ sgs.LoadTranslationTable{
 ["$se_tiaoyue"] = "给我跳啊！！...",
 ["se_tiaoyue$"] = "image=image/animate/se_tiaoyue.png",
 [":se_tiaoyue"] =  "<font color=\"green\"><b>出牌阶段限一次，</b></font>若你有“时间点”，你可以弃置1枚“时空”标记，然后你将体力回复至Y点并获得所有“时间碎片”（Y为“时间点”的数量）。",
-["Okarin"] = "岡部倫太郎", 
-["&Okarin"] = "岡部倫太郎", 
-["@Okarin"] = "命运石之门", 
-["#Okarin"] = "鳳凰院兇真", 
-["~Okarin"] = "...这算什么！...", 
+["Okarin"] = "岡部倫太郎",
+["&Okarin"] = "岡部倫太郎",
+["@Okarin"] = "命运石之门",
+["#Okarin"] = "鳳凰院兇真",
+["~Okarin"] = "...这算什么！...",
 ["designer:Okarin"] = "Sword Elucidator",
 ["cv:Okarin"] = "宫野真守",
 ["illustrator:Okarin"] = "5pb",
@@ -1105,10 +1105,10 @@ sgs.LoadTranslationTable{
 
 --[[
 shengyou = sgs.CreateTriggerSkill{
-	name = "shengyou", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseStart, sgs.EventPhaseEnd},  
-	on_trigger = function(self, event, player, data) 
+	name = "shengyou",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseStart, sgs.EventPhaseEnd},
+	on_trigger = function(self, event, player, data)
 		if event == sgs.EventPhaseStart and player:getPhase() == sgs.Player_RoundStart then
 			if player:isAlive() and player:hasSkill(self:objectName()) then
 				local room = player:getRoom()
@@ -1227,10 +1227,10 @@ shengyou = sgs.CreateTriggerSkill{
 }
 
 jinqu = sgs.CreateTriggerSkill{
-	name = "jinqu", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damaged,sgs.GameStart},  
-	on_trigger = function(self, event, player, data) 
+	name = "jinqu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damaged,sgs.GameStart},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Damaged then
 			if player:isAlive() and player:hasSkill(self:objectName()) then
@@ -1265,9 +1265,9 @@ sgs.LoadTranslationTable{
 
 
 Zhudao = sgs.CreateTriggerSkill{
-	name = "Zhudao", 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.CardsMoveOneTime}, 
+	name = "Zhudao",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
 		local move = data:toMoveOneTime()
 		local places = move.from_places
@@ -1358,9 +1358,9 @@ Zhudao = sgs.CreateTriggerSkill{
 }
 
 Sixu = sgs.CreateTriggerSkill{
-	name = "Sixu", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseEnd}, 
+	name = "Sixu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseEnd},
 	on_trigger = function(self, event, player, data)
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			if player:getPhase() == sgs.Player_Play then
@@ -1430,8 +1430,8 @@ Sixu = sgs.CreateTriggerSkill{
 									room:moveCardTo(card, from, to, place, reason)
 								end
 							end
-						
-						
+
+
 						local from = room:askForPlayerChosen(player, list, "Laiyuan")
 
 
@@ -1508,9 +1508,9 @@ Sixu = sgs.CreateTriggerSkill{
 
 
 SixuDef = sgs.CreateTriggerSkill{
-	name = "#SixuDef",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageInflicted}, 
+	name = "#SixuDef",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageInflicted},
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
 			if not player:faceUp() then
@@ -1525,7 +1525,7 @@ SixuDef = sgs.CreateTriggerSkill{
 				end
 			end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target
 	end
@@ -1550,11 +1550,11 @@ sgs.LoadTranslationTable{
 ["$Sixu1"] = "那个...我们...打算私奔！",
 ["$Sixu2"] = "我要改变，接受一切。",
 ["$SixuDef"] = "什么嘛...还想让你大吃一惊的。",
-["Taiga"] = "逢坂大河", 
-["&Taiga"] = "逢坂大河", 
-["@Taiga"] = "龙与虎", 
-["#Taiga"] = "掌中萌虎", 
-["~Taiga"] = "完全不行啊...不管怎么做...都还是喜欢着龙儿啊...", 
+["Taiga"] = "逢坂大河",
+["&Taiga"] = "逢坂大河",
+["@Taiga"] = "龙与虎",
+["#Taiga"] = "掌中萌虎",
+["~Taiga"] = "完全不行啊...不管怎么做...都还是喜欢着龙儿啊...",
 ["designer:Taiga"] = "Sword Elucidator",
 ["cv:Taiga"] = "钉宫理惠",
 ["illustrator:Taiga"] = "画楽多",
@@ -1583,10 +1583,10 @@ se_erdao=sgs.CreateViewAsSkill{
 }
 
 se_erdaocard = sgs.CreateSkillCard{
-	name = "se_erdaocard", 
-	target_fixed = false, 
+	name = "se_erdaocard",
+	target_fixed = false,
 	will_throw = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		if #targets == 0 then
 			local subcards = self:getSubcards()
 			if subcards:length() > 1 then
@@ -1612,7 +1612,7 @@ se_erdaocard = sgs.CreateSkillCard{
 			else
 				card = sgs.Sanguosha:cloneCard("thunder_slash", sgs.Card_NoSuit, 0)
 			end
-			card:setSkillName(self:objectName())		
+			card:setSkillName(self:objectName())
 			local use = sgs.CardUseStruct()
 			use.from = source
 			use.to:append(dest)
@@ -1623,16 +1623,16 @@ se_erdaocard = sgs.CreateSkillCard{
 }
 
 se_erdaoTwice = sgs.CreateTriggerSkill{
-	name = "#se_erdaoTwice", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardFinished}, 
+	name = "#se_erdaoTwice",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardFinished},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local use = data:toCardUse()
 		if not use.to:isEmpty() and use.to:at(0):isDead() then return false end
 		if use.card:isKindOf("Nullification") then return false end
 		if use.card:isKindOf("Collateral") and not use.to:at(0):getWeapon() then return false end
-		if (use.card:isKindOf("Snatch") or use.card:isKindOf("Dismantlement")) and use.to and use.to:at(0):getCards("hej"):isEmpty() then return false end 
+		if (use.card:isKindOf("Snatch") or use.card:isKindOf("Dismantlement")) and use.to and use.to:at(0):getCards("hej"):isEmpty() then return false end
 		if use.card:isKindOf("GodSalvation") or use.card:isKindOf("AmazingGrace") or use.card:isKindOf("AOE") or use.card:isKindOf("IronChain") then return false end
 		if use.card:isNDTrick() then
 			if not player:hasFlag("se_erdaoTwice_used") then
@@ -1666,16 +1666,16 @@ se_erdaoTwice = sgs.CreateTriggerSkill{
 		end
 	end
 }
-			
+
 
 
 
 
 SE_Shanguang = sgs.CreateTriggerSkill{
-	name = "SE_Shanguang",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Shanguang",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageCaused then
@@ -1718,7 +1718,7 @@ SE_Shanguang = sgs.CreateTriggerSkill{
 		return false
 	end
 }
-		
+
 se_yekongMark = sgs.CreateTriggerSkill{
 	name = "#se_yekongMark",
 	frequency = sgs.Skill_Compulsory,
@@ -1736,9 +1736,9 @@ se_yekongMark = sgs.CreateTriggerSkill{
 se_yekong=sgs.CreateViewAsSkill{
 	name="se_yekong",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_yekongcard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@Yuzora") > 0
 	end,
@@ -1746,16 +1746,16 @@ se_yekong=sgs.CreateViewAsSkill{
 
 
 se_yekongcard = sgs.CreateSkillCard{
-	name = "se_yekongcard", 
-	target_fixed = true, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_yekongcard",
+	target_fixed = true,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return true
 	end,
 	on_use = function(self, room, source, targets)
 		local count = source:getMark("@Yuzora")
 		if count == 0 then
-			return 
+			return
 		else
 			source:loseAllMarks("@Yuzora")
 		end
@@ -1768,9 +1768,9 @@ se_yekongcard = sgs.CreateSkillCard{
 }
 
 se_yekongRe = sgs.CreateTriggerSkill{
-	name = "#se_yekongRe", --必须 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TurnStart}, --必须 
+	name = "#se_yekongRe", --必须
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.TurnStart}, --必须
 	on_trigger = function(self, event, player, data) --必须
 		if player:isAlive() and player:hasSkill(self:objectName()) and player:getMark("@Yuzorano") > 0 then
 			local room = player:getRoom()
@@ -1787,14 +1787,14 @@ se_yekongRe = sgs.CreateTriggerSkill{
 				end
 			end
 		end
-	end, 
+	end,
 }
 
 SE_Dixian = sgs.CreateTriggerSkill{
-	name = "SE_Dixian", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damaged},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Dixian",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damaged},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if player:isAlive() and player:hasSkill(self:objectName()) and damage.nature == sgs.DamageStruct_Normal then
@@ -1850,8 +1850,8 @@ SE_ShanguangX = sgs.CreateDistanceSkill{
 
 
 
-SE_Kirito:addSkill(se_yekongRe)		
-SE_Kirito:addSkill(se_yekong)	
+SE_Kirito:addSkill(se_yekongRe)
+SE_Kirito:addSkill(se_yekong)
 SE_Kirito:addSkill(se_yekongMark)
 extension:insertRelatedSkills("se_yekong", "#se_yekongRe")
 extension:insertRelatedSkills("se_yekong", "#se_yekongMark")
@@ -1884,11 +1884,11 @@ sgs.LoadTranslationTable{
 ["$SE_Dixian1"] = "..我是不能原谅只是站在这里等待的自己！",
 ["$SE_Dixian2"] = "赶上了...赶上了！神啊...！",
 [":SE_Dixian"] = "每当你受到一次无属性伤害后，你可以对伤害来源造成1点伤害并进行一次判定，然后你令一名角色获得此判定牌并对其造成1点火焰伤害。",
-["SE_Kirito"] = "桐人", 
-["&SE_Kirito"] = "桐人", 
-["@SE_Kirito"] = "刀剑神域", 
-["#SE_Kirito"] = "黑の剑士", 
-["~SE_Kirito"] = "对不起，亚丝娜...至少你要活下去！...", 
+["SE_Kirito"] = "桐人",
+["&SE_Kirito"] = "桐人",
+["@SE_Kirito"] = "刀剑神域",
+["#SE_Kirito"] = "黑の剑士",
+["~SE_Kirito"] = "对不起，亚丝娜...至少你要活下去！...",
 ["designer:SE_Kirito"] = "Sword Elucidator; Lolihime",
 ["cv:SE_Kirito"] = "松岡禎丞",
 ["illustrator:SE_Kirito"] = "SL@原稿修羅場",
@@ -1898,11 +1898,11 @@ sgs.LoadTranslationTable{
 ["$SE_Shanguang1"] = "不要！！！！！！",
 ["$SE_Shanguang2"] = "（连续斩杀声）",
 [":SE_Shanguang"] = "每当你对一名角色造成一次无属性伤害时，你可以获得其X+1张牌（X为你已损失的体力）。",
-["SE_Asuna"] = "亚丝娜", 
-["&SE_Asuna"] = "亚丝娜", 
-["@SE_Asuna"] = "刀剑神域", 
-["#SE_Asuna"] = "白の闪光", 
-["~SE_Asuna"] = "对不起呐...再见了...", 
+["SE_Asuna"] = "亚丝娜",
+["&SE_Asuna"] = "亚丝娜",
+["@SE_Asuna"] = "刀剑神域",
+["#SE_Asuna"] = "白の闪光",
+["~SE_Asuna"] = "对不起呐...再见了...",
 ["designer:SE_Asuna"] = "Sword Elucidator",
 ["cv:SE_Asuna"] = "戶松遙",
 ["illustrator:SE_Asuna"] = "なかじまゆか",
@@ -1917,9 +1917,9 @@ sgs.LoadTranslationTable{
 se_chouyuan=sgs.CreateViewAsSkill{
 	name="se_chouyuan",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_chouyuancard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@hates") > 0
 	end,
@@ -1927,16 +1927,16 @@ se_chouyuan=sgs.CreateViewAsSkill{
 
 
 se_chouyuancard = sgs.CreateSkillCard{
-	name = "se_chouyuancard", 
-	target_fixed = false, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_chouyuancard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return #targets == 0
 	end,
 	on_use = function(self, room, source, targets)
 		local count = source:getMark("@hates")
 		if count == 0 then
-			return 
+			return
 		else
 			source:loseAllMarks("@hates")
 		end
@@ -1968,10 +1968,10 @@ se_chouyuanMark = sgs.CreateTriggerSkill{
 
 
 SE_Qixin = sgs.CreateTriggerSkill{
-	name = "SE_Qixin",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TargetConfirmed},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Qixin",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.TargetConfirmed},
+	on_trigger = function(self, event, player, data)
 		if player:isAlive() and player:hasSkill("SE_Qixin") then
 			local use = data:toCardUse()
 			local targets = use.to
@@ -1987,7 +1987,7 @@ SE_Qixin = sgs.CreateTriggerSkill{
 								for _, ap in sgs.qlist(room:getOtherPlayers(player)) do
 									if player:isDead() then return end
 									local choice = room:askForChoice(ap, self:objectName(), "Qixin_setcard+Qixin_slashto")
-									if choice == "Qixin_slashto" then	
+									if choice == "Qixin_slashto" then
 										local slash = room:askForUseSlashTo(ap, target, string.format("SE_Qixin:%s",target:objectName()), false)
 										if not slash then
 											local list = room:getOtherPlayers(player)
@@ -2033,18 +2033,18 @@ sgs.LoadTranslationTable{
 ["$SE_Qixin2"] = "固定炮整备四班！准备战斗！目标是...眼前的超大型巨人！",
 ["@hates"] = "仇怨",
 ["@juren"] = "巨人",
-["SE_Eren"] = "艾伦", 
-["&SE_Eren"] = "艾伦", 
-["@SE_Eren"] = "进击的巨人", 
-["#SE_Eren"] = "驱逐巨人的先锋", 
-["~SE_Eren"] = "是因为...我太弱小了？...弱小的人...就只能等着任受宰割么！", 
+["SE_Eren"] = "艾伦",
+["&SE_Eren"] = "艾伦",
+["@SE_Eren"] = "进击的巨人",
+["#SE_Eren"] = "驱逐巨人的先锋",
+["~SE_Eren"] = "是因为...我太弱小了？...弱小的人...就只能等着任受宰割么！",
 ["designer:SE_Eren"] = "Sword Elucidator",
 ["cv:SE_Eren"] = "梶裕贵",
 ["illustrator:SE_Eren"] = "WIT",
-["SE_Eren_sound"] = "----艾伦台词", 
-["&SE_Eren_sound"] = "----艾伦台词", 
-["#SE_Eren_sound"] = "台词向", 
-["~SE_Eren_sound"] = "是因为...我太弱小了？...弱小的人...就只能等着任受宰割么！", 
+["SE_Eren_sound"] = "----艾伦台词",
+["&SE_Eren_sound"] = "----艾伦台词",
+["#SE_Eren_sound"] = "台词向",
+["~SE_Eren_sound"] = "是因为...我太弱小了？...弱小的人...就只能等着任受宰割么！",
 ["designer:SE_Eren_sound"] = "Sword Elucidator",
 ["cv:SE_Eren_sound"] = "梶裕贵",
 ["illustrator:SE_Eren_sound"] = "WIT",
@@ -2061,19 +2061,19 @@ sgs.LoadTranslationTable{
 se_shunshan=sgs.CreateViewAsSkill{
 	name="se_shunshan",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_shunshancard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
-		return not player:hasFlag("se_shunshan_used") 
+		return not player:hasFlag("se_shunshan_used")
 	end,
 }
 
 se_shunshancard = sgs.CreateSkillCard{
-	name = "se_shunshancard", 
-	target_fixed = false, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_shunshancard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return #targets == 0
 	end,
 	on_use = function(self, room, source, targets)
@@ -2108,8 +2108,8 @@ se_shunshancard = sgs.CreateSkillCard{
 }
 
 se_shunshanKeep = sgs.CreateMaxCardsSkill{
-	name = "se_shunshanKeep", 
-	extra_func = function(self, target) 
+	name = "se_shunshanKeep",
+	extra_func = function(self, target)
 		if target:getMark("@Stop") > 0 then
 			local stops = target:getMark("@Stop")
 			if stops > 3 then
@@ -2131,12 +2131,12 @@ se_shunshanStopped = sgs.CreateDistanceSkill{
 		end
 	end
 }
-		
---[[	
+
+--[[
 se_shunshan_Another = sgs.CreateTriggerSkill{
-	name = "#se_shunshan_Another", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseEnd}, 
+	name = "#se_shunshan_Another",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseEnd},
 	on_trigger = function(self, event, player, data)
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			if player:getPhase() == sgs.Player_Play then
@@ -2155,19 +2155,19 @@ se_shunshan_Another = sgs.CreateTriggerSkill{
 se_chongjing=sgs.CreateViewAsSkill{
 	name="se_chongjing",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_chongjingcard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@longing") > 0
 	end,
 }
 
 se_chongjingcard = sgs.CreateSkillCard{
-	name = "se_chongjingcard", 
-	target_fixed = false, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_chongjingcard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return #targets == 0 and not to_select:isMale()
 	end,
 	on_use = function(self, room, source, targets)
@@ -2175,7 +2175,7 @@ se_chongjingcard = sgs.CreateSkillCard{
 		if dest:objectName() == source:objectName() then return end
 		local count = source:getMark("@longing")
 		if count == 0 then
-			return 
+			return
 		else
 			source:loseAllMarks("@longing")
 		end
@@ -2191,10 +2191,10 @@ se_chongjingcard = sgs.CreateSkillCard{
 }
 
 se_chongjing_Attack = sgs.CreateTriggerSkill{
-	name = "se_chongjing_Attack",  
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.DamageCaused, sgs.DamageInflicted},  
-	on_trigger = function(self, event, player, data) 
+	name = "se_chongjing_Attack",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.DamageCaused, sgs.DamageInflicted},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageCaused then
@@ -2263,9 +2263,9 @@ se_chongjingStart = sgs.CreateTriggerSkill{
 se_jieshu=sgs.CreateViewAsSkill{
 	name="se_jieshu",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_jieshucard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return true
 	end,
@@ -2273,10 +2273,10 @@ se_jieshu=sgs.CreateViewAsSkill{
 
 
 se_jieshucard = sgs.CreateSkillCard{
-	name = "se_jieshucard", 
-	target_fixed = false, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_jieshucard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return #targets == 0 and to_select:getMark("@Stop") > 0
 	end,
 	on_use = function(self, room, source, targets)
@@ -2318,14 +2318,14 @@ sgs.LoadTranslationTable{
 ["jieshu"] = "解束「解除束缚」",
 [":se_jieshu"] = "出牌阶段，你可以令一名其他角色弃置其所有“定身”标记。",
 ["$se_jieshu"] = "欢迎回来，过激犯人。",
-["Kuroko"] = "白井黒子", 
-["&Kuroko"] = "白井黒子", 
-["@Kuroko"] = "魔法禁书目录", 
-["#Kuroko"] = "空间移动能力者", 
+["Kuroko"] = "白井黒子",
+["&Kuroko"] = "白井黒子",
+["@Kuroko"] = "魔法禁书目录",
+["#Kuroko"] = "空间移动能力者",
 ["@longing"] = "憧憬",
 ["@Sister"] = "お姉様",
 ["@Stop"] = "定身",
-["~Kuroko"] = "姐姐大人......", 
+["~Kuroko"] = "姐姐大人......",
 ["designer:Kuroko"] = "Sword Elucidator",
 ["cv:Kuroko"] = "新井里美",
 ["illustrator:Kuroko"] = "厩戸王子",
@@ -2335,10 +2335,10 @@ sgs.LoadTranslationTable{
 
 
 dai = sgs.CreateTriggerSkill{
-	name = "dai", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardResponded}, 
-	on_trigger = function(self, event, player, data) 
+	name = "dai",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardResponded},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local card = data:toCardResponse().m_card
 		if (card:isKindOf("Jink") or card:isKindOf("Slash")) and player:hasSkill(self:objectName()) then
@@ -2364,9 +2364,9 @@ dai = sgs.CreateTriggerSkill{
 					room:recover(dest,theRecover)
 				end
 			end
-		end 
+		end
 		return false
-	end, 
+	end,
 	priority = 3
 }
 
@@ -2374,7 +2374,7 @@ dai = sgs.CreateTriggerSkill{
 
 daiVS = sgs.CreateTriggerSkill{
 	name = "#daiVS",
-	frequency = sgs.Skill_NotFrequent, 
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.AskForPeachesDone},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -2396,14 +2396,14 @@ daiVS = sgs.CreateTriggerSkill{
 				end
 			end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		local room = target:getRoom()
 		local mygod= room:findPlayerBySkillName("dai")
 		if mygod then
 			if mygod:hasSkill(self:objectName()) then
 				if mygod:isAlive() then
-					return mygod:getMark("@daiwei") >1 
+					return mygod:getMark("@daiwei") >1
 				end
 			end
 		end
@@ -2414,10 +2414,10 @@ daiVS = sgs.CreateTriggerSkill{
 
 
 zhuchang = sgs.CreateTriggerSkill{
-	name = "zhuchang", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.HpRecover}, 
-	on_trigger = function(self, event, player, data)						
+	name = "zhuchang",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.HpRecover},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:hasFlag("zhuchang_use") then return end
 		local list = room:getAlivePlayers()
@@ -2429,7 +2429,7 @@ zhuchang = sgs.CreateTriggerSkill{
 						room:broadcastSkillInvoke("zhuchang")
 						room:setPlayerFlag(player,"zhuchang_use")
 						local re = sgs.RecoverStruct()
-						re.who = player		
+						re.who = player
 						room:recover(player,re,true)
 						room:setPlayerFlag(player,"-zhuchang_use")
 					end
@@ -2439,12 +2439,12 @@ zhuchang = sgs.CreateTriggerSkill{
 		end
 	end
 }
-		
+
 zhuchangClone = sgs.CreateTriggerSkill{
-	name = "zhuchangClone", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.HpRecover}, 
-	on_trigger = function(self, event, player, data)						
+	name = "zhuchangClone",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.HpRecover},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:hasFlag("zhuchang_use") then return end
 		if player:hasSkill("zhuchang") then return end
@@ -2457,7 +2457,7 @@ zhuchangClone = sgs.CreateTriggerSkill{
 						room:broadcastSkillInvoke("zhuchang")
 						room:setPlayerFlag(player,"zhuchang_use")
 						local re = sgs.RecoverStruct()
-						re.who = player		
+						re.who = player
 						room:recover(player,re,true)
 						room:setPlayerFlag(player,"-zhuchang_use")
 					end
@@ -2466,7 +2466,7 @@ zhuchangClone = sgs.CreateTriggerSkill{
 			end
 		end
 	end
-}							
+}
 
 
 zhuchangCloneGet = sgs.CreateTriggerSkill{
@@ -2510,11 +2510,11 @@ sgs.LoadTranslationTable{
 ["$zhuchang2"] = "「ふわふわタイム」",
 ["$zhuchang3"] = "「U & I」",
 [":zhuchang"] = " 每当一名角色回复一次体力时，你可以令其额外回复1点体力。",
-["HYui"] = "平沢唯", 
-["&HYui"] = "平沢唯", 
-["@HYui"] = "轻音少女", 
-["#HYui"] = "呆唯", 
-["~HYui"] = "这是汗~~...呜呜~~", 
+["HYui"] = "平沢唯",
+["&HYui"] = "平沢唯",
+["@HYui"] = "轻音少女",
+["#HYui"] = "呆唯",
+["~HYui"] = "这是汗~~...呜呜~~",
 ["designer:HYui"] = "Sword Elucidator",
 ["cv:HYui"] = "豊崎爱生",
 ["illustrator:HYui"] = "らぐほのえりか",
@@ -2633,7 +2633,7 @@ se_tianmingWore = sgs.CreateTriggerSkill{
 		end
 	end
 }
-	
+
 se_tianmingFlag = sgs.CreateTriggerSkill{
 	name = "#se_tianmingFlag",
 	frequency = sgs.Skill_Compulsory,
@@ -2642,7 +2642,7 @@ se_tianmingFlag = sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		if event == sgs.CardAsked then
 			local ask = data:toString()
-			if ask == "jink" then	
+			if ask == "jink" then
 				room:setPlayerFlag(player,"jink_to")
 			elseif ask == "slash" then
 				room:setPlayerFlag(player,"slash_to")
@@ -2657,9 +2657,9 @@ se_tianmingFlag = sgs.CreateTriggerSkill{
 se_jianwu=sgs.CreateViewAsSkill{
 	name="se_jianwu",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_jianwucard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		if player:getMark("@Tianming") > 129 then
 			return true
@@ -2680,7 +2680,7 @@ se_jianwucard = sgs.CreateSkillCard{
 	feasible = function(self, targets)
 		return #targets > 0
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		local list = room:getAlivePlayers()
 		for _,p in sgs.qlist(list) do
 			if p:getMark("@Yuzorano") > 0 then
@@ -2714,9 +2714,9 @@ se_jianwucard = sgs.CreateSkillCard{
 se_kanhu=sgs.CreateViewAsSkill{
 	name="se_kanhu",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_kanhucard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@Tianming") > 19 and not sgs.Self:hasFlag("se_kanhucard_used")
 	end,
@@ -2730,12 +2730,12 @@ se_kanhucard = sgs.CreateSkillCard{
 	filter = function(self, targets, to_select) --必须
 		return  #targets == 0
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		room:setPlayerFlag(source,"se_kanhucard_used")
 		source:loseMark("@Tianming", 20)
 		--room:broadcastSkillInvoke("se_kanhu")
 		local re = sgs.RecoverStruct()
-		re.who = targets[1]		
+		re.who = targets[1]
 		room:recover(targets[1],re,true)
 		if targets[1]:getGeneralName() == "SE_Kirito" then
 			local re = sgs.RecoverStruct()
@@ -2777,11 +2777,11 @@ sgs.LoadTranslationTable{
 ["kanhu"] = "看护「神圣术治疗」",
 ["se_kanhucard"] = "看护「神圣术治疗」",
 [":se_kanhu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置20枚“天命”标记并指定一名已受伤的角色，令其回复1点体力。若目标角色为桐人，你令其额外回复1点体力。",
-["Alice"] = "爱丽丝", 
-["&Alice"] = "爱丽丝", 
-["@Alice"] = "刀剑神域", 
-["#Alice"] = "金色の骑士", 
-["~Alice"] = "太过分了...篡改记忆不说，连行动都要受到控制吗？...", 
+["Alice"] = "爱丽丝",
+["&Alice"] = "爱丽丝",
+["@Alice"] = "刀剑神域",
+["#Alice"] = "金色の骑士",
+["~Alice"] = "太过分了...篡改记忆不说，连行动都要受到控制吗？...",
 ["designer:Alice"] = "Sword Elucidator",
 ["cv:Alice"] = "",
 ["illustrator:Alice"] = "",
@@ -2791,10 +2791,10 @@ sgs.LoadTranslationTable{
 
 
 SE_Xianjing = sgs.CreateTriggerSkill{
-	name = "SE_Xianjing", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damaged},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Xianjing",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damaged},
+	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
 		local source = damage.from
 		if source then
@@ -2821,9 +2821,9 @@ SE_Xianjing = sgs.CreateTriggerSkill{
 						elseif player:isAlive() and  player:hasSkill("paoxiao") and not player:hasSkill("luagonglue") then
 							room:acquireSkill(player, "luagonglue")
 						elseif player:isAlive() and  player:hasSkill("luagonglue") and not player:hasSkill("SE_Zishang") then
-							room:acquireSkill(player, "SE_Zishang") 
+							room:acquireSkill(player, "SE_Zishang")
 						elseif player:isAlive()	and player:hasSkill("SE_Zishang") and not player:hasSkill("LuaBaozou") then
-							room:acquireSkill(player, "LuaBaozou") 
+							room:acquireSkill(player, "LuaBaozou")
 					end
 				end
 			end
@@ -2835,11 +2835,14 @@ SE_Xianjing = sgs.CreateTriggerSkill{
 
 SE_Boming = sgs.CreateTriggerSkill{
 	name = "SE_Boming",
-	frequency = sgs.Skill_Limited, 
-	events = {sgs.AskForPeachesDone},
+	frequency = sgs.Skill_Limited,
+	events = {sgs.GameStart,sgs.AskForPeachesDone},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if event == sgs.AskForPeachesDone then
+    if event == sgs.GameStart and player:hasSkill(self:objectName()) then
+      player:loseAllMarks("@HIMIKO")
+      player:gainMark("@HIMIKO")
+		elseif event == sgs.AskForPeachesDone then
 			local dying_data = data:toDying()
 			local source = dying_data.who
 			local mygod= room:findPlayerBySkillName("SE_Boming")
@@ -2848,30 +2851,43 @@ SE_Boming = sgs.CreateTriggerSkill{
 					local i = 0
 					if mygod:hasSkill("yingzi") then
 						i = i + 1
-						room:detachSkillFromPlayer(mygod, "yingzi")
 					end
 					if mygod:hasSkill("zhuren") then
 						i = i + 1
-						room:detachSkillFromPlayer(mygod, "zhuren")
 					end
 					if mygod:hasSkill("paoxiao") then
 						i = i + 1
-						room:detachSkillFromPlayer(mygod, "paoxiao")
 					end
 					if mygod:hasSkill("luagonglue") then
 						i = i + 1
-						room:detachSkillFromPlayer(mygod, "luagonglue")
 					end
 					if mygod:hasSkill("SE_Zishang") then
 						i = i + 1
-						room:detachSkillFromPlayer(mygod, "SE_Zishang")
 					end
 					if mygod:hasSkill("LuaBaozou") then
 						i = i + 1
-						room:detachSkillFromPlayer(mygod, "LuaBaozou")
 					end
 					if i > 0 and room:askForSkillInvoke(mygod, "SE_Boming", data) then
 						mygod:loseMark("@HIMIKO")
+
+            if mygod:hasSkill("yingzi") then
+  						room:detachSkillFromPlayer(mygod, "yingzi")
+  					end
+  					if mygod:hasSkill("zhuren") then
+  						room:detachSkillFromPlayer(mygod, "zhuren")
+  					end
+  					if mygod:hasSkill("paoxiao") then
+  						room:detachSkillFromPlayer(mygod, "paoxiao")
+  					end
+  					if mygod:hasSkill("luagonglue") then
+  						room:detachSkillFromPlayer(mygod, "luagonglue")
+  					end
+  					if mygod:hasSkill("SE_Zishang") then
+  						room:detachSkillFromPlayer(mygod, "SE_Zishang")
+  					end
+  					if mygod:hasSkill("LuaBaozou") then
+  						room:detachSkillFromPlayer(mygod, "LuaBaozou")
+  					end
 
 						HpMax = source:getMaxHp()
 						if HpMax < i then i = HpMax end
@@ -2883,37 +2899,15 @@ SE_Boming = sgs.CreateTriggerSkill{
 			end
 			return false
 		end
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target ~= nil
 	end
 }
 
-SE_Boming_KOF = sgs.CreateTriggerSkill{
-	name = "#SE_Boming_KOF",
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.GameStart},
-	on_trigger = function(self, event, player, data)
-		local room = player:getRoom()
-		--KOF
-		if event == sgs.GameStart then
-			if player:hasSkill("SE_Boming") then
-				player:loseAllMarks("@HIMIKO")
-				player:gainMark("@HIMIKO")
-				if room:getAllPlayers(true):length() == 2 then
-					room:detachSkillFromPlayer(player, "SE_Boming")
-				end
-			end
-			room:detachSkillFromPlayer(player, self:objectName())
-		end
-	end, 
-}
-
 
 Sakamoto:addSkill(SE_Xianjing)
 Sakamoto:addSkill(SE_Boming)
-Sakamoto:addSkill(SE_Boming_KOF)
-extension:insertRelatedSkills("SE_Boming", "#SE_Boming_KOF")
 
 sgs.LoadTranslationTable{
 ["SE_Xianjing"] = "陷阱「坂本の计谋」",
@@ -2926,11 +2920,11 @@ sgs.LoadTranslationTable{
 ["SE_Boming$"] = "image=image/animate/SE_Boming.png",
 [":SE_Boming"] = "<font color=\"red\"><b>限定技，</b></font>，每当一名角色的濒死状态结束后，你可以弃置所有“陷阱”标记并失去1点体力，然后令其体力回复至X（X为你弃置的“陷阱”标记数且至多为6）。",
 ["$SE_Boming"] = "我怎么可能抛弃你呢！...不论现实世界...还是虚拟世界！",
-["Sakamoto"] = "坂本竜太", 
-["&Sakamoto"] = "坂本竜太", 
-["@Sakamoto"] = "BTOOOM!", 
-["#Sakamoto"] = "神级玩家", 
-["~Sakamoto"] = "...为什么...为什么会变成这样啊！...", 
+["Sakamoto"] = "坂本竜太",
+["&Sakamoto"] = "坂本竜太",
+["@Sakamoto"] = "BTOOOM!",
+["#Sakamoto"] = "神级玩家",
+["~Sakamoto"] = "...为什么...为什么会变成这样啊！...",
 ["designer:Sakamoto"] = "Sword Elucidator",
 ["cv:Sakamoto"] = "本乡奏多",
 ["illustrator:Sakamoto"] = "MAD HOUSE",
@@ -2966,7 +2960,7 @@ se_qiyuancard = sgs.CreateSkillCard{
 	name = "se_qiyuancard",
 	target_fixed = true,
 	will_throw = true,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		if source:getMark("@se_qiyuan") == 0 then return end
 		local deathplayer = {}
 		for _,p in sgs.qlist(room:getPlayers()) do
@@ -2974,11 +2968,11 @@ se_qiyuancard = sgs.CreateSkillCard{
 				table.insert(deathplayer,p:getGeneralName())
 			end
 		end
-		if #deathplayer==0 then 
+		if #deathplayer==0 then
 			local log =  sgs.LogMessage()
 			log.type = "#se_qiyuan_noDeath"
-			room:sendLog(log)	
-			return 
+			room:sendLog(log)
+			return
 		end
 		local ap = room:askForChoice(source,"se_qiyuan",table.concat(deathplayer,"+"))
 		if ap == "" then return end
@@ -3045,9 +3039,9 @@ Lichang =  sgs.CreateTriggerSkill{
 se_shouren=sgs.CreateViewAsSkill{
 	name="se_shouren",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_shourencard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return not sgs.Self:hasFlag("se_shourencard_used")
 	end,
@@ -3061,7 +3055,7 @@ se_shourencard = sgs.CreateSkillCard{
 	filter = function(self, targets, to_select) --必须
 		return  #targets == 0
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		room:setPlayerFlag(source,"se_shourencard_used")
 		--room:broadcastSkillInvoke("se_shouren")
 		local target = targets[1]
@@ -3111,11 +3105,11 @@ sgs.LoadTranslationTable{
 ["$se_shouren2"] = "「Handsonic Version2」",
 ["#addMaxHp"] = "%from 增加 %arg 点体力上限。",
 [":se_shouren"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定一名角色，令其失去1点体力。若如此做且该角色的体力值变为0，你令其将武将牌翻面，然后失去技能“立场”。",
-["Kanade"] = "立华奏", 
-["&Kanade"] = "立华奏", 
-["@Kanade"] = "Angel Beats!", 
-["#Kanade"] = "天使", 
-["~Kanade"] = "赐予我生命，真的...很感谢...", 
+["Kanade"] = "立华奏",
+["&Kanade"] = "立华奏",
+["@Kanade"] = "Angel Beats!",
+["#Kanade"] = "天使",
+["~Kanade"] = "赐予我生命，真的...很感谢...",
 ["designer:Kanade"] = "Sword Elucidator",
 ["cv:Kanade"] = "花泽香菜",
 ["illustrator:Kanade"] = "Na-Ga",
@@ -3136,10 +3130,10 @@ KeaiStart =  sgs.CreateTriggerSkill{
 
 --~
 ChaidaoChange = sgs.CreateTriggerSkill{
-	name = "#ChaidaoChange", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.Damaged},  
-	on_trigger = function(self, event, player, data) 
+	name = "#ChaidaoChange",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.Damaged},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:getMark("@Putong_Rena") > 0 and player:hasSkill(self:objectName()) then
 			room:broadcastSkillInvoke("Chaidao")
@@ -3156,10 +3150,10 @@ ChaidaoChange = sgs.CreateTriggerSkill{
 }
 --~
 ZizhuChange = sgs.CreateTriggerSkill{
-	name = "#ZizhuChange", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.EventPhaseEnd},  
-	on_trigger = function(self, event, player, data) 
+	name = "#ZizhuChange",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.EventPhaseEnd},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseEnd and player:getPhase()==sgs.Player_Finish then
 			if player:getMark("@Heihua_Rena") > 0 and player:hasSkill(self:objectName()) then
@@ -3178,20 +3172,20 @@ ZizhuChange = sgs.CreateTriggerSkill{
 
 --~
 Zizhu = sgs.CreateTriggerSkill{
-	name = "Zizhu", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TurnStart},  
+	name = "Zizhu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.TurnStart},
 	on_trigger = function(self, event, player, data)
 		if player:getMark("@Heihua_Rena") == 0 then return end
 		local room = player:getRoom()
 		if player:getJudgingArea():length() > 0 then
 			if room:askForSkillInvoke(player,self:objectName(),data) then
 				room:broadcastSkillInvoke(self:objectName())
-				local move = sgs.CardsMoveStruct()		
+				local move = sgs.CardsMoveStruct()
 				for _, trick in sgs.qlist(player:getJudgingArea()) do
 					move.card_ids:append(trick:getEffectiveId())
-				end	
-		
+				end
+
 				move.reason = sgs.CardMoveReason(0x01,"","Zizhu","")
 				move.to_place = sgs.Player_DiscardPile
 				room:moveCardsAtomic(move, true)
@@ -3353,18 +3347,18 @@ sgs.LoadTranslationTable{
 ["$Chaidao2"] = "啊哈哈哈！啊哈哈哈哈哈！！！啊哈哈哈哈哈！！！",
 ["$Chaidao3"] = "明明那么相信你...明明那么相信你！！...",
 [":Chaidao"] = "每当其他角色的黑色牌因弃置、使用、打出或判定置入弃牌堆时，你可以获得之。",
-["Rena"] = "龙宫礼奈", 
-["&Rena"] = "龙宫礼奈", 
-["@Rena"] = "寒蝉鸣泣之时", 
-["#Rena"] = "柴刀女", 
-["~Rena"] = "......相信我...", 
+["Rena"] = "龙宫礼奈",
+["&Rena"] = "龙宫礼奈",
+["@Rena"] = "寒蝉鸣泣之时",
+["#Rena"] = "柴刀女",
+["~Rena"] = "......相信我...",
 ["designer:Rena"] = "Sword Elucidator",
 ["cv:Rena"] = "中原麻衣",
 ["illustrator:Rena"] = "Studio DEEN",
-["Rena_black"] = "龙宫礼奈レナ", 
-["&Rena_black"] = "龙宫礼奈", 
-["#Rena_black"] = "柴刀女", 
-["~Rena_black"] = "......", 
+["Rena_black"] = "龙宫礼奈レナ",
+["&Rena_black"] = "龙宫礼奈",
+["#Rena_black"] = "柴刀女",
+["~Rena_black"] = "......",
 ["designer:Rena_black"] = "Sword Elucidator",
 ["cv:Rena_black"] = "中原麻衣",
 ["illustrator:Rena_black"] = "Studio DEEN",
@@ -3392,7 +3386,7 @@ se_shengjiancard = sgs.CreateSkillCard{
 	filter = function(self, targets, to_select) --必须
 		return #targets ==0
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		source:turnOver()
 		--room:broadcastSkillInvoke("se_shengjian")
 		room:setPlayerFlag(source,"se_shengjiancard_used")
@@ -3409,10 +3403,10 @@ se_shengjiancard = sgs.CreateSkillCard{
 			room:damage(theDamage)
 		end
 		if targets[1]:getEquips():length() > 0 then
-			local move = sgs.CardsMoveStruct()		
+			local move = sgs.CardsMoveStruct()
 			for _, equip in sgs.qlist(targets[1]:getEquips()) do
 				move.card_ids:append(equip:getEffectiveId())
-			end			
+			end
 			move.reason.m_reason = sgs.CardMoveReason_S_REASON_NATURAL_ENTER
 			move.to_place = sgs.Player_DiscardPile
 			room:moveCardsAtomic(move, true)
@@ -3427,21 +3421,39 @@ se_shengjiancard = sgs.CreateSkillCard{
 }
 
 Jianqiao = sgs.CreateTriggerSkill{
-	name = "Jianqiao", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageInflicted},  
-	on_trigger = function(self, event, player, data) 
-		local damage = data:toDamage()
+	name = "Jianqiao",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageInflicted, sgs.AskForPeachesDone, sgs.EventPhaseEnd},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if damage.to and damage.to:hasSkill(self:objectName()) then
-			local x = math.random(1,3)
-			if x == 1 then
-				room:broadcastSkillInvoke("Jianqiao")
-				local msg = sgs.LogMessage()
-				msg.type = "#Jianqiao_stop"
-				msg.from = damage.to
-				room:sendLog(msg)
-				return true
+		if event == sgs.DamageInflicted then
+			local damage = data:toDamage()
+			if damage.to and damage.to:hasSkill(self:objectName()) then
+				local x = math.random(1,3)
+				if x == 1 then
+					room:broadcastSkillInvoke("Jianqiao", 1)
+					local msg = sgs.LogMessage()
+					msg.type = "#Jianqiao_stop"
+					msg.from = damage.to
+					room:sendLog(msg)
+					return true
+				end
+			end
+		elseif event == sgs.AskForPeachesDone then
+			local dying = data:toDying()
+			if not dying.who or dying.who:isDead() or not dying.who:hasSkill(self:objectName()) then return end
+			local theRecover = sgs.RecoverStruct()
+			theRecover.who =  dying.who
+			room:broadcastSkillInvoke("Jianqiao", 2)
+			room:recover(dying.who,theRecover)
+		else
+			if player:isAlive() and player:hasSkill(self:objectName()) and player:getPhase() == sgs.Player_Finish then
+				transfer_to = room:askForPlayerChosen(player, room:getOtherPlayers(player), self:objectName(), "@jianqiao-prompt", true)
+				if transfer_to then
+					room:broadcastSkillInvoke("Jianqiao", 3)
+					room:detachSkillFromPlayer(player, self:objectName())
+					room:acquireSkill(transfer_to, self:objectName())
+				end
 			end
 		end
 		return false
@@ -3464,12 +3476,13 @@ sgs.LoadTranslationTable{
 ["Jianqiao"] = "剑鞘「远离尘世的理想乡」",
 ["$Jianqiao1"] = "不要紧...治疗已经派上用场了。",
 ["$Jianqiao2"] = "Avalon！！",
-[":Jianqiao"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你受到一次伤害时，有1/3概率防止此伤害。",
-["Saber"] = "Saber", 
-["&Saber"] = "Saber", 
-["@Saber"] = "Fate Zero", 
-["#Saber"] = "吾王", 
-["~Saber"] = "这也许全都是...对我这个不懂的人心的君王的惩罚吧...", 
+[":Jianqiao"] = "回合结束时，你可以将这个技能转交给其他角色。<font color=\"blue\"><b>锁定技,</b></font>每当你受到一次伤害时，有1/3概率防止此伤害；你离开濒死阶段时回复一点体力。",
+["@jianqiao-prompt"] = "选择一名角色并将「剑鞘」转交之，可以取消。",
+["Saber"] = "Saber",
+["&Saber"] = "Saber",
+["@Saber"] = "Fate Zero",
+["#Saber"] = "吾王",
+["~Saber"] = "这也许全都是...对我这个不懂的人心的君王的惩罚吧...",
 ["designer:Saber"] = "Sword Elucidator",
 ["cv:Saber"] = "川澄绫子",
 ["illustrator:Saber"] = "しらび",
@@ -3478,10 +3491,10 @@ sgs.LoadTranslationTable{
 --言峰綺礼
 
 Yuyue = sgs.CreateTriggerSkill{
-	name = "Yuyue",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.Damage},  
-	on_trigger = function(self, event, player, data) 
+	name = "Yuyue",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.Damage},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.Damage then
@@ -3508,10 +3521,10 @@ Yuyue = sgs.CreateTriggerSkill{
 
 
 Xianhai = sgs.CreateTriggerSkill{
-	name = "Xianhai",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "Xianhai",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageCaused then
@@ -3553,11 +3566,11 @@ sgs.LoadTranslationTable{
 ["$Xianhai1"] = "酒的味道...比想象中的还要善变...",
 ["$Xianhai2"] = "为了庆祝你独当一面，我要送你一件礼物。",
 [":Xianhai"] = "每当一名角色造成伤害时，若该伤害可以令目标进入濒死，你可以指定该伤害的来源。",
-["Kirei"] = "言峰綺礼", 
-["&Kirei"] = "言峰綺礼", 
-["@Kirei"] = "Fate Zero/Fate Stay Night", 
-["#Kirei"] = "麻婆神父", 
-["~Kirei"] = "他在渴望自己生命的诞生！...求你了...别杀掉它！那是...", 
+["Kirei"] = "言峰綺礼",
+["&Kirei"] = "言峰綺礼",
+["@Kirei"] = "Fate Zero/Fate Stay Night",
+["#Kirei"] = "麻婆神父",
+["~Kirei"] = "他在渴望自己生命的诞生！...求你了...别杀掉它！那是...",
 ["designer:Kirei"] = "Sword Elucidator",
 ["cv:Kirei"] = "中田讓治",
 ["illustrator:Kirei"] = "zihad",
@@ -3567,8 +3580,8 @@ sgs.LoadTranslationTable{
 
 se_zhurencard = sgs.CreateSkillCard{
 	name = "se_zhurencard",
-	target_fixed = false, 
-	will_throw = false, 
+	target_fixed = false,
+	will_throw = false,
 	filter = function(self, targets, to_select)
 		return to_select:objectName() ~= sgs.Self:objectName()
 	end,
@@ -3590,12 +3603,12 @@ se_zhurencard = sgs.CreateSkillCard{
 	end
 }
 se_zhuren = sgs.CreateViewAsSkill{
-	name = "se_zhuren", 
-	n = 999, 
+	name = "se_zhuren",
+	n = 999,
 	view_filter = function(self, selected, to_select)
 		local max_num = sgs.Self:getMaxHp() - sgs.Self:getHp() + 1
 		return #selected < max_num
-	end, 
+	end,
 	view_as = function(self, cards)
 		if #cards > 0 then
 			local card = se_zhurencard:clone()
@@ -3604,16 +3617,16 @@ se_zhuren = sgs.CreateViewAsSkill{
 			end
 			return card
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return not player:hasUsed("#se_zhurencard")
 	end
 }
 
 se_zhuren_End = sgs.CreateTriggerSkill{
-	name = "#se_zhuren_End", 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.EventPhaseEnd}, 
+	name = "#se_zhuren_End",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.EventPhaseEnd},
 	on_trigger = function(self, event, player, data)
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			if player:getPhase() == sgs.Player_Discard then
@@ -3630,8 +3643,8 @@ se_zhuren_End = sgs.CreateTriggerSkill{
 }
 
 Daolu = sgs.CreateTriggerSkill{
-	name = "Daolu", 
-	frequency = sgs.Skill_Wake, 
+	name = "Daolu",
+	frequency = sgs.Skill_Wake,
 	events = {sgs.AskForPeachesDone},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -3678,7 +3691,7 @@ Daolu = sgs.CreateTriggerSkill{
 			room:acquireSkill(player, "Haixing")
 		end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		if target then
 			return target:getMark("@NagisaMark") == 0 and target:getMark("@Tomoyo") == 0 and target:getMark("@Fuko") == 0
@@ -3688,9 +3701,9 @@ Daolu = sgs.CreateTriggerSkill{
 }
 
 se_diangong_def = sgs.CreateTriggerSkill{
-	name = "#se_diangong_def",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageInflicted}, 
+	name = "#se_diangong_def",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageInflicted},
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
 		local room = player:getRoom()
@@ -3705,7 +3718,7 @@ se_diangong_def = sgs.CreateTriggerSkill{
 				end
 			end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target
 	end
@@ -3722,7 +3735,7 @@ se_diangong = sgs.CreateViewAsSkill{
 			local card = sgs.Sanguosha:cloneCard("lightning",cards[1]:getSuit(),cards[1]:getNumber())
 			card:addSubcard(cards[1]:getId())
 			card:setSkillName("se_diangong")
-			return card 
+			return card
 		end
 	end,
 	enabled_at_play = function(self,player)
@@ -3731,9 +3744,9 @@ se_diangong = sgs.CreateViewAsSkill{
 }
 
 Shouyang_ed = sgs.CreateTriggerSkill{
-	name = "#Shouyang_ed",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageCaused}, 
+	name = "#Shouyang_ed",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageCaused},
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
 		local room = player:getRoom()
@@ -3755,16 +3768,16 @@ Shouyang_ed = sgs.CreateTriggerSkill{
 					end
 				end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target
 	end
 }
 
 Shouyang = sgs.CreateTriggerSkill{
-	name = "Shouyang", 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.EventPhaseEnd}, 
+	name = "Shouyang",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.EventPhaseEnd},
 	on_trigger = function(self, event, player, data)
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			if player:getPhase() == sgs.Player_Finish then
@@ -3779,8 +3792,8 @@ Shouyang = sgs.CreateTriggerSkill{
 }
 
 Haixing = sgs.CreateTriggerSkill{
-	name = "Haixing", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "Haixing",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -3813,29 +3826,29 @@ Haixing = sgs.CreateTriggerSkill{
 					end
 				end
 			end
-		
+
 	end
 }
 
 DaoluA = sgs.CreateTriggerSkill{
-	name = "DaoluA", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "DaoluA",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 	end
 }
 
 DaoluB = sgs.CreateTriggerSkill{
-	name = "DaoluB", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "DaoluB",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 	end
 }
 
 DaoluC = sgs.CreateTriggerSkill{
-	name = "DaoluC", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "DaoluC",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 	end
@@ -3866,10 +3879,10 @@ Tomoya:addWakeTypeSkillForAudio("Haixing")
 --真·一方通行
 
 Fanshe = sgs.CreateTriggerSkill{
-	name = "Fanshe", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageInflicted}, 
-	on_trigger = function(self, event, player, data) 
+	name = "Fanshe",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageInflicted},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.DamageInflicted then
 			if player:isAlive() then
@@ -3896,16 +3909,16 @@ Fanshe = sgs.CreateTriggerSkill{
 			end
 		end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target
-	end, 
+	end,
 	priority = 2
 }
 
 BianhuaCard = sgs.CreateSkillCard{
 	name = "BianhuaCard",
-	target_fixed = true, 
+	target_fixed = true,
 	will_throw = true,
 	on_use = function(self, room, source, targets)
 		--room:broadcastSkillInvoke("Bianhua")
@@ -3921,16 +3934,16 @@ BianhuaCard = sgs.CreateSkillCard{
 		local move = sgs.CardsMoveStruct()
 		move.card_ids = left
 		move.to_place = sgs.Player_DiscardPile
-		room:moveCardsAtomic(move,false)		
+		room:moveCardsAtomic(move,false)
 	end
 }
 
 Bianhua = sgs.CreateViewAsSkill{
-	name = "Bianhua", 
-	n = 1, 
+	name = "Bianhua",
+	n = 1,
 	view_filter = function(self, selected, to_select)
 		return true
-	end, 
+	end,
 	view_as = function(self, cards)
 		if #cards == 1 then
 			local Bianhua_Card = BianhuaCard:clone()
@@ -3938,7 +3951,7 @@ Bianhua = sgs.CreateViewAsSkill{
 			Bianhua_Card:setSkillName(self:objectName())
 			return Bianhua_Card
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		local used = player:usedTimes("#BianhuaCard")
 		return used < 5
@@ -3946,8 +3959,8 @@ Bianhua = sgs.CreateViewAsSkill{
 }
 
 Heiyi = sgs.CreateTriggerSkill{
-	name = "Heiyi", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "Heiyi",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -3972,8 +3985,8 @@ Heiyi = sgs.CreateTriggerSkill{
 }
 
 Baiyi = sgs.CreateTriggerSkill{
-	name = "Baiyi", 
-	frequency = sgs.Skill_Limited, 
+	name = "Baiyi",
+	frequency = sgs.Skill_Limited,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -3991,11 +4004,11 @@ Baiyi = sgs.CreateTriggerSkill{
 							num = num + p:getHandcardNum()
 						end
 						source:drawCards(num)
-						mygod:loseMark("@LastOrder") 
+						mygod:loseMark("@LastOrder")
 					end
 				end
 			end
-		
+
 	end
 }
 
@@ -4010,8 +4023,8 @@ BaiyiGet = sgs.CreateTriggerSkill{
 }
 
 Wangluo = sgs.CreateMaxCardsSkill{
-	name = "Wangluo", 
-	extra_func = function(self, target) 
+	name = "Wangluo",
+	extra_func = function(self, target)
 		if target:hasSkill(self:objectName()) then
 			local num = target:getSiblings():length()
 			return num + 1
@@ -4020,9 +4033,9 @@ Wangluo = sgs.CreateMaxCardsSkill{
 }
 
 WangluoLaugh = sgs.CreateTriggerSkill{
-	name = "#WangluoLaugh", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.EventPhaseEnd}, 
+	name = "#WangluoLaugh",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.EventPhaseEnd},
 	on_trigger = function(self, event, player, data)
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			if player:getPhase() == sgs.Player_Discard then
@@ -4076,11 +4089,11 @@ sgs.LoadTranslationTable{
 ["$Wangluo1"] = "哦！御坂的存在终于得到承认了，万岁！御坂御坂王婆卖瓜自卖自夸道~",
 ["$Wangluo2"] = "人睡觉时的表情是最诚实的呢~御坂御坂用冒牌京都腔说道~",
 ["$Wangluo3"] = "这次换御坂守护他了~御坂御坂试着坦白说道~",
-["Accelerator"] = "真·一方通行", 
-["&Accelerator"] = "一方通行", 
-["@Accelerator"] = "魔法禁书目录", 
-["#Accelerator"] = "罪愆中的英雄", 
-["~Accelerator"] = "......", 
+["Accelerator"] = "真·一方通行",
+["&Accelerator"] = "一方通行",
+["@Accelerator"] = "魔法禁书目录",
+["#Accelerator"] = "罪愆中的英雄",
+["~Accelerator"] = "......",
 ["designer:Accelerator"] = "Sword Elucidator",
 ["cv:Accelerator"] = "冈本信彦",
 ["illustrator:Accelerator"] = "テルヤ",
@@ -4105,10 +4118,10 @@ SE_Juji_Start = sgs.CreateTriggerSkill{
 		if room:getAllPlayers(true):length() == 2 then
 			local target = player:getNextAlive()
 			if target:getEquips():length() == 0 then return end
-			local move = sgs.CardsMoveStruct()		
+			local move = sgs.CardsMoveStruct()
 			for _, equip in sgs.qlist(target:getEquips()) do
 				move.card_ids:append(equip:getEffectiveId())
-			end			
+			end
 			move.to = player
 			move.to_place = sgs.Player_PlaceHand
 			room:moveCardsAtomic(move, true)
@@ -4117,10 +4130,10 @@ SE_Juji_Start = sgs.CreateTriggerSkill{
 }
 
 SE_Juji = sgs.CreateTriggerSkill{
-	name = "SE_Juji",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.TargetConfirmed, sgs.SlashProceed}, 
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Juji",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.TargetConfirmed, sgs.SlashProceed},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.TargetConfirmed then
 			local use = data:toCardUse()
@@ -4184,13 +4197,13 @@ se_jianyucard = sgs.CreateSkillCard{
 	feasible = function(self, targets)
 		return #targets > 0
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		--room:broadcastSkillInvoke("se_jianyu")
 		room:setPlayerFlag(source,"se_jianyucard_used")
 		room:doLightbox("se_jianyu$", 800)
 		if #targets > 0 then
 			local card = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0)
-			card:setSkillName(self:objectName())		
+			card:setSkillName(self:objectName())
 			local use = sgs.CardUseStruct()
 			use.from = source
 			for _,target in ipairs(targets) do
@@ -4221,11 +4234,11 @@ sgs.LoadTranslationTable{
 ["$se_jianyu1"] = "那个男人，有着能在战场中笑的强大，干掉那个男人，我也会....",
 ["$se_jianyu2"] = "还有什么....是我能做的",
 [":se_jianyu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定X+1名角色（X为你已损失的体力），视为你对他们使用一张【杀】。",
-["Shino"] = "朝田诗乃", 
-["&Shino"] = "朝田诗乃", 
-["@Shino"] = "刀剑神域", 
-["#Shino"] = "深蓝の狙击手", 
-["~Shino"] = "怎么会！不可能！", 
+["Shino"] = "朝田诗乃",
+["&Shino"] = "朝田诗乃",
+["@Shino"] = "刀剑神域",
+["#Shino"] = "深蓝の狙击手",
+["~Shino"] = "怎么会！不可能！",
 ["designer:Shino"] = "Sword Elucidator",
 ["cv:Shino"] = "泽城美雪",
 ["illustrator:Shino"] = "A-1",
@@ -4250,14 +4263,14 @@ se_qidianvs = sgs.CreateViewAsSkill{
 			local card = se_qidiancard:clone()
 			card:addSubcard(cards[1])
 			card:setSkillName("se_qidian")
-			return card 
+			return card
 		end
 	end,
 	enabled_at_play = function()
 		return false
 	end,
 	enabled_at_response = function(self, player, pattern)
-		return pattern == "@se_qidian" 
+		return pattern == "@se_qidian"
 	end
 }
 
@@ -4273,7 +4286,7 @@ se_qidian = sgs.CreateTriggerSkill{
 	on_trigger = function(self,event,player,data)
 		if player:hasSkill(self:objectName()) then
 			if player:askForSkillInvoke(self:objectName(), data) then
-				local room = player:getRoom()	
+				local room = player:getRoom()
 				local list = room:getAlivePlayers()
 				local judge = data:toJudge()
 				local pattern = "@se_qidian"
@@ -4315,8 +4328,8 @@ SE_Weigong = sgs.CreateTriggerSkill{
 }
 
 SE_Weigong_end = sgs.CreateMaxCardsSkill{
-	name = "#SE_Weigong_end", 
-	extra_func = function(self, player) 
+	name = "#SE_Weigong_end",
+	extra_func = function(self, player)
 		if player:hasSkill(self:objectName()) then
 			local num = player:getSiblings():length()
 			if num < 3 then
@@ -4351,11 +4364,11 @@ sgs.LoadTranslationTable{
 ["$SE_Weigong2"] = "御坂对自己的心理状态怀有疑问。为了我这个能随意制造替换，要多少有多少的仿制品，你想要做什么？御坂再三问道。",
 ["$SE_Weigong3"] = "晒一下~御坂若无其事地向原型显摆他买给我的项链。",
 [":SE_Weigong"] = "<font color=\"blue\"><b>锁定技,</b></font>你的手牌上限+X；摸牌阶段，你随机额外摸1至X张牌（X为场上存活人数的一半且至少为2，向下取整）。",
-["Misaka_Imouto"] = "御坂妹", 
-["&Misaka_Imouto"] = "御坂妹", 
-["@Misaka_Imouto"] = "魔法禁书目录", 
-["#Misaka_Imouto"] = "活出自身", 
-["~Misaka_Imouto"] = "（一方通行）嘿...", 
+["Misaka_Imouto"] = "御坂妹",
+["&Misaka_Imouto"] = "御坂妹",
+["@Misaka_Imouto"] = "魔法禁书目录",
+["#Misaka_Imouto"] = "活出自身",
+["~Misaka_Imouto"] = "（一方通行）嘿...",
 ["designer:Misaka_Imouto"] = "Sword Elucidator",
 ["cv:Misaka_Imouto"] = "佐々木望",
 ["illustrator:Misaka_Imouto"] = "Ogata",
@@ -4364,7 +4377,7 @@ sgs.LoadTranslationTable{
 --柊司
 --[[
 SE_Maoshi = sgs.CreateProhibitSkill{
-	name = "SE_Maoshi", 
+	name = "SE_Maoshi",
 	is_prohibited = function(self, from, to, card)
 		if to and to:hasSkill(self:objectName()) then
 			if card and card:isKindOf("Supply_shortage") or card:isKindOf("Indulgence") or card:isKindOf("Lightning") then --or card:isKindOf("EquipCard") then
@@ -4383,15 +4396,15 @@ SE_Maoshi = sgs.CreateProhibitSkill{
 ]]
 
 SE_Maoshi = sgs.CreateTriggerSkill{
-	name = "SE_Maoshi", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.CardsMoveOneTime, sgs.CardUsed}, 
+	name = "SE_Maoshi",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.CardsMoveOneTime, sgs.CardUsed},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.CardsMoveOneTime then
 			local move = data:toMoveOneTime()
 			local source = move.to
 			if source and source:objectName() == player:objectName() then
-				local room = player:getRoom()	
+				local room = player:getRoom()
 				for _,card_id in sgs.qlist(move.card_ids) do
 					local card = sgs.Sanguosha:getCard(card_id)
 					local place = move.to_place
@@ -4428,8 +4441,8 @@ SE_Maoshi = sgs.CreateTriggerSkill{
 
 se_zhiyucard = sgs.CreateSkillCard{
 	name = "se_zhiyucard",
-	target_fixed = false, 
-	will_throw = false, 
+	target_fixed = false,
+	will_throw = false,
 	filter = function(self, targets, to_select)
 		return to_select:objectName() ~= sgs.Self:objectName()
 	end,
@@ -4451,11 +4464,11 @@ se_zhiyucard = sgs.CreateSkillCard{
 	end
 }
 se_zhiyu = sgs.CreateViewAsSkill{
-	name = "se_zhiyu", 
-	n = 999, 
+	name = "se_zhiyu",
+	n = 999,
 	view_filter = function(self, selected, to_select)
 		return to_select:isKindOf("EquipCard") or to_select:getSuit() == sgs.Card_Heart
-	end, 
+	end,
 	view_as = function(self, cards)
 		if #cards > 0 then
 			local card = se_zhiyucard:clone()
@@ -4464,7 +4477,7 @@ se_zhiyu = sgs.CreateViewAsSkill{
 			end
 			return card
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return true
 	end
@@ -4473,8 +4486,8 @@ se_zhiyu = sgs.CreateViewAsSkill{
 
 se_zhiyuGetRe = sgs.CreateTriggerSkill{
 	name = "#se_zhiyu",
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.CardsMoveOneTime}, 
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
 		if player:isAlive() then
 			if player:hasSkill(self:objectName()) then
@@ -4531,13 +4544,13 @@ se_liaolivs = sgs.CreateViewAsSkill{
 	n=1,
 	view_filter = function(self, selected, to_select)
 		return #selected == 0
-	end, 
+	end,
 	view_as = function(self, cards)
 		if #cards == 1 then
-			local W1card = se_liaolicard:clone() 
+			local W1card = se_liaolicard:clone()
 			W1card:addSubcard(cards[1])
 			W1card:setSkillName(self:objectName())
-			return W1card 
+			return W1card
 		end
     end,
 	enabled_at_play = function(self,player)
@@ -4547,8 +4560,8 @@ se_liaolivs = sgs.CreateViewAsSkill{
 
 se_liaolicard = sgs.CreateSkillCard{
 	name="se_liaolicard",
-	target_fixed = false, 
-	will_throw = true, 
+	target_fixed = false,
+	will_throw = true,
 	filter = function(self, targets, to_select)
 		return #targets == 0 and to_select:getMark("@se_liaoli")==0
 	end,
@@ -4569,19 +4582,19 @@ se_liaoli=sgs.CreateTriggerSkill{
 	events={sgs.EventPhaseStart},
 	view_as_skill = se_liaolivs,
 	can_trigger=function(self,player)
-		return true 
+		return true
 	end,
 	on_trigger=function(self,event,player,data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseStart and player:getPhase() == sgs.Player_RoundStart then
 			local tukasas = anime_playersbyskillname(player,self:objectName())
-			if tukasas:isEmpty() then 
+			if tukasas:isEmpty() then
 				for _, pp in sgs.qlist(room:getAlivePlayers()) do
 					pp:loseAllMarks("@se_liaoli")
 				end
 				return
 			end
-			local sb 
+			local sb
 			for _,pp in sgs.qlist(room:getAlivePlayers()) do
 				if pp:getMark("@se_liaoli")>0 and pp:getPhase() == sgs.Player_RoundStart then
 					sb = pp
@@ -4598,10 +4611,10 @@ se_liaoli=sgs.CreateTriggerSkill{
 					local judges = sb:getJudgingArea()
 					local num = judges:length()
 						if judges:length() > 0 then
-							local move = sgs.CardsMoveStruct()		
+							local move = sgs.CardsMoveStruct()
 							for _,judge in sgs.qlist(judges) do
 								move.card_ids:append(judge:getEffectiveId())
-							end			
+							end
 							move.reason.m_reason = sgs.CardMoveReason_S_REASON_NATURAL_ENTER
 							move.to_place = sgs.Player_DiscardPile
 							room:moveCardsAtomic(move, true)
@@ -4628,7 +4641,7 @@ se_liaoli=sgs.CreateTriggerSkill{
 											if z==1 then break end
 										end
 									end
-							end	
+							end
 							if num > 1 then
 								tukasa:drawCards(num-1)
 							end
@@ -4661,7 +4674,7 @@ se_liaoli=sgs.CreateTriggerSkill{
 				end
 			end
 		end
-	end	
+	end
 }
 
 
@@ -4700,11 +4713,11 @@ sgs.LoadTranslationTable{
 ["$se_zhiyu4"] = "虽然我废话很多，但这个没关系。",
 ["$se_zhiyu5"] = "我讲不出那么有趣的故事，我是小司。",
 [":se_zhiyu"] = "出牌阶段，你可以将任意数量的<font color=\"red\"><b>♥</b></font>牌或装备牌交给一名其他角色。",
-["Tukasa"] = "柊司", 
-["&Tukasa"] = "柊司", 
-["@Tukasa"] = "Lucky Star!", 
-["#Tukasa"] = "天然", 
-["~Tukasa"] = "总有一天，肯定会……", 
+["Tukasa"] = "柊司",
+["&Tukasa"] = "柊司",
+["@Tukasa"] = "Lucky Star!",
+["#Tukasa"] = "天然",
+["~Tukasa"] = "总有一天，肯定会……",
 ["designer:Tukasa"] = "yxl88205",
 ["cv:Tukasa"] = "福原香织",
 ["illustrator:Tukasa"] = "竜胆",
@@ -4725,10 +4738,10 @@ SE_Pasheng = sgs.CreateDistanceSkill{
 }
 
 SE_Maoqun = sgs.CreateTriggerSkill{
-	name = "SE_Maoqun",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.Damage},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Maoqun",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.Damage},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Damage then
 			local damage = data:toDamage()
@@ -4751,10 +4764,10 @@ SE_Maoqun = sgs.CreateTriggerSkill{
 }
 
 SE_Maoqun_KOF = sgs.CreateTriggerSkill{
-	name = "#SE_Maoqun_KOF",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.GameStart},  
-	on_trigger = function(self, event, player, data) 
+	name = "#SE_Maoqun_KOF",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.GameStart},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.GameStart then
 			if room:getAllPlayers(true):length() > 2 or not player:hasSkill(self:objectName()) then return end
@@ -4774,9 +4787,9 @@ SE_Maoqun_KOF = sgs.CreateTriggerSkill{
 
 
 SE_Chengzhang = sgs.CreateTriggerSkill{
-	name = "SE_Chengzhang", 
-	frequency = sgs.Skill_Wake, 
-	events = {sgs.EventPhaseStart}, 
+	name = "SE_Chengzhang",
+	frequency = sgs.Skill_Wake,
+	events = {sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		player:gainMark("@waked")
@@ -4793,7 +4806,7 @@ SE_Chengzhang = sgs.CreateTriggerSkill{
 		room:acquireSkill(player, "se_zhiling")
 		room:acquireSkill(player, "SE_Zhixing")
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		if target then
 			if target:isAlive() and target:hasSkill(self:objectName()) then
@@ -4810,20 +4823,20 @@ SE_Chengzhang = sgs.CreateTriggerSkill{
 }
 
 
-		
+
 se_zhiling = sgs.CreateViewAsSkill{
-	name = "se_zhiling", 
+	name = "se_zhiling",
 	n = 0,
 	view_as = function(self, cards)
 		return se_zhilingcard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getPile("Neko"):length() > 0
 	end,
 }
 
 se_zhilingcard = sgs.CreateSkillCard{
-	name = "se_zhilingcard", 
+	name = "se_zhilingcard",
 	target_fixed = false,
 	will_throw = true,
 	filter = function(self, targets, to_select)
@@ -4885,8 +4898,8 @@ se_zhilingcard = sgs.CreateSkillCard{
 		if card:getSuit() == sgs.Card_Diamond and target:getMark("@Neko_D") == 0 then
 			target:gainMark("@Neko_D")
 		end
-		if card:getSuit() == sgs.Card_Heart and target:getMark("@Neko_H") == 0 then 
-			target:gainMark("@Neko_H") 
+		if card:getSuit() == sgs.Card_Heart and target:getMark("@Neko_H") == 0 then
+			target:gainMark("@Neko_H")
 		end
 		room:throwCard(card, nil, nil)
 	end,
@@ -4912,8 +4925,8 @@ se_zhiling_S = sgs.CreateTriggerSkill{
 }
 
 se_zhiling_C = sgs.CreateMaxCardsSkill{
-	name = "#se_zhiling_C", 
-	extra_func = function(self, target) 
+	name = "#se_zhiling_C",
+	extra_func = function(self, target)
 		if target:getMark("@Neko_C") > 0 then
 			return -1
 		end
@@ -4921,9 +4934,9 @@ se_zhiling_C = sgs.CreateMaxCardsSkill{
 }
 
 se_zhiling_D = sgs.CreateTriggerSkill{
-	name = "#se_zhiling_D",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageInflicted}, 
+	name = "#se_zhiling_D",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageInflicted},
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
 		local room = player:getRoom()
@@ -4937,7 +4950,7 @@ se_zhiling_D = sgs.CreateTriggerSkill{
 				end
 			end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target
 	end
@@ -4964,8 +4977,8 @@ se_zhiling_H = sgs.CreateTriggerSkill{
 }
 
 SE_Zhixing = sgs.CreateTriggerSkill{
-	name = "SE_Zhixing", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "SE_Zhixing",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying,sgs.EventLoseSkill},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.Dying then
@@ -5007,7 +5020,7 @@ SE_Zhixing = sgs.CreateTriggerSkill{
 							source:drawCards(1)
 						end
 						if (card:isRed() and acard:isRed()) or (not card:isRed() and not acard:isRed()) then
-							local move = sgs.CardsMoveStruct()		
+							local move = sgs.CardsMoveStruct()
 							move.card_ids:append(card:getEffectiveId())
 							move.reason.m_reason = sgs.CardMoveReason_S_REASON_NATURAL_ENTER
 							move.to_place = sgs.Player_DiscardPile
@@ -5091,7 +5104,7 @@ SE_GeassCard = sgs.CreateSkillCard{
 	filter = function(self, targets, to_select) --必须
 		return #targets == 0 and to_select:getMark("@Geass") == 0 and to_select:getRole() ~= "lord"
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		--room:broadcastSkillInvoke("SE_Geass")
 		local target = targets[1]
 		local role = source:getRole()
@@ -5113,9 +5126,9 @@ SE_GeassCard = sgs.CreateSkillCard{
 		if self_people >= list:length()/2 then
 			local log =  sgs.LogMessage()
 			log.type = "#morethanhalf"
-			room:sendLog(log)	
+			room:sendLog(log)
 			return
-		end 
+		end
 		room:doLightbox("SE_Geass$", 2000)
 		if role == "lord" then
 			room:setPlayerProperty(target, "role", sgs.QVariant("loyalist"))
@@ -5131,10 +5144,10 @@ SE_GeassCard = sgs.CreateSkillCard{
 }
 
 SE_Zhihui = sgs.CreateTriggerSkill{
-	name = "SE_Zhihui",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Zhihui",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageCaused then
@@ -5187,11 +5200,11 @@ sgs.LoadTranslationTable{
 ["SE_Zhihui$"] = "image=image/animate/SE_Zhihui.png",
 ["$SE_Zhihui"] = "All Hail Lelouch!",
 [":SE_Zhihui"] = "每当一名角色对你造成一次伤害时，你可以将此伤害转移给拥有GEASS标记的一名角色。",
-["Lelouch"] = "真·鲁鲁修", 
-["&Lelouch"] = "真·鲁鲁修", 
-["@Lelouch"] = "叛逆的鲁鲁修", 
-["#Lelouch"] = "暗之皇子", 
-["~Lelouch"] = "这也是对你的惩罚...你要作为正义的使者，一直戴着面具...再也无法以枢木朱雀的身份活下去了...", 
+["Lelouch"] = "真·鲁鲁修",
+["&Lelouch"] = "真·鲁鲁修",
+["@Lelouch"] = "叛逆的鲁鲁修",
+["#Lelouch"] = "暗之皇子",
+["~Lelouch"] = "这也是对你的惩罚...你要作为正义的使者，一直戴着面具...再也无法以枢木朱雀的身份活下去了...",
 ["designer:Lelouch"] = "Sword Elucidator",
 ["cv:Lelouch"] = "福山润",
 ["illustrator:Lelouch"] = "SUNRISE",
@@ -5203,15 +5216,15 @@ sgs.LoadTranslationTable{
 --莉法
 
 SE_Zhuzhen = sgs.CreateTriggerSkill{
-	name = "SE_Zhuzhen", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardsMoveOneTime, sgs.CardUsed}, 
+	name = "SE_Zhuzhen",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardsMoveOneTime, sgs.CardUsed},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.CardsMoveOneTime then
 			local move = data:toMoveOneTime()
 			local source = move.from
 			if source and source:objectName() == player:objectName() then
-				local room = player:getRoom()	
+				local room = player:getRoom()
 				if move.to then
 					if move.to:objectName() ~= source:objectName() then
 						for _,card_id in sgs.qlist(move.card_ids) do
@@ -5274,10 +5287,10 @@ SE_Zhuzhen = sgs.CreateTriggerSkill{
 }
 
 SE_Huifu = sgs.CreateTriggerSkill{
-	name = "SE_Huifu", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.EventPhaseEnd},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Huifu",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.EventPhaseEnd},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseEnd and player:getPhase()==sgs.Player_RoundStart then
 			if player:hasSkill(self:objectName()) then
@@ -5316,11 +5329,11 @@ sgs.LoadTranslationTable{
 ["$SE_Huifu1"] = "（恢复系咒语）",
 ["$SE_Huifu2"] = "啊，危险...",
 [":SE_Huifu"] = "<font color=\"blue\"><b>锁定技,</b></font>回合开始时，若你的当前体力值不为场上最多或之一，你自然增加一点体力。",
-["Leafa"] = "莉法", 
-["&Leafa"] = "莉法", 
-["@Leafa"] = "刀剑神域", 
-["#Leafa"] = "风の剑士", 
-["~Leafa"] = "以为...终于能好好地看看我了...但是！...如果是这样...还不如一直对我冷漠就好... ", 
+["Leafa"] = "莉法",
+["&Leafa"] = "莉法",
+["@Leafa"] = "刀剑神域",
+["#Leafa"] = "风の剑士",
+["~Leafa"] = "以为...终于能好好地看看我了...但是！...如果是这样...还不如一直对我冷漠就好... ",
 ["designer:Leafa"] = "Sword Elucidator",
 ["cv:Leafa"] = "竹達彩奈",
 ["illustrator:Leafa"] = "うえはら",
@@ -5336,7 +5349,7 @@ SE_Mengfeng = sgs.CreateTriggerSkill{
 	events = {sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if player:getPhase()==sgs.Player_RoundStart then 
+		if player:getPhase()==sgs.Player_RoundStart then
 			if room:askForSkillInvoke(player, self:objectName(), data) then
 				room:broadcastSkillInvoke("SE_Mengfeng")
 				room:setPlayerFlag(player, "SE_Mengfeng")
@@ -5407,7 +5420,7 @@ SE_Nagong = sgs.CreateTriggerSkill{
 	events = {sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if player:getPhase()==sgs.Player_RoundStart then 
+		if player:getPhase()==sgs.Player_RoundStart then
 			local Musessou
 			for _,p in sgs.qlist(room:getAlivePlayers()) do
 				if p:hasSkill("SE_Nagong") then
@@ -5440,7 +5453,7 @@ SE_Nagong = sgs.CreateTriggerSkill{
 							if idn2 then
 								room:obtainCard(Musessou,idn2,false)
 								local re = sgs.RecoverStruct()
-								re.who = player		
+								re.who = player
 								room:recover(player,re,true)
 							end
 						end
@@ -5476,11 +5489,11 @@ sgs.LoadTranslationTable{
 ["SE_Nagong_Geiqian"] = "纳贡「赛钱箱」",
 ["SE_Nagong_Geiqian_2"] = "纳贡「赛钱箱」",
 [":SE_Nagong"] = "其他角色的回合开始时，其可以交给你至多两张牌。若如此做且交给你的牌数量为2，该角色回复1点体力，若此回合为“梦封”效果获得的额外回合，你摸一张牌。",
-["Reimu"] = "博麗霊夢", 
-["&Reimu"] = "博麗霊夢", 
-["@Reimu"] = "東方project", 
-["#Reimu"] = "無節操の巫女", 
-["~Reimu"] = "唉。。（毫无表情地）魔理沙是对的确实是异变呀我搞错了真对不住啊———— （魔理沙）完全都没放入感情！！", 
+["Reimu"] = "博麗霊夢",
+["&Reimu"] = "博麗霊夢",
+["@Reimu"] = "東方project",
+["#Reimu"] = "無節操の巫女",
+["~Reimu"] = "唉。。（毫无表情地）魔理沙是对的确实是异变呀我搞错了真对不住啊———— （魔理沙）完全都没放入感情！！",
 ["designer:Reimu"] = "紅白無節操",
 ["cv:Reimu"] = "中原麻衣",
 ["illustrator:Reimu"] = "A-1",
@@ -5496,7 +5509,7 @@ SE_Yishi = sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		if event == sgs.EventPhaseStart then
 			local targets = sgs.SPlayerList()
-			if player:getPhase()==sgs.Player_RoundStart then 
+			if player:getPhase()==sgs.Player_RoundStart then
 				local list = room:getAlivePlayers()
 				for _,p in sgs.qlist(list) do
 					if p:isMale() then
@@ -5528,21 +5541,21 @@ SE_Yishi = sgs.CreateTriggerSkill{
 }
 
 se_dushe = sgs.CreateViewAsSkill{
-	name = "se_dushe", 
+	name = "se_dushe",
 	n = 0,
 	view_as = function(self, cards)
 		return se_dushecard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return not sgs.Self:hasFlag("se_dushecard")
 	end,
 }
 
 se_dushecard = sgs.CreateSkillCard{
-	name = "se_dushecard", 
+	name = "se_dushecard",
 	target_fixed = true,
 	will_throw = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		return #targets == 0 and not to_select:isKongcheng()
 	end,
 	on_use = function(self, room, source, targets)
@@ -5560,17 +5573,17 @@ se_dushecard = sgs.CreateSkillCard{
 		local success = source:pindian(target, self:objectName(), nil)
 		if success then
 			if not target:isKongcheng() then
-				local card = room:askForCardChosen(source,target,"h",self:objectName()) 
+				local card = room:askForCardChosen(source,target,"h",self:objectName())
 				room:obtainCard(source, card)
 			end
-			local choice = room:askForChoice(source,"se_dushecard","se_dushe_Discard+se_dushe_Damage")	
+			local choice = room:askForChoice(source,"se_dushecard","se_dushe_Discard+se_dushe_Damage")
 			if choice == "se_dushe_Discard" then
 				if room:askForCard(source, ".black", "se_dushe_Discard", sgs.QVariant(), self:objectName()) then
 					if target:getEquips():length() > 0 then
-						local move = sgs.CardsMoveStruct()		
+						local move = sgs.CardsMoveStruct()
 						for _, equip in sgs.qlist(target:getEquips()) do
 							move.card_ids:append(equip:getEffectiveId())
-						end			
+						end
 						move.reason.m_reason = sgs.CardMoveReason_S_REASON_NATURAL_ENTER
 						move.to_place = sgs.Player_DiscardPile
 						room:moveCardsAtomic(move, true)
@@ -5617,11 +5630,11 @@ sgs.LoadTranslationTable{
 ["$se_dushe6"] = "一个人的自我满足？自慰作品？谁管你啊，我只想把我自己想做的，自己真正在做的呈现出来而已。",
 ["$se_dushe7"] = "明明能和妹妹一起玩色情游戏，却不能和我玩文字游戏么？",
 [":se_dushe"] = "出牌阶段，你可以与一名其他角色拼点：若你赢，你获得该角色一张手牌并选择一项：弃置一张黑色手牌并弃置其装备区里的所有牌，或弃置一张红色手牌，令该角色对其造成1点伤害；若你没赢，该角色摸一张牌，你失去“毒舌”直到回合结束。",
-["Kuroneko"] = "五更琉璃", 
-["&Kuroneko"] = "五更琉璃", 
+["Kuroneko"] = "五更琉璃",
+["&Kuroneko"] = "五更琉璃",
 ["@Kuroneko"] = "我的妹妹不可能这么可爱！",
-["#Kuroneko"] = "堕天圣黑猫", 
-["~Kuroneko"] = "很，很难受啊，不要这样。", 
+["#Kuroneko"] = "堕天圣黑猫",
+["~Kuroneko"] = "很，很难受啊，不要这样。",
 ["designer:Kuroneko"] = "黑猫roy",
 ["cv:Kuroneko"] = "花泽香菜",
 ["illustrator:Kuroneko"] = "AIC",
@@ -5630,15 +5643,15 @@ sgs.LoadTranslationTable{
 --杉崎鍵
 
 SE_Kurimu = sgs.CreateTriggerSkill{
-	name = "SE_Kurimu", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardsMoveOneTime}, 
+	name = "SE_Kurimu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.CardsMoveOneTime then
 			local move = data:toMoveOneTime()
 			local source = move.from
 			if source and source:objectName() == player:objectName() then
-				local room = player:getRoom()	
+				local room = player:getRoom()
 				for _,card_id in sgs.qlist(move.card_ids) do
 					local card = sgs.Sanguosha:getCard(card_id)
 					local places = move.from_places
@@ -5664,15 +5677,15 @@ SE_Kurimu = sgs.CreateTriggerSkill{
 
 
 SE_Minatsu = sgs.CreateTriggerSkill{
-	name = "SE_Minatsu", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardsMoveOneTime}, 
+	name = "SE_Minatsu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.CardsMoveOneTime then
 			local move = data:toMoveOneTime()
 			local source = move.from
 			if source and source:objectName() == player:objectName() then
-				local room = player:getRoom()	
+				local room = player:getRoom()
 				for _,card_id in sgs.qlist(move.card_ids) do
 					local card = sgs.Sanguosha:getCard(card_id)
 					local places = move.from_places
@@ -5684,7 +5697,7 @@ SE_Minatsu = sgs.CreateTriggerSkill{
 									--room:broadcastSkillInvoke("SE_Minatsu")
 									room:doLightbox("SE_Minatsu$", 800)
 									local card1 = sgs.Sanguosha:cloneCard("fire_slash", sgs.Card_NoSuit, 0)
-									card1:setSkillName(self:objectName())		
+									card1:setSkillName(self:objectName())
 									local use = sgs.CardUseStruct()
 									use.from = player
 									use.to:append(to)
@@ -5702,15 +5715,15 @@ SE_Minatsu = sgs.CreateTriggerSkill{
 }
 
 SE_Chizuru = sgs.CreateTriggerSkill{
-	name = "SE_Chizuru", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardsMoveOneTime}, 
+	name = "SE_Chizuru",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.CardsMoveOneTime then
 			local move = data:toMoveOneTime()
 			local source = move.from
 			if source and source:objectName() == player:objectName() then
-				local room = player:getRoom()	
+				local room = player:getRoom()
 				for _,card_id in sgs.qlist(move.card_ids) do
 					local card = sgs.Sanguosha:getCard(card_id)
 					local places = move.from_places
@@ -5722,7 +5735,7 @@ SE_Chizuru = sgs.CreateTriggerSkill{
 									room:broadcastSkillInvoke("SE_Chizuru")
 									room:doLightbox("SE_Chizuru$", 800)
 									local re = sgs.RecoverStruct()
-									re.who = to	
+									re.who = to
 									room:recover(to,re,true)
 								end
 							end
@@ -5736,15 +5749,15 @@ SE_Chizuru = sgs.CreateTriggerSkill{
 }
 
 SE_Mafuyu = sgs.CreateTriggerSkill{
-	name = "SE_Mafuyu", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardsMoveOneTime}, 
+	name = "SE_Mafuyu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.CardsMoveOneTime then
 			local move = data:toMoveOneTime()
 			local source = move.from
 			if source and source:objectName() == player:objectName() then
-				local room = player:getRoom()	
+				local room = player:getRoom()
 				for _,card_id in sgs.qlist(move.card_ids) do
 					local card = sgs.Sanguosha:getCard(card_id)
 					local places = move.from_places
@@ -5752,7 +5765,7 @@ SE_Mafuyu = sgs.CreateTriggerSkill{
 						if player:getPhase() == sgs.Player_NotActive then
 							if places:contains(sgs.Player_PlaceHand) or places:contains(sgs.Player_PlaceEquip) then
 								if player:askForSkillInvoke(self:objectName(), data) then
-									local list = room:getAlivePlayers()	
+									local list = room:getAlivePlayers()
 									local to = room:askForPlayerChosen(player, list, self:objectName())
 									room:broadcastSkillInvoke("SE_Mafuyu")
 									room:doLightbox("SE_Mafuyu$", 800)
@@ -5778,19 +5791,19 @@ SE_Mafuyu_Do=sgs.CreateTriggerSkill{
 	events={sgs.EventPhaseStart},
 	view_as_skill = se_liaolivs,
 	can_trigger=function(self,player)
-		return true 
+		return true
 	end,
 	on_trigger=function(self,event,player,data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseStart and player:getPhase() == sgs.Player_RoundStart then
 			local tukasas = anime_playersbyskillname(player,self:objectName())
-			if tukasas:isEmpty() then 
+			if tukasas:isEmpty() then
 				for _, pp in sgs.qlist(room:getAlivePlayers()) do
 					pp:loseAllMarks("@SE_Mafuyu")
 				end
 				return
 			end
-			local sb 
+			local sb
 			for _,pp in sgs.qlist(room:getAlivePlayers()) do
 				if pp:getMark("@SE_Mafuyu")>0 and pp:getPhase() == sgs.Player_RoundStart then
 					sb = pp
@@ -5809,13 +5822,13 @@ SE_Mafuyu_Do=sgs.CreateTriggerSkill{
 				end
 			end
 		end
-	end	
+	end
 }
 
 
 SE_Haremu = sgs.CreateMaxCardsSkill{
-	name = "SE_Haremu", 
-	extra_func = function(self, player) 
+	name = "SE_Haremu",
+	extra_func = function(self, player)
 		if player:hasSkill(self:objectName()) then
 			local num = 0
 			for _,p in sgs.qlist(player:getSiblings()) do
@@ -5829,9 +5842,9 @@ SE_Haremu = sgs.CreateMaxCardsSkill{
 }
 
 SE_HaremuLaugh = sgs.CreateTriggerSkill{
-	name = "#SE_HaremuLaugh", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.EventPhaseEnd, sgs.GameStart}, 
+	name = "#SE_HaremuLaugh",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.EventPhaseEnd, sgs.GameStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseEnd then
@@ -5916,11 +5929,11 @@ sgs.LoadTranslationTable{
 ["$SE_Haremu5"] = "能在春天和她邂逅真是太好了，如果没有与她相遇，我就不会再向前迈进；能在夏天和她邂逅真是太好了，如果没有与她相遇，我会一直处于颓废之中；能在秋天与她邂逅真是太好了，如果没有与她相遇，我只会在角落里默默崩溃；能在冬天与她邂逅真是太好了，如果没有与她相遇，我就会误解坚强的真意。",
 ["$SE_Haremu6"] = "（栗梦：一,二）我们也最喜欢你了！",
 [":SE_Haremu"] = "<font color=\"blue\"><b>锁定技,</b></font>你的手牌上限+X（X为场上的女性角色数量）。",
-["Sugisaki"] = "杉崎鍵", 
-["&Sugisaki"] = "杉崎鍵", 
-["@Sugisaki"] = "学生会的一己之见", 
-["#Sugisaki"] = "KEY君", 
-["~Sugisaki"] = "靠这种半吊子的觉悟，再怎么挣扎也是赢不了的么？", 
+["Sugisaki"] = "杉崎鍵",
+["&Sugisaki"] = "杉崎鍵",
+["@Sugisaki"] = "学生会的一己之见",
+["#Sugisaki"] = "KEY君",
+["~Sugisaki"] = "靠这种半吊子的觉悟，再怎么挣扎也是赢不了的么？",
 ["designer:Sugisaki"] = "黑猫roy",
 ["cv:Sugisaki"] = "近藤隆",
 ["illustrator:Sugisaki"] = "STUDIO DEEN/AIC",
@@ -5930,8 +5943,8 @@ sgs.LoadTranslationTable{
 --黑雪姬
 se_xunyucard = sgs.CreateSkillCard{
 	name = "se_xunyucard",
-	target_fixed = false, 
-	will_throw = true, 
+	target_fixed = false,
+	will_throw = true,
 	filter = function(self, targets, to_select)
 		if sgs.Self:getMark("@SE_Chaopin_Red") > 0 then
 			return to_select:objectName() ~= sgs.Self:objectName()
@@ -5972,10 +5985,10 @@ se_xunyucard = sgs.CreateSkillCard{
 }
 
 se_xunyu_damage = sgs.CreateTriggerSkill{
-	name = "#se_xunyu_damage", 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.Damage},  
-	on_trigger = function(self, event, player, data) 
+	name = "#se_xunyu_damage",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.Damage},
+	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
 		local target = damage.to
 		local slash = damage.card
@@ -6002,14 +6015,14 @@ se_xunyu_damage = sgs.CreateTriggerSkill{
 
 
 se_xunyu = sgs.CreateViewAsSkill{
-	name = "se_xunyu", 
-	n = 1, 
+	name = "se_xunyu",
+	n = 1,
 	view_filter = function(self, selected, to_select)
 		if sgs.Self:getMark("@SE_Chaopin_Red") > 0 then
 			return true
 		end
 		return #selected == 0 and  not to_select:isEquipped()
-	end, 
+	end,
 	view_as = function(self, cards)
 		if #cards == 1 then
 			local card = se_xunyucard:clone()
@@ -6022,7 +6035,7 @@ se_xunyu = sgs.CreateViewAsSkill{
 				return card
 			end
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		if player:getMark("@SE_Chaopin_Blue") > 0 then
 			return player:usedTimes("#se_xunyucard") < 3
@@ -6032,9 +6045,9 @@ se_xunyu = sgs.CreateViewAsSkill{
 }
 
 SE_Heiyang = sgs.CreateTriggerSkill{
-	name = "SE_Heiyang", 
-	frequency = sgs.Skill_Wake, 
-	events = {sgs.TurnStart}, 
+	name = "SE_Heiyang",
+	frequency = sgs.Skill_Wake,
+	events = {sgs.TurnStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		player:gainMark("@waked")
@@ -6045,7 +6058,7 @@ SE_Heiyang = sgs.CreateTriggerSkill{
 		room:broadcastSkillInvoke("SE_Heiyang")
 		room:doLightbox("SE_Heiyang$", 3000)
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		if target then
 			if target:isAlive() and target:hasSkill(self:objectName()) then
@@ -6067,9 +6080,9 @@ SE_Heiyang = sgs.CreateTriggerSkill{
 }
 
 SE_Chaopin = sgs.CreateTriggerSkill{
-	name = "SE_Chaopin", --必须 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TurnStart}, --必须 
+	name = "SE_Chaopin", --必须
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.TurnStart}, --必须
 	on_trigger = function(self, event, player, data) --必须
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			local room = player:getRoom()
@@ -6100,7 +6113,7 @@ SE_Chaopin = sgs.CreateTriggerSkill{
 				end
 			end
 		end
-	end, 
+	end,
 }
 
 Kuroyukihime:addSkill(se_xunyu)
@@ -6133,11 +6146,11 @@ sgs.LoadTranslationTable{
 ["$SE_Chaopin2"] = "Death By Piercing",
 ["$SE_Chaopin3"] = "Overdrive ModeGreen",
 [":SE_Chaopin"] = "回合开始前，你可以选择一项：1.弃置1枚“绿”标记或“蓝”并获得1枚“红”标记；2.弃置1枚“红”标记或“蓝”标记并获得1枚“绿”标记；3.弃置1枚“红”标记或“绿”标记并获得1枚“蓝”标记。若你拥有“红”标记，你使用“迅羽”时攻击范围无限且可以不交给目标角色手牌，若该角色的攻击范围内没有你，其失去1点体力；若你拥有“蓝”标记，将“迅羽”的“将一张手牌交给你攻击范围内的一名其他角色”改为“弃置你攻击范围内一名其他角色的一张手牌”，“出牌阶段限一次”改为“出牌阶段限X次（X为场上存活角色数）”；若你拥有“绿”标记，你获得“克己”。",
-["Kuroyukihime"] = "黒雪姫", 
-["&Kuroyukihime"] = "黒雪姫", 
-["@Kuroyukihime"] = "加速世界", 
-["#Kuroyukihime"] = "黑之睡莲", 
-["~Kuroyukihime"] = "总有一天，我们肯定能再次相会。", 
+["Kuroyukihime"] = "黒雪姫",
+["&Kuroyukihime"] = "黒雪姫",
+["@Kuroyukihime"] = "加速世界",
+["#Kuroyukihime"] = "黑之睡莲",
+["~Kuroyukihime"] = "总有一天，我们肯定能再次相会。",
 ["designer:Kuroyukihime"] = "昂翼天使",
 ["cv:Kuroyukihime"] = "三澤紗千香",
 ["illustrator:Kuroyukihime"] = "SUNRISE",
@@ -6148,10 +6161,10 @@ sgs.LoadTranslationTable{
 --永瀬伊織
 
 SE_Qifen = sgs.CreateTriggerSkill{
-	name = "SE_Qifen",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseEnd}, 
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Qifen",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseEnd},
+	on_trigger = function(self, event, player, data)
 		if player:getPhase() == sgs.Player_Finish then
 			if player:hasSkill(self:objectName()) then
 				local room = player:getRoom()
@@ -6193,8 +6206,8 @@ SE_Qifen = sgs.CreateTriggerSkill{
 }
 
 SE_Mishi = sgs.CreateTriggerSkill{
-	name = "SE_Mishi", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "SE_Mishi",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -6245,7 +6258,7 @@ SE_Zhufu = sgs.CreateTriggerSkill{
 	events = {sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if player:getPhase()==sgs.Player_Draw then 
+		if player:getPhase()==sgs.Player_Draw then
 			if player:hasSkill(self:objectName()) then
 				if room:askForSkillInvoke(player, self:objectName(), data) then
 					local target = room:askForPlayerChosen(player,  room:getOtherPlayers(player), self:objectName())
@@ -6288,11 +6301,11 @@ sgs.LoadTranslationTable{
 ["$SE_Zhufu2"] = "能和你恋爱过真是太好了。",
 ["$SE_Zhufu3"] = "全力全心，今天也努力去享受生活吧！",
 [":SE_Zhufu"] = "摸牌阶段开始时，你可以令一名其他角色将手牌补至X张（X为你的手牌数且至多为7）。",
-["Nagase"] = "永瀬伊織", 
-["&Nagase"] = "永瀬伊織", 
-["@Nagase"] = "恋爱随意链接", 
-["#Nagase"] = "真正的自己", 
-["~Nagase"] = "啊..永瀬！！", 
+["Nagase"] = "永瀬伊織",
+["&Nagase"] = "永瀬伊織",
+["@Nagase"] = "恋爱随意链接",
+["#Nagase"] = "真正的自己",
+["~Nagase"] = "啊..永瀬！！",
 ["designer:Nagase"] = "Sword Elucidator",
 ["cv:Nagase"] = "豊崎爱生",
 ["illustrator:Nagase"] = "れい",
@@ -6301,9 +6314,9 @@ sgs.LoadTranslationTable{
 
 --風早翔太
 SE_Xiuse = sgs.CreateTriggerSkill{
-	name = "SE_Xiuse",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageComplete}, 
+	name = "SE_Xiuse",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageComplete},
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
 		local room = player:getRoom()
@@ -6327,16 +6340,16 @@ SE_Xiuse = sgs.CreateTriggerSkill{
 				end
 			end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target
 	end
 }
 
 SE_Shuanglang_target = sgs.CreateTriggerSkill{
-	name = "#SE_Shuanglang_target", --必须 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TurnStart, sgs.DamageInflicted}, --必须 
+	name = "#SE_Shuanglang_target", --必须
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.TurnStart, sgs.DamageInflicted}, --必须
 	on_trigger = function(self, event, player, data) --必须
 		if event == sgs.TurnStart then
 			if player:isAlive() and not player:faceUp() then
@@ -6382,10 +6395,10 @@ SE_Shuanglang = sgs.CreateTriggerSkill{
 }
 
 SE_Lianmu = sgs.CreateTriggerSkill{
-	name = "SE_Lianmu",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseEnd}, 
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Lianmu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseEnd},
+	on_trigger = function(self, event, player, data)
 		if player:getPhase() == sgs.Player_Finish then
 			if player:hasSkill(self:objectName()) then
 				local room = player:getRoom()
@@ -6411,7 +6424,7 @@ SE_Lianmu = sgs.CreateTriggerSkill{
 							target:drawCards(2)
 						else
 							local re = sgs.RecoverStruct()
-							re.who = target		
+							re.who = target
 							room:recover(target,re,true)
 						end
 					end
@@ -6450,11 +6463,11 @@ sgs.LoadTranslationTable{
 ["$SE_Lianmu3"] = "我，不想放弃，我，喜欢她。",
 ["$SE_Lianmu4"] = "所以，刚刚那个表情可以留给我吗？让我独占...",
 [":SE_Lianmu"] = "<font color=\"blue\"><b>锁定技,</b></font>结束阶段结束时，你选择一项：1.将武将牌翻面，然后令已受伤的一名异性角色回复1点体力；2.将武将牌翻面，然后令未受伤的一名异性角色摸两张牌；3.摸一张牌。",
-["Kazehaya"] = "風早翔太", 
-["&Kazehaya"] = "風早翔太", 
-["@Kazehaya"] = "好想告诉你", 
-["#Kazehaya"] = "爽朗君", 
-["~Kazehaya"] = "让你哭泣了，对不起；总是让你为难，对不起；只顾着把自己心里想说的说了，对不起...", 
+["Kazehaya"] = "風早翔太",
+["&Kazehaya"] = "風早翔太",
+["@Kazehaya"] = "好想告诉你",
+["#Kazehaya"] = "爽朗君",
+["~Kazehaya"] = "让你哭泣了，对不起；总是让你为难，对不起；只顾着把自己心里想说的说了，对不起...",
 ["designer:Kazehaya"] = "黄金堂下卧麒麟; 黑猫roy",
 ["cv:Kazehaya"] = "浪川大輔",
 ["illustrator:Kazehaya"] = "Production I.G",
@@ -6462,10 +6475,10 @@ sgs.LoadTranslationTable{
 
 --新垣あやせ
 SE_Feiti = sgs.CreateTriggerSkill{
-	name = "SE_Feiti",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseStart}, 
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Feiti",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseStart},
+	on_trigger = function(self, event, player, data)
 		if player:getPhase() == sgs.Player_Finish then
 			if player:hasSkill(self:objectName()) then
 				local room = player:getRoom()
@@ -6482,7 +6495,7 @@ SE_Feiti = sgs.CreateTriggerSkill{
 					local j = sgs.JudgeStruct()
 					j.play_animation=true
 					j.good = true
-					j.pattern = "."	
+					j.pattern = "."
 					j.who = Kyousuke
 					room:judge(j)
 					local num =j.card:getNumber()
@@ -6518,9 +6531,9 @@ SE_Feiti = sgs.CreateTriggerSkill{
 }
 
 SE_Menghei = sgs.CreateTriggerSkill{
-	name = "SE_Menghei",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damaged}, 
+	name = "SE_Menghei",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damaged},
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
 		local room = player:getRoom()
@@ -6552,7 +6565,7 @@ SE_Menghei = sgs.CreateTriggerSkill{
 				end
 			end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return true
 	end
@@ -6561,26 +6574,26 @@ SE_Menghei = sgs.CreateTriggerSkill{
 se_gaobai=sgs.CreateViewAsSkill{
 	name="se_gaobai",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_gaobaicard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@Gaobai") > 0
 	end,
 }
 
 se_gaobaicard = sgs.CreateSkillCard{
-	name = "se_gaobaicard", 
-	target_fixed = false, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_gaobaicard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return #targets == 0 and to_select:isMale()
 	end,
 	on_use = function(self, room, source, targets)
 		local dest = targets[1]
 		local count = source:getMark("@Gaobai")
 		if count == 0 then
-			return 
+			return
 		else
 			source:loseAllMarks("@Gaobai")
 		end
@@ -6635,11 +6648,11 @@ sgs.LoadTranslationTable{
 ["se_gaobai$"] = "image=image/animate/se_gaobai.png",
 ["$se_gaobai"] = "哥哥你真是个不得了的大骗子！是色狼，变态，妹控，萝莉控，而且还是抖M！每次见到我都对我性骚扰，还惹我生气！但无论什么时候都老好人的，又爱管闲事！...迟钝又不讲理，却很温柔...总是...总是欺骗我...但是我喜欢...那样的你...",
 [":se_gaobai"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以令一名男性角色的体力上限增加或减少至4，然后令其将体力补至体力上限。",
-["Ayase"] = "新垣绫濑", 
-["&Ayase"] = "新垣绫濑", 
+["Ayase"] = "新垣绫濑",
+["&Ayase"] = "新垣绫濑",
 ["@Ayase"] = "我的妹妹不可能这么可爱！",
-["#Ayase"] = "黑化天使", 
-["~Ayase"] = "再见了哥哥...我最..讨厌你了~", 
+["#Ayase"] = "黑化天使",
+["~Ayase"] = "再见了哥哥...我最..讨厌你了~",
 ["designer:Ayase"] = "Sword Elucidator",
 ["cv:Ayase"] = "早見沙織",
 ["illustrator:Ayase"] = "スカイ",
@@ -6648,10 +6661,10 @@ sgs.LoadTranslationTable{
 
 --あかりん
 SE_Touming = sgs.CreateTriggerSkill{
-	name = "SE_Touming",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseStart}, 
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Touming",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseStart},
+	on_trigger = function(self, event, player, data)
 		if player:getPhase() == sgs.Player_Discard then
 			if player:hasSkill(self:objectName()) then
 				local room = player:getRoom()
@@ -6678,7 +6691,7 @@ SE_Touming = sgs.CreateTriggerSkill{
 	end
 }
 
---[[SE_ToumingAF=sgs.CreateProhibitSkill{ 
+--[[SE_ToumingAF=sgs.CreateProhibitSkill{
 	name = "#SE_ToumingAF",
 	is_prohibited=function(self,from,to,card)
 		if to and to:hasSkill(self:objectName()) then
@@ -6710,9 +6723,9 @@ SE_ToumingNT = sgs.CreateTriggerSkill{
 }
 
 SE_Tuanzi = sgs.CreateTriggerSkill{
-	name = "SE_Tuanzi", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardUsed}, 
+	name = "SE_Tuanzi",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardUsed},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.CardUsed then
 			if player:getPhase() == sgs.Player_Play then
@@ -6744,10 +6757,10 @@ SE_Tuanzi = sgs.CreateTriggerSkill{
 
 --比企谷八幡
 SE_Zishang = sgs.CreateTriggerSkill{
-	name = "SE_Zishang",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Zishang",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageCaused then
@@ -6794,9 +6807,9 @@ SE_Zishang = sgs.CreateTriggerSkill{
 }
 
 SE_Zibi = sgs.CreateTriggerSkill{
-	name = "SE_Zibi", 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.CardUsed,sgs.EventPhaseEnd}, 
+	name = "SE_Zibi",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.CardUsed,sgs.EventPhaseEnd},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.CardUsed then
 			if player:getPhase() == sgs.Player_Play then
@@ -6858,11 +6871,11 @@ sgs.LoadTranslationTable{
 ["$SE_Zibi5"] = "呐，雪之下......和我...[雪乃]抱歉，那不可能。",
 ["$SE_Zibi6"] = "错的不是我，是社会！",
 [":SE_Zibi"] = "若你的出牌阶段没有指定其他角色为目标，则回合结束后你回复一点体力或摸取两张牌。",
-["Hikigaya"] = "比企谷八幡", 
-["&Hikigaya"] = "比企谷八幡", 
-["@Hikigaya"] = "果然我的青春恋爱喜剧搞错了", 
-["#Hikigaya"] = "现充爆裂使", 
-["~Hikigaya"] = "即使如此...我，我...我！...我想要真实。（俺は本物がほしい）", 
+["Hikigaya"] = "比企谷八幡",
+["&Hikigaya"] = "比企谷八幡",
+["@Hikigaya"] = "果然我的青春恋爱喜剧搞错了",
+["#Hikigaya"] = "现充爆裂使",
+["~Hikigaya"] = "即使如此...我，我...我！...我想要真实。（俺は本物がほしい）",
 ["designer:Hikigaya"] = "黑猫roy",
 ["cv:Hikigaya"] = "江口拓也",
 ["illustrator:Hikigaya"] = "Brain's Base",
@@ -6871,9 +6884,9 @@ sgs.LoadTranslationTable{
 --仓嶋千百合
 
 se_huanyuan_Pre = sgs.CreateTriggerSkill{
-	name = "#se_huanyuan_Pre", 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.EventPhaseEnd}, 
+	name = "#se_huanyuan_Pre",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.EventPhaseEnd},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.EventPhaseEnd then
 			if player:getPhase() == sgs.Player_Finish then
@@ -6931,26 +6944,26 @@ se_huanyuancard = sgs.CreateSkillCard{
 			room:setPlayerProperty(targets[1], "maxhp", sgs.QVariant(Maxhp))
 			room:setPlayerProperty(targets[1], "hp", sgs.QVariant(hp))
 		end
-		room:setPlayerFlag(source,"se_huanyuan_used")		
+		room:setPlayerFlag(source,"se_huanyuan_used")
 	end
 }
 
 se_chengling=sgs.CreateViewAsSkill{
 	name="se_chengling",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_chenglingcard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@LimeBell") > 0
 	end,
 }
 
 se_chenglingcard = sgs.CreateSkillCard{
-	name = "se_chenglingcard", 
-	target_fixed = false, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_chenglingcard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return #targets < 2 and to_select:objectName() ~= sgs.Self:objectName()
 	end,
 	feasible = function(self, targets)
@@ -7003,7 +7016,7 @@ se_chenglingMark = sgs.CreateTriggerSkill{
 --[[
 SE_Huwei = sgs.CreateTriggerSkill{
 	name = "SE_Huwei",
-	frequency = sgs.Skill_Limited, 
+	frequency = sgs.Skill_Limited,
 	events = {sgs.AskForPeachesDone},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -7026,7 +7039,7 @@ SE_Huwei = sgs.CreateTriggerSkill{
 			end
 		end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return true
 	end
@@ -7061,11 +7074,11 @@ sgs.LoadTranslationTable{
 ["$se_chengling1"] = "我之所以对你言听计从，是为了提高必杀技的级别，扩展可以倒流的时间。然后，就是瞄准了今天这个唯一的机会。我从来都没有成为过你的伙伴！",
 ["$se_chengling2"] = "柠檬召唤！",
 [":se_chengling"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以令至多两名其他角色将武将牌、体力和体力上限恢复至游戏开始时的状态，然后将觉醒复原。",
-["Chiyuri"] = "仓嶋千百合", 
-["&Chiyuri"] = "仓嶋千百合", 
-["@Chiyuri"] = "加速世界", 
-["#Chiyuri"] = "时间逆流", 
-["~Chiyuri"] = "为什么...会变成这样啊！为什么...非得被说得那么过分！", 
+["Chiyuri"] = "仓嶋千百合",
+["&Chiyuri"] = "仓嶋千百合",
+["@Chiyuri"] = "加速世界",
+["#Chiyuri"] = "时间逆流",
+["~Chiyuri"] = "为什么...会变成这样啊！为什么...非得被说得那么过分！",
 ["designer:Chiyuri"] = "昂翼天使",
 ["cv:Chiyuri"] = "豊崎愛生",
 ["illustrator:Chiyuri"] = "SUNRISE",
@@ -7074,7 +7087,7 @@ sgs.LoadTranslationTable{
 --艾·亚斯汀
 SE_Shouzang = sgs.CreateTriggerSkill{
 	name = "SE_Shouzang",
-	frequency = sgs.Skill_NotFrequent, 
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -7105,7 +7118,7 @@ SE_Shouzang = sgs.CreateTriggerSkill{
 				end
 			end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return true
 	end
@@ -7113,7 +7126,7 @@ SE_Shouzang = sgs.CreateTriggerSkill{
 
 SE_Xiangren = sgs.CreateTriggerSkill{
 	name = "SE_Xiangren",
-	frequency = sgs.Skill_NotFrequent, 
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying,sgs.Damaged, sgs.Death},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -7159,7 +7172,7 @@ SE_Xiangren = sgs.CreateTriggerSkill{
 				end
 			end
 		end
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return true
 	end
@@ -7167,7 +7180,7 @@ SE_Xiangren = sgs.CreateTriggerSkill{
 
 SE_Shenmin = sgs.CreateTriggerSkill{
 	name = "SE_Shenmin",
-	frequency = sgs.Skill_Compulsory, 
+	frequency = sgs.Skill_Compulsory,
 	events = {sgs.Death},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -7194,7 +7207,7 @@ SE_Shenmin = sgs.CreateTriggerSkill{
 			end
 		end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target~= nil
 	end
@@ -7202,8 +7215,8 @@ SE_Shenmin = sgs.CreateTriggerSkill{
 
 
 SE_ShenminKeep = sgs.CreateMaxCardsSkill{
-	name = "#SE_ShenminKeep", 
-	extra_func = function(self, target) 
+	name = "#SE_ShenminKeep",
+	extra_func = function(self, target)
 		if target:getMark("@shenmin") > 0 then
 			local shenmin = target:getMark("@shenmin")
 			return shenmin
@@ -7241,11 +7254,11 @@ sgs.LoadTranslationTable{
 [":SE_ShenminAll"] = "你处于神悯之下。",
 ["$SE_Shenmin"] = "如果神抛弃了世界，我就去拯救这个世界。",
 [":SE_Shenmin"] = "<font color=\"blue\"><b>锁定技,</b></font>每当一名角色死亡后，你回复1点体力；你的手牌上限+X（X为已死亡的人数）。",
-["AiAstin"] = "艾", 
-["&AiAstin"] = "艾", 
-["@AiAstin"] = "神不在的星期天", 
-["#AiAstin"] = "终焉的墓旅人", 
-["~AiAstin"] = "...我出发了！", 
+["AiAstin"] = "艾",
+["&AiAstin"] = "艾",
+["@AiAstin"] = "神不在的星期天",
+["#AiAstin"] = "终焉的墓旅人",
+["~AiAstin"] = "...我出发了！",
 ["designer:AiAstin"] = "黑猫roy",
 ["cv:AiAstin"] = "豊崎愛生",
 ["illustrator:AiAstin"] = "Madhouse",
@@ -7254,10 +7267,10 @@ sgs.LoadTranslationTable{
 --鎖部葉風
 
 SE_Gongpin = sgs.CreateTriggerSkill{
-	name = "SE_Gongpin",  
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.Damage, sgs.EventLoseSkill},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Gongpin",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.Damage, sgs.EventLoseSkill},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.Damage then
@@ -7307,9 +7320,9 @@ SE_Gongpin = sgs.CreateTriggerSkill{
 se_jiejie=sgs.CreateViewAsSkill{
 	name="se_jiejie",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_jiejiecard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		if player:getMark("@MagicEquip") > 0 then
 			return true
@@ -7325,7 +7338,7 @@ se_jiejiecard = sgs.CreateSkillCard{
 	filter = function(self, targets, to_select) --必须
 		return #targets == 0 and to_select:getMark("@Kekkai") == 0
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		source:loseMark("@MagicEquip")
 		room:doLightbox("se_jiejie$", 800)
 		targets[1]:gainMark("@Kekkai")
@@ -7333,10 +7346,10 @@ se_jiejiecard = sgs.CreateSkillCard{
 }
 
 se_jiejieEffect = sgs.CreateTriggerSkill{
-	name = "#se_jiejieEffect",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "#se_jiejieEffect",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.DamageCaused then
 			local damage = data:toDamage()
@@ -7376,11 +7389,11 @@ sgs.LoadTranslationTable{
 ["$se_jiejie2"] = "不懂也无所谓！...",
 ["$se_jiejie3"] = "就算悖论而行！爱花！...我也不会让你回去！",
 [":se_jiejie"] = "出牌阶段，你可以弃置1枚“魔道具”标记并指定一名没有“结界”标记的角色，你令其获得1枚“结界”标记。每当拥有“结界”标记的角色受到伤害时，其须弃置1枚“结界”标记并令此伤害-1。",
-["Hakaze"] = "鎖部葉風", 
-["&Hakaze"] = "鎖部葉風", 
-["@Hakaze"] = "绝园的暴风雨", 
-["#Hakaze"] = "初始的魔法使", 
-["~Hakaze"] = "为什么...为什么会变成这样...我...我相信至今的理究竟是什么...", 
+["Hakaze"] = "鎖部葉風",
+["&Hakaze"] = "鎖部葉風",
+["@Hakaze"] = "绝园的暴风雨",
+["#Hakaze"] = "初始的魔法使",
+["~Hakaze"] = "为什么...为什么会变成这样...我...我相信至今的理究竟是什么...",
 ["designer:Hakaze"] = "Sword Elucidator",
 ["cv:Hakaze"] = "沢城みゆき",
 ["illustrator:Hakaze"] = "pixiv いやくん",
@@ -7390,10 +7403,10 @@ sgs.LoadTranslationTable{
 
 --五河琴里
 SE_Niepan = sgs.CreateTriggerSkill{
-	name = "SE_Niepan", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.Damaged},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Niepan",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.Damaged},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			room:broadcastSkillInvoke("SE_Niepan")
@@ -7410,7 +7423,7 @@ se_jiangui = sgs.CreateViewAsSkill{
 	view_as = function(self, cards)
 		local card = se_jianguicard:clone()
 		card:setSkillName(self:objectName())
-		return card 
+		return card
 	end,
 	enabled_at_play = function(self, player)
 		return not player:hasUsed("#se_jianguicard")
@@ -7420,7 +7433,7 @@ se_jianguicard = sgs.CreateSkillCard{
 	name = "se_jianguicard",
 	target_fixed = false,
 	will_throw = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 	if #targets <10 then
 			return to_select:objectName() ~= sgs.Self:objectName()
 		end
@@ -7439,7 +7452,7 @@ se_jianguicard = sgs.CreateSkillCard{
 			flame.nature = sgs.DamageStruct_Fire
 			room:damage(flame)
 		end
-		
+
 		for _,wore in ipairs(targets) do
 			if not wore:isNude() then
 				local id = room:askForCardChosen(source, wore, "hej", "se_jiangui")
@@ -7450,7 +7463,7 @@ se_jianguicard = sgs.CreateSkillCard{
 				room:throwCard(id, wore, source)
 			end
 		end
-		
+
 		source:drawCards(3)
 	end
 }
@@ -7550,18 +7563,18 @@ sgs.LoadTranslationTable{
 ["$SE_Wufan3"] = "来吧，我们还能继续厮杀呢。这可是你期盼的战斗，是你希望的争斗啊！",
 ["$SE_Wufan4"] = "喜欢！我也最喜欢你了！最喜欢哥哥了！是世界上最爱的人！",
 [":SE_Wufan"] = "游戏开始时，你获得3枚 Efreet 标记；每当你处于濒死状态被救回，你获得一枚 Efreet 标记。回合开始前，若你没有 Efreet 标记，你失去所有技能。准备阶段，你可以弃置一个 Efreet 标记，并获得<font color=\"brown\"><b>【涅槃】</b></font>和<font color=\"brown\"><b>【灼烂歼鬼（Camael）】</b></font>\n\n<font weight=2><font color=\"brown\"><b>涅槃「伤势复原」：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"blue\"><b>锁定技,</b></font>你受到一次伤害后，回复一点体力。\n\n<font weight=2><font color=\"brown\"><b>奸鬼「灼烂歼鬼（Camael）」：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定任意名其他角色，对这些角色造成一点火焰伤害，弃置这些角色各两张牌，然后摸三张牌。",
-["Kotori"] = "五河琴里", 
-["&Kotori"] = "五河琴里", 
-["@Kotori"] = "Date A Live", 
-["#Kotori"] = "炎魔妹妹", 
-["~Kotori"] = "（士道）求你了...不要从我这里夺走琴里！她救了我...没有她，就不会有现在的我！...求你了！", 
+["Kotori"] = "五河琴里",
+["&Kotori"] = "五河琴里",
+["@Kotori"] = "Date A Live",
+["#Kotori"] = "炎魔妹妹",
+["~Kotori"] = "（士道）求你了...不要从我这里夺走琴里！她救了我...没有她，就不会有现在的我！...求你了！",
 ["designer:Kotori"] = "御坂20623",
 ["cv:Kotori"] = "竹達彩奈",
 ["illustrator:Kotori"] = "ちゃわん",
-["Kotori_white"] = "五河琴里", 
-["&Kotori_white"] = "五河琴里", 
-["#Kotori_white"] = "软妹妹", 
-["~Kotori_white"] = "呜呜...好可怕...病毒...好可怕...", 
+["Kotori_white"] = "五河琴里",
+["&Kotori_white"] = "五河琴里",
+["#Kotori_white"] = "软妹妹",
+["~Kotori_white"] = "呜呜...好可怕...病毒...好可怕...",
 ["designer:Kotori_white"] = "御坂20623",
 ["cv:Kotori_white"] = "竹達彩奈",
 ["illustrator:Kotori_white"] = "...",
@@ -7603,10 +7616,10 @@ SE_Baskervilles_make = sgs.CreateTriggerSkill{
 --巴斯克维尔小队
 --巴斯克维尔-亚里亚
 SE_Shuangqiang = sgs.CreateTriggerSkill{
-	name = "SE_Shuangqiang",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Shuangqiang",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageCaused then
@@ -7657,10 +7670,10 @@ SE_Shuangqiang = sgs.CreateTriggerSkill{
 }
 
 SE_Xinlai = sgs.CreateTriggerSkill{
-	name = "SE_Xinlai",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damage},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Xinlai",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damage},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.Damage then
@@ -7680,7 +7693,7 @@ SE_Xinlai = sgs.CreateTriggerSkill{
 										local newdata = sgs.QVariant()
 										newdata:setValue(guy)
 										local prompt = string.format("Give Card to:"..guy:getGeneralName())
-										local choice = room:askForChoice(p,"SE_Xinlai",prompt.."+".."SE_Xinlai_Not", newdata)	
+										local choice = room:askForChoice(p,"SE_Xinlai",prompt.."+".."SE_Xinlai_Not", newdata)
 										if choice == prompt then
 											guy:drawCards(damage_num)
 											num = num + 1
@@ -7716,16 +7729,16 @@ sgs.LoadTranslationTable{
 ["$SE_Xinlai2"] = "万一遇到危机，我会保护你的！",
 ["$SE_Xinlai3"] = "武侦第一条·相信同伴，拯救同伴！",
 [":SE_Xinlai"] = "<font color=\"Sky Blue\"><b>萌战技，3，武侦，</b></font>每当一名武侦角色造成伤害后，若其参战，你可以令任意数量的武侦角色各摸X张牌（X为此伤害的数值）。",
-["#SE_Xinlai_Draw"] = "令该角色摸牌", 
-["Give Card to:Aria"] = "令亚里亚摸牌", 
-["Give Card to:Reki"] = "令雷姬摸牌", 
-["Give Card to:Riko"] = "令理子摸牌", 
-["Give Card to:Shirayuki"] = "令白雪摸牌", 
-["Aria"] = "亚里亚", 
-["&Aria"] = "亚里亚", 
-["@Aria"] = "绯弹的亚里亚", 
-["#Aria"] = "双枪双剑", 
-["~Aria"] = "我都这样说了！为什么...为什么你还不肯相信我！", 
+["#SE_Xinlai_Draw"] = "令该角色摸牌",
+["Give Card to:Aria"] = "令亚里亚摸牌",
+["Give Card to:Reki"] = "令雷姬摸牌",
+["Give Card to:Riko"] = "令理子摸牌",
+["Give Card to:Shirayuki"] = "令白雪摸牌",
+["Aria"] = "亚里亚",
+["&Aria"] = "亚里亚",
+["@Aria"] = "绯弹的亚里亚",
+["#Aria"] = "双枪双剑",
+["~Aria"] = "我都这样说了！为什么...为什么你还不肯相信我！",
 ["designer:Aria"] = "Sword Elucidator",
 ["cv:Aria"] = "钉宫理惠",
 ["illustrator:Aria"] = "NorthAbyssor",
@@ -7733,10 +7746,10 @@ sgs.LoadTranslationTable{
 
 --巴斯克维尔-雷姬
 SE_Juji_Reki = sgs.CreateTriggerSkill{
-	name = "SE_Juji_Reki",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.TargetConfirmed, sgs.SlashProceed}, 
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Juji_Reki",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.TargetConfirmed, sgs.SlashProceed},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.TargetConfirmed then
 			local use = data:toCardUse()
@@ -7778,10 +7791,10 @@ SE_Juji_Reki = sgs.CreateTriggerSkill{
 }
 
 SE_Zhiyuan = sgs.CreateTriggerSkill{
-	name = "SE_Zhiyuan",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damage},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Zhiyuan",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damage},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.Damage then
@@ -7802,7 +7815,7 @@ SE_Zhiyuan = sgs.CreateTriggerSkill{
 								local newdata = sgs.QVariant()
 								newdata:setValue(guy)
 								local prompt = string.format("Make Judge on:"..guy:getGeneralName())
-								local choice = room:askForChoice(p,"SE_Zhiyuan",prompt.."+".."SE_Zhiyuan_Not", newdata)	
+								local choice = room:askForChoice(p,"SE_Zhiyuan",prompt.."+".."SE_Zhiyuan_Not", newdata)
 								if choice == prompt then
 									local judge = sgs.JudgeStruct()
 									judge.pattern = ".|spade"
@@ -7810,7 +7823,7 @@ SE_Zhiyuan = sgs.CreateTriggerSkill{
 										judge.pattern = "."
 									end
 									judge.good = true
-									judge.negative = false	
+									judge.negative = false
 									judge.reason = self:objectName()
 									judge.who = guy
 									judge.play_animation = true
@@ -7863,15 +7876,15 @@ sgs.LoadTranslationTable{
 ["$SE_Zhiyuan3"] = "请冷静。失去冷静的人只能发挥其五成的能力。",
 [":SE_Zhiyuan"] = "<font color=\"Sky Blue\"><b>萌战技，武侦，3，</b></font>每当你使用【杀】造成一次伤害后，你可以选择一项：1.令任意数量的参战角色（目标角色必须包括其他角色）各进行一次判定：若结果为♠，该角色获得一个额外的回合，然后若没有角色判定为♠，你弃置受到伤害角色的一张牌。2.令为参战角色的你进行一次判定：若结果为黑色，你获得一个额外的回合，然后若没有角色判定为黑色，你弃置受到伤害角色的一张牌。",
 ["#SE_Zhiyuan_Judge"] = "支援",
-["Make Judge on:Aria"] = "令亚里亚判定", 
-["Make Judge on:Reki"] = "令雷姬判定", 
-["Make Judge on:Riko"] = "令理子判定", 
-["Make Judge on:Shirayuki"] = "令白雪判定", 
-["Reki"] = "雷姬", 
-["&Reki"] = "雷姬", 
+["Make Judge on:Aria"] = "令亚里亚判定",
+["Make Judge on:Reki"] = "令雷姬判定",
+["Make Judge on:Riko"] = "令理子判定",
+["Make Judge on:Shirayuki"] = "令白雪判定",
+["Reki"] = "雷姬",
+["&Reki"] = "雷姬",
 ["@Reki"] = "绯弹的亚里亚",
-["#Reki"] = "风の狙击手", 
-["~Reki"] = "...", 
+["#Reki"] = "风の狙击手",
+["~Reki"] = "...",
 ["designer:Reki"] = "Sword Elucidator",
 ["cv:Reki"] = "石原夏織",
 ["illustrator:Reki"] = "暴力にゃ長",
@@ -7879,9 +7892,9 @@ sgs.LoadTranslationTable{
 
 --右代宮縁寿
 SE_QizhuangCompulsory = sgs.CreateTriggerSkill{
-	name = "#SE_QizhuangCompulsory", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.GameStart, sgs.EventPhaseStart,sgs.EventPhaseEnd}, 
+	name = "#SE_QizhuangCompulsory",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.GameStart, sgs.EventPhaseStart,sgs.EventPhaseEnd},
 	on_trigger = function(self, event, player, data)
 		if event == sgs.GameStart then
 			local room = player:getRoom()
@@ -7931,9 +7944,9 @@ local function  QizhuangTarget(room, player)
 end
 ]]
 SE_Qizhuang = sgs.CreateTriggerSkill{
-	name = "SE_Qizhuang", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseEnd,sgs.DamageInflicted, sgs.Death}, 
+	name = "SE_Qizhuang",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseEnd,sgs.DamageInflicted, sgs.Death},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local ange = room:findPlayerBySkillName("SE_Qizhuang")
@@ -8158,11 +8171,11 @@ SE_Qizhuang = sgs.CreateTriggerSkill{
 		return target ~= nil
 	end
 }
-			
+
 SE_Fanhun = sgs.CreateTriggerSkill{
-	name = "SE_Fanhun", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseStart}, 
+	name = "SE_Fanhun",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			local room = player:getRoom()
@@ -8202,7 +8215,7 @@ SE_Fanhun = sgs.CreateTriggerSkill{
 					for _,p in sgs.qlist(room:getAlivePlayers()) do
 						if p:getMark("@SE_Fanhun_ed") > 0 then
 							if player:getMark("@Mahou_ai") > 0 then
-								local choice = room:askForChoice(player,"Use_Mahou+Use_Mahou_Not", data)	
+								local choice = room:askForChoice(player,"Use_Mahou+Use_Mahou_Not", data)
 								if choice == "Use_Mahou" then
 									player:loseMark("@Mahou_ai")
 								else
@@ -8296,58 +8309,58 @@ extension:addToSkills(Asmodeus)
 
 
 sgs.LoadTranslationTable{
-["Lucifer"] = "路西法 - 令该角色受到相同伤害。", 
-["Leviathan"] = "雷维阿坦 - 1/2概率弃掉该角色的两件装备。", 
-["Satan"] = "撒旦 - 1/2概率令你对该角色造成一点伤害。", 
-["Belphegor"] = "贝露菲格露 - 1/2概率令该角色造成的伤害失效。", 
-["Mammon"] = "玛蒙 - 令你获得一个【爱の魔法】标记。", 
-["Beelzebub"] = "贝露赛布布 - 1/2概率令该角色摸2张牌。", 
-["Asmodeus"] = "阿丝磨德乌丝 - 1/2概率令你和该角色各回复一点体力。（在自己身上时为1/4）", 
-["@Lucifer"] = "路西法", 
-["@Leviathan"] = "雷维阿坦", 
-["@Satan"] = "撒旦", 
-["@Belphegor"] = "贝露菲格露", 
-["@Mammon"] = "玛蒙", 
-["@Beelzebub"] = "贝露赛布布", 
-["@Asmodeus"] = "阿丝磨德乌丝", 
-["@Mahou_ai"] = "爱の魔法", 
-["@SE_Fanhun_ed"] = "返魂状态", 
-["Lucifer$"] = "image=image/animate/Lucifer.png", 
-["Leviathan$"] = "image=image/animate/Leviathan.png", 
-["Satan$"] = "image=image/animate/Satan.png", 
-["Belphegor$"] = "image=image/animate/Belphegor.png", 
-["Mammon$"] = "image=image/animate/Mammon.png", 
-["Beelzebub$"] = "image=image/animate/Beelzebub.png", 
-["Asmodeus$"] = "image=image/animate/Asmodeus.png", 
+["Lucifer"] = "路西法 - 令该角色受到相同伤害。",
+["Leviathan"] = "雷维阿坦 - 1/2概率弃掉该角色的两件装备。",
+["Satan"] = "撒旦 - 1/2概率令你对该角色造成一点伤害。",
+["Belphegor"] = "贝露菲格露 - 1/2概率令该角色造成的伤害失效。",
+["Mammon"] = "玛蒙 - 令你获得一个【爱の魔法】标记。",
+["Beelzebub"] = "贝露赛布布 - 1/2概率令该角色摸2张牌。",
+["Asmodeus"] = "阿丝磨德乌丝 - 1/2概率令你和该角色各回复一点体力。（在自己身上时为1/4）",
+["@Lucifer"] = "路西法",
+["@Leviathan"] = "雷维阿坦",
+["@Satan"] = "撒旦",
+["@Belphegor"] = "贝露菲格露",
+["@Mammon"] = "玛蒙",
+["@Beelzebub"] = "贝露赛布布",
+["@Asmodeus"] = "阿丝磨德乌丝",
+["@Mahou_ai"] = "爱の魔法",
+["@SE_Fanhun_ed"] = "返魂状态",
+["Lucifer$"] = "image=image/animate/Lucifer.png",
+["Leviathan$"] = "image=image/animate/Leviathan.png",
+["Satan$"] = "image=image/animate/Satan.png",
+["Belphegor$"] = "image=image/animate/Belphegor.png",
+["Mammon$"] = "image=image/animate/Mammon.png",
+["Beelzebub$"] = "image=image/animate/Beelzebub.png",
+["Asmodeus$"] = "image=image/animate/Asmodeus.png",
 ["SE_Fanhun$"] = "image=image/animate/SE_Fanhun.png",
-["$Lucifer1"] = "...", 
-["$Lucifer2"] = "...", 
-["$Lucifer3"] = "...", 
-["$Lucifer4"] = "...", 
-["$Leviathan1"] = "...", 
-["$Leviathan2"] = "...", 
-["$Leviathan3"] = "...", 
-["$Satan1"] = "...", 
-["$Satan2"] = "...", 
-["$Satan3"] = "...", 
-["$Belphegor1"] = "...", 
+["$Lucifer1"] = "...",
+["$Lucifer2"] = "...",
+["$Lucifer3"] = "...",
+["$Lucifer4"] = "...",
+["$Leviathan1"] = "...",
+["$Leviathan2"] = "...",
+["$Leviathan3"] = "...",
+["$Satan1"] = "...",
+["$Satan2"] = "...",
+["$Satan3"] = "...",
+["$Belphegor1"] = "...",
 ["$Belphegor2"] = "...",
-["$Belphegor3"] = "...", 
-["$Mammon1"] = "...", 
-["$Mammon2"] = "...", 
-["$Mammon3"] = "...", 
-["$Mammon4"] = "...", 
+["$Belphegor3"] = "...",
+["$Mammon1"] = "...",
+["$Mammon2"] = "...",
+["$Mammon3"] = "...",
+["$Mammon4"] = "...",
 ["$Mammon5"] = "...",
-["$Beelzebub1"] = "...", 
-["$Beelzebub2"] = "...", 
-["$Beelzebub3"] = "...", 
-["$Asmodeus1"] = "...", 
-["$Asmodeus2"] = "...", 
-["$Asmodeus3"] = "...", 
+["$Beelzebub1"] = "...",
+["$Beelzebub2"] = "...",
+["$Beelzebub3"] = "...",
+["$Asmodeus1"] = "...",
+["$Asmodeus2"] = "...",
+["$Asmodeus3"] = "...",
 ["SE_Fanhun_choose"] = "请选择返魂的目标",
 ["Use_Mahou"] = "使用【爱の魔法】标记维持其存在",
 ["Use_Mahou_Not"] = "不维持其存在",
-["SE_Qizhuang"] = "七桩【炼狱七桩】", 
+["SE_Qizhuang"] = "七桩【炼狱七桩】",
 ["$SE_Qizhuang1"] = "七姐妹！",
 ["$SE_Qizhuang2"] = "炼狱的七姐妹！",
 ["$SE_Qizhuang3"] = "那么，再见了。See you again.",
@@ -8356,7 +8369,7 @@ sgs.LoadTranslationTable{
 ["$SE_Qizhuang6"] = "给我适可而止吧！",
 ["$SE_Qizhuang7"] = "Good night. Have a nice dream.",
 [":SE_Qizhuang"] = "<font color=\"blue\"><b>锁定技,</b></font>游戏开始时，你获得7枚“炼狱桩”标记；你跳过你的出牌阶段；弃牌阶段结束时，若你的手牌小于X，你将手牌补至X-2（X为场上的存活角色）；每当拥有“炼狱桩”标记的角色死亡后，你获得其对应的“炼狱桩”标记。结束阶段结束时，你可以令至多四名其他角色分别获得你的“路西法”“雷维阿坦”“撒旦”“贝露菲格露”标记；结束阶段结束时，你可以令至多两名角色分别获得你的“贝露赛布布”“阿丝磨德乌丝”标记。每当拥有“炼狱桩”标记的角色造成伤害时，你可以获得此标记并根据此标记执行以下效果：\n路西法 - 该角色受到等同于其造成的伤害。\n雷维阿坦 - 你有1/2的几率弃置该角色的两张装备区里的牌。\n撒旦 - 你有1/2几率对该角色造成1点伤害。\n贝露菲格露 -  你有1/2几率防止此伤害。\n贝露赛布布 - 你有1/2几率令该角色摸两张牌。\n阿丝磨德乌丝 - 你有1/2几率令你与该角色各回复1点体力。\n玛蒙 - 你获得1枚“爱の魔法”标记。 \n◆7枚“炼狱桩”标记分别为“路西法”“雷维阿坦”“撒旦”“贝露菲格露”“贝露赛布布”“阿丝磨德乌丝”“玛蒙”标记。",
-["SE_Fanhun"] = "返魂【爱の魔法】", 
+["SE_Fanhun"] = "返魂【爱の魔法】",
 ["$SE_Fanhun1"] = "把憎恨强加给别人的根本就不是魔法。",
 ["$SE_Fanhun2"] = "真羡慕大家...",
 ["$SE_Fanhun3"] = "这是非常美妙的奇迹。",
@@ -8365,11 +8378,11 @@ sgs.LoadTranslationTable{
 ["$SE_Fanhun6"] = "我是安琪·贝阿朵莉切！",
 ["$SE_Fanhun7"] = "（樱太郎）呜溜~做到了呐！",
 [":SE_Fanhun"] = "回合开始时，你可以令一名已死亡的角色复活并将其体力自然回复至2点，然后令其获得一个额外的回合。结束阶段开始时，你可以弃置1枚“爱の魔法”标记并令该角色存活至你的下一回合初，否则该角色死亡。",
-["Ange"] = "右代宮縁寿", 
-["&Ange"] = "右代宮縁寿", 
-["@Ange"] = "海猫鸣泣之时", 
-["#Ange"] = "反魂の魔女", 
-["~Ange"] = "对不起，哥哥...", 
+["Ange"] = "右代宮縁寿",
+["&Ange"] = "右代宮縁寿",
+["@Ange"] = "海猫鸣泣之时",
+["#Ange"] = "反魂の魔女",
+["~Ange"] = "对不起，哥哥...",
 ["designer:Ange"] = "Sword Elucidator",
 ["cv:Ange"] = "佐藤利奈",
 ["illustrator:Ange"] = "時火",
@@ -8378,8 +8391,8 @@ sgs.LoadTranslationTable{
 
 
 SE_Jiepi = sgs.CreateTriggerSkill{
-        name = "SE_Jiepi", 
-        frequency = sgs.Skill_Compulsory, 
+        name = "SE_Jiepi",
+        frequency = sgs.Skill_Compulsory,
         events = {sgs.CardEffect, sgs.CardEffected},
         on_trigger = function(self, event, player, data)
 			local effect = data:toCardEffect()
@@ -8402,7 +8415,7 @@ SE_Jiepi = sgs.CreateTriggerSkill{
 				end
 			end
 			return false
-        end, 
+        end,
         can_trigger = function(self, target)
 			return target
         end
@@ -8411,19 +8424,19 @@ SE_Jiepi = sgs.CreateTriggerSkill{
 se_zhanjing=sgs.CreateViewAsSkill{
 	name="se_zhanjing",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_zhanjingcard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
-		return not player:hasFlag("se_zhanjing_used") 
+		return not player:hasFlag("se_zhanjing_used")
 	end,
 }
 
 se_zhanjingcard = sgs.CreateSkillCard{
-	name = "se_zhanjingcard", 
-	target_fixed = false, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_zhanjingcard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return #targets == 0
 	end,
 	on_use = function(self, room, source, targets)
@@ -8471,8 +8484,8 @@ Rivaille:addSkill(SE_Jiepi)
 Rivaille:addSkill(se_zhanjing)
 
 sgs.LoadTranslationTable{
-["se_zhanjing1$"] = "image=image/animate/se_zhanjing1.png", 
-["se_zhanjing2$"] = "image=image/animate/se_zhanjing2.png", 
+["se_zhanjing1$"] = "image=image/animate/se_zhanjing1.png",
+["se_zhanjing2$"] = "image=image/animate/se_zhanjing2.png",
 ["SE_Jiepi"] = "洁癖",
 ["$SE_Jiepi1"] = "切...脏死了...",
 ["$SE_Jiepi2"] = "...跟没打扫一样...全部重做！...",
@@ -8482,11 +8495,11 @@ sgs.LoadTranslationTable{
 ["$se_zhanjing2"] = "给我放老实点。不然我就没办法...漂亮地切下你的肉了好嘛。",
 ["$se_zhanjing3"] = "（斩颈声）",
 [":se_zhanjing"] = "<font color=\"green\"><b>出牌阶段限一次,</b></font>你可以向右依次交换位置至一名角色右侧，然后弃掉该角色一半（向下取整）数量的手牌。若该角色的体力值大于你的体力值，你令其失去一点体力；若该角色体力上限大于你的体力上限，你令其失去一点体力上限。若该角色体力值和体力上限均不大于你，你对其造成一点伤害。",
-["Rivaille"] = "利维尔", 
-["&Rivaille"] = "利维尔", 
-["@Rivaille"] = "进击的巨人", 
-["#Rivaille"] = "兵长", 
-["~Rivaille"] = "...我不可能知道答案，一直以来都是如此。不管你是相信自己的力量，还是相信那些值得信赖的伙伴所作出的选择，其对应的结果，任何人都不可能预见到。", 
+["Rivaille"] = "利维尔",
+["&Rivaille"] = "利维尔",
+["@Rivaille"] = "进击的巨人",
+["#Rivaille"] = "兵长",
+["~Rivaille"] = "...我不可能知道答案，一直以来都是如此。不管你是相信自己的力量，还是相信那些值得信赖的伙伴所作出的选择，其对应的结果，任何人都不可能预见到。",
 ["designer:Rivaille"] = "御坂20623",
 ["cv:Rivaille"] = "神谷浩史",
 ["illustrator:Rivaille"] = "NA2-A5",
@@ -8497,24 +8510,24 @@ sgs.LoadTranslationTable{
 se_poyi=sgs.CreateViewAsSkill{
 	name="se_poyi",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_poyicard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
-		return not player:hasFlag("se_poyi_used") 
+		return not player:hasFlag("se_poyi_used")
 	end,
 }
 
 
 
 se_poyicard = sgs.CreateSkillCard{
-	name = "se_poyicard", 
-	target_fixed = true, 
-	will_throw = true, 
+	name = "se_poyicard",
+	target_fixed = true,
+	will_throw = true,
 	on_use = function(self, room, source, targets)
 		if source:hasFlag("se_poyi_used")  then return end
 		local AIList = sgs.SPlayerList()
-		for _,p in sgs.qlist(room:getOtherPlayers(source)) do	
+		for _,p in sgs.qlist(room:getOtherPlayers(source)) do
 			if p:getAI() ~= nil then
 				AIList:append(p)
 			end
@@ -8522,7 +8535,7 @@ se_poyicard = sgs.CreateSkillCard{
 		if AIList:length() == 0 then
 			local log1 =  sgs.LogMessage()
 			log1.type = "#se_poyi_NOAI"
-			room:sendLog(log1)	
+			room:sendLog(log1)
 			return
 		end
 		local target1 = room:askForPlayerChosen(source, AIList, "se_poyi1")
@@ -8598,7 +8611,7 @@ Asagi:addSkill(SE_Guanli)
 
 
 sgs.LoadTranslationTable{
-["se_poyi$"] = "image=image/animate/se_poyi.png", 
+["se_poyi$"] = "image=image/animate/se_poyi.png",
 ["#se_poyi_Reset"] = "%from 清除了 %arg 的AI的意识形态",
 ["#se_poyi_NOAI"] = "场上没有AI角色。",
 ["se_poyi"] = "破译",
@@ -8615,11 +8628,11 @@ sgs.LoadTranslationTable{
 ["Gl_draw"] = "摸牌阶段",
 ["Gl_play"] = "出牌阶段",
 ["Gl_discard"] = "弃牌阶段",
-["Asagi"] = "藍羽浅葱", 
-["&Asagi"] = "藍羽浅葱", 
-["@Asagi"] = "噬血狂袭", 
-["#Asagi"] = "电子の女帝", 
-["~Asagi"] = "（古城）别过来，浅葱！...", 
+["Asagi"] = "藍羽浅葱",
+["&Asagi"] = "藍羽浅葱",
+["@Asagi"] = "噬血狂袭",
+["#Asagi"] = "电子の女帝",
+["~Asagi"] = "（古城）别过来，浅葱！...",
 ["designer:Asagi"] = "Sword Elucidator",
 ["cv:Asagi"] = "瀬戸麻沙美",
 ["illustrator:Asagi"] = "",
@@ -8640,7 +8653,7 @@ function askForChooseSkill(riko)
 	for i=1, #all_generals do
 		if all_generals[i]=="Ushio" or all_generals[i]=="Nico" or all_generals[i]=="rika2" or all_generals[i]=="mianma" or all_generals[i]=="Chiyo" or all_generals[i]=="Eugen" or all_generals[i]=="Tukasa" or  all_generals[i]=="Sayaka" or all_generals[i]=="Koishi" or all_generals[i]=="Mikoto" or all_generals[i]=="Natsume_Rin" or all_generals[i]=="Kazehaya" or all_generals[i]=="AiAstin" or all_generals[i]=="Reimu" or all_generals[i]=="Louise" then
 			table.remove(all_generals, i)
-			i = i - 1 
+			i = i - 1
 		end
 	end
 
@@ -8681,7 +8694,7 @@ function askForChooseSkill(riko)
 			end
 		end
 	end
-end 
+end
 
 SE_Yirong = sgs.CreateTriggerSkill{
     name = "SE_Yirong",
@@ -8750,9 +8763,9 @@ se_youhuocard = sgs.CreateSkillCard{
 						local newdata = sgs.QVariant()
 						newdata:setValue(guy)
 						local prompt = string.format("Allow to obtain card:"..guy:getGeneralName())
-						local choice2 = room:askForChoice(source,"Youhuo_Obtain",prompt.."+".."Youhuo_Obtain_Not", newdata)	
+						local choice2 = room:askForChoice(source,"Youhuo_Obtain",prompt.."+".."Youhuo_Obtain_Not", newdata)
 						if choice2 == prompt then
-							local card = room:askForCardChosen(guy,target,"he",self:objectName()) 
+							local card = room:askForCardChosen(guy,target,"he",self:objectName())
 							room:obtainCard(guy, card)
 							times = times + 1
 						end
@@ -8765,7 +8778,7 @@ se_youhuocard = sgs.CreateSkillCard{
 			re.who = source
 			room:recover(source, re, true)
 		end
-		room:setPlayerFlag(source,"se_youhuo_used")		
+		room:setPlayerFlag(source,"se_youhuo_used")
 	end
 }
 
@@ -8775,7 +8788,7 @@ Riko:addSkill(se_youhuo)
 Riko:addSkill("#SE_Baskervilles_make")
 
 sgs.LoadTranslationTable{
-["se_youhuo$"] = "image=image/animate/se_youhuo.png", 
+["se_youhuo$"] = "image=image/animate/se_youhuo.png",
 ["SE_Yirong"] = "易容",
 ["Buyaozhexie"] = "不要这些！",
 ["Meile"] = "再不选没了！",
@@ -8794,15 +8807,15 @@ sgs.LoadTranslationTable{
 ["Youhuo_Obtain_Not"] = "不令其获得牌。",
 ["se_youhuo_Obtain"] = "令武侦角色获得你的牌",
 ["se_youhuo_Recovery"] = "失去一点体力，并令理子恢复体力。",
-["Allow to obtain card:Aria"] = "令亚里亚获得目标的牌", 
-["Allow to obtain card:Reki"] = "令雷姬获得目标的牌", 
-["Allow to obtain card:Riko"] = "令理子获得目标的牌", 
-["Allow to obtain card:Shirayuki"] = "令白雪获得目标的牌", 
-["Riko"] = "理子", 
-["&Riko"] = "理子", 
-["@Riko"] = "绯弹的亚里亚", 
-["#Riko"] = "侦探科宅女", 
-["~Riko"] = "我不会再轻视你们，将视你们为同等的对手。所以，承诺过的约定一定会遵守。要是被我以外的人干掉了我课不会轻饶你们。au revoir！", 
+["Allow to obtain card:Aria"] = "令亚里亚获得目标的牌",
+["Allow to obtain card:Reki"] = "令雷姬获得目标的牌",
+["Allow to obtain card:Riko"] = "令理子获得目标的牌",
+["Allow to obtain card:Shirayuki"] = "令白雪获得目标的牌",
+["Riko"] = "理子",
+["&Riko"] = "理子",
+["@Riko"] = "绯弹的亚里亚",
+["#Riko"] = "侦探科宅女",
+["~Riko"] = "我不会再轻视你们，将视你们为同等的对手。所以，承诺过的约定一定会遵守。要是被我以外的人干掉了我课不会轻饶你们。au revoir！",
 ["designer:Riko"] = "幻胧之月",
 ["cv:Riko"] = "伊瀬茉莉也",
 ["illustrator:Riko"] = "North Abyssor",
@@ -8826,7 +8839,7 @@ SE_Qidan = sgs.CreateTriggerSkill{
 				player:gainMark("@Seven")
 			end
 		elseif event == sgs.EventPhaseStart then
-			if player:getPhase()==sgs.Player_Start and player:getMark("@Seven") > 0 then 
+			if player:getPhase()==sgs.Player_Start and player:getMark("@Seven") > 0 then
 				room:setPlayerFlag(player,"SE_Qidan_Seven")
 				if room:askForSkillInvoke(player, self:objectName(), data) then
 					local targets = room:getAlivePlayers()
@@ -8862,7 +8875,7 @@ SE_Shidan = sgs.CreateTriggerSkill{
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseStart then
-			if player:getPhase()==sgs.Player_Start and player:getMark("@Ten") > 0 then 
+			if player:getPhase()==sgs.Player_Start and player:getMark("@Ten") > 0 then
 				room:setPlayerFlag(player,"SE_Shidan_Ten")
 				if room:askForSkillInvoke(player, self:objectName(), data) then
 					local targets = room:getAlivePlayers()
@@ -8950,8 +8963,8 @@ Kurumi:addSkill(SE_Shidan)
 Kurumi:addSkill(SE_Badan)
 
 sgs.LoadTranslationTable{
-["SE_Shidan$"] = "image=image/animate/SE_Shidan.png", 
-["SE_Badan$"] = "image=image/animate/SE_Badan.png", 
+["SE_Shidan$"] = "image=image/animate/SE_Shidan.png",
+["SE_Badan$"] = "image=image/animate/SE_Badan.png",
 ["@Seven"] = "奇数回合",
 ["@Ten"] = "偶数回合",
 ["@Eight"] = "八弹",
@@ -8972,11 +8985,11 @@ sgs.LoadTranslationTable{
 [":SE_Badan"] = "<font color=\"red\"><b>限定技，</b></font>回合开始时，你可以将体力值回复至3，并重置你当前的回合为奇数或偶数。",
 ["SE_Badan_Odd"] = "设定为奇数回合",
 ["SE_Badan_Oven"] = "设定为偶数回合",
-["Kurumi"] = "时崎狂三", 
-["&Kurumi"] = "时崎狂三", 
-["@Kurumi"] = "Date A Live", 
-["#Kurumi"] = "NightMare", 
-["~Kurumi"] = "（士道）琴里，这样下去她真的会死的！用不杀精灵的方法解决问题，这才是拉塔托斯克吧！", 
+["Kurumi"] = "时崎狂三",
+["&Kurumi"] = "时崎狂三",
+["@Kurumi"] = "Date A Live",
+["#Kurumi"] = "NightMare",
+["~Kurumi"] = "（士道）琴里，这样下去她真的会死的！用不杀精灵的方法解决问题，这才是拉塔托斯克吧！",
 ["designer:Kurumi"] = "御坂20623",
 ["cv:Kurumi"] = "真田麻美",
 ["illustrator:Kurumi"] = "入绘由君（君君々）",
@@ -8991,7 +9004,7 @@ local function searchBaibianForSkill(card)
 	local suit = card:getSuit()
 	local number = card:getNumber()
 	if suit == sgs.Card_Spade then
-		
+
 		if number == 1 then return "zhuren"
 		elseif number == 2 then return "haixing"
 		elseif number == 3 then return "SE_Zhixing"
@@ -9005,9 +9018,9 @@ local function searchBaibianForSkill(card)
 		elseif number == 11 then return "taxian"
 		elseif number == 12 then return "goutong"
 		elseif number == 13 then return "kangfen" end
-		
+
 	elseif suit == sgs.Card_Club then
-		
+
 		if number == 1 then return "nangua"
 		elseif number == 2 then return "jixian"
 		elseif number == 3 then return "ningju"
@@ -9021,9 +9034,9 @@ local function searchBaibianForSkill(card)
 		elseif number == 11 then return "se_qianlei"
 		elseif number == 12 then return "se_shuacun"
 		elseif number == 13 then return "jinghua" end
-		
+
 	elseif suit == sgs.Card_Heart then
-		
+
 		if number == 1 then return "Huansha"
 		elseif number == 2 then return "SE_Shanguang"
 		elseif number == 3 then return "SE_Dixian"
@@ -9037,9 +9050,9 @@ local function searchBaibianForSkill(card)
 		elseif number == 11 then return "se_dushe"
 		elseif number == 12 then return "SE_Qifen"
 		elseif number == 13 then return "SE_Feiti" end
-		
+
 	elseif suit == sgs.Card_Diamond then
-		
+
 		if number == 1 then return "SE_Zishang"
 		elseif number == 2 then return "SE_Shouzang"
 		elseif number == 3 then return "SE_Shuangqiang"
@@ -9053,14 +9066,14 @@ local function searchBaibianForSkill(card)
 		elseif number == 11 then return "LLJ_reality"
 		elseif number == 12 then return "LuaJingming"
 		elseif number == 13 then return "luasaoshe" end
-		
+
 	end
 end
 
 SE_Baibian = sgs.CreateTriggerSkill{
-	name = "SE_Baibian", --必须 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.TurnStart, sgs.GameStart}, --必须 
+	name = "SE_Baibian", --必须
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.TurnStart, sgs.GameStart}, --必须
 	on_trigger = function(self, event, player, data) --必须
 		if player:isAlive() and player:hasSkill(self:objectName()) then
 			local room = player:getRoom()
@@ -9093,12 +9106,12 @@ SE_Baibian = sgs.CreateTriggerSkill{
 				end
 			end
 		end
-	end, 
+	end,
 }
 
 SE_Kuluo = sgs.CreateMaxCardsSkill{
-	name = "SE_Kuluo", 
-	extra_func = function(self, player) 
+	name = "SE_Kuluo",
+	extra_func = function(self, player)
 		if player:hasSkill(self:objectName()) then
 			return 52 - player:getHp()
 		end
@@ -9109,7 +9122,7 @@ Sakura:addSkill(SE_Baibian)
 Sakura:addSkill(SE_Kuluo)
 
 sgs.LoadTranslationTable{
-["SE_Baibian$"] = "image=image/animate/SE_Baibian.png", 
+["SE_Baibian$"] = "image=image/animate/SE_Baibian.png",
 ["SE_Baibian"] = "百变",
 ["$SE_Baibian1"] = "【盾】",
 ["$SE_Baibian2"] = "【风】",
@@ -9124,11 +9137,11 @@ sgs.LoadTranslationTable{
 ["SE_Kuluo"] = "库洛",
 ["$SE_Kuluo"] = "",
 [":SE_Kuluo"] = "<font color=\"blue\"><b>锁定技,</b></font>你的手牌上限为52。",
-["Sakura"] = "木之本樱", 
-["&Sakura"] = "木之本樱", 
-["@Sakura"] = "魔卡少女樱", 
-["#Sakura"] = "初代萌王", 
-["~Sakura"] = "【影】", 
+["Sakura"] = "木之本樱",
+["&Sakura"] = "木之本樱",
+["@Sakura"] = "魔卡少女樱",
+["#Sakura"] = "初代萌王",
+["~Sakura"] = "【影】",
 ["designer:Sakura"] = "幽灵;御坂;萝莉姬",
 ["cv:Sakura"] = "丹下桜",
 ["illustrator:Sakura"] = "",
@@ -9138,9 +9151,9 @@ sgs.LoadTranslationTable{
 
 --忍耐
 SE_Rennai = sgs.CreateTriggerSkill{
-	name = "SE_Rennai",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageInflicted, sgs.PreHpLost, sgs.EventPhaseStart, sgs.Death}, 
+	name = "SE_Rennai",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageInflicted, sgs.PreHpLost, sgs.EventPhaseStart, sgs.Death},
 	priority = 2,
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -9188,7 +9201,7 @@ se_qingqiangwei = sgs.CreateViewAsSkill{
 	view_as = function(self, cards)
 		local card = se_qingqiangweicard:clone()
 		card:setSkillName(self:objectName())
-		return card 
+		return card
 	end,
 	enabled_at_play = function(self, player)
 		return not player:hasUsed("#se_qingqiangweicard")
@@ -9222,10 +9235,10 @@ se_qingqiangweicard = sgs.CreateSkillCard{
 }
 
 SE_Zhanfang = sgs.CreateTriggerSkill{
-	name = "SE_Zhanfang",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Zhanfang",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.DamageCaused then
 			local damage = data:toDamage()
@@ -9262,7 +9275,7 @@ SE_Zhanfang = sgs.CreateTriggerSkill{
 
 SE_Huajian = sgs.CreateTriggerSkill{
 	name = "SE_Huajian",
-	frequency = sgs.Skill_Limited, 
+	frequency = sgs.Skill_Limited,
 	events = {sgs.Death},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -9302,15 +9315,15 @@ SE_Huajian = sgs.CreateTriggerSkill{
 }
 
 SE_Huajian_ed = sgs.CreateTriggerSkill{
-	name = "SE_Huajian_ed", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.CardsMoveOneTime, sgs.CardUsed}, 
+	name = "SE_Huajian_ed",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.CardsMoveOneTime, sgs.CardUsed},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.CardsMoveOneTime then
 			local move = data:toMoveOneTime()
 			local source = move.from
-			if source and source:objectName() == player:objectName() then	
+			if source and source:objectName() == player:objectName() then
 				if move.from_places:contains(sgs.Player_PlaceEquip) then
 					for _,card_id in sgs.qlist(move.card_ids) do
 						if sgs.Sanguosha:getCard(card_id):objectName() == "GreenRose" then
@@ -9350,9 +9363,9 @@ extension:addToSkills(SE_Zhanfang)
 extension:addToSkills(SE_Huajian_ed)
 
 sgs.LoadTranslationTable{
-["SE_Rennai$"] = "image=image/animate/SE_Rennai.png", 
-["se_qingqiangwei$"] = "image=image/animate/se_qingqiangwei.png", 
-["SE_Huajian$"] = "image=image/animate/SE_Huajian.png", 
+["SE_Rennai$"] = "image=image/animate/SE_Rennai.png",
+["se_qingqiangwei$"] = "image=image/animate/se_qingqiangwei.png",
+["SE_Huajian$"] = "image=image/animate/SE_Huajian.png",
 ["Yuzora_Qingqiangwei"] = "令优吉欧的青蔷薇加强。",
 ["SE_Rennai"] = "忍耐",
 ["$SE_Rennai"] = "",
@@ -9369,11 +9382,11 @@ sgs.LoadTranslationTable{
 ["SE_Huajian_ed"] = "化剑",
 ["$SE_Huajian_ed"] = "",
 [":SE_Huajian_ed"] = "每当“青蔷薇之剑”从你的手牌区打出、弃置或装备区移出时，你重新获得之。",
-["Eugeo"] = "优吉欧", 
-["&Eugeo"] = "优吉欧", 
-["@Eugeo"] = "刀剑神域", 
-["#Eugeo"] = "青の剑士", 
-["~Eugeo"] = "...", 
+["Eugeo"] = "优吉欧",
+["&Eugeo"] = "优吉欧",
+["@Eugeo"] = "刀剑神域",
+["#Eugeo"] = "青の剑士",
+["~Eugeo"] = "...",
 ["designer:Eugeo"] = "Sword Elucidator",
 ["cv:Eugeo"] = "",
 ["illustrator:Eugeo"] = "SL@原稿修羅場",
@@ -9382,10 +9395,10 @@ sgs.LoadTranslationTable{
 --古手梨花
 
 SE_Shenghua = sgs.CreateTriggerSkill{
-	name = "SE_Shenghua", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseStart},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Shenghua",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseStart},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:isAlive() then
 			if event == sgs.EventPhaseStart then
@@ -9412,10 +9425,10 @@ SE_Shenghua = sgs.CreateTriggerSkill{
 }
 
 SE_Wumai = sgs.CreateTriggerSkill{
-	name = "SE_Wumai", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damaged, sgs.DamageInflicted},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Wumai",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damaged, sgs.DamageInflicted},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Damaged then
 			if player:isAlive() and player:hasSkill(self:objectName()) then
@@ -9457,10 +9470,10 @@ SE_Wumai = sgs.CreateTriggerSkill{
 }
 
 SE_Poxiao = sgs.CreateTriggerSkill{
-	name = "SE_Poxiao", 
-	frequency = sgs.Skill_Wake, 
-	events = {sgs.EventPhaseStart},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Poxiao",
+	frequency = sgs.Skill_Wake,
+	events = {sgs.EventPhaseStart},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:isAlive() then
 			if event == sgs.EventPhaseStart then
@@ -9487,21 +9500,21 @@ SE_Poxiao = sgs.CreateTriggerSkill{
 }
 
 se_mipa = sgs.CreateViewAsSkill{
-	name = "se_mipa", 
+	name = "se_mipa",
 	n = 0,
 	view_as = function(self, cards)
 		return se_mipacard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getPile("Fragments"):length() >0
 	end,
 }
 
 se_mipacard = sgs.CreateSkillCard{
-	name = "se_mipacard", 
+	name = "se_mipacard",
 	target_fixed = false,
 	will_throw = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		return #targets == 0 and (to_select:getMark("@mipa_basic") == 0 or to_select:getMark("@mipa_notbasic") == 0)
 	end,
 	on_use = function(self, room, source, targets)
@@ -9533,10 +9546,10 @@ se_mipacard = sgs.CreateSkillCard{
 }
 
 SE_Mipa_ed = sgs.CreateTriggerSkill{
-	name = "#SE_Mipa_ed", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.EventPhaseStart, sgs.EventLoseSkill, sgs.Death},  
-	on_trigger = function(self, event, player, data) 
+	name = "#SE_Mipa_ed",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.EventPhaseStart, sgs.EventLoseSkill, sgs.Death},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:isAlive() then
 			if event == sgs.EventPhaseStart then
@@ -9593,8 +9606,8 @@ extension:addToSkills(se_mipa)
 Rika:addWakeTypeSkillForAudio("se_mipa")
 
 sgs.LoadTranslationTable{
-["SE_Poxiao$"] = "image=image/animate/SE_Poxiao.png", 
-["se_mipa$"] = "image=image/animate/se_mipa.png", 
+["SE_Poxiao$"] = "image=image/animate/SE_Poxiao.png",
+["se_mipa$"] = "image=image/animate/se_mipa.png",
 ["SE_Shenghua"] = "升华",
 ["$SE_Shenghua1"] = "要不要来上一拳让她吐出来？",
 ["$SE_Shenghua2"] = "不知为何感觉十分不爽呢！",
@@ -9622,11 +9635,11 @@ sgs.LoadTranslationTable{
 ["@mipa_notbasic"] = "咪啪-非基本牌",
 ["$se_mipa1"] = "（大梨花）咪啪~（小梨花）咪啪~（大梨花）咪啪~（小梨花）咪啪~（梨花合奏）咪啪~~~",
 [":se_mipa"] = "出牌阶段，你可以弃置1枚“碎片”并指定一名角色，直到你的下个回合开始前，你选择一项：令该角色不能使用或打出基本牌，或令该角色不能使用非锦囊牌。",
-["Rika"] = "古手梨花", 
-["&Rika"] = "古手梨花", 
-["@Rika"] = "寒蝉鸣泣之时", 
-["#Rika"] = "御社神の巫女", 
-["~Rika"] = "（背景音：蝉鸣）今天，是举行绵流祭的日子...", 
+["Rika"] = "古手梨花",
+["&Rika"] = "古手梨花",
+["@Rika"] = "寒蝉鸣泣之时",
+["#Rika"] = "御社神の巫女",
+["~Rika"] = "（背景音：蝉鸣）今天，是举行绵流祭的日子...",
 ["designer:Rika"] = "黑猫roy",
 ["cv:Rika"] = "田村ゆかり",
 ["illustrator:Rika"] = "ナナムラ",
@@ -9836,7 +9849,7 @@ luaqice=sgs.CreateViewAsSkill{
 	end,
 	enabled_at_response=function(self,player,pattern)
 		return pattern=="@@luaqice"
-	end, 
+	end,
 }
 ]]
 luaqice_tr=sgs.CreateTriggerSkill{
@@ -9896,7 +9909,7 @@ se_tonglingcard = sgs.CreateSkillCard{
 	name = "se_tonglingcard",
 	target_fixed = true,
 	will_throw = true,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		if source:getMark("@se_tongling") == 0 then return end
 		local choice = room:askForChoice(source, "se_tongling_kd", "se_tongling_kill+se_tongling_death")
 		if choice == "se_tongling_death" then
@@ -9906,11 +9919,11 @@ se_tonglingcard = sgs.CreateSkillCard{
 					table.insert(deathplayer,p:getGeneralName())
 				end
 			end
-			if #deathplayer==0 then 
+			if #deathplayer==0 then
 				local log =  sgs.LogMessage()
 				log.type = "#se_qiyuan_noDeath"
-				room:sendLog(log)	
-				return 
+				room:sendLog(log)
+				return
 			end
 			local ap = room:askForChoice(source,"se_tongling_d",table.concat(deathplayer,"+"))
 			local player
@@ -9951,7 +9964,7 @@ Eucliwood:addSkill(se_tonglingMark)
 extension:insertRelatedSkills("se_tongling", "#se_tongling")
 
 sgs.LoadTranslationTable{
-["se_tongling$"] = "image=image/animate/se_tongling.png", 
+["se_tongling$"] = "image=image/animate/se_tongling.png",
 ["qice_zero"] = "使用0张牌。",
 ["qice_two"] = "使用两张牌",
 ["luaqice"] = "谶言",
@@ -9973,11 +9986,11 @@ sgs.LoadTranslationTable{
 ["$se_tongling1"] = "步，你给那个女孩戒指了啊...（背景音：步惊吓ING）",
 ["$se_tongling2"] = "太温吞，酸死了，真差劲。",
 [":se_tongling"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以选择一项：1、指定一名主公以外的体力值不大于1的其他角色，你杀死该角色，然后令其复活并变身为僵尸。2、指定一名已死亡角色，令其变身为僵尸。",
-["Eucliwood"] = "优克莉伍德", 
-["&Eucliwood"] = "优克莉伍德", 
-["@Eucliwood"] = "这就是僵尸吗", 
-["#Eucliwood"] = "沉默の死灵师", 
-["~Eucliwood"] = "好痛啊，步。", 
+["Eucliwood"] = "优克莉伍德",
+["&Eucliwood"] = "优克莉伍德",
+["@Eucliwood"] = "这就是僵尸吗",
+["#Eucliwood"] = "沉默の死灵师",
+["~Eucliwood"] = "好痛啊，步。",
 ["designer:Eucliwood"] = "御坂20623；黑猫roy-音频",
 ["cv:Eucliwood"] = "月宫みどり",
 ["illustrator:Eucliwood"] = "Windforcelan",
@@ -9985,9 +9998,9 @@ sgs.LoadTranslationTable{
 
 
 SE_Juyang = sgs.CreateTriggerSkill{
-	name = "SE_Juyang",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageInflicted}, 
+	name = "SE_Juyang",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageInflicted},
 	priority = -1,
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
@@ -10010,21 +10023,21 @@ SE_Juyang = sgs.CreateTriggerSkill{
 				end
 			end
 		return false
-	end, 
+	end,
 }
 
 Eu_Zombie:addSkill(SE_Juyang)
 
 sgs.LoadTranslationTable{
---["SE_Wumai$"] = "image=image/animate/SE_Wumai.png", 
+--["SE_Wumai$"] = "image=image/animate/SE_Wumai.png",
 ["SE_Juyang"] = "惧阳",
 ["$SE_Juyang"] = "",
 [":SE_Juyang"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你受到普通伤害时，你防止此伤害，你须摸一张牌并将你的武将牌翻面。每当你受到火焰伤害时，此伤害+1。",
-["Eu_Zombie"] = "僵尸", 
-["&Eu_Zombie"] = "僵尸", 
-["@Eu_Zombie"] = "这就是僵尸吗", 
-["#Eu_Zombie"] = "", 
-["~Eu_Zombie"] = "...", 
+["Eu_Zombie"] = "僵尸",
+["&Eu_Zombie"] = "僵尸",
+["@Eu_Zombie"] = "这就是僵尸吗",
+["#Eu_Zombie"] = "",
+["~Eu_Zombie"] = "...",
 ["designer:Eu_Zombie"] = "御坂20623",
 ["cv:Eu_Zombie"] = "",
 ["illustrator:Eu_Zombie"] = "",
@@ -10043,10 +10056,10 @@ sgs.LoadTranslationTable{
 
 
 SE_Zuozhan = sgs.CreateTriggerSkill{
-	name = "SE_Zuozhan", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseStart, sgs.EventPhaseChanging},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Zuozhan",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseStart, sgs.EventPhaseChanging},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:isAlive() then
 			if event == sgs.EventPhaseStart then
@@ -10160,7 +10173,7 @@ SE_Zuozhan = sgs.CreateTriggerSkill{
 Yuri:addSkill(SE_Zuozhan)
 
 sgs.LoadTranslationTable{
-["SE_Zuozhan$"] = "image=image/animate/SE_Zuozhan.png", 
+["SE_Zuozhan$"] = "image=image/animate/SE_Zuozhan.png",
 ["@SSS"] = "SSS团",
 ["1_Zuozhan"] = "判定阶段",
 ["2_Zuozhan"] = "摸牌阶段",
@@ -10173,11 +10186,11 @@ sgs.LoadTranslationTable{
 ["$SE_Zuozhan4"] = "不...今天的作战是「怪物流」。",
 ["$SE_Zuozhan"] = "",
 [":SE_Zuozhan"] = "一名角色回合开始时，若其血量不少于你，你可以重新为其分配判定阶段、摸牌阶段、出牌阶段、弃牌阶段的顺序。",
-["Yuri"] = "仲村由理", 
-["&Yuri"] = "仲村由理", 
-["@Yuri"] = "Angel Beats!", 
-["#Yuri"] = "死后战线の领袖", 
-["~Yuri"] = "嗯~那，有缘再见啦~", 
+["Yuri"] = "仲村由理",
+["&Yuri"] = "仲村由理",
+["@Yuri"] = "Angel Beats!",
+["#Yuri"] = "死后战线の领袖",
+["~Yuri"] = "嗯~那，有缘再见啦~",
 ["designer:Yuri"] = "Sword Elucidator",
 ["cv:Yuri"] = "櫻井浩美",
 ["illustrator:Yuri"] = "キチロク",
@@ -10191,9 +10204,9 @@ sgs.LoadTranslationTable{
 sgs.GaolingPattern = {"pattern"}
 
 SE_Gaoling = sgs.CreateViewAsSkill{
-	name = "SE_Gaoling", 
-	n = 0, 
-	view_as = function(self, cards) 
+	name = "SE_Gaoling",
+	n = 0,
+	view_as = function(self, cards)
 		local pattern = sgs.GaolingPattern[1]
 		if pattern == "jink" then
 			local card = sgs.Sanguosha:cloneCard("jink", sgs.Card_NoSuit,0)
@@ -10208,10 +10221,10 @@ SE_Gaoling = sgs.CreateViewAsSkill{
 			nu_card:setSkillName("SE_Gaoling")
 			return nu_card
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return false
-	end, 
+	end,
 	enabled_at_response = function(self, player, pattern)
 		if math.ceil(player:getHandcardNum()/2) * 2 == player:getHandcardNum() and (pattern == "nullification" or pattern == "jink") then
 			sgs.GaolingPattern = {pattern}
@@ -10249,9 +10262,9 @@ SE_Gaoling_tr=sgs.CreateTriggerSkill{
 }
 
 SE_Shengmu = sgs.CreateTriggerSkill{
-	name = "SE_Shengmu",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damaged}, 
+	name = "SE_Shengmu",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damaged},
 	priority = -1,
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
@@ -10271,18 +10284,12 @@ SE_Shengmu = sgs.CreateTriggerSkill{
 				room:recover(victim,re,true)
 				if card:isRed() then
 					room:doLightbox("SE_Shengmu$", 1000)
-					if victim:getMaxHp() - victim:getHandcardNum() > 0 then
-						if victim:getMaxHp() - victim:getHandcardNum() > 5 then
-							victim:drawCards(5)
-						else
-							victim:drawCards(victim:getMaxHp() - victim:getHandcardNum())
-						end
-					end
+					victim:drawCards(1)
 				end
 			end
 		end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return not target:hasSkill("SE_Shengmu")
 	end
@@ -10294,7 +10301,7 @@ extension:insertRelatedSkills("SE_Gaoling", "#SE_Gaoling_tr")
 Setsuna:addSkill(SE_Shengmu)
 
 sgs.LoadTranslationTable{
-["SE_Shengmu$"] = "image=image/animate/SE_Shengmu.png", 
+["SE_Shengmu$"] = "image=image/animate/SE_Shengmu.png",
 ["SE_Gaoling"] = "高岭",
 ["$SE_Gaoling1"] = "十分感谢您的聆听！~",
 ["$SE_Gaoling2"] = "听了这个以后，小木曽雪菜的秘密就一个不剩了。全部都被你知道了。",
@@ -10306,12 +10313,12 @@ sgs.LoadTranslationTable{
 ["$SE_Shengmu2"] = "明明昨天说过绝对不会过来，冬马同学已经没事了嘛？",
 ["$SE_Shengmu3"] = "太好了，冬马同学~真的对不起，没帮上忙。",
 ["$SE_Shengmu4"] = "今天我想一直沉睡在梦境里，打从心底唱着自己最喜欢的曲子，被最喜欢人的夸奖...",
-[":SE_Shengmu"] = "若你手牌数为单数，其他角色受到伤害后，你可以弃置一张牌，令其恢复1点体力，若你弃牌为红牌，该角色将手牌补至体力上限。（不超过5）",
-["Setsuna"] = "小木曽雪菜", 
-["&Setsuna"] = "小木曽雪菜", 
+[":SE_Shengmu"] = "若你手牌数为单数，其他角色受到伤害后，你可以弃置一张牌，令其恢复1点体力，若你弃牌为红牌，该角色摸一张牌。",
+["Setsuna"] = "小木曽雪菜",
+["&Setsuna"] = "小木曽雪菜",
 ["@Setsuna"] = "白色相簿2",
-["#Setsuna"] = "峰城附の高岭之花", 
-["~Setsuna"] = "要是和纱，要是和纱是男生的话，该多好啊...", 
+["#Setsuna"] = "峰城附の高岭之花",
+["~Setsuna"] = "要是和纱，要是和纱是男生的话，该多好啊...",
 ["designer:Setsuna"] = "昂翼天使",
 ["cv:Setsuna"] = "米澤円",
 ["illustrator:Setsuna"] = "なかむらたけし",
@@ -10322,9 +10329,9 @@ sgs.LoadTranslationTable{
 
 
 Schneewalzer = sgs.CreateTriggerSkill{
-	name = "Schneewalzer",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageCaused}, 
+	name = "Schneewalzer",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageCaused},
 	priority = 1,
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
@@ -10362,9 +10369,9 @@ Schneewalzer = sgs.CreateTriggerSkill{
 }
 
 SE_JianshiTr = sgs.CreateTriggerSkill{
-	name = "#SE_JianshiTr",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damaged, sgs.Death}, 
+	name = "#SE_JianshiTr",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damaged, sgs.Death},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Damaged then
@@ -10391,9 +10398,9 @@ SE_JianshiTr = sgs.CreateTriggerSkill{
 }
 
 SE_JianshiTrAll = sgs.CreateTriggerSkill{
-	name = "#SE_JianshiTrAll",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardUsed, sgs.CardResponded}, 
+	name = "#SE_JianshiTrAll",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardUsed, sgs.CardResponded},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event==sgs.CardUsed then
@@ -10436,9 +10443,9 @@ SE_JianshiTrAll = sgs.CreateTriggerSkill{
 }
 
 SE_JianshiTri = sgs.CreateTriggerSkill{
-	name = "#SE_JianshiTri",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.GameStart}, 
+	name = "#SE_JianshiTri",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.GameStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.GameStart then
@@ -10452,20 +10459,20 @@ SE_JianshiTri = sgs.CreateTriggerSkill{
 se_jianshi=sgs.CreateViewAsSkill{
 	name="se_jianshi",
 	n = 0,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		return se_jianshicard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@surveillance") > 0
 	end,
 }
 
 se_jianshicard = sgs.CreateSkillCard{
-	name = "se_jianshicard", 
-	target_fixed = false, 
-	will_throw = true, 
+	name = "se_jianshicard",
+	target_fixed = false,
+	will_throw = true,
 	mute = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		return #targets == 0 and to_select:getMark("@surveillance") == 0
 	end,
 	on_use = function(self, room, source, targets)
@@ -10473,7 +10480,7 @@ se_jianshicard = sgs.CreateSkillCard{
 		if dest:objectName() == source:objectName() then return end
 		local count = source:getMark("@surveillance")
 		if count == 0 then
-			return 
+			return
 		else
 			source:loseMark("@surveillance", 1)
 		end
@@ -10501,7 +10508,7 @@ extension:insertRelatedSkills("se_jianshi", "#SE_JianshiTri")
 extension:insertRelatedSkills("se_jianshi", "#SE_JianshiTr")
 
 sgs.LoadTranslationTable{
-["Schneewalzer$"] = "image=image/animate/Schneewalzer.png", 
+["Schneewalzer$"] = "image=image/animate/Schneewalzer.png",
 ["Schneewalzer"] = "雪霞狼",
 ["$Schneewalzer1"] = "不，前辈，是我们的战斗。",
 ["$Schneewalzer2"] = "狮子神子 高神剑巫 诚心祷祝",
@@ -10513,11 +10520,11 @@ sgs.LoadTranslationTable{
 ["$se_jianshi2"] = "难道今后一直跟着？当然啦，我可是监视者啊。",
 ["$se_jianshi3"] = "前...前辈......",
 [":se_jianshi"] = "游戏开始时，你获得1枚“监视”标记；每当你受到1点伤害后，你获得1枚“监视”标记。\n出牌阶段，你可以指定一名没有“监视”标记的角色，若如此做，你令其获得你的1枚“监视”标记。\n每当拥有“监视”标记的角色使用一张牌后或成为一张牌的目标后，你有17%的概率可以指定一名角色，你对其造成1点雷电伤害。每当拥有“监视”标记的角色死亡时，所有其他角色各失去“监视”标记。",
-["Yukina"] = "姫柊雪菜", 
-["&Yukina"] = "姫柊雪菜", 
-["@Yukina"] = "噬血狂袭", 
-["#Yukina"] = "狮子王机关の剑巫", 
-["~Yukina"] = "啊...", 
+["Yukina"] = "姫柊雪菜",
+["&Yukina"] = "姫柊雪菜",
+["@Yukina"] = "噬血狂袭",
+["#Yukina"] = "狮子王机关の剑巫",
+["~Yukina"] = "啊...",
 ["designer:Yukina"] = "Sword Elucidator",
 ["cv:Yukina"] = "種田梨沙",
 ["illustrator:Yukina"] = "緋華",
@@ -10528,10 +10535,10 @@ sgs.LoadTranslationTable{
 
 
 SE_Guiyin = sgs.CreateTriggerSkill{
-	name = "SE_Guiyin",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.Damaged, sgs.EventPhaseStart, sgs.EventPhaseEnd,sgs.TargetConfirmed}, 
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Guiyin",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.Damaged, sgs.EventPhaseStart, sgs.EventPhaseEnd,sgs.TargetConfirmed},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Damaged then
 			local damage = data:toDamage()
@@ -10551,7 +10558,7 @@ SE_Guiyin = sgs.CreateTriggerSkill{
 				if player:getMark("OniLv") > 2 then
 					room:broadcastSkillInvoke("SE_Guiyin", 3)
 					for _,p in sgs.qlist(room:getAlivePlayers()) do
-						if p:inMyAttackRange(player) then 
+						if p:inMyAttackRange(player) then
 						p:gainMark("@Oni")
 						player:gainMark("OniLv")
 						end
@@ -10614,10 +10621,10 @@ SE_Guiyin = sgs.CreateTriggerSkill{
 }
 --[[
 SE_GuiyinEx = sgs.CreateTriggerSkill{
-	name = "#SE_GuiyinEx",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.CardUsed}, 
-	on_trigger = function(self, event, player, data) 
+	name = "#SE_GuiyinEx",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.CardUsed},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.CardUsed then
 			local use = data:toCardUse()
@@ -10649,7 +10656,7 @@ extension:insertRelatedSkills("SE_Guiyin", "#SE_GuiyinDis")
 
 
 sgs.LoadTranslationTable{
-["SE_Guiyin$"] = "image=image/animate/SE_Guiyin.png", 
+["SE_Guiyin$"] = "image=image/animate/SE_Guiyin.png",
 ["SE_Guiyin"] = "鬼隐",
 ["@Oni"] = "鬼",
 ["$SE_Guiyin1"] = "...针？...啊啊啊啊啊！......",
@@ -10657,11 +10664,11 @@ sgs.LoadTranslationTable{
 ["$SE_Guiyin3"] = "那个...果然，好像有人想要我的命...",
 ["$SE_Guiyin4"] = "住手啊啊！！！（敲打声）",
 [":SE_Guiyin"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你成为卡牌的目标或受到伤害后，来源获得一个“鬼”标记。当场上“鬼”标记总数大于或等于：\n1：球棒 你与其他角色计算距离时，始终-2.\n3：幻觉 回合结束阶段开始时，每个攻击范围内有你的角色各获得一个“鬼”标记。\n5：L5   出牌阶段结束时，你对所有其他拥有“鬼”标记的角色造成X点伤害，并清空其各自的“鬼”标记。X为该角色“鬼”标记的数量且至多为2（若目标为自己，至多为1）。",
-["K1"] = "前原圭一（鬼隐篇）", 
-["&K1"] = "前原圭一", 
-["@K1"] = "寒蝉鸣泣之时", 
-["#K1"] = "鬼隐の迷途人", 
-["~K1"] = "（大石：喂喂，前原先生！）对...对不起...", 
+["K1"] = "前原圭一（鬼隐篇）",
+["&K1"] = "前原圭一",
+["@K1"] = "寒蝉鸣泣之时",
+["#K1"] = "鬼隐の迷途人",
+["~K1"] = "（大石：喂喂，前原先生！）对...对不起...",
 ["designer:K1"] = "前原圭一",
 ["cv:K1"] = "保志総一朗",
 ["illustrator:K1"] = "さよなら転さん…",
@@ -10672,9 +10679,9 @@ sgs.LoadTranslationTable{
 
 
 SE_Heimu = sgs.CreateTriggerSkill{
-	name = "SE_Heimu",  
-	frequency = sgs.Skill_Limited, 
-	events = {sgs.AskForPeachesDone, sgs.GameStart}, 
+	name = "SE_Heimu",
+	frequency = sgs.Skill_Limited,
+	events = {sgs.AskForPeachesDone, sgs.GameStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.AskForPeachesDone then
@@ -10703,7 +10710,7 @@ SE_Heimu = sgs.CreateTriggerSkill{
 				end
 			end
 			if not junko then return false end
-			
+
 			if junko:getMark("SE_Heimu_done") == 1 then return false end
 			if room:askForSkillInvoke(junko, self:objectName()) then
 				if junko:isDead() then
@@ -10766,7 +10773,7 @@ SE_Heimu = sgs.CreateTriggerSkill{
 
 SE_Xianzhuo = sgs.CreateTriggerSkill{
 	name = "SE_Xianzhuo",
-	frequency = sgs.Skill_NotFrequent, 
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Death},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -10845,11 +10852,11 @@ sgs.LoadTranslationTable{
 ["$SE_Xianzhuo"] = "",
 [":SE_Xianzhuo"] = "你死亡时，你可以依次指出每个角色的身份，若正确，你复活并回复至体力上限，令场上所有角色的牌、标记、武将牌、各牌堆均置入弃牌堆，复活各角色，所有角色均摸取一张武将牌，然后你重新分配各角色的身份（主公只能有一个）。",
 
-["Batora"] = "右代宮戦人", 
-["&Batora"] = "右代宮戦人", 
-["@Batora"] = "海猫鸣泣之时", 
-["#Batora"] = "翻盘狂魔", 
-["~Batora"] = "", 
+["Batora"] = "右代宮戦人",
+["&Batora"] = "右代宮戦人",
+["@Batora"] = "海猫鸣泣之时",
+["#Batora"] = "翻盘狂魔",
+["~Batora"] = "",
 ["designer:Batora"] = "Sword Elucidator",
 ["cv:Batora"] = "小野大輔",
 ["illustrator:Batora"] = "",
@@ -10917,7 +10924,7 @@ SE_Jiawu = sgs.CreateTriggerSkill{
 	                            room:useCard(newuse)
 	                            if sgs.Sanguosha:getCard(cid):isKindOf("EquipCard") then player:setFlags("-SE_Jiawu_EquipCard") end
 	                            return
-	                        end   
+	                        end
 	                    end
 						local toGiveList = sgs.SPlayerList()
 						if player:getPhase() == sgs.Player_Discard then
@@ -10940,10 +10947,10 @@ SE_Jiawu = sgs.CreateTriggerSkill{
 }
 
 SE_Zhandan = sgs.CreateTriggerSkill{
-	name = "SE_Zhandan",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Zhandan",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.DamageCaused then
 			local damage = data:toDamage()
@@ -11017,11 +11024,11 @@ sgs.LoadTranslationTable{
 ["$SE_Zhandan4"] = "我的讳名，真正的名字是「绯色的巫女」，也就是「绯巫女」！",
 [":SE_Zhandan"] = "每当一名角色受到伤害时，若该伤害大于1，1.且若没有伤害来源，你可以防止之。2.且其或伤害来源在你的攻击范围内时，你可以令伤害来源展示一张手牌，若其无法展示或你弃置一张与其展示手牌花色相同的牌，你令该伤害无效。",
 
-["Shirayuki"] = "星伽白雪", 
-["&Shirayuki"] = "星伽白雪", 
-["@Shirayuki"] = "绯弹的亚里亚", 
-["#Shirayuki"] = "星伽的绯巫女", 
-["~Shirayuki"] = "亚里亚，对不起。我明明总是对你做那么过分的事。", 
+["Shirayuki"] = "星伽白雪",
+["&Shirayuki"] = "星伽白雪",
+["@Shirayuki"] = "绯弹的亚里亚",
+["#Shirayuki"] = "星伽的绯巫女",
+["~Shirayuki"] = "亚里亚，对不起。我明明总是对你做那么过分的事。",
 ["designer:Shirayuki"] = "Sword Elucidator",
 ["cv:Shirayuki"] = "高橋美佳子",
 ["illustrator:Shirayuki"] = "",
@@ -11074,7 +11081,7 @@ SE_Lingshang = sgs.CreateTriggerSkill{
 							room:broadcastSkillInvoke(self:objectName(), 4)
 						end
 					end
-					
+
 					room:fillAG(cards, player)
 					local card1 = room:askForAG(player, cards, true, self:objectName())
 					room:clearAG(player)
@@ -11133,8 +11140,8 @@ SE_Lingshang = sgs.CreateTriggerSkill{
 }
 
 SE_Lingshang_end = sgs.CreateMaxCardsSkill{
-	name = "#SE_Lingshang_end", 
-	extra_func = function(self, player) 
+	name = "#SE_Lingshang_end",
+	extra_func = function(self, player)
 		if player:hasSkill(self:objectName()) then
 			if player:hasSkill("SE_Guiling") then
 				return player:getMark("@Saki")
@@ -11175,18 +11182,18 @@ sgs.LoadTranslationTable{
 ["$SE_Lingshang3"] = "杠",
 ["$SE_Lingshang4"] = "再来一个，杠",
 [":SE_Lingshang"]="每当一张牌非因弃置而进入弃牌堆时，你可以弃置两张与之相同类别的牌，然后指定一种牌堆中存在的牌名，你从牌堆中获得一张这种牌，然后你获得一个“咲”标记。摸牌阶段，你可以额外摸2X张牌。你的手牌上限始终+X。X为你“咲”标记的数量。若你没有“归零”，X至多为4，且摸牌数变为X。",
-["@Saki"] = "咲", 
+["@Saki"] = "咲",
 
 ["SE_Guiling"] = "归零",
 ["$SE_Guiling1"] = "我每次打麻将，都会变成这个样子..",
 ["$SE_Guiling2"] = "（和）只是这样？（咲）只是这样。",
 [":SE_Guiling"] = "<font color=\"blue\"><b>锁定技,</b></font>摸牌阶段结束时，你失去“咲”标记。",
 
-["Saki"] = "宮永咲", 
-["&Saki"] = "宮永咲", 
-["@Saki"] = "天才麻将少女", 
-["#Saki"] = "裱人大魔王", 
-["~Saki"] = "嗯...没办法杠...", 
+["Saki"] = "宮永咲",
+["&Saki"] = "宮永咲",
+["@Saki"] = "天才麻将少女",
+["#Saki"] = "裱人大魔王",
+["~Saki"] = "嗯...没办法杠...",
 ["designer:Saki"] = "Sword Elucidator",
 ["cv:Saki"] = "植田佳奈",
 ["illustrator:Saki"] = "",
@@ -11197,10 +11204,10 @@ sgs.LoadTranslationTable{
 
 
 SE_Wuwei = sgs.CreateTriggerSkill{
-	name = "SE_Wuwei", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.Damaged, sgs.EventPhaseStart, sgs.CardUsed, sgs.DamageCaused, sgs.TargetConfirmed, sgs.CardFinished, sgs.SlashProceed},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Wuwei",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.Damaged, sgs.EventPhaseStart, sgs.CardUsed, sgs.DamageCaused, sgs.TargetConfirmed, sgs.CardFinished, sgs.SlashProceed},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Damaged then
 			if player:isAlive() and player:hasSkill(self:objectName()) then
@@ -11275,12 +11282,12 @@ SE_Wuwei = sgs.CreateTriggerSkill{
 		elseif event == sgs.TargetConfirmed then
 			local use = data:toCardUse()
 			if use.from and use.from:hasSkill(self:objectName()) and use.from:getMark("@Wuwei") > 2 then
-				if use.card:isKindOf("Slash") then 
+				if use.card:isKindOf("Slash") then
 					if use.from:objectName() == player:objectName() then
 					room:setPlayerFlag(use.from, "WuweiArmor")
 					easyTalk(room, "#SE_Wuwei_Armor")
 						for _,p in sgs.qlist(use.to) do
-							room:setPlayerMark(p, "Armor_Nullified", 1) 
+							room:setPlayerMark(p, "Armor_Nullified", 1)
 						end
 					end
 				end
@@ -11329,25 +11336,25 @@ sgs.LoadTranslationTable{
 ["$SE_Wuwei3"] = "这个名为梦之事物啊，并不是什么悲伤的事情哦。",
 ["$SE_Wuwei4"] = "我真是个笨蛋...",
 [":SE_Wuwei"]="<font color=\"blue\"><b>锁定技,</b></font>你每受到一次伤害后，你回复一点体力然后你获得一个“无畏”标记。\n\n回合结束阶段开始时，若你的“无畏”标记大于场上存活角色数（至少为4），你变身为魔女并将你的身份变为内奸（主公时不变），否则你回复一点体力并摸一张牌。\n\n当你使用【杀】时，你可以获得一个“无畏”标记，此【杀】造成伤害时，该伤害+1，你失去一个“无畏”标记。\n\n若你的“无畏”标记大于1，你使用【杀】无次数限制；\n\n若你的“无畏”标记大于2，你使用【杀】无视防具；\n\n若你的“无畏”标记大于场上存活角色数（至少为4）/2，你回合内使用【杀】无视距离；\n\n若你的“无畏”标记大于场上存活角色数（至少为4），你的【杀】不可闪避且你使用【杀】造成伤害时摸一张牌。",
-["@Wuwei"] = "无畏", 
-["#SE_Wuwei_Armor"] = "沙耶香发动了「无畏」无视了目标的防具。", 
-["#SE_Wuwei_plusOne"] = "沙耶香发动了「无畏」令该伤害+1", 
-["#SE_Wuwei_noJink"] = "沙耶香发动了「无畏」令目标不能闪避。", 
-["#SE_Wuwei_noLimit"] = "沙耶香发动了「无畏」出【杀】没有次数限制。", 
+["@Wuwei"] = "无畏",
+["#SE_Wuwei_Armor"] = "沙耶香发动了「无畏」无视了目标的防具。",
+["#SE_Wuwei_plusOne"] = "沙耶香发动了「无畏」令该伤害+1",
+["#SE_Wuwei_noJink"] = "沙耶香发动了「无畏」令目标不能闪避。",
+["#SE_Wuwei_noLimit"] = "沙耶香发动了「无畏」出【杀】没有次数限制。",
 
-["Sayaka"] = "美樹沙耶香", 
-["&Sayaka"] = "美樹沙耶香", 
+["Sayaka"] = "美樹沙耶香",
+["&Sayaka"] = "美樹沙耶香",
 ["@Sayaka"] = "魔法少女小圆",
-["#Sayaka"] = "迷茫的魔法少女", 
-["~Sayaka"] = "我真是个笨蛋...", 
+["#Sayaka"] = "迷茫的魔法少女",
+["~Sayaka"] = "我真是个笨蛋...",
 ["designer:Sayaka"] = "OmnisReen; Sword Elucidator",
 ["cv:Sayaka"] = "喜多村英梨",
 ["illustrator:Sayaka"] = "momonote",
 
-["Majyo"] = "魔女", 
-["&Majyo"] = "魔女", 
-["#Majyo"] = "崩溃的魔法少女", 
-["~Majyo"] = "", 
+["Majyo"] = "魔女",
+["&Majyo"] = "魔女",
+["#Majyo"] = "崩溃的魔法少女",
+["~Majyo"] = "",
 ["designer:Majyo"] = "Sword Elucidator",
 ["cv:Majyo"] = "",
 ["illustrator:Majyo"] = "",
@@ -11387,10 +11394,10 @@ se_gate=sgs.CreateTriggerSkill{
 			end
 			if weapon_id == -1 then return end
 			if not player:askForSkillInvoke("se_gate", data) then return false end
-			room:broadcastSkillInvoke("se_gate", math.random(1, 3))	
+			room:broadcastSkillInvoke("se_gate", math.random(1, 3))
 			player:addToPile("pika_gob", weapon_id)
 		end
-	end	
+	end
 }
 
 
@@ -11422,8 +11429,8 @@ se_gatecard = sgs.CreateSkillCard{
 				card = sgs.Sanguosha:cloneCard("fire_slash", sgs.Card_NoSuit, 0)
 			end
 			card:addSubcard(agid)
-			card:setSkillName(self:objectName())	
-			--room:broadcastSkillInvoke(self:objectName(), math.random(4, 6))	
+			card:setSkillName(self:objectName())
+			--room:broadcastSkillInvoke(self:objectName(), math.random(4, 6))
 			room:doLightbox("se_gate$", 800)
 			local use = sgs.CardUseStruct()
 			use.from = source
@@ -11431,7 +11438,7 @@ se_gatecard = sgs.CreateSkillCard{
 			use.card = card
 			room:useCard(use, false)
 		else
-			--room:broadcastSkillInvoke(self:objectName(), math.random(1, 3))	
+			--room:broadcastSkillInvoke(self:objectName(), math.random(1, 3))
 			for _,id in sgs.qlist(ids) do
 				source:addToPile("pika_gob", id)
 			end
@@ -11442,12 +11449,12 @@ se_gatecard = sgs.CreateSkillCard{
 
 
 se_gatevs = sgs.CreateViewAsSkill{
-	name = "se_gate", 
-	n = 999, 
+	name = "se_gate",
+	n = 999,
 	view_filter = function(self, selected, to_select)
 		return to_select:isKindOf("Weapon") and #selected < 999
 	end,
-	view_as = function(self, cards) 
+	view_as = function(self, cards)
 		if #cards == 0 then
 			return se_gatecard:clone()
 		else
@@ -11457,7 +11464,7 @@ se_gatevs = sgs.CreateViewAsSkill{
 			end
 			return se_jcard
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		if player:getPile("pika_gob"):length() > 0 then return true end
 		local hasWea = false
@@ -11475,10 +11482,10 @@ se_gatevs = sgs.CreateViewAsSkill{
 }
 
 SE_Tiansuo = sgs.CreateTriggerSkill{
-	name = "SE_Tiansuo",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.SlashProceed, sgs.TargetConfirmed},  
-	on_trigger = function(self, event, player, data) 
+	name = "SE_Tiansuo",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.SlashProceed, sgs.TargetConfirmed},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.TargetConfirmed then
 			local use = data:toCardUse()
@@ -11530,7 +11537,7 @@ sgs.LoadTranslationTable{
 ["gateNormal"] = "将武器牌当做一张普通【杀】",
 ["gateThunder"] = "将武器牌当做一张雷属性【杀】",
 ["gateFire"] = "将武器牌当做一张火属性【杀】",
-[":se_gate"]="回合开始时，你可以搜寻一张武器牌并放在你的武将牌上，称为“王之财宝”。出牌阶段，你可以将任意张武器牌置入“王之财宝”。你可选择一张“王之财宝”，将其视为你对一名其他角色使用了一张任意属性的【杀】。以此法使用的【杀】无视距离且不计入回合次数限制。", 
+[":se_gate"]="回合开始时，你可以搜寻一张武器牌并放在你的武将牌上，称为“王之财宝”。出牌阶段，你可以将任意张武器牌置入“王之财宝”。你可选择一张“王之财宝”，将其视为你对一名其他角色使用了一张任意属性的【杀】。以此法使用的【杀】无视距离且不计入回合次数限制。",
 ["pika_gob"] = "王之财宝",
 
 ["SE_Tiansuo"] = "天锁「天之锁」",
@@ -11539,15 +11546,15 @@ sgs.LoadTranslationTable{
 ["$SE_Tiansuo3"] = "杂种一样的东西，也敢朝着王吠么。",
 ["$SE_Tiansuo4"] = "那么，这是你最后的舞台了",
 ["$SE_Tiansuo5"] = "送你归西吧。",
-[":SE_Tiansuo"]="你指定一名其他角色为唯一目标时，可以令其横置。你指定横置的角色为目标使用【杀】时，其需弃置一张基本牌，否则该【杀】不能闪避。", 
-["#SE_Tiansuo_noJink"] = "吉尔伽美什的「天之锁」令该【杀】不可被闪避。", 
+[":SE_Tiansuo"]="你指定一名其他角色为唯一目标时，可以令其横置。你指定横置的角色为目标使用【杀】时，其需弃置一张基本牌，否则该【杀】不能闪避。",
+["#SE_Tiansuo_noJink"] = "吉尔伽美什的「天之锁」令该【杀】不可被闪避。",
 ["@SE_Tiansuo-discard"] = "吉尔伽美什的「天之锁」效果，你需要弃置一张基本牌，否则该【杀】不能闪避。",
 
-["Kinpika"] = "吉尔伽美什", 
-["&Kinpika"] = "吉尔伽美什", 
-["@Kinpika"] = "Fate Zero/Fate Stay Night", 
-["#Kinpika"] = "金闪闪", 
-["~Kinpika"] = "明明是个杂种！#￥%…", 
+["Kinpika"] = "吉尔伽美什",
+["&Kinpika"] = "吉尔伽美什",
+["@Kinpika"] = "Fate Zero/Fate Stay Night",
+["#Kinpika"] = "金闪闪",
+["~Kinpika"] = "明明是个杂种！#￥%…",
 ["designer:Kinpika"] = "Sword Elucidator",
 ["cv:Kinpika"] = "関智一",
 ["illustrator:Kinpika"] = "null",
@@ -11558,7 +11565,7 @@ se_origincard = sgs.CreateSkillCard{
 	target_fixed = true,
 	will_throw = true,
 	mute = true,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		--room:broadcastSkillInvoke("se_origin")
 		room:loseMaxHp(source)
 		source:gainMark("@origin_bullet")
@@ -11578,10 +11585,10 @@ se_origin = sgs.CreateViewAsSkill{
 
 
 se_origin_trigger = sgs.CreateTriggerSkill{
-	name = "#se_origin_trigger",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.TargetConfirmed, sgs.DrawNCards, sgs.DamageCaused, sgs.CardFinished}, 
-	on_trigger = function(self, event, player, data) 
+	name = "#se_origin_trigger",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.TargetConfirmed, sgs.DrawNCards, sgs.DamageCaused, sgs.CardFinished},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.TargetConfirmed then
 			local use = data:toCardUse()
@@ -11654,10 +11661,10 @@ se_bilingvscard = sgs.CreateSkillCard{
 	target_fixed = false,
 	will_throw = true,
 	mute = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		return #targets == 0
 	end,
-	on_use = function(self, room, source, targets) 
+	on_use = function(self, room, source, targets)
 		room:broadcastSkillInvoke("se_biling", math.random(1, 3))
 		source:loseMark("@Biling_kiri")
 		local target = targets[1]
@@ -11678,7 +11685,7 @@ se_bilingvscard = sgs.CreateSkillCard{
 			for i = 1, 2,1 do
 				if not from:isAlive() then return end
 				local card = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0)
-				card:setSkillName("se_bilingvscard")	
+				card:setSkillName("se_bilingvscard")
 				local use = sgs.CardUseStruct()
 				use.from = from
 				use.to:append(target)
@@ -11785,7 +11792,7 @@ sgs.LoadTranslationTable{
 ["$se_origin2"] = "这颗子弹放进了小少爷肋骨磨成的粉末，小少爷的起源会在被它击中的人身上具体化。",
 ["$se_origin3"] = "这就是小少爷的礼装，起源弹",
 ["$se_origin4"] = "（砰——）",
-[":se_origin"]="出牌阶段，你可以失去一点体力上限，获得一发“起源弹”。\n若你拥有起源弹，你额外摸“起源弹”数目张牌，你回合使用【杀】次数+“起源弹”数目。\n你使用【杀】指定一名角色时，需选择是否为“起源弹”（目标不知道选项），当你的【杀】造成的伤害时，若为“起源弹”，目标失去副将外的所有的技能。", 
+[":se_origin"]="出牌阶段，你可以失去一点体力上限，获得一发“起源弹”。\n若你拥有起源弹，你额外摸“起源弹”数目张牌，你回合使用【杀】次数+“起源弹”数目。\n你使用【杀】指定一名角色时，需选择是否为“起源弹”（目标不知道选项），当你的【杀】造成的伤害时，若为“起源弹”，目标失去副将外的所有的技能。",
 
 ["se_biling"] = "逼令「自我强制证文」",
 ["se_bilingvs"] = "逼令「自我强制证文」",
@@ -11800,19 +11807,19 @@ sgs.LoadTranslationTable{
 ["$se_biling4"] = "用掉所有剩下的令咒，让Servant自尽。",
 ["$se_biling5"] = "嗯，成立了，我已经无法再伤害你们了。（打火机声，枪声）仅限我。",
 ["$se_biling6"] = "不好意思，契约让我做不到。",
-[":se_biling"]="<font color=\"red\"><b>限定技，</b></font>你指定一名角色，令其获得效果：你对其造成伤害时，取消之，且其不能成为起源弹的目标。若该角色有副将，令该角色移除自己的副将；若该角色没有副将，其受到你指定的你和其以外的来源的两张【杀】（若无来源则无效）。", 
+[":se_biling"]="<font color=\"red\"><b>限定技，</b></font>你指定一名角色，令其获得效果：你对其造成伤害时，取消之，且其不能成为起源弹的目标。若该角色有副将，令该角色移除自己的副将；若该角色没有副将，其受到你指定的你和其以外的来源的两张【杀】（若无来源则无效）。",
 
 ["@kiri_jianqiao"] = "剑鞘",
 ["se_jianqiao"] = "剑鞘「亚瑟王的治愈之力」",
 ["se_jianqiao$"] = "image=image/animate/se_jianqiao.png",
 ["$se_jianqiao"] = "还活着...还活着...还活着......",
-[":se_jianqiao"]="<font color=\"red\"><b>限定技，</b></font>当一名角色受到造成濒死的伤害时，你可以取消之并令其回复一点体力。", 
+[":se_jianqiao"]="<font color=\"red\"><b>限定技，</b></font>当一名角色受到造成濒死的伤害时，你可以取消之并令其回复一点体力。",
 
-["Kiritsugu"] = "衛宮切嗣", 
-["&Kiritsugu"] = "衛宮切嗣", 
-["@Kiritsugu"] = "Fate Zero", 
-["#Kiritsugu"] = "正义天平的衡量者", 
-["~Kiritsugu"] = "（士郎）就交给我吧，老爹的梦想。 ————啊，那就安心了。", 
+["Kiritsugu"] = "衛宮切嗣",
+["&Kiritsugu"] = "衛宮切嗣",
+["@Kiritsugu"] = "Fate Zero",
+["#Kiritsugu"] = "正义天平的衡量者",
+["~Kiritsugu"] = "（士郎）就交给我吧，老爹的梦想。 ————啊，那就安心了。",
 ["designer:Kiritsugu"] = "Sword Elucidator",
 ["cv:Kiritsugu"] = "小山力也",
 ["illustrator:Kiritsugu"] = "砂雲",
@@ -11827,7 +11834,7 @@ se_banyun = sgs.CreateViewAsSkill{
 	view_as = function(self, cards)
 		local card = se_banyuncard:clone()
 		card:setSkillName(self:objectName())
-		return card 
+		return card
 	end,
 	enabled_at_play = function(self, player)
 		return not player:hasUsed("#se_banyuncard")
@@ -11837,7 +11844,7 @@ se_banyuncard = sgs.CreateSkillCard{
 	name = "se_banyuncard",
 	target_fixed = false,
 	will_throw = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		if #targets < 1 then
 			return to_select:objectName() ~= sgs.Self:objectName() and sgs.Self:distanceTo(to_select) == 1
 		end
@@ -11884,7 +11891,7 @@ se_jianxi = sgs.CreateViewAsSkill{
 	view_as = function(self, cards)
 		local card = se_jianxicard:clone()
 		card:setSkillName(self:objectName())
-		return card 
+		return card
 	end,
 	enabled_at_play = function(self, player)
 		return not player:hasUsed("#se_jianxicard")
@@ -11894,7 +11901,7 @@ se_jianxicard = sgs.CreateSkillCard{
 	name = "se_jianxicard",
 	target_fixed = false,
 	will_throw = true,
-	filter = function(self, targets, to_select) 
+	filter = function(self, targets, to_select)
 		return #targets < 2
 	end,
 	on_use = function(self, room, source, targets)
@@ -11907,11 +11914,11 @@ se_jianxicard = sgs.CreateSkillCard{
 }
 
 se_shenglong = sgs.CreateTriggerSkill{
-	name = "se_shenglong",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageInflicted},  
+	name = "se_shenglong",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageInflicted},
 	priority = 10,
-	on_trigger = function(self, event, player, data) 
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageInflicted then
@@ -11951,24 +11958,24 @@ sgs.LoadTranslationTable{
 ["se_banyun"] = "搬运",
 ["$se_banyun1"] = "（音效）",
 ["se_banyun$"] = "image=image/animate/se_banyun.png",
-[":se_banyun"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>指定一名距离为1的其他角色A和任意一名你和A以外的角色B。你带着A随机位移5次，然后你和A以原次序移动到B的左侧。若如此做，你对A造成一点伤害。", 
+[":se_banyun"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>指定一名距离为1的其他角色A和任意一名你和A以外的角色B。你带着A随机位移5次，然后你和A以原次序移动到B的左侧。若如此做，你对A造成一点伤害。",
 
 ["se_jianxi"] = "间隙",
 ["$se_jianxi1"] = "（音效）",
 ["$se_jianxi2"] = "（音效）",
 ["se_jianxi$"] = "image=image/animate/se_jianxi.png",
-[":se_jianxi"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定两名角色交换位置。", 
+[":se_jianxi"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定两名角色交换位置。",
 
 ["se_shenglong"] = "升龙",
 ["$se_shenglong1"] = "（音效）",
 ["se_shenglong$"] = "image=image/animate/se_shenglong.png",
-[":se_shenglong"]="<font color=\"blue\"><b>锁定技,</b></font>你受到其他角色的伤害时，若伤害来源的手牌数为0，取消之；为1-3，伤害来源受到一点你造成的伤害；为4-6，伤害来源受到两点你造成的伤害；大于6，伤害来源受到三点你造成的伤害。", 
+[":se_shenglong"]="<font color=\"blue\"><b>锁定技,</b></font>你受到其他角色的伤害时，若伤害来源的手牌数为0，取消之；为1-3，伤害来源受到一点你造成的伤害；为4-6，伤害来源受到两点你造成的伤害；大于6，伤害来源受到三点你造成的伤害。",
 
-["Yakumo"] = "社长八云", 
-["&Yakumo"] = "社长八云", 
-["@Yakumo"] = "拳皇/TH", 
-["#Yakumo"] = "搬运社", 
-["~Yakumo"] = "啊————KO", 
+["Yakumo"] = "社长八云",
+["&Yakumo"] = "社长八云",
+["@Yakumo"] = "拳皇/TH",
+["#Yakumo"] = "搬运社",
+["~Yakumo"] = "啊————KO",
 ["designer:Yakumo"] = "军师可以打酱油",
 ["cv:Yakumo"] = "",
 ["illustrator:Yakumo"] = "",
@@ -11977,10 +11984,10 @@ sgs.LoadTranslationTable{
 --雪之下雪乃
 
 se_shifeng = sgs.CreateTriggerSkill{
-	name = "se_shifeng",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused},  
-	on_trigger = function(self, event, player, data) 
+	name = "se_shifeng",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageCaused},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.DamageCaused then
 			local damage = data:toDamage()
@@ -12057,15 +12064,15 @@ se_zhiyan_Trigger = sgs.CreateTriggerSkill{
 --結衣
 
 se_wenchang = sgs.CreateTriggerSkill{
-	name = "se_wenchang",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.Damaged},  
+	name = "se_wenchang",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.Damaged},
 	priority = 2,
-	on_trigger = function(self, event, player, data) 
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.Damaged then
-			if not damage.to:isAlive() or damage.from:isNude() then return end
+			if not damage.to:isAlive() or not damage.from or damage.from:isNude() then return end
 			local Yyui = room:findPlayerBySkillName(self:objectName())
 			if not Yyui then return end
 			if Yyui:isNude() then return end
@@ -12091,11 +12098,11 @@ se_wenchang = sgs.CreateTriggerSkill{
 }
 
 se_yuanxin = sgs.CreateTriggerSkill{
-	name = "se_yuanxin",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageInflicted},  
+	name = "se_yuanxin",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageInflicted},
 	priority = 10,
-	on_trigger = function(self, event, player, data) 
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.DamageInflicted then
@@ -12138,7 +12145,7 @@ sgs.LoadTranslationTable{
 ["$se_shifeng4"] = "你是在说...不想改变呢",
 ["$se_shifeng5"] = "（静）打扰了，有些事情要拜托你们一下。",
 ["$se_shifeng6"] = "不是的...我总是以为自己做的很好，却是自作聪明而已。",
-[":se_shifeng"]="一名角色受到伤害时，若你的“侍奉”标记不超过2，你可以令该伤害值-1。若如此做，你获得一个“侍奉”标记。", 
+[":se_shifeng"]="一名角色受到伤害时，若你的“侍奉”标记不超过2，你可以令该伤害值-1。若如此做，你获得一个“侍奉”标记。",
 
 ["se_shifeng$"] = "image=image/animate/se_shifeng.png",
 ["@yukino_zhiyan"] = "直言",
@@ -12147,13 +12154,13 @@ sgs.LoadTranslationTable{
 ["$se_zhiyan2"] = "虽然不知道怎么形容，但我对此感到十分焦躁",
 ["$se_zhiyan3"] = "那你也不用特意去撒那种谎的。",
 ["$se_zhiyan4"] = "也没什么关系，我不可能去干涉你私人的行动，而且也没那种资格。",
-[":se_zhiyan"]="摸牌阶段，若你有“侍奉”标记，你的摸牌数为0，若你的“侍奉”标记数至少为2，直到你的下一个摸牌阶段，当你需要使用【金色宣言】时，你可以视为使用一张【金色宣言】，并获得一个“侍奉”标记。该效果获得后将“侍奉”标记全部弃置。", 
+[":se_zhiyan"]="摸牌阶段，若你有“侍奉”标记，你的摸牌数为0，若你的“侍奉”标记数至少为2，直到你的下一个摸牌阶段，当你需要使用【金色宣言】时，你可以视为使用一张【金色宣言】，并获得一个“侍奉”标记。该效果获得后将“侍奉”标记全部弃置。",
 
 ["se_wenchang"] = "稳场",
 ["$se_wenchang1"] = "就是嘛。啊哈哈...哈哈......",
 ["$se_wenchang2"] = "说起来大家都和平常一样啊，那个，嗯，大家都......",
 ["$se_wenchang3"] = "等等...怎么会变成这样的呢...很奇怪啊......",
-[":se_wenchang"]="一次伤害造成后，你可以弃置一张牌，令受到伤害的角色获得伤害来源的一张牌并展示。若获得的牌为红色，受伤角色回复一点体力。", 
+[":se_wenchang"]="一次伤害造成后，你可以弃置一张牌，令受到伤害的角色获得伤害来源的一张牌并展示。若获得的牌为红色，受伤角色回复一点体力。",
 
 ["se_yuanxin$"] = "image=image/animate/se_yuanxin.png",
 ["se_yuanxin"] = "援心",
@@ -12161,36 +12168,36 @@ sgs.LoadTranslationTable{
 ["$se_yuanxin2"] = "但是.....你也要考虑下别人的感受啊......为什么你知道那么多东西，却偏偏不明白这个啊！......",
 ["$se_yuanxin3"] = "那样的......我不想看到。",
 ["$se_yuanxin4"] = "我喜欢这个社团......喜欢...的",
-[":se_yuanxin"]="一名角色受到伤害时，若伤害值不小于2，你可以受到伤害来源的一点伤害，然后令该伤害-1。若如此做，你和受到伤害的角色互相观看手牌。", 
+[":se_yuanxin"]="一名角色受到伤害时，若伤害值不小于2，你可以受到伤害来源的一点伤害，然后令该伤害-1。若如此做，你和受到伤害的角色互相观看手牌。",
 
-["Yukino"] = "雪之下雪乃", 
-["&Yukino"] = "雪之下雪乃", 
-["@Yukino"] = "果然我的青春恋爱喜剧搞错了", 
-["#Yukino"] = "侍奉部长", 
-["~Yukino"] = "为什么...你要哭呢...果然你...卑怯呢...", 
+["Yukino"] = "雪之下雪乃",
+["&Yukino"] = "雪之下雪乃",
+["@Yukino"] = "果然我的青春恋爱喜剧搞错了",
+["#Yukino"] = "侍奉部长",
+["~Yukino"] = "为什么...你要哭呢...果然你...卑怯呢...",
 ["designer:Yukino"] = "Sword Elucidator",
 ["cv:Yukino"] = "早见沙织",
 ["illustrator:Yukino"] = "刃天",
 
-["Yyui"] = "由比滨结衣", 
-["&Yyui"] = "由比滨结衣", 
-["@Yyui"] = "果然我的青春恋爱喜剧搞错了", 
-["#Yyui"] = "决意的团子", 
-["~Yyui"] = "但是呢...我...不想要现在这个样子啊...", 
+["Yyui"] = "由比滨结衣",
+["&Yyui"] = "由比滨结衣",
+["@Yyui"] = "果然我的青春恋爱喜剧搞错了",
+["#Yyui"] = "决意的团子",
+["~Yyui"] = "但是呢...我...不想要现在这个样子啊...",
 ["designer:Yyui"] = "Sword Elucidator",
 ["cv:Yyui"] = "东山奈央",
 ["illustrator:Yyui"] = "コ゛りぼて",
 }
 
---佐仓千代 
+--佐仓千代
 
 
 
 se_linmo_trigger = sgs.CreateTriggerSkill{
-	name = "#se_linmo_trigger",  
-	frequency = sgs.Skill_NotFrequent, 
+	name = "#se_linmo_trigger",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.CardUsed, sgs.EventPhaseChanging},
-	priority = -100, 
+	priority = -100,
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event==sgs.CardUsed then
@@ -12256,17 +12263,17 @@ se_linmo = sgs.CreateOneCardViewAsSkill{
     end,
     enabled_at_play = function(self, player)
         return sgs.Slash_IsAvailable(player)
-    end, 
+    end,
     enabled_at_response = function(self, player, pattern)
         return (pattern == "slash" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Slash")) or (pattern == "jink" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Jink")) or (pattern == "nullification" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Nullification"))
     end
 }
 
 se_zhenfen = sgs.CreateTriggerSkill{
-	name = "se_zhenfen", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.CardUsed, sgs.EventPhaseStart, sgs.EventLoseSkill},  
-	on_trigger = function(self, event, player, data) 
+	name = "se_zhenfen",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.CardUsed, sgs.EventPhaseStart, sgs.EventLoseSkill},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if player:isAlive() then
 			if event == sgs.CardUsed then
@@ -12304,9 +12311,9 @@ se_zhenfen = sgs.CreateTriggerSkill{
 }
 
 se_fupao = sgs.CreateTriggerSkill{
-	name = "se_fupao", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardUsed, sgs.Damage}, 
+	name = "se_fupao",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardUsed, sgs.Damage},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.CardUsed then
@@ -12324,7 +12331,7 @@ se_fupao = sgs.CreateTriggerSkill{
 			ap:setValue(use.from)
 			room:setTag("se_fupao_tag",ap)
 			local ncard = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0)
-			ncard:setSkillName("se_fupao")	
+			ncard:setSkillName("se_fupao")
 			local nuse = sgs.CardUseStruct()
 			nuse.from = eu
 			nuse.to = use.to
@@ -12334,7 +12341,7 @@ se_fupao = sgs.CreateTriggerSkill{
 			local damage = data:toDamage()
 			if not damage.card then return end
 			if not damage.card:isKindOf("Slash") or damage.card:getSkillName() ~= "se_fupao" then return end
-			if damage.card:getSuit() ~= sgs.Card_NoSuit or damage.card:getNumber() ~= 0 then return end 
+			if damage.card:getSuit() ~= sgs.Card_NoSuit or damage.card:getNumber() ~= 0 then return end
 			local  eu = room:findPlayerBySkillName(self:objectName())
 			if not eu then return end
 			eu:drawCards(1)
@@ -12356,10 +12363,10 @@ se_fupao = sgs.CreateTriggerSkill{
 }
 
 se_tuodui = sgs.CreateTriggerSkill{
-	name = "se_tuodui",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.TargetConfirming, sgs.DamageInflicted}, 
-	on_trigger = function(self, event, player, data) 
+	name = "se_tuodui",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.TargetConfirming, sgs.DamageInflicted},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.TargetConfirming then
 			local use = data:toCardUse()
@@ -12407,7 +12414,7 @@ sgs.LoadTranslationTable{
 ["$se_linmo1"] = "哎————野崎君是漫画家？（野崎）哎？不知道就涂了四个小时？",
 ["$se_linmo2"] = "（野崎）我在想，能画出边界那么干净的海报的人，一定能帮上忙吧。（千代）原来是看重我的技术么！",
 ["$se_linmo3"] = "（野崎）那边，拜托涂黑了。（千代）嗯？......",
-[":se_linmo"]="一名其他角色于出牌阶段使用基本牌或锦囊牌时，若你的武将牌上没有“原稿”，你可以将其置于你的武将牌上，称为“原稿”。若如此做，你可以将一张牌置于你的武将牌上，称为“临摹”。若你拥有该技能，你所有的与“临摹”牌类相同的牌均可以视为“原稿”，你每以此方式使用一张这种牌，你摸一张牌。“原稿”与“临摹”于你回合结束时进入弃牌堆。", 
+[":se_linmo"]="一名其他角色于出牌阶段使用基本牌或锦囊牌时，若你的武将牌上没有“原稿”，你可以将其置于你的武将牌上，称为“原稿”。若如此做，你可以将一张牌置于你的武将牌上，称为“临摹”。若你拥有该技能，你所有的与“临摹”牌类相同的牌均可以视为“原稿”，你每以此方式使用一张这种牌，你摸一张牌。“原稿”与“临摹”于你回合结束时进入弃牌堆。",
 
 ["se_linmo$"] = "image=image/animate/se_linmo.png",
 ["se_zhenfen$"] = "image=image/animate/se_zhenfen.png",
@@ -12417,36 +12424,36 @@ sgs.LoadTranslationTable{
 ["$se_zhenfen3"] = "佐仓千代，16岁，和喜欢的人告白，获得了签名......",
 ["$se_zhenfen4"] = "稍等......不我好像确实说了是粉丝......",
 ["$se_zhenfen5"] = "被当成缠人的女生的话怎么办啊！",
-[":se_zhenfen"]="<font color=\"blue\"><b>锁定技,</b></font>若你于出牌阶段使用了第x张牌，你变身为“欧根亲王”。 x为你的体力值+1", 
+[":se_zhenfen"]="<font color=\"blue\"><b>锁定技,</b></font>若你于出牌阶段使用了第x张牌，你变身为“欧根亲王”。 x为你的体力值+1",
 ["@zhenfen_carduse"] = "振奋",
 
 ["se_fupao"] = "辅炮「援护火力」",
 ["$se_fupao1"] = "开火！开火！",
 ["$se_fupao2"] = "仔细瞄准…开火！",
 ["$se_fupao3"] = "主炮，仔细瞄准…炮击，开始！",
-[":se_fupao"]="每当一名其他角色使用【杀】时，你可以视为对相同目标使用一张【杀】。若该【杀】造成伤害后，你需摸一张牌并变身为佐仓千代，然后将受到这张【杀】的伤害的角色的武器移动到这名角色的武器区。", 
+[":se_fupao"]="每当一名其他角色使用【杀】时，你可以视为对相同目标使用一张【杀】。若该【杀】造成伤害后，你需摸一张牌并变身为佐仓千代，然后将受到这张【杀】的伤害的角色的武器移动到这名角色的武器区。",
 
 ["se_tuodui$"] = "image=image/animate/se_tuodui.png",
 ["se_fupao$"] = "image=image/animate/se_fupao.png",
 ["se_tuodui"] = "脱队「全身而退」",
 ["$se_tuodui1"] = "诶，你说我是幸运女孩？完全没这回事哦！浅海什么的都不在行啦…",
 ["$se_tuodui2"] = "就这点伤我才不会沉呢！反击了哦！",
-[":se_tuodui"]="<font color=\"blue\"><b>锁定技,</b></font>你成为AOE目标时，将你从目标中排除。当你受到伤害时，你取消之，然后变身为佐仓千代。", 
+[":se_tuodui"]="<font color=\"blue\"><b>锁定技,</b></font>你成为AOE目标时，将你从目标中排除。当你受到伤害时，你取消之，然后变身为佐仓千代。",
 
-["Chiyo"] = "佐仓千代", 
-["&Chiyo"] = "佐仓千代", 
-["@Chiyo"] = "月刊少女野崎君", 
-["#Chiyo"] = "月刊派拉斯", 
-["~Chiyo"] = "哇————嘿嘿...哈哈...真高兴呢...第二张签名呢......嘿嘿...万岁————......", 
+["Chiyo"] = "佐仓千代",
+["&Chiyo"] = "佐仓千代",
+["@Chiyo"] = "月刊少女野崎君",
+["#Chiyo"] = "月刊派拉斯",
+["~Chiyo"] = "哇————嘿嘿...哈哈...真高兴呢...第二张签名呢......嘿嘿...万岁————......",
 ["designer:Chiyo"] = "Sword Elucidator",
 ["cv:Chiyo"] = "小澤亞李",
 ["illustrator:Chiyo"] = "Straw@お仕事募集中",
 
-["Eugen"] = "欧根亲王", 
-["&Eugen"] = "欧根亲王", 
-["@Eugen"] = "艦隊collection", 
-["#Eugen"] = "月刊重巡", 
-["~Eugen"] = "这样的话，要被俾斯麦姐姐取笑了啦…", 
+["Eugen"] = "欧根亲王",
+["&Eugen"] = "欧根亲王",
+["@Eugen"] = "艦隊collection",
+["#Eugen"] = "月刊重巡",
+["~Eugen"] = "这样的话，要被俾斯麦姐姐取笑了啦…",
 ["designer:Eugen"] = "Sword Elucidator",
 ["cv:Eugen"] = "小澤亞李",
 ["illustrator:Eugen"] = "Hiten◆三日目A08a",

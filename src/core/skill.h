@@ -180,6 +180,7 @@ public:
     virtual void onDamaged(ServerPlayer *target, const DamageStruct &damage) const = 0;
 };
 
+
 class PhaseChangeSkill : public TriggerSkill
 {
     Q_OBJECT
