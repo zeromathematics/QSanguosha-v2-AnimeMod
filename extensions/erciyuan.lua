@@ -7,10 +7,10 @@ keima=sgs.General(extension,"keima","real",3,true,false) --桂馬
 SPkirito=sgs.General(extension,"SPkirito","science",4,true,false) --キリト
 odanobuna=sgs.General(extension,"odanobuna","magic",3,false,false) --織田信奈
 yuuta=sgs.General(extension,"yuuta","real",4,true,false) --勇太
-tsukushi=sgs.General(extension,"tsukushi","real",3,false,false) --筑紫
+-- tsukushi=sgs.General(extension,"tsukushi","real",3,false,false) --筑紫
 batora=sgs.General(extension,"batora","magic",3,true,true) --バトラ
 mao_maoyu=sgs.General(extension,"mao_maoyu","magic",4,false,false) --まお
-sheryl=sgs.General(extension,"sheryl","diva",3,false,false) --シェリル
+-- sheryl=sgs.General(extension,"sheryl","diva",3,false,false) --シェリル
 aoitori=sgs.General(extension,"aoitori","magic",4,true,false) --葵‘トリ
 kyouko=sgs.General(extension,"kyouko","magic",4,false,false) --きょうこ
 -- diarmuid=sgs.General(extension,"diarmuid","magic",4,true,false) --迪卢木多
@@ -3215,14 +3215,14 @@ odanobuna:addSkill(LuaTianmo)
 odanobuna:addSkill(LuaTianmoDefense)
 yuuta:addSkill(LuaWangxiang)
 yuuta:addSkill(luablackflame)
-tsukushi:addSkill(LuaGqset)
-tsukushi:addSkill(LuaGqef)
-tsukushi:addSkill(luatiaojiao)
+-- tsukushi:addSkill(LuaGqset)
+-- tsukushi:addSkill(LuaGqef)
+-- tsukushi:addSkill(luatiaojiao)
 batora:addSkill(LuaBuqi)
 mao_maoyu:addSkill(luaboxue)
-sheryl:addSkill(LuaYaojing)
-sheryl:addSkill(LuaGongming)
-sheryl:addSkill(LuaYaojingSound)
+-- sheryl:addSkill(LuaYaojing)
+-- sheryl:addSkill(LuaGongming)
+-- sheryl:addSkill(LuaYaojingSound)
 aoitori:addSkill(LuaLuowang)
 kyouko:addSkill(LuaLuoshen)
 -- diarmuid:addSkill(LuaPomo)
@@ -3354,8 +3354,6 @@ sgs.LoadTranslationTable{
 	["draw"]="摸两张牌",
 	["throw"]="弃置",
 	["gx"]="以任意顺序置于牌堆顶",
-	["youdraw"]="你摸X张牌",
-	["hedraws"]="令其摸X张牌",
 	["throwtableequip"]="弃置场上一张装备牌",
 	["loseonehp"]="失去1点体力",
 	["turnoverself"]="翻面",
@@ -3397,11 +3395,6 @@ sgs.LoadTranslationTable{
 	["#yuuta"]="漆黑烈焰使",
 	["LuaWangxiang"]="妄想",
 	["luablackflame"]="黑焰",
-	["tsukushi"]="筒隐筑紫",
-	["@tsukushi"]="变态王子与不笑猫",
-	["#tsukushi"]="钢铁之王",
-	["LuaGqset"]="钢躯",
-	["luatiaojiao"]="调教",
 	["batora"]="魔·右代宫战人",
 	["@batora"]="海猫鸣泣之时",
 	["#batora"]="无限黄金魔术师",
@@ -3410,11 +3403,6 @@ sgs.LoadTranslationTable{
 	["@mao_maoyu"]="魔王勇者",
 	["#mao_maoyu"]="红玉之瞳",
 	["luaboxue"]="博学",
-	["sheryl"]="雪莉露·诺姆",
-	["@sheryl"]="超时空要塞F",
-	["#sheryl"]="银河的妖精",
-	["LuaGongming"]="共鸣",
-	["LuaYaojing"]="妖精",
 	["aoitori"]="葵·托利",
 	["@aoitori"]="境界线上的地平线",
 	["#aoitori"]="不可能之男",
@@ -3501,9 +3489,7 @@ sgs.LoadTranslationTable{
 }
 ------------------------------------------------------------------------技能描述区
 sgs.LoadTranslationTable{
-	[":luatiaojiao"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以令一名角色选择一项：对一名你指定的其他角色使用一张【杀】，或令你获得其区域内的一张牌。",
 	[":LuaWangxiang"]="当你的手牌数不多于你已损失的体力值时，你可以将一张手牌当【等价交换】使用。",
-	[":LuaGqset"]="结束阶段开始时，你可以将一张手牌置于你的武将牌上，称为“钢”，然后同类型的牌对你无效直至你下一回合的准备阶段。你的准备阶段开始时，若你的武将牌上有“钢”，须将“钢”弃置。（“钢”至多存在1张）",
 	[":luablackflame"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可失去1点体力，然后对一名角色造成1点火焰伤害。",
 	[":LuaBuwu"]="每当你造成一次伤害后，你可令受到伤害的角色将其武将牌翻面，然后该角色摸等同于其体力值-1张牌。",
 	[":LuaChigui"]="结束阶段开始时，你可失去1点体力，获得1名角色装备区内的武器牌，然后再摸1张牌，直到场上没有武器牌。",
@@ -3518,8 +3504,6 @@ sgs.LoadTranslationTable{
 	[":nvshen"]="<font color=\"blue\"><b>锁定技，</b></font>你的手牌上限+X（X为你的体力上限）。",
 	[":LuaBuqi"]="游戏开始时或你受到一次伤害后，你可获得所有其他角色手牌，并由当前回合角色开始，依次交给每名其他角色等同于其原有手牌张数的手牌。",
 	[":luaboxue"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可指定X名角色并亮出牌堆顶X张牌，然后你摸X/2(向上取整)张牌，指定角色依次与之交换一张牌（包括装备牌），然后你将其余的牌弃置，或以任意顺序置于牌堆顶。",
-	[":LuaYaojing"]="出牌阶段，你可将一张手牌当【闪耀祭典】使用。",
-	[":LuaGongming"]="你的回合内，每有一名角色回复体力，你可以令其摸X张牌，或你摸X张牌。（X为你已损失体力值）。",
 	[":LuaLuowang"]="摸牌阶段结束时，你可以展示所有手牌。其中每有一种红色花色，你可令一名角色摸一张牌。然后每有一种黑色花色，你可弃置一名角色的一张牌。",
 	[":LuaLuoshen"]="准备阶段开始时，你可以进行一次判定，然后你获得生效后的判定牌且你可以重复此流程，直到判定结果为【杀】。",
 	[":LuaBaozou"]=" 你在“暴走”回合外的濒死状态结算后，你可以暂停一切结算，发动以下效果且防止进入濒死状态直到该效果结束，然后继续暂停的结算：你进行一个额外的回合并于此回合内获得以下技能：“无双”、“咆哮”、“狂骨”、“猛噬”（锁定技，你的基本牌均视为【杀】，你的锦囊牌均视为【相爱相杀】）“音爆”（锁定技，你计算与其他角色的距离始终为1）。以此法获得的回合内造成伤害后，若你的血量超过1，你本回合不能使用基本牌或锦囊牌。",
@@ -3561,7 +3545,7 @@ sgs.LoadTranslationTable{
 }
 ------------------------------------------------------------------------武将信息区
 sgs.LoadTranslationTable{
-	["designer:tsukushi"]="OmnisReen",
+
 	["designer:SPkirito"]="OmnisReen",
 	["designer:itomakoto"]="OmnisReen",
 	["designer:yuuta"]="OmnisReen",
@@ -3569,7 +3553,7 @@ sgs.LoadTranslationTable{
 	["designer:keima"]="OmnisReen",
 	["designer:ayanami"]="OmnisReen",
 	["designer:batora"]="OmnisReen",
-	["designer:sheryl"]="昂翼天使; OmnisReen",
+
 	["designer:mao_maoyu"]="昂翼天使; OmnisReen",
 	["designer:aoitori"]="OmnisReen",
 	["designer:kyouko"]="昂翼天使",
@@ -3586,7 +3570,7 @@ sgs.LoadTranslationTable{
 	["designer:kntsubasa"]="OmnisReen",
 	["designer:khntmiku"]="OmnisReen",
 	["designer:yukinechris"]="OmnisReen",
-	["cv:tsukushi"]="田村ゆかり",
+
 	["cv:SPkirito"]="松冈祯丞",
 	["cv:itomakoto"]="平川大辅",
 	["cv:yuuta"]="福山潤",
@@ -3594,7 +3578,7 @@ sgs.LoadTranslationTable{
 	["cv:keima"]="下野紘",
 	["cv:ayanami"]="林原 めぐみ",
 	["cv:batora"]="小野大辅",
-	["cv:sheryl"]="远藤绫 & May'n",
+
 	["cv:mao_maoyu"]="小清水亜美",
 	["cv:aoitori"]="福山潤",
 	["cv:kyouko"]="野中藍",
@@ -3611,7 +3595,7 @@ sgs.LoadTranslationTable{
 	["cv:khntmiku"]="井口裕香",
 	["cv:kntsubasa"]="水樹奈々",
 	["cv:yukinechris"]="高垣彩陽",
-	["illustrator:tsukushi"] = "J.C.Staff",
+
 	["illustrator:SPkirito"] = "A1 Pictures",
 	["illustrator:itomakoto"] = "TNK",
 	["illustrator:yuuta"] = "Kyoto Animation",
@@ -3619,7 +3603,7 @@ sgs.LoadTranslationTable{
 	["illustrator:keima"] = "manglobe",
 	["illustrator:ayanami"] = "Khara",
 	["illustrator:batora"]="水野英多",
-	["illustrator:sheryl"]="BigWest",
+
 	["illustrator:mao_maoyu"]="Arms",
 	["illustrator:aoitori"]="Sunrise",
 	["illustrator:kyouko"]="SHAFT",
@@ -3639,10 +3623,6 @@ sgs.LoadTranslationTable{
 }
 ------------------------------------------------------------------------武将配音区
 sgs.LoadTranslationTable{
-	["$luatiaojiao1"]="啊！！！“绷”~~~",
-	["$luatiaojiao2"]="现在就把你赶出去！再也不让你踏进这个家门半步了！",
-	["$LuaGqset1"]="真有种啊！",
-	["$LuaGqset2"]="（你这！） 砰！",
 	["$LuaShenzhi1"]="我已经看到结局了",
 	["$luagonglue1"]="还没穿短裤！",
 	["$luagonglue2"]="欢迎~迷途羔羊们。。。",
@@ -3658,12 +3638,6 @@ sgs.LoadTranslationTable{
 	["$luarenzha1"]="啊~~~ 可恶！",
 	["$renzha1"]="才不是",
 	["$renzha2"]="世界？",
-	["$LuaGongming1"]="与神明相恋之时，从未想过这样的离别会降临 ",
-	["$LuaGongming2"]="与你相逢 群星闪耀 赐我新生 去爱了才会… 拥有爱才会… ",
-	["$LuaYaojing1"]="（啪！）来 听我的歌吧！",
-	["$LuaYaojing2"]="曾经伫立在世界中心，星球因我而旋转 无意中的喷嚏，便惊起林中蝴蝶乱舞 ",
-	["$LuaYaojing3"]="来了哦，大家！ 听我的歌吧！",
-	["$LuaYaojing4"]="我是雪莉露诺姆，被称为「银河的妖精」",
 	["$luaboxue1"]="战争的彼端 未曾见过的世界",
 	["$luaboxue2"]="你好（勇者）",
 	["$LuaLuoshen1"]="超烦~超烦人~~",
@@ -3723,13 +3697,13 @@ sgs.LoadTranslationTable{
 	["$luayingxian1"]="闪光…创始的世界　漆黑…终结的世界",
 	["$luayingxian2"]="（圣咏）",
 	["$LuaDikai2"]="（圣咏）",
-	["~tsukushi"]="不要。。我不会再放开了。。。",
+
 	["~keima"]="就一步，为现实妥协。。。",
 	["~yuuta"]="啊~~~砰！",
 	["~ayanami"]="为什么~~",
 	["~odanobuna"]="还会。。。再会的吧。",
 	["~itomakoto"]="嘘~~~~~~~~~~",
-	["~sheryl"]="但是，我的工作已经结束了。",
+
 	["~mao_maoyu"]="真为这样的自己感到难过。",
 	["~kyouko"]="拜托了 神啊 都已经是这样的人生了，至少让我做一次幸福的梦吧。",
 	["~aoitori"]="（哦哦哦哦哦哦~~~）",
@@ -3749,15 +3723,12 @@ sgs.LoadTranslationTable{
 ------------------------------------------------------------------------技能动画区
 sgs.LoadTranslationTable{
 	["luaboxue$"] = "image=image/animate/luaboxue.png",
-	["LuaYaojing$"] = "image=image/animate/LuaYaojing.png",
 	["luarenzha$"] = "image=image/animate/luarenzha.png",
 	["LuaBuwu$"] = "image=image/animate/LuaBuwu.png",
 	["weixiao$"] = "image=image/animate/weixiao.png",
-	["LuaGqset$"] = "image=image/animate/LuaGqset.png",
 	["LuaShenzhi$"] = "image=image/animate/LuaShenzhi.png",
 	["luablackflame$"] = "image=image/animate/luablackflame.png",
 	["LuaLuowang$"] = "image=image/animate/LuaLuowang.png",
-	["LuaBimie$"] = "image=image/animate/LuaBimie.png",
 	["LuaJianzhi$"] = "image=image/animate/LuaJianzhi.png",
 	["$LuaRedoWake"] = "anim=skill/LuaRedoWake",
 }

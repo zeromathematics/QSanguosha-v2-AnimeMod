@@ -5788,11 +5788,6 @@ void Room::setAura(ServerPlayer* player, QString aura)
         return;
     }
 
-    bool first = true;
-    if (hasAura()){
-        first = false;
-    }
-
     setTag("aura", QVariant::fromValue(aura));
     setTag("aura_player", QVariant::fromValue(player));
     //change BGM, background

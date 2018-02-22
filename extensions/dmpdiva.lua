@@ -439,7 +439,7 @@ sgs.LoadTranslationTable{
 	["no_more"] = "不再邀请这名角色加入",
 	["se_guwu_accept"] = "接受邀请加入「μ’ｓ」",
 	["se_guwu$"] = "image=image/animate/se_guwu.png",
-	[":se_guwu"] = "\n<font color=\"Pink\"><b>社团技，</b></font>「μ’ｓ」\n<font color=\"Pink\"><b>加入条件：</b></font>一名角色于回合外回复体力时，你可以询问其是否加入「μ’ｓ」。\n<font color=\"Pink\"><b>效果：</b></font>每当一名「μ’ｓ」角色离开濒死阶段时，其进行一次判定。若为红色，其回复一点体力，否则所有「μ’ｓ」的角色各摸一张牌。",
+	[":se_guwu"] = "\n<font color=\"#93DB70\"><b>社团技，</b></font>「μ’ｓ」\n<font color=\"#93DB70\"><b>加入条件：</b></font>一名角色于回合外回复体力时，你可以询问其是否加入「μ’ｓ」。\n<font color=\"#93DB70\"><b>效果：</b></font>每当一名「μ’ｓ」角色离开濒死阶段时，其进行一次判定。若为红色，其回复一点体力，否则所有「μ’ｓ」的角色各摸一张牌。",
 
 	["se_qiangjing"] = "抢镜「抢镜头的大头小鸟」",
 	["$se_qiangjing1"] = "哇，吓我一跳…",

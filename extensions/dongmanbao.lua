@@ -4427,7 +4427,7 @@ SE_Maoshi = sgs.CreateTriggerSkill{
 			if use.to:length() > 0 and use.to:at(0):objectName() == player:objectName() then
 				local card = use.card
 				if card:isKindOf("EquipCard") then
-					if player:hasSkill(self.objectName()) then
+					if player:hasSkill(self:objectName()) then
 						local room = player:getRoom()
 						room:moveCardTo(card,player,sgs.Player_DiscardPile,true)
 					end
@@ -9346,7 +9346,7 @@ SE_Huajian_ed = sgs.CreateTriggerSkill{
 			if use.from:objectName() == player:objectName() then
 				local card = use.card
 				if card:objectName() == "GreenRose" then
-					if player:hasSkill(self.objectName()) then
+					if player:hasSkill(self:objectName()) then
 						room:obtainCard(player, card)
 					end
 				end

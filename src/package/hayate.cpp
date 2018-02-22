@@ -409,7 +409,7 @@ public:
             if (damage.card && damage.card->isKindOf("Slash") && damage.from == player && damage.from->hasSkill(objectName()) && damage.to->getMark("@zhou") == 0 && damage.to->isAlive()){
                 if (room->askForSkillInvoke(player, objectName(), data)){
                     room->broadcastSkillInvoke(objectName());
-                    room->doLightbox("LuaBimie$", 1500);
+                    room->doLightbox("bimie$", 1500);
                     damage.to->gainMark("@zhou", 1);
                 }
             }
@@ -431,7 +431,261 @@ public:
 };
 
 
+class Gangqu : public TriggerSkill
+{
+public:
+    Gangqu() : TriggerSkill("gangqu")
+    {
+        frequency = NotFrequent;
+        events << EventPhaseStart << CardEffected;
+    }
 
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart)
+        {
+            if (player->getPhase() == Player::Finish){
+                if (!player->isKongcheng() && player->getPile("gang").length() == 0 && room->askForSkillInvoke(player, objectName(), data)){
+                    player->addToPile("gang", room->askForCardChosen(player, player, "h", objectName()));
+                }
+            }
+            else if (player->getPhase() == Player::Start && player->getPile("gang").length() > 0){
+                if (player->getPile("gang").length() == 1){
+                    room->obtainCard(player, player->getPile("gang").first());
+                }
+                else{
+                    room->fillAG(player->getPile("gang"), player);
+                    room->obtainCard(player, room->askForAG(player, player->getPile("gang"), false, objectName()));
+                    room->clearAG(player);
+                }
+            }
+        }
+        else if (triggerEvent == CardEffected){
+            CardEffectStruct effect = data.value<CardEffectStruct>();
+            if (effect.to == player && player->getPile("gang").length() > 0 && effect.card->getType() == (Sanguosha->getCard(player->getPile("gang").first()))->getType() && room->askForSkillInvoke(player, objectName() + "Prevent", data)){
+                room->broadcastSkillInvoke(objectName());
+                room->doLightbox(objectName() + "$", 800);
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+TiaojiaoCard::TiaojiaoCard()
+{
+}
+
+bool TiaojiaoCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    if (!targets.isEmpty()) return false;
+    return to_select != Self;
+}
+
+void TiaojiaoCard::use(Room *room, ServerPlayer *tsukushi, QList<ServerPlayer *> &targets) const
+{
+    ServerPlayer *target = targets.first();
+    ServerPlayer *slashTarget = room->askForPlayerChosen(tsukushi, room->getAlivePlayers(), "tiaojiao");
+    if (!room->askForUseSlashTo(target, slashTarget, "@TiaojiaoSlash:" + tsukushi->getGeneralName() + ":" + target->getGeneralName() + ":" + slashTarget->getGeneralName(), false)){
+        if (!target->isNude()){
+            room->obtainCard(tsukushi, room->askForCardChosen(tsukushi, target, "hej", objectName()));
+        }
+    }
+}
+
+class Tiaojiao : public ZeroCardViewAsSkill
+{
+public:
+    Tiaojiao() : ZeroCardViewAsSkill("tiaojiao")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("TiaojiaoCard");
+    }
+
+    const Card *viewAs() const
+    {
+        return new TiaojiaoCard();
+    }
+};
+
+
+class Gongming : public TriggerSkill
+{
+public:
+    Gongming() : TriggerSkill("gongming")
+    {
+        frequency = NotFrequent;
+        events << HpRecover;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+
+    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        ServerPlayer *sher = room->findPlayerBySkillName(objectName());
+        if (!sher){
+            return false;
+        }
+        if (sher->getPhase() == Player::NotActive){
+            return false;
+        }
+        if (room->askForChoice(sher, objectName(), "youdraw+hedraws") == "youdraw"){
+            sher->drawCards(sher->getLostHp() + 1);
+        }
+        else{
+            player->drawCards(sher->getLostHp() + 1);
+        }
+        room->broadcastSkillInvoke(objectName());
+        return false;
+    }
+};
+
+class YaojingVS : public OneCardViewAsSkill
+{
+public:
+    YaojingVS() : OneCardViewAsSkill("yaojing")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return player->hasFlag("Yaojing_Active");
+    }
+
+    bool viewFilter(const Card *card) const
+    {
+        return true;
+    }
+
+    const Card *viewAs(const Card *originalCard) const
+    {
+        Card *god_salvation = new GodSalvation(originalCard->getSuit(), originalCard->getNumber());
+        god_salvation->addSubcard(originalCard->getId());
+        god_salvation->setSkillName(objectName());
+        return god_salvation;
+    }
+};
+
+class Yaojing : public TriggerSkill
+{
+public:
+    Yaojing() : TriggerSkill("yaojing")
+    {
+        events << EventPhaseChanging << CardUsed << EventLoseSkill << Death;
+        view_as_skill = new YaojingVS;
+    }
+
+    int getEffectIndex(const ServerPlayer*, const Card*){
+        return 0;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseChanging && player->hasSkill(objectName())) {
+            // change phase to not active -> make change to maximum
+            PhaseChangeStruct changing = data.value<PhaseChangeStruct>();
+            if (changing.from == Player::Discard){
+                player->tag["yaojing_times"] = QVariant(0);
+            }
+            else if (changing.to == Player::Play){
+                if (room->hasAura()){
+                    if (room->getAura() == objectName() || room->getAura() == "MacrossF"){
+                        // is current
+
+                        room->setPlayerFlag(player, "Yaojing_Active");
+                        return false;
+                    }
+                    if (room->getAuraPlayer()->getHandcardNum() > player->getHandcardNum()){
+                        // cannot replace
+                        return false;
+                    }
+
+                }
+                if (!player->askForSkillInvoke(objectName(), data)){
+                    return false;
+                }
+                room->broadcastSkillInvoke(objectName(), rand() % 2 * 2 + 1);
+                room->setPlayerFlag(player, "Yaojing_Active");
+                if (room->getAura() == "xingjian"){
+                    room->doAura(player, "MacrossF");
+                }
+                else{
+                    room->doAura(player, objectName());
+                }
+                
+            }
+        }
+        else if (triggerEvent == CardUsed) {
+            // gain card used mark
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.card->isKindOf("GodSalvation") && use.from == player && player->hasSkill(objectName())){
+                if (use.card->getSkillName() == objectName()){
+                    room->doLightbox(objectName() + "$", 1500);
+                    player->tag["yaojing_times"] = QVariant(player->tag["yaojing_times"].toInt() + 1);
+                }
+            }
+        }
+        else if (triggerEvent == EventLoseSkill){
+            if (data.toString() == objectName() && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
+                player->tag["yaojing_times"] = QVariant(0);
+                if (room->getAura() == "MacrossF"){
+                    ServerPlayer *ranka = room->findPlayerBySkillName("xingjian");
+                    if (ranka &&ranka->isAlive()){
+                        room->doAura(ranka, "xingjian");
+                        return false;
+                    }
+                    
+                }
+                room->clearAura();
+            }
+        }
+        else if (triggerEvent == Death){
+            DeathStruct death = data.value<DeathStruct>();
+            if (death.who->hasSkill(objectName()) && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
+                player->tag["yaojing_times"] = QVariant(0);
+                if (room->getAura() == "MacrossF"){
+                    ServerPlayer *ranka = room->findPlayerBySkillName("xingjian");
+                    if (ranka && ranka->isAlive()){
+                        room->doAura(ranka, "xingjian");
+                        return false;
+                    }
+
+                }
+                room->clearAura();
+            }
+        }
+
+        return false;
+    }
+};
+
+class YaojingMaxCards : public MaxCardsSkill
+{
+public:
+    YaojingMaxCards() : MaxCardsSkill("#yaojing")
+    {
+    }
+
+    int getExtra(const Player *target) const
+    {
+        if (target->tag["yaojing_times"].toInt() > 0){
+            return  -target->tag["yaojing_times"].toInt();
+        }
+        else
+            return 0;
+    }
+};
 
 
 
@@ -448,6 +702,18 @@ HayatePackage::HayatePackage()
     General * diarmuid = new General(this, "diarmuid", "magic", 4);
     diarmuid->addSkill(new Pomo);
     diarmuid->addSkill(new Bimie);
+
+    General *tsukushi = new General(this, "tsukushi", "real", 3, false);
+    tsukushi->addSkill(new Gangqu);
+    tsukushi->addSkill(new Tiaojiao);
+
+    addMetaObject<TiaojiaoCard>();
+
+    General *sheryl = new General(this, "sheryl", "diva", 3, false);
+    sheryl->addSkill(new Yaojing);
+    sheryl->addSkill(new YaojingMaxCards);
+    sheryl->addSkill(new Gongming);
+    related_skills.insertMulti("yaojing", "#yaojing");
 }
 
 ADD_PACKAGE(Hayate)

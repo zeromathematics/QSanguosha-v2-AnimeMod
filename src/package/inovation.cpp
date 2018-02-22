@@ -4658,18 +4658,26 @@ public:
     {
         if (event == EventPhaseStart){
             if (player->getPhase() == Player::Play && player->hasSkill(objectName())){
-                if (room->hasAura() && (room->getAura() == objectName() || room->getAuraPlayer()->getHp() < player->getHp())){
+                if (room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF" || room->getAuraPlayer()->getHp() < player->getHp())){
                     return false;
                 }
                 if (!player->askForSkillInvoke(objectName(), data)){
                     return false;
                 }
                 room->broadcastSkillInvoke(objectName(), rand() % 2 * 2 + 1);
-                room->doAura(player, objectName());
+                if (room->getAura() == "yaojing"){
+                    room->doAura(player, "MacrossF");
+                }
+                else{
+                    room->doAura(player, objectName());
+                }
             }
-            else if (player->getPhase() == Player::RoundStart && room->hasAura() && room->getAura() == objectName() && player != room->getAuraPlayer() && player->getEquips().length() > 0){
+            else if (player->getPhase() == Player::RoundStart && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF") && player->getEquips().length() > 0){
                 QString choice = room->askForChoice(player, objectName(), "xingjian_skip+xingjian_throw", data);
-                ServerPlayer * ranka = room->getAuraPlayer();
+                ServerPlayer * ranka = room->findPlayerBySkillName(objectName());
+                if (player == ranka){
+                    return false;
+                }
                 room->broadcastSkillInvoke(objectName(), 2);
                 if (choice == "xingjian_throw"){
 
@@ -4684,13 +4692,29 @@ public:
             }
         }
         else if (event == EventLoseSkill){
-            if (data.toString() == objectName() && room->hasAura() && room->getAura() == objectName()){
+            if (data.toString() == objectName() && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
+                if (room->getAura() == "MacrossF"){
+                    ServerPlayer *sher = room->findPlayerBySkillName("yaojing");
+                    if (sher &&sher->isAlive()){
+                        room->doAura(sher, "yaojing");
+                        return false;
+                    }
+
+                }
                 room->clearAura();
             }
         }
         else if (event == Death){
             DeathStruct death = data.value<DeathStruct>();
-            if (death.who->hasSkill(objectName()) && room->hasAura() && room->getAura() == objectName()){
+            if (death.who->hasSkill(objectName()) && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
+                if (room->getAura() == "MacrossF"){
+                    ServerPlayer *sher = room->findPlayerBySkillName("yaojing");
+                    if (sher &&sher->isAlive()){
+                        room->doAura(sher, "yaojing");
+                        return false;
+                    }
+
+                }
                 room->clearAura();
             }
         }
