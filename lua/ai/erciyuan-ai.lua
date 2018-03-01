@@ -910,14 +910,14 @@ sgs.ai_skill_choice["LuaJingming"] = function(self, choices, data)
 			target = p
 		end
 	end
-	if not target then return "cancel" end
+	if not target then return "youdiscard" end
 	if self:isEnemy(target) then
-		return "cancel"
+		return "youdiscard"
 	else
 		if target:getMaxHp() - target:getHp()  > 0 and target:getHandcardNum() >= 1 then return "recover" end
 		return "eachdraw"
 	end
-	return "cancel"
+	return "youdiscard"
 end
 
 local luayingxian_skill={}

@@ -779,6 +779,11 @@ bool QSanRoomSkin::_loadLayoutConfig(const QVariant &layout)
     tryParse(config["tinyAvatarSize"], _m_commonLayout.m_tinyAvatarSize);
     tryParse(config["bubbleChatBoxShowAreaSize"],
         _m_commonLayout.m_bubbleChatBoxShowAreaSize);
+
+    tryParse(config["graphicsBoxBgColor"], _m_commonLayout.graphicsBoxBackgroundColor);
+    tryParse(config["graphicsBoxBorderColor"], _m_commonLayout.graphicsBoxBorderColor);
+    _m_commonLayout.graphicsBoxTitleFont.tryParse(config["graphicsBoxTitleFont"]);
+
     _m_commonLayout.m_cardFootnoteFont.tryParse(config["cardFootnoteFont"]);
 
     JsonArray magatamaFont = config["magatamaFont"].value<JsonArray>();

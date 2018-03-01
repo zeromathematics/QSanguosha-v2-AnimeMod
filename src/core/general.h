@@ -45,6 +45,7 @@ public:
     bool hasSkill(const QString &skill_name) const;
     QList<const Skill *> getSkillList() const;
     QList<const Skill *> getVisibleSkillList() const;
+    QList<const Skill *> getWakedSkillList() const;
     QSet<const Skill *> getVisibleSkills() const;
     QSet<const TriggerSkill *> getTriggerSkills() const;
 

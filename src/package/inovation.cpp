@@ -4991,31 +4991,38 @@ class Jixian : public TriggerSkill
 public:
     Jixian() : TriggerSkill("jixian")
     {
-        events << EventPhaseEnd;
+        events << EventPhaseEnd << AskForPeachesDone;
+    }
+
+    void doJixian(Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (player->isNude() || !room->askForSkillInvoke(player, objectName(), data) || !room->askForDiscard(player, objectName(), 1, 1, false, true)){
+            return;
+        }
+        ServerPlayer *p = room->askForPlayerChosen(player, room->getAlivePlayers(), objectName());
+        if (p){
+            int num = player->getLostHp() + 1;
+            if (num > 2){
+                room->broadcastSkillInvoke(objectName(), 1);
+            }
+            else{
+                room->broadcastSkillInvoke(objectName(), 2);
+            }
+            room->damage(DamageStruct(objectName(), player, p, num));
+            if (num > 2){
+                room->detachSkillFromPlayer(player, objectName());
+                room->loseHp(player);  
+            }
+        }
     }
 
     bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (event == EventPhaseEnd && player->hasSkill(objectName()) && player->getPhase() == Player::Finish){
-            if (player->isNude() || !room->askForSkillInvoke(player, objectName(), data) || !room->askForDiscard(player, objectName(), 1, 1, false, true)){
-                return false;
-            }
-            player->turnOver();
-            ServerPlayer *p = room->askForPlayerChosen(player, room->getAlivePlayers(), objectName());
-            if (p){
-                int num = player->getLostHp() + 1;
-                if (num > 2){
-                    room->broadcastSkillInvoke(objectName(), 1);
-                }
-                else{
-                    room->broadcastSkillInvoke(objectName(), 2);
-                }
-                room->damage(DamageStruct(objectName(), player, p, num));
-                if (num > 2){
-                    room->loseHp(player);
-                    room->detachSkillFromPlayer(player, objectName());
-                }
-            }
+            doJixian(room, player, data);
+        }
+        else if (event == AskForPeachesDone){
+            doJixian(room, player, data);
         }
         return false;
     }
@@ -6080,7 +6087,7 @@ public:
                     }
 
                     room->setTag("shuji-card", QVariant(card_id));
-                    if (room->askForDiscard(dalian, objectName(), 1, 1, true, false, "@shuji-discard")){
+                    if (room->askForDiscard(dalian, objectName(), 1, 1, true, true, "@shuji-discard")){
                         if (dalian->getGeneral2Name() == "Hugh"){
                             room->broadcastSkillInvoke(objectName(), 3);
                         }
@@ -6143,16 +6150,21 @@ public:
     bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (event == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart){
-            if (player->getHandcardNum() == 0 && player->getMark("@waked") == 0){
+            int minHp = 100;
+            int minHand = 100;
+            foreach(ServerPlayer *p, room->getOtherPlayers(player)){
+                if (p->getHp() < minHp){
+                    minHp = p->getHp();
+                }
+                if (p->getHandcardNum() < minHand){
+                    minHand = p->getHandcardNum();
+                }
+            }
+            if ((player->getHandcardNum() < minHand || player->getHp() < minHp) && player->getMark("@waked") == 0){
                 room->broadcastSkillInvoke(objectName());
                 room->doLightbox("jicheng$", 3000);
-                room->setPlayerProperty(player, "maxhp", QVariant(player->getMaxHp() + 1));
-                if (room->askForChoice(player, objectName(), "jicheng_recover+jicheng_draw") == "jicheng_recover"){
-                    room->recover(player, RecoverStruct(player));
-                }
-                else{
-                    player->drawCards(2);
-                }
+                room->recover(player, RecoverStruct(player, 0, player->getLostHp()));
+                player->drawCards(2);
                 player->gainMark("@waked");
                 room->changeHero(player, "Hugh", false, false, true);
             }
@@ -6161,6 +6173,7 @@ public:
     }
 };
 
+/*
 class ShoushiProhibit : public ProhibitSkill
 {
 public:
@@ -6180,32 +6193,38 @@ public:
         }
         return false;
     }
-};
+};*/
 
 class Shoushi : public TriggerSkill
 {
 public:
     Shoushi() : TriggerSkill("shoushi")
     {
-        events << PreCardUsed << TrickCardCanceling;
+        events << PreCardUsed << TrickCardCanceling << TargetConfirmed;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *jianyong, QVariant &data) const
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (triggerEvent == TrickCardCanceling){
             CardEffectStruct effect = data.value<CardEffectStruct>();
-            if (effect.from && effect.from->hasSkill(objectName())
-                && effect.to){
+            if (effect.from && effect.from->hasSkill(objectName())){
                 if (!effect.card || !effect.card->isNDTrick()){
                     return false;
                 }
                 int num = 0;
+                ServerPlayer *jianyong = effect.from;
                 foreach(int card_id, jianyong->getPile("huanshu")){
                     num += Sanguosha->getCard(card_id)->getSuit() == effect.card->getSuit() ? 1 : 0;
                 }
                 if (num == 0){
                     return false;
                 }
+
                 if (!jianyong->hasFlag("Shoushi_sound_used")){
                     room->broadcastSkillInvoke(objectName());
                     jianyong->setFlags("Shoushi_sound_used");
@@ -6215,9 +6234,31 @@ public:
             }
 
         }
-        else{
+        if (triggerEvent == TargetConfirmed && TriggerSkill::triggerable(player)) {
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.card->isNDTrick()) {
+
+            if (use.to.contains(player) && use.from != player) {
+                if (use.card && use.card->isNDTrick()) {
+                    bool can_trigger = false;
+                    foreach(int card_id, player->getPile("huanshu")){
+                        if (Sanguosha->getCard(card_id)->getClassName() == use.card->getClassName()){
+                            can_trigger = true;
+                            break;
+                        }
+                    }
+
+                    if (can_trigger && room->askForSkillInvoke(player, objectName(), data)) {
+                        room->broadcastSkillInvoke(objectName());
+                        use.nullified_list << player->objectName();
+                        data = QVariant::fromValue(use);
+                    }
+                }
+            }
+        }
+        else if (triggerEvent == PreCardUsed) {
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.card->isNDTrick() && use.from->hasSkill(objectName())) {
+                ServerPlayer *jianyong = use.from;
                 int num = 0;
                 foreach(int card_id, jianyong->getPile("huanshu")){
                     num += Sanguosha->getCard(card_id)->getSuit() == use.card->getSuit() ? 1 : 0;
@@ -6225,6 +6266,9 @@ public:
 
 
                 //1
+                // cannot wu xie ke ji
+
+
                 if (num < 2){
                     return false;
                 }
@@ -6298,26 +6342,25 @@ public:
             QList<ServerPlayer *> left = room->getAlivePlayers();
             if (player->hasSkill(objectName()) && player->getPhase() == Player::Play){
                 int i = 0;
-                while (player->getPile("huanshu").length() > 0 && left.length() > 0 && !player->isNude()){
-                    if (room->askForDiscard(player, objectName(), 1, 1, true, true, "@kaiqi-discard")){
-                        if (i == 0){
-                            room->broadcastSkillInvoke(objectName());
-                            room->doLightbox("kaiqi$", 800);
-                        }
-                        ServerPlayer *target = room->askForPlayerChosen(player, left, objectName());
-                        left.removeOne(target);
-                        QList<int> card_ids = player->getPile("huanshu");
-                        room->fillAG(card_ids, player);
-                        int id = room->askForAG(player, card_ids, false, objectName());
-                        room->clearAG(player);
-                        if (id == -1){
-                            return false;
-                        }
-                        room->obtainCard(target, id);
-                    }
-                    else{
+                while (player->getPile("huanshu").length() > 0 && left.length() > 0){
+                    ServerPlayer *target = room->askForPlayerChosen(player, left, objectName(), "@shuji-prompt", true);
+                    if (!target){
                         return false;
                     }
+                    if (i == 0){
+                        room->broadcastSkillInvoke(objectName());
+                        room->doLightbox("kaiqi$", 800);
+                    }
+
+                    left.removeOne(target);
+                    QList<int> card_ids = player->getPile("huanshu");
+                    room->fillAG(card_ids, player);
+                    int id = room->askForAG(player, card_ids, false, objectName());
+                    room->clearAG(player);
+                    if (id == -1){
+                        return false;
+                    }
+                    room->obtainCard(target, id);
                 }
             }
         }
@@ -6461,7 +6504,7 @@ InovationPackage::InovationPackage()
     related_skills.insertMulti("jianhun", "#jianhun-target");
     //General *SaratogaR = new General(this, "SaratogaR", "kancolle", 4, false);
     //General *FubukiR = new General(this, "FubukiR", "kancolle", 3, false);
-    General *AyanamiR = new General(this, "AyanamiR", "kancolle", 4, false);
+    General *AyanamiR = new General(this, "AyanamiR", "kancolle", 3, false);
     AyanamiR->addSkill(new Taxian);
     AyanamiR->addSkill(new Guishen);
     //General *QuincyR = new General(this, "QuincyR", "kancolle", 3, false);
@@ -6527,10 +6570,8 @@ InovationPackage::InovationPackage()
     related_skills.insertMulti("shuji", "#shuji");
     Dalian->addSkill(new Jicheng);
 
-    General *Hugh = new General(this, "Hugh", "magic", 4, true, true);
+    General *Hugh = new General(this, "Hugh", "magic", 3, true, true);
     Hugh->addSkill(new Shoushi);
-    Hugh->addSkill(new ShoushiProhibit);
-    related_skills.insertMulti("shoushi", "#shoushi");
     Hugh->addSkill(new Kaiqi);
 
 

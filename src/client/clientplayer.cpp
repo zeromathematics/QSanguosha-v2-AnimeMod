@@ -197,6 +197,20 @@ void ClientPlayer::setMark(const QString &mark, int value)
             keys.prepend(key);
         }
     }
+
+    QString club_mark;
+    foreach(QString mark_name, keys){
+        if (mark_name.startsWith("@amclub_")){
+            club_mark = mark_name;
+            break;
+        }
+    }
+
+    if (club_mark.length() > 0){
+        keys.removeAll(club_mark);
+        keys.prepend(club_mark);
+    }
+
     foreach (QString key, keys) {
         if (key.startsWith("@") && marks[key] > 0) {
             int val = marks[key];

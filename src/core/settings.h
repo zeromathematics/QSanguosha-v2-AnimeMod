@@ -20,6 +20,10 @@ public:
     QFont UIFont;
     QColor TextEditColor;
 
+    QColor SkillDescriptionInToolTipColor;
+    QColor SkillDescriptionInOverviewColor;
+    QColor ToolTipBackgroundColor;
+
     // server side
     QString ServerName;
     int CountDownSeconds;

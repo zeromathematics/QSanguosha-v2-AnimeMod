@@ -1005,7 +1005,7 @@ QString Room::askForChoice(ServerPlayer *player, const QString &skill_name, cons
         answer = validChoices.first();
     else {
         if (ai) {
-            answer = ai->askForChoice(skill_name, choices, data);
+            answer = ai->askForChoice(skill_name.split("%").at(0), choices, data);
             thread->delay();
         } else {
             bool success = doRequest(player, S_COMMAND_MULTIPLE_CHOICE, JsonArray() << skill_name << choices, true);
@@ -1731,6 +1731,18 @@ void Room::slotSetProperty(ServerPlayer *player, const char *property_name, cons
 
 void Room::setPlayerMark(ServerPlayer *player, const QString &mark, int value)
 {
+    if (mark.startsWith("@amclub_")){
+        if (value > 0){
+            foreach(QString pmark, player->getMarkNames()){
+                if (pmark.startsWith("@amclub_")){
+                    player->loseAllMarks(pmark);
+                }
+            }
+        }
+        if (value > 1)
+            value = 1;
+    }
+    
     player->setMark(mark, value);
 
     JsonArray arg;

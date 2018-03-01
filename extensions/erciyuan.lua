@@ -1946,8 +1946,8 @@ LuaRedoWake = sgs.CreateTriggerSkill{
 		if  player:hasSkill("LuaGaoxiao") then
 			room:detachSkillFromPlayer(player,"LuaGaoxiao")
 		end
-		if player:hasSkill("LuaGaokang") then
-			room:detachSkillFromPlayer(player,"LuaGaokang")
+		if player:hasSkill("gaokang") then
+			room:detachSkillFromPlayer(player,"gaokang")
 		end
 		if player:hasSkill("LuaJiguangAsk") then
 			room:detachSkillFromPlayer(player,"LuaJiguangAsk")
@@ -1979,8 +1979,8 @@ LuaChamberStart = sgs.CreateTriggerSkill{
 			if not player:hasSkill("LuaGaoxiao") then
 				room:acquireSkill(player,"LuaGaoxiao")
 			end
-			if not player:hasSkill("LuaGaokang") then
-				room:acquireSkill(player,"LuaGaokang")
+			if not player:hasSkill("gaokang") then
+				room:acquireSkill(player,"gaokang")
 			end
 			if not player:hasSkill("LuaJiguangAsk") then
 				room:acquireSkill(player,"LuaJiguangAsk")
@@ -2013,8 +2013,8 @@ LuaChamberMove = sgs.CreateTriggerSkill{
 			if not player:hasSkill("LuaJiguangAsk") then
 				room:acquireSkill(player,"LuaJiguangAsk")
 			end
-			if not player:hasSkill("LuaGaokang") then
-				room:acquireSkill(player,"LuaGaokang")
+			if not player:hasSkill("gaokang") then
+				room:acquireSkill(player,"gaokang")
 			end
 			room:broadcastSkillInvoke("LuaChamberMove")
 		elseif player:getMark("@Chamber") == 1 then
@@ -2026,8 +2026,8 @@ LuaChamberMove = sgs.CreateTriggerSkill{
 			if player:hasSkill("LuaJiguangAsk") then
 				room:detachSkillFromPlayer(player,"LuaJiguangAsk")
 			end
-			if player:hasSkill("LuaGaokang") then
-				room:detachSkillFromPlayer(player,"LuaGaokang")
+			if player:hasSkill("gaokang") then
+				room:detachSkillFromPlayer(player,"gaokang")
 			end
 			room:broadcastSkillInvoke("LuaChamberMove")
 		end
@@ -2060,26 +2060,26 @@ LuaGaoxiao = sgs.CreateTriggerSkill{
 	end
 }
 --------------------------------------------------------------高抗@redo
-LuaGaokang = sgs.CreateTriggerSkill{
-	name = "LuaGaokang",
-	frequency = sgs.Skill_Compulsory,
-	events = {sgs.DamageInflicted},
-	on_trigger = function(self, event, player, data)
-		local room = player:getRoom()
-		local damage = data:toDamage()
-		local source = damage.from
-		if not player:isNude() then
-			if damage.nature == sgs.DamageStruct_Normal then
-				local id = room:askForCardChosen(player, player, "he", self:objectName())
-				room:throwCard(id, nil)
-				damage.damage = damage.damage - 1
-				room:broadcastSkillInvoke("LuaGaokang")
-				data:setValue(damage)
-			end
-		end
-		return false
-	end,
-}
+-- LuaGaokang = sgs.CreateTriggerSkill{
+-- 	name = "LuaGaokang",
+-- 	frequency = sgs.Skill_Compulsory,
+-- 	events = {sgs.DamageInflicted},
+-- 	on_trigger = function(self, event, player, data)
+-- 		local room = player:getRoom()
+-- 		local damage = data:toDamage()
+-- 		local source = damage.from
+-- 		if not player:isNude() then
+-- 			if damage.nature == sgs.DamageStruct_Normal then
+-- 				local id = room:askForCardChosen(player, player, "he", self:objectName())
+-- 				room:throwCard(id, nil)
+-- 				damage.damage = damage.damage - 1
+-- 				room:broadcastSkillInvoke("LuaGaokang")
+-- 				data:setValue(damage)
+-- 			end
+-- 		end
+-- 		return false
+-- 	end,
+-- }
 --------------------------------------------------------------激光@redo
 LuaJiguangMod = sgs.CreateTargetModSkill{
 	name = "#LuaJiguangMod",
@@ -2754,7 +2754,7 @@ suipian = sgs.CreateTriggerSkill
 --------------------------------------------------------------圣枪@hibiki
 LuaGungnir = sgs.CreateTriggerSkill{
 	name = "LuaGungnir",
-	events = {sgs.SlashProceed,sgs.ConfirmDamage,sgs.CardUsed,sgs.EventPhaseEnd},
+	events = {sgs.SlashProceed,sgs.ConfirmDamage,sgs.EventPhaseStart},
 	frequency = sgs.Skill_Compulsory,
 	on_trigger = function(self, event ,player, data)
 		local room = player:getRoom()
@@ -2903,7 +2903,7 @@ LuaCangshanTrig = sgs.CreateTriggerSkill{
 			card = data:toCardUse().card
 		end
 		if card:getSkillName() == "LuaCangshan" then
-			player:drawCards(2)
+			player:drawCards(1)
 		end
 	end,
 }
@@ -2938,7 +2938,7 @@ luayuehuangcard = sgs.CreateSkillCard{
 		end
 		ResPlayers:append(source)
 		for _,p in sgs.qlist(ResPlayers) do
-			p:drawCards(source:getMark("yuehuang")+2)
+			p:drawCards(source:getMark("yuehuang")+1)
 		end
 	end
 }
@@ -2948,7 +2948,7 @@ luayuehuangSlash = sgs.CreateTargetModSkill{
 	residue_func = function(self, player)
 		if player:hasSkill(self:objectName()) then
 			if player:hasFlag("SucYh") then
-				return player:getMark("yuehuang")+2
+				return player:getMark("yuehuang")+1
 			end
 		end
 	end,
@@ -2996,9 +2996,9 @@ LuaJingming=sgs.CreateTriggerSkill{
 			local choice
 			room:broadcastSkillInvoke("LuaJingming",2)
 			if player:isWounded() then
-				choice = room:askForChoice(miku, self:objectName(), "recover+eachdraw+cancel")
+				choice = room:askForChoice(miku, self:objectName(), "recover+eachdraw+youdiscard")
 			else
-				choice = room:askForChoice(miku, self:objectName(), "eachdraw+cancel")
+				choice = room:askForChoice(miku, self:objectName(), "eachdraw+youdiscard")
 			end
 			if choice == "recover" then
 				local rcv = sgs.RecoverStruct()
@@ -3007,6 +3007,8 @@ LuaJingming=sgs.CreateTriggerSkill{
 				room:recover(player,rcv)
 			elseif choice == "eachdraw" then
 				player:drawCards(2)
+			else
+				room:askForDiscard(miku, self:objectName(), 1, 1, false, true)
 			end
 		end
 	end,
@@ -3046,7 +3048,7 @@ luayingxiancard = sgs.CreateSkillCard{
 				yxnum = yxnum + point
 			end
 		end
-		local x = math.ceil(math.pow(yxnum,0.5))
+		local x = math.floor(math.pow(yxnum,0.5))
 		local cards = room:getNCards(x)
 		local move = sgs.CardsMoveStruct()
 		move.card_ids = cards
@@ -3189,9 +3191,14 @@ extension:addToSkills(GreenRoseSkill)
 extension:addToSkills(ElucidatorSkill)
 extension:addToSkills(LuaChitian)
 extension:addToSkills(luajianyu)
+redarcher:addWakeTypeSkillForAudio("LuaChitian")
+redarcher:addWakeTypeSkillForAudio("luajianyu")
 extension:addToSkills(LuaJiguangAsk)
-extension:addToSkills(LuaGaokang)
+-- extension:addToSkills(LuaGaokang)
 extension:addToSkills(LuaGaoxiao)
+redo:addWakeTypeSkillForAudio("LuaJiguangAsk")
+redo:addWakeTypeSkillForAudio("gaokang")
+redo:addWakeTypeSkillForAudio("LuaGaoxiao")
 extension:addToSkills(LuaYinbao)
 extension:addToSkills(LuaKuanggu)
 extension:addToSkills(LuaWushuang)
@@ -3244,6 +3251,7 @@ redo:addSkill(LuaChamberStart)
 redo:addSkill(LuaChamberMove)
 redo:addSkill(LuaJiguangMod)
 redo:addSkill(LuaRedoNoSlash)
+
 runaria:addSkill(luayukongMod)
 runaria:addSkill(luayukong)
 runaria:addSkill(LuaWenle)
@@ -3351,6 +3359,7 @@ sgs.LoadTranslationTable{
 	["b"]="令一名角色弃牌",
 	["recover"]="回复1点体力",
 	["eachdraw"]="该角色摸两张牌",
+	["youdiscard"]="你弃置一张牌",
 	["draw"]="摸两张牌",
 	["throw"]="弃置",
 	["gx"]="以任意顺序置于牌堆顶",
@@ -3435,7 +3444,7 @@ sgs.LoadTranslationTable{
 	["LuaRedoWake"]="去死吧，铁皮混蛋！",
 	["LuaChamberMove"]="钱伯",
 	["LuaGaoxiao"]="高效",
-	["LuaGaokang"]="高抗",
+
 	["LuaJiguangAsk"]="激光",
 	["runaria"]="露娜莉亚",
 	["@runaria"]="月光嘉年华",
@@ -3490,56 +3499,55 @@ sgs.LoadTranslationTable{
 ------------------------------------------------------------------------技能描述区
 sgs.LoadTranslationTable{
 	[":LuaWangxiang"]="当你的手牌数不多于你已损失的体力值时，你可以将一张手牌当【等价交换】使用。",
-	[":luablackflame"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可失去1点体力，然后对一名角色造成1点火焰伤害。",
+	[":luablackflame"]="出牌阶段限一次，你可失去1点体力，然后对一名角色造成1点火焰伤害。",
 	[":LuaBuwu"]="每当你造成一次伤害后，你可令受到伤害的角色将其武将牌翻面，然后该角色摸等同于其体力值-1张牌。",
 	[":LuaChigui"]="结束阶段开始时，你可失去1点体力，获得1名角色装备区内的武器牌，然后再摸1张牌，直到场上没有武器牌。",
 	[":LuaTianmoDefense"]="当你使用的【杀】被【闪】抵消时，你获得1枚“天魔”标记。当扣减你的体力时，你可弃置1枚“天魔”标记，防止此次扣减体力。",
 	[":LuaChanshi"]="你的【杀】可以额外指定2个目标。",
 	[":LuaZhuan"]="你每使用一张黑【杀】，可以摸一张牌，每使用一张【相爱相杀】，可以摸两张牌",
-	[":luarenzha"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置一张“渣”,然后恢复X点体力并将你的武将牌翻面，视作你发动了一次技能“乱武”。（X为“渣”的数量-1）",
+	[":luarenzha"]="出牌阶段限一次，你可以弃置一张“渣”,然后恢复X点体力并将你的武将牌翻面，视作你发动了一次技能“乱武”。（X为“渣”的数量-1）",
 	[":renzha"]="每当你受到1点伤害后，你摸两张牌并将一张手牌置于你的武将牌上，称为“渣”，然后你可将武将牌翻面并摸一张牌。",
 	[":weixiao"]="结束阶段开始时，你可选择弃置两张牌然后选择一项；令一名角色摸X张牌，或令一名角色弃置Y张牌（X为弃牌中较小点数的一半，向下取整；Y为弃牌中较大点数的一半，向上取整）",
 	[":LuaShenzhi"]="准备阶段或结束阶段开始时，你可以观看牌堆顶的X张牌，然后将任意数量的牌以任意顺序置于牌堆顶，将其余的牌以任意顺序置于牌堆底。（X为存活角色数且至多为4。)",
-	[":luagonglue"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可观看一名角色的手牌，然后选择其中一张牌并获得之。",
-	[":nvshen"]="<font color=\"blue\"><b>锁定技，</b></font>你的手牌上限+X（X为你的体力上限）。",
+	[":luagonglue"]="出牌阶段限一次，你可观看一名角色的手牌，然后选择其中一张牌并获得之。",
+	[":nvshen"]="锁定技。你的手牌上限+X（X为你的体力上限）。",
 	[":LuaBuqi"]="游戏开始时或你受到一次伤害后，你可获得所有其他角色手牌，并由当前回合角色开始，依次交给每名其他角色等同于其原有手牌张数的手牌。",
-	[":luaboxue"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可指定X名角色并亮出牌堆顶X张牌，然后你摸X/2(向上取整)张牌，指定角色依次与之交换一张牌（包括装备牌），然后你将其余的牌弃置，或以任意顺序置于牌堆顶。",
+	[":luaboxue"]="出牌阶段限一次，你可指定X名角色并亮出牌堆顶X张牌，然后你摸X/2(向上取整)张牌，指定角色依次与之交换一张牌（包括装备牌），然后你将其余的牌弃置，或以任意顺序置于牌堆顶。",
 	[":LuaLuowang"]="摸牌阶段结束时，你可以展示所有手牌。其中每有一种红色花色，你可令一名角色摸一张牌。然后每有一种黑色花色，你可弃置一名角色的一张牌。",
 	[":LuaLuoshen"]="准备阶段开始时，你可以进行一次判定，然后你获得生效后的判定牌且你可以重复此流程，直到判定结果为【杀】。",
-	[":LuaBaozou"]=" 你在“暴走”回合外的濒死状态结算后，你可以暂停一切结算，发动以下效果且防止进入濒死状态直到该效果结束，然后继续暂停的结算：你进行一个额外的回合并于此回合内获得以下技能：“无双”、“咆哮”、“狂骨”、“猛噬”（锁定技，你的基本牌均视为【杀】，你的锦囊牌均视为【相爱相杀】）“音爆”（锁定技，你计算与其他角色的距离始终为1）。以此法获得的回合内造成伤害后，若你的血量超过1，你本回合不能使用基本牌或锦囊牌。",
-	[":LuaKuangshi"]="<font color=\"blue\"><b>锁定技，</b></font>你的基本牌均视为【杀】，你的锦囊牌均视为【相爱相杀】。",
-	[":LuaXinbi"]="<font color=\"blue\"><b>锁定技，</b></font>你因“暴走”外的方式执行的回合的结束阶段开始时，你弃置场上一张装备牌或失去1点体力；<font color=\"blue\"><b>锁定技，</b></font>当你获得三张或更多牌时，每获得两张，你失去1点体力，当前回合角色摸一张牌。",
-	[":LuaYinbao"]="<font color=\"blue\"><b>锁定技，</b></font>你计算的与其他角色距离为1。",
-	[":luatouying"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>若你的装备区没有武器，你可以声明一种武器，获得其特效直到回合结束。",
+	[":LuaBaozou"]=" 你在“暴走”回合外的濒死状态结算后，你可以暂停一切结算，发动以下效果且防止进入濒死状态直到该效果结束，然后继续暂停的结算：你进行一个额外的回合并于此回合内获得以下技能：“无双”、“咆哮”、“狂骨”、“猛噬”（锁定技。你的基本牌均视为【杀】，你的锦囊牌均视为【相爱相杀】）“音爆”（锁定技。你计算与其他角色的距离始终为1）。以此法获得的回合内造成伤害后，若你的血量超过1，你本回合不能使用基本牌或锦囊牌。",
+	[":LuaKuangshi"]="锁定技。你的基本牌均视为【杀】，你的锦囊牌均视为【相爱相杀】。",
+	[":LuaXinbi"]="锁定技。你因“暴走”外的方式执行的回合的结束阶段开始时，你弃置场上一张装备牌或失去1点体力；锁定技。当你获得三张或更多牌时，每获得两张，你失去1点体力，当前回合角色摸一张牌。",
+	[":LuaYinbao"]="锁定技。你计算的与其他角色距离为1。",
+	[":luatouying"]="出牌阶段限一次，若你的装备区没有武器，你可以声明一种武器，获得其特效直到回合结束。",
 	[":LuaGongqi"]="你可以将一张装备牌当无距离限制的【杀】使用。",
 	[":LuaJianyong"]="弃牌阶段开始时，若此回合内你未造成伤害，可以摸X张牌。若如此做，你可以将至多X张手牌置于武将牌上，称为“咏”。（X为你已损失的体力值，至少为1；）",
 	[":luajianyu"]="你可以将等同于存活角色数的一半的张数的”咏“置入弃牌堆，视为使用一张【无限剑制】。",
 	[":LuaChitian"]="你可以将一张”咏“视作【杀】或【闪】打出，然后摸一张牌。",
-	[":LuaJianzhi"]="<font color=\"purple\"><b>觉醒技，</b></font>结束阶段开始时，若你的”咏“的数量达到三张或更多时，你减1点体力上限，获得每名其他角色各一张手牌并置于你的武将牌上，然后获得技能”剑雨“和”炽天“，此回合结束后进行一个额外的回合，",
-	[":LuaRedoWake"]="<font color=\"purple\"><b>觉醒技，</b></font>出牌阶段开始时，若你的体力值为1，你失去“钱伯”标记，回复1点体力，然后对一名其他角色造成3点雷电伤害。",
+	[":LuaJianzhi"]="觉醒技。结束阶段开始时，若你的”咏“的数量达到三张或更多时，你减1点体力上限，获得每名其他角色各一张手牌并置于你的武将牌上，然后获得技能”剑雨“和”炽天“，此回合结束后进行一个额外的回合，",
+	[":LuaRedoWake"]="觉醒技。出牌阶段开始时，若你的体力值为1，你失去“钱伯”标记，回复1点体力，然后对一名其他角色造成3点雷电伤害。",
 	[":LuaChamberMove"]="游戏开始时，你弃置两张牌并获得标记“钱伯”，你可以于准备阶段开始时获得标记“钱伯”，或将其移出游戏：若你拥有“钱伯”标记，你拥有以下技能“激光”“高效”“高抗”；若你没有，你不能成为【杀】的目标。",
 	[":LuaGaoxiao"]="摸牌阶段摸牌时，你可以额外摸一张牌。",
-	[":LuaJiguangAsk"]="<font color=\"blue\"><b>锁定技，</b></font>你使用【杀】时无距离限制，且目标角色须弃置一张非基本牌以抵消之",
-	[":LuaGaokang"]="<font color=\"blue\"><b>锁定技，</b></font>若你有手牌，你受到的非属性伤害-1且你弃置一张牌。",
-	[":LuaWenle"]="<font color=\"blue\"><b>锁定技，</b></font>摸牌阶段摸牌时，你额外摸X张牌，然后摸牌阶段结束时将X张牌背面朝上置于武将牌上称为“丝”（X为存活角色数的一半，向下取整）。准备阶段开始时，你须弃置所有的“丝”，然后摸等量的牌。",
+	[":LuaJiguangAsk"]="锁定技。你使用【杀】时无距离限制，且目标角色须弃置一张非基本牌以抵消之",
+	[":LuaWenle"]="锁定技。摸牌阶段摸牌时，你额外摸X张牌，然后摸牌阶段结束时将X张牌背面朝上置于武将牌上称为“丝”（X为存活角色数的一半，向下取整）。准备阶段开始时，你须弃置所有的“丝”，然后摸等量的牌。",
 	[":LuaQisi"]="【杀】或非延时类锦囊对你生效前，你可以弃置一张“丝”，若该角色的攻击范围小于“丝”点数的一半（向下取整），取消之。",
-	[":luayukong"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置一张“丝”，然后你计算和其他角色的距离为1，直到回合结束。",
-	[":luaposhi"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可失去1点体力，然后你无视与其他角色的距离和其他角色的防具；且你使用杀时无使用次数限制，直到回合结束。",
+	[":luayukong"]="出牌阶段限一次，你可以弃置一张“丝”，然后你计算和其他角色的距离为1，直到回合结束。",
+	[":luaposhi"]="出牌阶段限一次，你可失去1点体力，然后你无视与其他角色的距离和其他角色的防具；且你使用杀时无使用次数限制，直到回合结束。",
 	[":LuaLiansuo"]="每名其他角色的回合限两次，其他角色的牌因弃置而置入弃牌堆时，你可以摸一张牌",
-	[":LuaYinguo"]="<font color=\"red\"><b>限定技，</b></font>你死亡后，可以将所有手牌交给至多两名男性角色，然后指定的角色再摸等同于交给其手牌张数的牌。",
+	[":LuaYinguo"]="限定技。你死亡后，可以将所有手牌交给至多两名男性角色，然后指定的角色再摸等同于交给其手牌张数的牌。",
 	[":slyanhuo"]="出牌阶段，你可以将一张手牌背面朝上置于武将牌上，称为“惑”（惑最多为当前场上人数且最多为4），然后你摸一张牌。其他角色的出牌阶段限一次，可以翻开一张你的“惑”。你受到伤害后，可令伤害来源翻开你指定的一张“惑”。",
-	[":zhahu"]="<font color=\"blue\"><b>锁定技，</b></font>翻开“惑”的角色须执行以下效果并弃置“惑”，黑桃，回复1点体力，红桃，失去1点体力，梅花，摸两张牌，方块，你弃置其一张牌；准备阶段开始时，你须翻开你所有的“惑”。",
+	[":zhahu"]="锁定技。翻开“惑”的角色须执行以下效果并弃置“惑”，黑桃，回复1点体力，红桃，失去1点体力，梅花，摸两张牌，方块，你弃置其一张牌；准备阶段开始时，你须翻开你所有的“惑”。",
 	[":LuaHeartlead"]="其他角色的基本牌或非延时类锦囊牌指定一名角色为目标时，你可以将武将牌翻面或横置，然后该角色指定另一名角色为此牌的唯一目标。",
-	[":LuaPositionMove"]="<font color=\"blue\"><b>锁定技，</b></font>你受到的伤害结算开始时，若你有两张或更多手牌且你的武将牌横置或背面朝上，你弃置两张牌并防止此伤害，然后将你的武将牌翻至正面并重置。",
-	[":LuaSpkprison"]="<font color=\"red\"><b>限定技，</b></font>一名其他角色的准备阶段开始时，你可以令其摸三张牌，然后该角色须交给你四张牌。",
+	[":LuaPositionMove"]="锁定技。你受到的伤害结算开始时，若你有两张或更多手牌且你的武将牌横置或背面朝上，你弃置两张牌并防止此伤害，然后将你的武将牌翻至正面并重置。",
+	[":LuaSpkprison"]="限定技。一名其他角色的准备阶段开始时，你可以令其摸三张牌，然后该角色须交给你四张牌。",
 	[":qiji"]="当一名角色受到其他角色伤害而进入濒死状态时，你可令该角色和伤害来源各进行一次判定；若判定点数相同，则该角色体力恢复至其体力上限，伤害来源失去全部体力。（该技能对一名角色一局游戏只能使用一次）",
     [":suipian"]="在一名角色的判定牌生效前，你可用牌堆顶牌代替判定牌且你可重复此流程。",
-	[":LuaGungnir"]="<font color=\"blue\"><b>锁定技，</b></font>若你装备有武器，你的【杀】不能被【闪】响应。你对体力值比你多的角色造成的伤害+1；你对体力值不多于你的角色造成伤害时，回复1点体力。回合内你每造成一次伤害，结束阶段开始时便须弃置一张牌。",
+	[":LuaGungnir"]="锁定技。若你装备有武器，你的【杀】不能被【闪】响应。你对体力值比你多的角色造成的伤害+1；你对体力值不多于你的角色造成伤害时，回复1点体力。回合内你每造成一次伤害，结束阶段开始时便须弃置一张牌。",
 	[":luasynchrogazer"]="<font color=\"Sky Blue\"><b>萌战技,绝唱,3,出牌阶段限一次;</b></font>令参战角色依次对一名其他角色使用一张【杀】，直到一名参战角色不如此做。每以此法使用一张【杀】，你可令一名参战角色摸一张牌。（不计入出牌阶段使用杀次数）",
-	[":LuaCangshan"]="你可将装备牌当【杀】或【闪】使用或打出。以此法使用的【杀】无视距离，每以此法使用或打出一张牌时，你摸两张牌。",
-	[":luayuehuang"]="<font color=\"Sky Blue\"><b>萌战技,绝唱,3,出牌阶段限一次;</b></font>令其他参战角色各交给你一张装备牌，然后参战角色各摸X张牌。若如此做，该阶段内你可额外使用X张【杀】（X为以此法交给你的装备牌的数量+2）",
-	[":LuaJingming"]="其他角色的回合开始时，你可弃置一张牌，然后令其不能使用【杀】直到其回合结束；若如此做，回合结束时，你可令其回复1点体力，或其摸两张牌。",
-	[":luayingxian"]="<font color=\"Sky Blue\"><b>萌战技,绝唱,3,出牌阶段限一次;</b></font>参战角色各展示一张手牌，然后你将牌堆顶X张牌以任意方式交给参战角色。（X为所有展示手牌的点数和的算术平方根，向上取整）",
+	[":LuaCangshan"]="你可将装备牌当【杀】或【闪】使用或打出。以此法使用的【杀】无视距离，每以此法使用或打出一张牌时，你摸一张牌。",
+	[":luayuehuang"]="<font color=\"Sky Blue\"><b>萌战技,绝唱,3,出牌阶段限一次;</b></font>令其他参战角色各交给你一张装备牌，然后参战角色各摸X张牌。若如此做，该阶段内你可额外使用X张【杀】（X为以此法交给你的装备牌的数量+1）",
+	[":LuaJingming"]="其他角色的回合开始时，你可弃置一张牌，然后令其不能使用【杀】直到其回合结束；若如此做，回合结束时，你选择一项：1.令其回复1点体力，2.其摸两张牌，3.你弃置一张牌。",
+	[":luayingxian"]="<font color=\"Sky Blue\"><b>萌战技,绝唱,3,出牌阶段限一次;</b></font>参战角色各展示一张手牌，然后你将牌堆顶X张牌以任意方式交给参战角色。（X为所有展示手牌的点数和的算术平方根，向下取整）",
 	[":luasaoshe"]="出牌阶段对每名角色限两次，你可指定一名你攻击范围内的其他角色，然后交给其一张牌并视为你对其使用一张【杀】（不计入出牌阶段使用【杀】次数。）当你于出牌阶段内以此法交给其他角色的手牌首次达到两张或更多时，你回复1点体力，或摸两张牌。",
 	[":LuaDikai"]="<font color=\"Sky Blue\"><b>萌战技,绝唱,1,绝唱角色受到伤害后;</b></font>若其参战，你可摸一张牌，然后弃置伤害来源的一张牌并可交给参战角色一张【杀】或装备牌。",
 }
@@ -3667,7 +3675,6 @@ sgs.LoadTranslationTable{
 	["$LuaRedoWake1"]="去死吧！铁皮魂淡！",
 	["$LuaJiguangAsk1"]="哗~哗~~哗~~~",
 	["$LuaGaoxiao1"]="全面同意",
-	["$LuaGaokang1"]="可以观测他们想对本机造成伤害，但苦于没有手段，推测他们的文明低下。",
 	["$LuaWenle1"]="哪都行，请带我离开这里",
 	["$luayukong1"]="那样的话，就算被我代替了也没啥怨言吧",
 	["$LuaQisi1"]="真狼狈呢",

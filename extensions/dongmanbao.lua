@@ -118,7 +118,7 @@ Lelouch = sgs.General(extension, "Lelouch", "science", 2, true,true,false)
 Leafa = sgs.General(extension, "Leafa", "science", 3, false,false,false)
 Reimu = sgs.General(extension, "Reimu", "touhou", 3, false,false,false)
 Kuroneko = sgs.General(extension, "Kuroneko", "real", 3, false,false,false)
-Sugisaki = sgs.General(extension, "Sugisaki", "real", 3, true,false,false)
+-- Sugisaki = sgs.General(extension, "Sugisaki", "real", 3, true,false,false)
 Kuroyukihime = sgs.General(extension, "Kuroyukihime", "science", 4, false,false,false)
 --Kuroyukihime_sub = sgs.General(extension, "Kuroyukihime_sub", "science", 4, false,true,true)
 Nagase = sgs.General(extension, "Nagase", "real", 3, false,false,false)
@@ -142,7 +142,7 @@ Asagi = sgs.General(extension, "Asagi", "magic", 3, false,false,false)
 Riko = sgs.General(extension, "Riko", "science", 2, false,false,false)
 Kurumi = sgs.General(extension, "Kurumi", "magic", 3, false,false,false)
 Sakura = sgs.General(extension, "Sakura", "magic", 3, false,false,false)
-Eugeo = sgs.General(extension, "Eugeo", "science", 3, true,false,false)
+-- Eugeo = sgs.General(extension, "Eugeo", "science", 3, true,false,false)
 --Eugeo_sub = sgs.General(extension, "Eugeo_sub", "science", 3, true,true,true)
 Rika = sgs.General(extension, "Rika", "real", 3, false,false,false)
 Eucliwood = sgs.General(extension, "Eucliwood", "magic", 3, false,false,false)
@@ -150,7 +150,7 @@ Eu_Zombie = sgs.General(extension, "Eu_Zombie", "magic", 5, true,true,true)
 Yuri = sgs.General(extension, "Yuri", "real", 3, false,false,false)
 Setsuna = sgs.General(extension, "Setsuna", "diva", 3, false,false,false)
 Yukina = sgs.General(extension, "Yukina", "magic", 3, false,false,false)
-K1 = sgs.General(extension, "K1", "real", 4, true,false,false)
+-- K1 = sgs.General(extension, "K1", "real", 4, true,false,false)
 --Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
 Batora = sgs.General(extension, "Batora", "magic", 4, true,true,false)
 Shirayuki = sgs.General(extension, "Shirayuki", "science", 4, false,false,false)
@@ -449,7 +449,7 @@ Louise:addSkill(Beizeng)
 sgs.LoadTranslationTable{
 ["dongmanbao"] = "动漫包-SE",
 ["Xuwu"] = "虚无「零成功率」",
-[":Xuwu"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你使用非延时类锦囊牌时 ，若此牌不是【金色宣言】，你取消之并摸一张牌，然后将牌堆顶牌置于你的武将牌上，称为“魔力”；当其他角色与你计算距离时，始终+X（X为“魔力”数量的一半，向下取整）。",
+[":Xuwu"] = "锁定技。每当你使用非延时类锦囊牌时 ，若此牌不是【金色宣言】，你取消之并摸一张牌，然后将牌堆顶牌置于你的武将牌上，称为“魔力”；当其他角色与你计算距离时，始终+X（X为“魔力”数量的一半，向下取整）。",
 ["moli"] = "魔力",
 ["$Xuwu"] = "好像稍微有点失败了呐。",
 ["se_cairen"] = "才人「唤来才人」",
@@ -457,7 +457,7 @@ sgs.LoadTranslationTable{
 ["se_cairencard"] = "才人「唤来才人」",
 ["$se_cairen"] = "你们对露易丝做了些什么！！",
 ["se_cairen$"] = "image=image/animate/se_cairen.png",
-[":se_cairen"] = "出牌阶段，若你拥有4枚或以上的“魔力”，你可以将一张“魔力”置入弃牌堆，然后变身为平贺才人并将手牌数补至5。\n\n<font weight=2><font color=\"brown\"><b>智剑「デルフリンガー」：</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将一张“魔力”置入弃牌堆，然后你选择一名角色进行拼点：若你赢，你进行一次判定，然后摸X张牌（X为判定结果的点数且至少为6）。\n\n<font weight=2><font color=\"brown\"><b>横扫「以一对七万」：</b></font>出牌阶段，你可以失去2点体力，然后对至多三名角色各造成一点伤害，并获得一个“守护”标记。\n\n<font weight=2><font color=\"brown\"><b>唤回「继续被虐待-。-」：</b></font>结束阶段开始时，你须变身为露易丝并回复体力至体力上限。",
+[":se_cairen"] = "出牌阶段，若你拥有4枚或以上的“魔力”，你可以将一张“魔力”置入弃牌堆，然后变身为平贺才人并将手牌数补至5。",
 ["Beizeng"] = "倍增「explosion」",
 ["beizeng"] = "倍增「explosion」",
 [":Beizeng"] = "弃牌阶段开始时，你可以弃置2枚“守护”标记，指定一名角色并令其减1点体力上限并失去1点体力。",
@@ -472,7 +472,7 @@ sgs.LoadTranslationTable{
 ["illustrator:Louise"] = "节操Staff",
 ["se_zhijian"] = "智剑「デルフリンガー」",
 ["$se_zhijian1"] = "唉...为什么我要勉强地做这种事情啊...（デルフリンガー）那当然是，为了你喜欢的女人了。",
-[":se_zhijian"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将一张“魔力”置入弃牌堆，然后你选择一名角色进行拼点：若你赢，你进行一次判定，然后摸X张牌（X为判定结果的点数且至少为6）。",
+[":se_zhijian"] = "出牌阶段限一次，你可以将一张“魔力”置入弃牌堆，然后你选择一名角色进行拼点：若你赢，你进行一次判定，然后摸X张牌（X为判定结果的点数且至少为6）。",
 ["se_zhijiancard"] = "智剑",
 ["se_hengsao"] = "横扫「以一对七万」",
 ["$se_hengsao1"] = "デルフリンガー...（干啥？） 我会...死吗...",
@@ -672,7 +672,7 @@ jinghua = sgs.CreateTriggerSkill{
 				if room:getAllPlayers(true):length() > 2 then
 					room:obtainCard(dest, card, false)
 				end
-				local choice = room:askForChoice(dest, self:objectName(), "jinghua_getcard+jinghua_drawcard+jinghua_recover")
+				local choice = room:askForChoice(dest, self:objectName().."%", "jinghua_getcard+jinghua_drawcard+jinghua_recover")
 				if choice == "jinghua_getcard" then
 					local judge = dest:getJudgingArea()
 					if judge:length() > 0 then
@@ -762,18 +762,19 @@ Eustia:addSkill(jiushuMark)
 extension:insertRelatedSkills("jiushu", "#jiushuMark")
 sgs.LoadTranslationTable{
 ["jinghua"] = "净化「天使·净化之力」",
+["#jinghua"] = "想让缇娅酱怎样净化你？ (*/▽＼*)",
 [":jinghua"] = "回合开始前，你可以交给一名角色一张牌并令其选择一项：1、令你获得其判定区内的一张牌。2、令你和其各摸一张牌。3、令其回复一点体力。",
 ["$jinghua1"] = "您的身上...没有哪里痛吧？",
 ["$jinghua2"] = "不...我很开心能够帮上忙。",
 ["@jinghua"] = "请选择一张手牌或跳过。",
-["jinghua_getcard"] = "让玩家获得你判定区内的一张牌",
+["jinghua_getcard"] = "让其获得你判定区内的一张牌",
 ["jinghua_recover"] = "令你回复一点体力",
-["jinghua_drawcard"] = "玩家和你各摸一张牌。",
+["jinghua_drawcard"] = "其和你各摸一张牌。",
 ["jiushu"] = "救赎",
 ["jiushu$"] = "image=image/animate/jiushu.png",
 ["jiushuCard"] = "救赎「親愛なる世界へ」",
 ["$jiushu"] = "凯伊姆先生...请您保重身体...我会为...凯伊姆先生的幸福...永远、永远地...祈祷...",
-[":jiushu"] = "<font color=\"red\"><b>限定技，</b></font>一名角色求桃阶段结束时，若该角色仍处于濒死状态，你可以使其回复体力至X，然后令其补充手牌至X张（X不超过8）。X为该角色的体力上限。",
+[":jiushu"] = "限定技。一名角色求桃阶段结束时，若该角色仍处于濒死状态，你可以使其回复体力至X，然后令其补充手牌至X张（X不超过8）。X为该角色的体力上限。",
 ["@tsubasa"] = "净化之翼",
 ["Eustia"] = "尤斯蒂娅",
 ["&Eustia"] = "尤斯蒂娅",
@@ -911,7 +912,7 @@ sgs.LoadTranslationTable{
 ["Huansha$"] = "image=image/animate/Huansha.png",
 ["Huansha_Short$"] = "image=image/animate/Huansha_Short.png",
 ["SE_Dapo"] = "打破「友情破颜拳」",
-[":SE_Dapo"] = "<font color=\"blue\"><b>锁定技,</b></font>每当体力上限少于你的一名角色濒死时，若你为主公且你的体力为1，其将身份改变为忠臣；若你与其均不为主公且你的体力为1，其将身份改变为与你相同。",
+[":SE_Dapo"] = "锁定技。每当体力上限少于你的一名角色濒死时，若你为主公且你的体力为1，其将身份改变为忠臣；若你与其均不为主公且你的体力为1，其将身份改变为与你相同。",
 ["$SE_Dapo"] = "那就没办法了...我要杀掉啊...你那无聊的幻想！",
 ["SE_Dapo$"] = "image=image/animate/SE_Dapo.png",
 ["Touma"] = "上条当麻",
@@ -1090,7 +1091,7 @@ sgs.LoadTranslationTable{
 ["se_tiaoyuecard"] = "跳跃",
 ["$se_tiaoyue"] = "给我跳啊！！...",
 ["se_tiaoyue$"] = "image=image/animate/se_tiaoyue.png",
-[":se_tiaoyue"] =  "<font color=\"green\"><b>出牌阶段限一次，</b></font>若你有“时间点”，你可以弃置1枚“时空”标记，然后你将体力回复至Y点并获得所有“时间碎片”（Y为“时间点”的数量）。",
+[":se_tiaoyue"] =  "出牌阶段限一次，若你有“时间点”，你可以弃置1枚“时空”标记，然后你将体力回复至Y点并获得所有“时间碎片”（Y为“时间点”的数量）。",
 ["Okarin"] = "岡部倫太郎",
 ["&Okarin"] = "岡部倫太郎",
 ["@Okarin"] = "命运石之门",
@@ -1872,13 +1873,13 @@ sgs.LoadTranslationTable{
 ["$se_erdaoTwice"] = "只能用那个了么...但是！",
 ["$se_erdao1"] = "星爆气流斩！！",
 ["$se_erdao2"] = "去吧...哥哥...上啊！  啊啊啊啊啊啊啊！！！",
-[":se_erdao"] = "出牌阶段，你可以弃置两张武器牌并指定一名角色，视为你对其使用其当前体力值数目的【杀】（不计入回合次数限制），顺序依次为【杀】【火杀】【雷杀】的循环；<font color=\"green\"><b>出牌阶段限一次，</b></font>每当你的一张单体锦囊牌结算后，你可以额外对目标角色使用此牌。",
+[":se_erdao"] = "出牌阶段，你可以弃置两张武器牌并指定一名角色，视为你对其使用其当前体力值数目的【杀】（不计入回合次数限制），顺序依次为【杀】【火杀】【雷杀】的循环；出牌阶段限一次，每当你的一张单体锦囊牌结算后，你可以额外对目标角色使用此牌。",
 ["se_yekong"] = "夜空「夜空之剑·ReleaseRellection」",
 ["se_yekong$"] = "image=image/animate/se_yekong.png",
 ["se_yekongRe"] = "夜空「夜空之剑·ReleaseRellection」",
 ["@Yuzorano"] = "夜空之剑·ReleaseRellection",
 ["@Yuzora"] = "夜空之剑",
-[":se_yekong"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，直到你第三个回合开始前，你获得以下效果：1.你使用“二刀②”可以额外结算一次；2.你可以令“闪光”的获得牌数+1；3.你可以令“剑舞”的消耗减半；3.回合开始前，你可以指定至多两名角色，令他们回复共计2点体力。",
+[":se_yekong"] = "限定技。出牌阶段，直到你第三个回合开始前，你获得以下效果：1.你使用“二刀②”可以额外结算一次；2.你可以令“闪光”的获得牌数+1；3.你可以令“剑舞”的消耗减半；3.回合开始前，你可以指定至多两名角色，令他们回复共计2点体力。",
 ["$se_yekong"] = "谢谢...各位！",
 ["SE_Dixian"] = "地陷「创世之神·丝提西亚」",
 ["$SE_Dixian1"] = "..我是不能原谅只是站在这里等待的自己！",
@@ -2021,13 +2022,13 @@ sgs.LoadTranslationTable{
 ["se_chouyuan"] = "仇怨",
 ["se_chouyuan"] = "仇怨",
 ["se_chouyuancard"] = "仇怨",
-[":se_chouyuan"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段你可以令一名角色获得1枚“巨人”标记。当除该角色外的角色于该角色计算距离时，始终为1。<font color=\"brown\"><b>【齐心】</b></font>直到游戏结束；场上所有角色对其结算距离时始终为1。\n\n<font weight=2><b>齐心：</b></font>每当你使用【杀】或【相爱相杀】指定拥有“巨人”标记的角色时，你可以令所有角色依次选择一项：对拥有“巨人”标记的角色使用一张【杀】（无距离限制），或你令一名角色摸一张牌。",
+[":se_chouyuan"] = "限定技。出牌阶段你可以令一名角色获得1枚“巨人”标记。当除该角色外的角色于该角色计算距离时，始终为1，然后获得“齐心”直到游戏结束；场上所有角色对其结算距离时始终为1。",
 ["$se_chouyuan"] = "...我要把你们全都驱逐掉！...一匹也不留！",
 ["SE_Qixin"] = "齐心",
 ["se_chouyuan$"] = "image=image/animate/se_chouyuan.png",
 ["SE_Qixin$"] = "image=image/animate/SE_Qixin.png",
 [":SE_Qixin"] = "你每对拥有“巨人”标记的角色打出一张【杀】或【相爱相杀】，你可以使场上所有你以外的角色依次选择一项：1、对该角色打出一张【杀】。2、让你选择一名你以外的角色摸一张牌。",
-["Qixin_setcard"] = "让来源选择一名角色摸一张牌。",
+["Qixin_setcard"] = "让艾伦选择一名角色摸一张牌。",
 ["Qixin_slashto"] = "对目标打出一张【杀】",
 ["$SE_Qixin1"] = "人类的反击...现在才要开始呢！",
 ["$SE_Qixin2"] = "固定炮整备四班！准备战斗！目标是...眼前的超大型巨人！",
@@ -2306,12 +2307,12 @@ sgs.LoadTranslationTable{
 ["$se_shunshan1"] = "我是「风机委员」，现在以损坏公物和抢劫现行犯的罪名逮捕你们！",
 ["$se_shunshan2"] = "哦呵呵呵呵，您要是忘了我的能力可是会让我很困扰的哦。",
 ["$se_shunshan3"] = "我是「风机委员」，我在这里的理由就没必要说明了吧。",
-[":se_shunshan"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以与一名角色交换位置，然后指定与你距离为1的一名角色，令其获得1枚“定身”标记。拥有“定身”标记的角色的手牌上限-X（X为其“定身”标记的数量且至多为3）；当其与除其外的角色计算距离时，始终+1。",
+[":se_shunshan"] = "出牌阶段限一次，你可以与一名角色交换位置，然后指定与你距离为1的一名角色，令其获得1枚“定身”标记。拥有“定身”标记的角色的手牌上限-X（X为其“定身”标记的数量且至多为3）；当其与除其外的角色计算距离时，始终+1。",
 ["se_chongjing"] = "憧憬「姐姐大人」",
 ["chongjing"] = "憧憬「姐姐大人」",
 ["se_chongjing$"] = "image=image/animate/se_chongjing.png",
 ["$se_chongjing"] = "啊啊~お姉様...お姉様...お姉様!お姉様!お姉様!!!!!!!!!!!",
-[":se_chongjing"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以令一名其他女性角色获得1枚“お姉様”标记。每当拥有“お姉様”标记的角色造成或受到一次伤害时，其可以令其或对方获得1枚“定身”标记。若如此做且目标角色为御坂美琴，其额外获得1枚“定身”标记。此技能发动前，摸牌阶段，你额外摸一张牌。",
+[":se_chongjing"] = "限定技。出牌阶段，你可以令一名其他女性角色获得1枚“お姉様”标记。每当拥有“お姉様”标记的角色造成或受到一次伤害时，其可以令其或对方获得1枚“定身”标记。若如此做且目标角色为御坂美琴，其额外获得1枚“定身”标记。此技能发动前，摸牌阶段，你额外摸一张牌。",
 ["se_chongjing_Attack"] = "お姉様の辅助",
 ["$se_chongjing_Attack"] = "这光芒是...お姉様！",
 ["se_jieshu"] = "解束「解除束缚」",
@@ -2530,7 +2531,7 @@ TianmingGetS = sgs.CreateTriggerSkill{
 	events = {sgs.GameStart},
 	on_trigger = function(self, event, player, data)
 		player:loseAllMarks("@Tianming")
-		player:gainMark("@Tianming", 100)
+		player:gainMark("@Tianming", 72)
 	end
 }
 
@@ -2765,7 +2766,7 @@ sgs.LoadTranslationTable{
 ["se_tianming"] = "天命「天命运算」",
 ["$se_tianming"] = "呼叫窗口！剩下的天命...",
 ["@Tianming"] = "天命",
-[":se_tianming"] = "游戏开始时，你获得100枚“天命”标记；回合开始前，你获得32枚“天命”标记。每当你需使用或打出一张【杀】时，你可以弃置12枚“天命”标记，视为你使用或打出一张【杀】；每当你需使用或打出一张【闪】时，你可以弃置17枚“天命”标记，视为你使用或打出一张【闪】；每当你需使用一张【金色宣言】时，你可以弃置23枚“天命”标记，视为你使用一张【金色宣言】。",
+[":se_tianming"] = "游戏开始时，你获得72枚“天命”标记；回合开始前，你获得32枚“天命”标记。每当你需使用或打出一张【杀】时，你可以弃置12枚“天命”标记，视为你使用或打出一张【杀】；每当你需使用或打出一张【闪】时，你可以弃置17枚“天命”标记，视为你使用或打出一张【闪】；每当你需使用一张【金色宣言】时，你可以弃置23枚“天命”标记，视为你使用一张【金色宣言】。",
 ["se_jianwu"] = "剑舞「金木犀之剑·ReleaseRellection」",
 ["jianwu"] = "剑舞「金木犀之剑·ReleaseRellection」",
 ["se_jianwu$"] = "image=image/animate/se_jianwu.png",
@@ -2776,7 +2777,7 @@ sgs.LoadTranslationTable{
 ["se_kanhu"] = "看护「神圣术治疗」",
 ["kanhu"] = "看护「神圣术治疗」",
 ["se_kanhucard"] = "看护「神圣术治疗」",
-[":se_kanhu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置20枚“天命”标记并指定一名已受伤的角色，令其回复1点体力。若目标角色为桐人，你令其额外回复1点体力。",
+[":se_kanhu"] = "出牌阶段限一次，你可以弃置20枚“天命”标记并指定一名已受伤的角色，令其回复1点体力。若目标角色为桐人，你令其额外回复1点体力。",
 ["Alice"] = "爱丽丝",
 ["&Alice"] = "爱丽丝",
 ["@Alice"] = "刀剑神域",
@@ -2918,7 +2919,7 @@ sgs.LoadTranslationTable{
 ["$SE_Xianjing4"] = "乖乖认输吧！否则我会毫不留情地干掉你！...",
 ["SE_Boming"] = "搏命「坂本の抉择」",
 ["SE_Boming$"] = "image=image/animate/SE_Boming.png",
-[":SE_Boming"] = "<font color=\"red\"><b>限定技，</b></font>，每当一名角色的濒死状态结束后，你可以弃置所有“陷阱”标记并失去1点体力，然后令其体力回复至X（X为你弃置的“陷阱”标记数且至多为6）。",
+[":SE_Boming"] = "限定技。每当一名角色的濒死状态结束后，你可以弃置所有“陷阱”标记并失去1点体力，然后令其体力回复至X（X为你弃置的“陷阱”标记数且至多为6）。",
 ["$SE_Boming"] = "我怎么可能抛弃你呢！...不论现实世界...还是虚拟世界！",
 ["Sakamoto"] = "坂本竜太",
 ["&Sakamoto"] = "坂本竜太",
@@ -2974,7 +2975,7 @@ se_qiyuancard = sgs.CreateSkillCard{
 			room:sendLog(log)
 			return
 		end
-		local ap = room:askForChoice(source,"se_qiyuan",table.concat(deathplayer,"+"))
+		local ap = room:askForChoice(source,"se_qiyuan%",table.concat(deathplayer,"+"))
 		if ap == "" then return end
 		local player
 		for _,p in sgs.qlist(room:getPlayers()) do
@@ -3086,6 +3087,7 @@ Kanade:addSkill(se_shouren)
 
 sgs.LoadTranslationTable{
 ["se_qiyuan"] = "祈愿「死后战线解放」",
+["#se_qiyuan"] = "嗯...复活谁呢？",
 ["qiyuan"] = "祈愿「死后战线解放」",
 ["se_qiyuancard"] = "祈愿「死后战线解放」",
 ["$se_qiyuan1"] = "因为...我是来向你说声谢谢的。",
@@ -3093,7 +3095,7 @@ sgs.LoadTranslationTable{
 ["@se_qiyuan"] = "祈愿",
 ["se_qiyuan$"] = "image=image/animate/se_qiyuan.png",
 ["#se_qiyuan_noDeath"] = "当前场上没有角色死亡或没有可用对象。",
-[":se_qiyuan"] = "<font color=\"red\"><b>限定技,</b></font>出牌阶段，你可以指定一名已死亡的角色，令其复活并失去所有技能，然后摸三张牌并加入你的阵营。",
+[":se_qiyuan"] = "限定技。出牌阶段，你可以指定一名已死亡的角色，令其复活并失去所有技能，然后摸三张牌并加入你的阵营。",
 ["Lichang"] = "力场「Distortion“扭曲力场”」",
 ["Lichang:jink"] = "力场「Distortion“扭曲力场”」",
 ["$Lichang"] = "「Guardskill Distortion」",
@@ -3104,7 +3106,7 @@ sgs.LoadTranslationTable{
 ["$se_shouren1"] = "「Guardskill Handsonic」",
 ["$se_shouren2"] = "「Handsonic Version2」",
 ["#addMaxHp"] = "%from 增加 %arg 点体力上限。",
-[":se_shouren"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定一名角色，令其失去1点体力。若如此做且该角色的体力值变为0，你令其将武将牌翻面，然后失去技能“立场”。",
+[":se_shouren"] = "出牌阶段限一次，你可以指定一名角色，令其失去1点体力。若如此做且该角色的体力值变为0，你令其将武将牌翻面，然后失去技能“立场”。",
 ["Kanade"] = "立华奏",
 ["&Kanade"] = "立华奏",
 ["@Kanade"] = "Angel Beats!",
@@ -3336,11 +3338,11 @@ sgs.LoadTranslationTable{
 ["Zizhu"] = "自主「自行摆脱L5」",
 ["$Zizhu1"] = "不要！...我不要！...",
 ["$Zizhu2"] = "...为什么我会对这么喜欢的朋友做出那么可怕的事情！...",
-[":Zizhu"] = "<font color=\"cyan\"><b>转化技,</b></font>通常状态下，你拥有标记“普通”并拥有技能“可爱”。每当你受到一次后，你须将你的标记翻面为“黑化”，将“可爱”转化为“柴刀”。回合开始前，若你的标记为“黑化”且你的判定区里有牌，你可以弃置判定区里的牌；回合结束后，你须将标记翻回“普通”。",
+[":Zizhu"] = "转化技。通常状态下，你拥有标记“普通”并拥有技能“可爱”。每当你受到一次后，你须将你的标记翻面为“黑化”，将“可爱”转化为“柴刀”。回合开始前，若你的标记为“黑化”且你的判定区里有牌，你可以弃置判定区里的牌；回合结束后，你须将标记翻回“普通”。",
 ["Keai"] = "可爱「好想带回家！」",
 ["$Keai1"] = "真好真好！好想带回家~~",
 ["$Keai2"] = "啊呜~~这个真棒啊！好想带回家！~~",
-[":Keai"] = "每当其他角色的<font color=\"red\"><b>♥</b></font>锦囊牌或装备牌因弃置、使用、打出或判定置入弃牌堆时，你可以获得之。",
+[":Keai"] = "每当其他角色的♥锦囊牌或装备牌因弃置、使用、打出或判定置入弃牌堆时，你可以获得之。",
 ["Chaidao"] = "柴刀「黑化暴走」",
 ["Chaidao$"] = "image=image/animate/Chaidao.png",
 ["$Chaidao1"] = "你骗人！！...",
@@ -3467,7 +3469,7 @@ sgs.LoadTranslationTable{
 ["shengjian"] = "圣剑「约束胜利之剑」",
 ["se_shengjiancard"] = "圣剑「约束胜利之剑」",
 ["se_shengjian$"] = "image=image/animate/se_shengjian.png",
-[":se_shengjian"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将武将牌翻面，然后对一名角色造成X点伤害并将其装备区里的所有牌置入弃牌堆（X为你与其装备牌数的差的绝对值）。",
+[":se_shengjian"] = "出牌阶段限一次，你可以将武将牌翻面，然后对一名角色造成X点伤害并将其装备区里的所有牌置入弃牌堆（X为你与其装备牌数的差的绝对值）。",
 ["$se_shengjian1"] = "Ex...calibur！！！！！！",
 ["$se_shengjian2"] = "（以第三道令咒，再次下令）不要！！！！（saber，把圣杯毁掉。）",
 ["$se_shengjian3"] = "Ex...calibur！！！！！！",
@@ -3476,7 +3478,7 @@ sgs.LoadTranslationTable{
 ["Jianqiao"] = "剑鞘「远离尘世的理想乡」",
 ["$Jianqiao1"] = "不要紧...治疗已经派上用场了。",
 ["$Jianqiao2"] = "Avalon！！",
-[":Jianqiao"] = "回合结束时，你可以将这个技能转交给其他角色。<font color=\"blue\"><b>锁定技,</b></font>每当你受到一次伤害时，有1/3概率防止此伤害；你离开濒死阶段时回复一点体力。",
+[":Jianqiao"] = "回合结束时，你可以将这个技能转交给其他角色。锁定技。每当你受到一次伤害时，有1/3概率防止此伤害；你离开濒死阶段时回复一点体力。",
 ["@jianqiao-prompt"] = "选择一名角色并将「剑鞘」转交之，可以取消。",
 ["Saber"] = "Saber",
 ["&Saber"] = "Saber",
@@ -3557,7 +3559,7 @@ Kirei:addSkill(Xianhai)
 
 sgs.LoadTranslationTable{
 ["Yuyue"] = "愉悦「追求愉悦」",
-[":Yuyue"] = "<font color=\"blue\"><b>锁定技,</b></font>每当一名角色造成一次伤害后 ，你摸等同于此伤害数量的牌。",
+[":Yuyue"] = "锁定技。每当一名角色造成一次伤害后 ，你摸等同于此伤害数量的牌。",
 ["Yuyue$"] = "image=image/animate/Yuyue.png",
 ["$Yuyue1"] = "啊哈哈哈哈哈哈哈哈！怎么了...我到底怎么了~！...",
 ["$Yuyue2"] = "多么的邪恶！多么的残酷！这便是我的愿望？",
@@ -4081,11 +4083,11 @@ sgs.LoadTranslationTable{
 [":Heiyi"] = "每当你进入濒死状态时，你可以依次弃置场上X张牌，然后摸X张牌（X为场上存活角色数）。",
 ["Baiyi"] = "白翼「守护而战」",
 ["Baiyi$"] = "image=image/animate/Baiyi.png",
-[":Baiyi"] = "<font color=\"red\"><b>限定技，</b></font>每当一名其他角色进入濒死状态时，你可以令该角色摸X张牌（X为所有角色手牌数之和）。",
+[":Baiyi"] = "限定技。每当一名其他角色进入濒死状态时，你可以令该角色摸X张牌（X为所有角色手牌数之和）。",
 ["$Baiyi"] = "最后之作！！",
 ["Wangluo"] = "网络「最后之作·御坂网络」",
 ["Wangluo$"] = "image=image/animate/Wangluo.png",
-[":Wangluo"] = "<font color=\"blue\"><b>锁定技,</b></font>你的手牌上限+X（X为场上存活角色数）。",
+[":Wangluo"] = "锁定技。你的手牌上限+X（X为场上存活角色数）。",
 ["$Wangluo1"] = "哦！御坂的存在终于得到承认了，万岁！御坂御坂王婆卖瓜自卖自夸道~",
 ["$Wangluo2"] = "人睡觉时的表情是最诚实的呢~御坂御坂用冒牌京都腔说道~",
 ["$Wangluo3"] = "这次换御坂守护他了~御坂御坂试着坦白说道~",
@@ -4226,14 +4228,14 @@ sgs.LoadTranslationTable{
 ["SE_Juji"] = "狙击「PGM Ultima Ratio HecateII」",
 ["$SE_Juji1"] = "碰~！(枪声）下一个！",
 ["$SE_Juji2"] = "结束了！碰！碰！碰！（枪声）",
-[":SE_Juji"] = "<font color=\"blue\"><b>锁定技,</b></font>当你与其他角色计算距离时，始终为1；出牌阶段，你使用的【杀】不能被攻击范围内没有你的角色的【闪】响应。",
+[":SE_Juji"] = "锁定技。当你与其他角色计算距离时，始终为1；出牌阶段，你使用的【杀】不能被攻击范围内没有你的角色的【闪】响应。",
 ["se_jianyu"] = "箭雨「提拉莉雅·无制限歼灭」",
 ["se_jianyu"] = "箭雨「提拉莉雅·无制限歼灭」",
 ["se_jianyu$"] = "image=image/animate/se_jianyu.png",
 ["se_jianyucard"] = "箭雨「提拉莉雅·无制限歼灭」",
 ["$se_jianyu1"] = "那个男人，有着能在战场中笑的强大，干掉那个男人，我也会....",
 ["$se_jianyu2"] = "还有什么....是我能做的",
-[":se_jianyu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定X+1名角色（X为你已损失的体力），视为你对他们使用一张【杀】。",
+[":se_jianyu"] = "出牌阶段限一次，你可以指定X+1名角色（X为你已损失的体力），视为你对他们使用一张【杀】。",
 ["Shino"] = "朝田诗乃",
 ["&Shino"] = "朝田诗乃",
 ["@Shino"] = "刀剑神域",
@@ -4330,7 +4332,7 @@ SE_Weigong = sgs.CreateTriggerSkill{
 SE_Weigong_end = sgs.CreateMaxCardsSkill{
 	name = "#SE_Weigong_end",
 	extra_func = function(self, player)
-		if player:hasSkill(self:objectName()) then
+		if player:hasSkill("SE_Weigong") then
 			local num = player:getSiblings():length()
 			if num < 3 then
 				num = 3
@@ -4363,7 +4365,7 @@ sgs.LoadTranslationTable{
 ["$SE_Weigong1"] = "我是她妹妹。御坂立即回答道。",
 ["$SE_Weigong2"] = "御坂对自己的心理状态怀有疑问。为了我这个能随意制造替换，要多少有多少的仿制品，你想要做什么？御坂再三问道。",
 ["$SE_Weigong3"] = "晒一下~御坂若无其事地向原型显摆他买给我的项链。",
-[":SE_Weigong"] = "<font color=\"blue\"><b>锁定技,</b></font>你的手牌上限+X；摸牌阶段，你随机额外摸1至X张牌（X为场上存活人数的一半且至少为2，向下取整）。",
+[":SE_Weigong"] = "锁定技。你的手牌上限+X；摸牌阶段，你随机额外摸1至X张牌（X为场上存活人数的一半且至少为2，向下取整）。",
 ["Misaka_Imouto"] = "御坂妹",
 ["&Misaka_Imouto"] = "御坂妹",
 ["@Misaka_Imouto"] = "魔法禁书目录",
@@ -4693,7 +4695,7 @@ sgs.LoadTranslationTable{
 ["$SE_Maoshi1"] = "比如泡方便炒面时泡得都没汤可倒了",
 ["$SE_Maoshi2"] = "我的手机，手机被……",
 ["$SE_Maoshi3"] = "这是肿么啦...",
-[":SE_Maoshi"] = "每当你的一张<font color=\"red\"><b>♥</b></font>牌因拼点、获得或于你的弃牌阶段外的弃置移动到你的区域外时，你可以回复1点体力；每当你的一张装备牌因拼点、获得或于你的弃牌阶段外的弃置移动到你的区域外时，你可以摸一张牌。每当一张牌置入你的装备区时，你将之置入弃牌堆。",
+[":SE_Maoshi"] = "每当你的一张♥牌因拼点、获得或于你的弃牌阶段外的弃置移动到你的区域外时，你可以回复1点体力；每当你的一张装备牌因拼点、获得或于你的弃牌阶段外的弃置移动到你的区域外时，你可以摸一张牌。每当一张牌置入你的装备区时，你将之置入弃牌堆。",
 ["se_liaoli"] = "料理",
 ["se_liaoli"] = "料理",
 ["se_liaoli$"] = "image=image/animate/se_liaoli.png",
@@ -4703,7 +4705,7 @@ sgs.LoadTranslationTable{
 ["$se_liaoli1"] = "诶~准备做什么呢？",
 ["$se_liaoli2"] = "好了久等了~",
 ["$se_liaoli3"] = "我做了蛋糕哦~要吃吗?",
-[":se_liaoli"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>可以弃置一张牌并指定一名角色，该角色的回合开始时，弃置其判定区里的所有牌，然后其摸X张牌，你获得牌堆中第一张装备牌并摸X-1张牌（X为弃置的牌数且至少为1）。 ",
+[":se_liaoli"] = "出牌阶段限一次，可以弃置一张牌并指定一名角色，该角色的回合开始时，弃置其判定区里的所有牌，然后其摸X张牌，你获得牌堆中第一张装备牌并摸X-1张牌（X为弃置的牌数且至少为1）。 ",
 ["se_zhiyu"] = "治愈",
 ["se_zhiyu"] = "治愈",
 ["se_zhiyucard"] = "治愈",
@@ -4712,7 +4714,7 @@ sgs.LoadTranslationTable{
 ["$se_zhiyu3"] = "加油~",
 ["$se_zhiyu4"] = "虽然我废话很多，但这个没关系。",
 ["$se_zhiyu5"] = "我讲不出那么有趣的故事，我是小司。",
-[":se_zhiyu"] = "出牌阶段，你可以将任意数量的<font color=\"red\"><b>♥</b></font>牌或装备牌交给一名其他角色。",
+[":se_zhiyu"] = "出牌阶段，你可以将任意数量的♥牌或装备牌交给一名其他角色。",
 ["Tukasa"] = "柊司",
 ["&Tukasa"] = "柊司",
 ["@Tukasa"] = "Lucky Star!",
@@ -5303,7 +5305,25 @@ SE_Huifu = sgs.CreateTriggerSkill{
 				end
 				if use then
 					room:broadcastSkillInvoke("SE_Huifu")
+					local over = player:getHp() + 1 >= player:getMaxHp()
 					room:setPlayerProperty(player, "hp", sgs.QVariant(player:getHp() + 1))
+					if over then
+						local card_id = -1
+						for _,id in sgs.qlist(room:getDrawPile()) do
+							if sgs.Sanguosha:getCard(id):isKindOf("EquipCard") or sgs.Sanguosha:getCard(id):isKindOf("TrickCard") then
+								card_id = id
+								break
+							end
+						end
+
+						if card_id == -1 then
+							player:drawCards(1)
+							return
+						end
+						room:obtainCard(player, card_id)
+					end
+
+
 				end
 			end
 		end
@@ -5328,7 +5348,7 @@ sgs.LoadTranslationTable{
 ["SE_Huifu"] = "回复「索尔斯·无制限自动回复」",
 ["$SE_Huifu1"] = "（恢复系咒语）",
 ["$SE_Huifu2"] = "啊，危险...",
-[":SE_Huifu"] = "<font color=\"blue\"><b>锁定技,</b></font>回合开始时，若你的当前体力值不为场上最多或之一，你自然增加一点体力。",
+[":SE_Huifu"] = "锁定技。回合开始时，若你的当前体力值不为场上最多或之一，你自然增加一点体力。若你因此而体力不少于自己的体力上限，你从牌堆摸一张随机的锦囊牌或装备牌。",
 ["Leafa"] = "莉法",
 ["&Leafa"] = "莉法",
 ["@Leafa"] = "刀剑神域",
@@ -5642,8 +5662,8 @@ sgs.LoadTranslationTable{
 
 --杉崎鍵
 
-SE_Kurimu = sgs.CreateTriggerSkill{
-	name = "SE_Kurimu",
+kurimu = sgs.CreateTriggerSkill{
+	name = "kurimu",
 	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
@@ -5658,9 +5678,9 @@ SE_Kurimu = sgs.CreateTriggerSkill{
 					if card:getSuit() == sgs.Card_Diamond then
 						if player:getPhase() == sgs.Player_NotActive then
 							if places:contains(sgs.Player_PlaceHand) or places:contains(sgs.Player_PlaceEquip) then
-								if room:askForSkillInvoke(player, "SE_Kurimu", data) then
-									room:broadcastSkillInvoke("SE_Kurimu")
-									room:doLightbox("SE_Kurimu$", 800)
+								if room:askForSkillInvoke(player, "kurimu", data) then
+									room:broadcastSkillInvoke("kurimu")
+									room:doLightbox("kurimu$", 800)
 									local to = room:askForPlayerChosen(player, room:getOtherPlayers(player), self:objectName())
 									player:drawCards(1)
 									to:drawCards(1)
@@ -5676,8 +5696,8 @@ SE_Kurimu = sgs.CreateTriggerSkill{
 }
 
 
-SE_Minatsu = sgs.CreateTriggerSkill{
-	name = "SE_Minatsu",
+minatsu = sgs.CreateTriggerSkill{
+	name = "minatsu",
 	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
@@ -5692,10 +5712,10 @@ SE_Minatsu = sgs.CreateTriggerSkill{
 					if card:getSuit() == sgs.Card_Club then
 						if player:getPhase() == sgs.Player_NotActive then
 							if places:contains(sgs.Player_PlaceHand) or places:contains(sgs.Player_PlaceEquip) then
-								if room:askForSkillInvoke(player, "SE_Minatsu", data) then
+								if room:askForSkillInvoke(player, "minatsu", data) then
 									local to = room:askForPlayerChosen(player, room:getAlivePlayers(), self:objectName())
-									--room:broadcastSkillInvoke("SE_Minatsu")
-									room:doLightbox("SE_Minatsu$", 800)
+									--room:broadcastSkillInvoke("minatsu")
+									room:doLightbox("minatsu$", 800)
 									local card1 = sgs.Sanguosha:cloneCard("fire_slash", sgs.Card_NoSuit, 0)
 									card1:setSkillName(self:objectName())
 									local use = sgs.CardUseStruct()
@@ -5714,8 +5734,8 @@ SE_Minatsu = sgs.CreateTriggerSkill{
 	end
 }
 
-SE_Chizuru = sgs.CreateTriggerSkill{
-	name = "SE_Chizuru",
+chizuru = sgs.CreateTriggerSkill{
+	name = "chizuru",
 	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
@@ -5730,10 +5750,10 @@ SE_Chizuru = sgs.CreateTriggerSkill{
 					if card:getSuit() == sgs.Card_Heart then
 						if player:getPhase() == sgs.Player_NotActive then
 							if places:contains(sgs.Player_PlaceHand) or places:contains(sgs.Player_PlaceEquip) then
-								if room:askForSkillInvoke(player, "SE_Chizuru", data) then
+								if room:askForSkillInvoke(player, "chizuru", data) then
 									local to = room:askForPlayerChosen(player, room:getAlivePlayers(), self:objectName())
-									room:broadcastSkillInvoke("SE_Chizuru")
-									room:doLightbox("SE_Chizuru$", 800)
+									room:broadcastSkillInvoke("chizuru")
+									room:doLightbox("chizuru$", 800)
 									local re = sgs.RecoverStruct()
 									re.who = to
 									room:recover(to,re,true)
@@ -5748,8 +5768,8 @@ SE_Chizuru = sgs.CreateTriggerSkill{
 	end
 }
 
-SE_Mafuyu = sgs.CreateTriggerSkill{
-	name = "SE_Mafuyu",
+mafuyu = sgs.CreateTriggerSkill{
+	name = "mafuyu",
 	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.CardsMoveOneTime},
 	on_trigger = function(self, event, player, data)
@@ -5767,13 +5787,13 @@ SE_Mafuyu = sgs.CreateTriggerSkill{
 								if player:askForSkillInvoke(self:objectName(), data) then
 									local list = room:getAlivePlayers()
 									local to = room:askForPlayerChosen(player, list, self:objectName())
-									room:broadcastSkillInvoke("SE_Mafuyu")
-									room:doLightbox("SE_Mafuyu$", 800)
-									to:gainMark("@SE_Mafuyu")
-									touhou_logmessage("#SE_Mafuyu",to)
+									room:broadcastSkillInvoke("mafuyu")
+									room:doLightbox("mafuyu$", 800)
+									to:gainMark("@mafuyu")
+									touhou_logmessage("#mafuyu",to)
 									local x =player:objectName()
-									room:setPlayerMark(player,"SE_Mafuyu_source"..x,1)
-									room:setPlayerMark(to,"SE_Mafuyu_target"..x,to:getMark("SE_Mafuyu_target"..x)+1)
+									room:setPlayerMark(player,"mafuyu_source"..x,1)
+									room:setPlayerMark(to,"mafuyu_target"..x,to:getMark("mafuyu_target"..x)+1)
 								end
 							end
 						end
@@ -5785,8 +5805,8 @@ SE_Mafuyu = sgs.CreateTriggerSkill{
 	end
 }
 
-SE_Mafuyu_Do=sgs.CreateTriggerSkill{
-	name="#SE_Mafuyu",
+mafuyu_Do=sgs.CreateTriggerSkill{
+	name="#mafuyu",
 	frequency=sgs.Skill_Limited,
 	events={sgs.EventPhaseStart},
 	view_as_skill = se_liaolivs,
@@ -5799,23 +5819,23 @@ SE_Mafuyu_Do=sgs.CreateTriggerSkill{
 			local tukasas = anime_playersbyskillname(player,self:objectName())
 			if tukasas:isEmpty() then
 				for _, pp in sgs.qlist(room:getAlivePlayers()) do
-					pp:loseAllMarks("@SE_Mafuyu")
+					pp:loseAllMarks("@mafuyu")
 				end
 				return
 			end
 			local sb
 			for _,pp in sgs.qlist(room:getAlivePlayers()) do
-				if pp:getMark("@SE_Mafuyu")>0 and pp:getPhase() == sgs.Player_RoundStart then
+				if pp:getMark("@mafuyu")>0 and pp:getPhase() == sgs.Player_RoundStart then
 					sb = pp
 				end
 			end
 			if not sb then return end
 			for _,tukasa in sgs.qlist(tukasas) do
 				local x = tukasa:objectName()
-				if sb:getMark("SE_Mafuyu_target"..x)>0 and tukasa:getMark("SE_Mafuyu_source"..x)>0 then
-					room:setPlayerMark(sb,"SE_Mafuyu_target"..x, sb:getMark("SE_Mafuyu_target"..x)-1)
-					sb:loseAllMarks("@SE_Mafuyu")
-					room:broadcastSkillInvoke("SE_Mafuyu")
+				if sb:getMark("mafuyu_target"..x)>0 and tukasa:getMark("mafuyu_source"..x)>0 then
+					room:setPlayerMark(sb,"mafuyu_target"..x, sb:getMark("mafuyu_target"..x)-1)
+					sb:loseAllMarks("@mafuyu")
+					room:broadcastSkillInvoke("mafuyu")
 					if not sb:isSkipped(sgs.Player_Play) then
 						sb:skip(sgs.Player_Play)
 					end
@@ -5826,8 +5846,8 @@ SE_Mafuyu_Do=sgs.CreateTriggerSkill{
 }
 
 
-SE_Haremu = sgs.CreateMaxCardsSkill{
-	name = "SE_Haremu",
+haremu = sgs.CreateMaxCardsSkill{
+	name = "haremu",
 	extra_func = function(self, player)
 		if player:hasSkill(self:objectName()) then
 			local num = 0
@@ -5841,8 +5861,8 @@ SE_Haremu = sgs.CreateMaxCardsSkill{
 	end
 }
 
-SE_HaremuLaugh = sgs.CreateTriggerSkill{
-	name = "#SE_HaremuLaugh",
+haremuLaugh = sgs.CreateTriggerSkill{
+	name = "#haremuLaugh",
 	frequency = sgs.Skill_Compulsory,
 	events = {sgs.EventPhaseEnd, sgs.GameStart},
 	on_trigger = function(self, event, player, data)
@@ -5851,92 +5871,31 @@ SE_HaremuLaugh = sgs.CreateTriggerSkill{
 			if player:isAlive() and player:hasSkill(self:objectName()) then
 				if player:getPhase() == sgs.Player_Discard then
 					if player:getHandcardNum() > player:getHp() then
-						room:broadcastSkillInvoke("SE_Haremu")
-						room:doLightbox("SE_Haremu$", 800)
+						room:broadcastSkillInvoke("haremu")
+						room:doLightbox("haremu$", 800)
 					end
 				end
 			end
 		elseif event == sgs.GameStart then
 			if room:getAllPlayers(true):length() == 2 then
-				room:detachSkillFromPlayer(player, "SE_Haremu")
+				room:detachSkillFromPlayer(player, "haremu")
 			end
 		end
 	end
 }
 
-Sugisaki:addSkill(SE_Kurimu)
-Sugisaki:addSkill(SE_Minatsu)
-Sugisaki:addSkill(SE_Chizuru)
-Sugisaki:addSkill(SE_Mafuyu)
-Sugisaki:addSkill(SE_Mafuyu_Do)
-extension:insertRelatedSkills("SE_Mafuyu", "#SE_Mafuyu")
-Sugisaki:addSkill(SE_Haremu)
-Sugisaki:addSkill(SE_HaremuLaugh)
-extension:insertRelatedSkills("SE_Haremu", "#SE_HaremuLaugh")
+-- Sugisaki:addSkill(kurimu)
+-- Sugisaki:addSkill(minatsu)
+-- Sugisaki:addSkill(chizuru)
+-- Sugisaki:addSkill(mafuyu)
+-- Sugisaki:addSkill(mafuyu_Do)
+-- extension:insertRelatedSkills("mafuyu", "#mafuyu")
+-- Sugisaki:addSkill(haremu)
+-- Sugisaki:addSkill(haremuLaugh)
+-- extension:insertRelatedSkills("haremu", "#haremuLaugh")
 
 sgs.LoadTranslationTable{
-["SE_Kurimu$"] = "image=image/animate/SE_Kurimu.png",
-["SE_Minatsu$"] = "image=image/animate/SE_Minatsu.png",
-["SE_Chizuru$"] = "image=image/animate/SE_Chizuru.png",
-["SE_Mafuyu$"] = "image=image/animate/SE_Mafuyu.png",
-["SE_Haremu$"] = "image=image/animate/SE_Haremu.png",
-["SE_Kurimu"] = "粟梦",
-["$SE_Kurimu1"] = "来玩恋爱模拟游戏吧~",
-["$SE_Kurimu2"] = "嗯，栗梦的一己之见（kurimu no ichizon），简称Crimson~",
-["$SE_Kurimu3"] = "我会在这里默默守护你即将前往的蓝色星球。",
-["$SE_Kurimu4"] = "这样的话不止地球...甚至宇宙...不，所有的时空都会得救的。",
-["$SE_Kurimu5"] = "我的年薪是两千兆减九万元。",
-["$SE_Kurimu6"] = "什...什么嘛，你们那个微妙的表情，不要用同情可怜孩子的眼神看着我啦。",
-["$SE_Kurimu7"] = "我知道了，既然这样就让你看看吧，身为碧阳学园学生会长的我，樱野栗梦的真正实力！",
-["$SE_Kurimu8"] = "她给了我改变的机会。",
-[":SE_Kurimu"] = "每当你于回合外失去一张<font color = 'red'><b>♦</b></font>牌时，你可以令你与一名其他角色各摸一张牌。",
-["SE_Minatsu"] = "深夏",
-["$SE_Minatsu1"] = "那些想成为我的人，没有资格进入学生会。",
-["$SE_Minatsu2"] = "哼哼哼~吱嘎嘎嘎嘎~哼哼哼~哆嘎嘎嘎嘎（制作花道超合金变形机器人中）",
-["$SE_Minatsu3"] = "椎名花店待客三原则是：亲切，耐心和亵-渎！的说哦~",
-["$SE_Minatsu4"] = "给我去死一次啦！",
-["$SE_Minatsu5"] = "呵吓！代表爱与正义的世纪末救世主-RISING AIR说的就是在下。",
-["$SE_Minatsu6"] = "她给了我发奋的动力。",
-[":SE_Minatsu"] = "每当你于回合外失去一张♣牌时，你可以视为对一名角色使用一张火属性的【杀】（无距离限制）。",
-["SE_Chizuru"] = "知弦",
-["$SE_Chizuru1"] = "心灵的伤口呢，尽管你觉得可以愈合，但很多时候却并非如此，郁积的情感偶尔也是需要宣泄的。",
-["$SE_Chizuru2"] = "key君的情人哦~",
-["$SE_Chizuru3"] = "是呢，你确实有一个只知道家里蹲，随心所欲，一天到晚使唤丈夫，浪费钱而且房间上锁不肯和丈夫亲热的妻子呢。",
-["$SE_Chizuru4"] = "只要key被治愈我就满足了，即使...做不了妻子也无所谓。",
-["$SE_Chizuru5"] = "别看我这样，我可是职业的哦（背景音：key：职业？！）东京情人技术专业学校毕业的哦~",
-["$SE_Chizuru6"] = "我做的酱油一杯都喝不了吗？",
-["$SE_Chizuru7"] = "是么，对不起呢，明明只是个情人我却如此多管闲事...",
-["$SE_Chizuru8"] = "想要永恒的话，果然还是只有沐浴或者饮下年轻萌妹子的鲜血才行的啊。",
-["$SE_Chizuru9"] = "她治愈了太过拼命的我。",
-[":SE_Chizuru"] = "每当你于回合外失去一张<font color = 'red'><b>♥</b></font>牌时，你可以令一名角色回复1点体力。",
-["SE_Mafuyu"] = "真冬",
-["@SE_Mafuyu"] = "真冬",
-["#SE_Mafuyu"]="<font color = 'gold'><b>真冬</b></font>效果将在 %from  的回合开始阶段开始时发动",
-["$SE_Mafuyu1"] = "那个...你没事吧？",
-["$SE_Mafuyu2"] = "前辈，麻烦你削弱下存在感。",
-["$SE_Mafuyu3"] = "前辈，你刚才漫不经心地撕裂了真冬的内心吧...",
-["$SE_Mafuyu4"] = "反正真冬就是个废物，是个没人要的孩子，就算在这一刻人气也是在不断的下滑...",
-["$SE_Mafuyu5"] = "欢迎回家，前辈。不对，是亲~爱~的~",
-["$SE_Mafuyu6"] = "今天辛苦了哦，老公你是先吃饭，先洗澡，还是...",
-["$SE_Mafuyu7"] = "亲爱的你是先吃饭，先洗澡，还是...先升级？",
-["$SE_Mafuyu8"] = "她让我下定决定，要做一个保护女孩子的男人。",
-[":SE_Mafuyu"] = "每当你于回合外失去一张♠牌时，你可以令一名角色跳过其的下个出牌阶段。",
-["SE_Haremu"] = "后宫",
-["$SE_Haremu1"] = "大家都得到幸福啊...后宫结局么...",
-["$SE_Haremu2"] = "决定了，从今天开始我要立志成为半晌既受欢迎学习又好了主人公。",
-["$SE_Haremu3"] = "我喜欢你们，超喜欢！大家都来和我交往吧，绝对会让你们永远幸福的！",
-["$SE_Haremu4"] = "我...我...我是要成为后宫王的男人...",
-["$SE_Haremu5"] = "能在春天和她邂逅真是太好了，如果没有与她相遇，我就不会再向前迈进；能在夏天和她邂逅真是太好了，如果没有与她相遇，我会一直处于颓废之中；能在秋天与她邂逅真是太好了，如果没有与她相遇，我只会在角落里默默崩溃；能在冬天与她邂逅真是太好了，如果没有与她相遇，我就会误解坚强的真意。",
-["$SE_Haremu6"] = "（栗梦：一,二）我们也最喜欢你了！",
-[":SE_Haremu"] = "<font color=\"blue\"><b>锁定技,</b></font>你的手牌上限+X（X为场上的女性角色数量）。",
-["Sugisaki"] = "杉崎鍵",
-["&Sugisaki"] = "杉崎鍵",
-["@Sugisaki"] = "学生会的一己之见",
-["#Sugisaki"] = "KEY君",
-["~Sugisaki"] = "靠这种半吊子的觉悟，再怎么挣扎也是赢不了的么？",
-["designer:Sugisaki"] = "黑猫roy",
-["cv:Sugisaki"] = "近藤隆",
-["illustrator:Sugisaki"] = "STUDIO DEEN/AIC",
+
 }
 
 
@@ -6137,10 +6096,10 @@ sgs.LoadTranslationTable{
 ["se_xunyucard"] = "迅羽",
 ["#se_xunyu_damage"] = "迅羽",
 ["$se_xunyu"] = "Death By Embracing",
-[":se_xunyu"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将一张手牌交给你攻击范围内的一名其他角色，视为对其使用一张【杀】（此【杀】不计入出牌阶段使用限制），此【杀】结算后，若你没有“蓝”标记，你获得目标角色一张牌。",
+[":se_xunyu"] = "出牌阶段限一次，你可以将一张手牌交给你攻击范围内的一名其他角色，视为对其使用一张【杀】（此【杀】不计入出牌阶段使用限制），此【杀】结算后，若你没有“蓝”标记，你获得目标角色一张牌。",
 ["SE_Heiyang"] = "黑扬「黑扬之羽蝶」",
 ["$SE_Heiyang"] = "此刻，我就让你一睹我的真正姿态。",
-[":SE_Heiyang"] = "<font color=\"purple\"><b>觉醒技，</b></font>回合开始前，若场上有已觉醒的其他角色或有当前体力值为1的其他角色，你须减1点体力上限并摸两张牌，获得“超频”。\n\n<font weight=2><font color=\"brown\"><b>超频「Overdrive」：</b></font>准备阶段开始时,回合开始前，你可以选择一项：1.弃置1枚“绿”标记或“蓝”并获得1枚“红”标记；2.弃置1枚“红”标记或“蓝”标记并获得1枚“绿”标记；3.弃置1枚“红”标记或“绿”标记并获得1枚“蓝”标记。若你拥有“红”标记，你使用“迅羽”时攻击范围无限且可以不交给目标角色手牌，若该角色的攻击范围内没有你，其失去1点体力；若你拥有“蓝”标记，将“迅羽”的“将一张手牌交给你攻击范围内的一名其他角色”改为“弃置一张手牌”，“出牌阶段限一次”改为“出牌阶段限3次”；若你拥有“绿”标记，你获得“克己”。",
+[":SE_Heiyang"] = "觉醒技。回合开始前，若场上有已觉醒的其他角色或有当前体力值为1的其他角色，你须减1点体力上限并摸两张牌，获得“超频”。",
 ["SE_Chaopin"] = "超频「Overdrive」",
 ["$SE_Chaopin1"] = "想加速的更快吗，少年？",
 ["$SE_Chaopin2"] = "Death By Piercing",
@@ -6462,7 +6421,7 @@ sgs.LoadTranslationTable{
 ["$SE_Lianmu2"] = "大概，我自己也没有考虑过交往的事情吧...背景音（爽子）：我，我懂得太少，根本没办法回答...",
 ["$SE_Lianmu3"] = "我，不想放弃，我，喜欢她。",
 ["$SE_Lianmu4"] = "所以，刚刚那个表情可以留给我吗？让我独占...",
-[":SE_Lianmu"] = "<font color=\"blue\"><b>锁定技,</b></font>结束阶段结束时，你选择一项：1.将武将牌翻面，然后令已受伤的一名异性角色回复1点体力；2.将武将牌翻面，然后令未受伤的一名异性角色摸两张牌；3.摸一张牌。",
+[":SE_Lianmu"] = "锁定技。结束阶段结束时，你选择一项：1.将武将牌翻面，然后令已受伤的一名异性角色回复1点体力；2.将武将牌翻面，然后令未受伤的一名异性角色摸两张牌；3.摸一张牌。",
 ["Kazehaya"] = "風早翔太",
 ["&Kazehaya"] = "風早翔太",
 ["@Kazehaya"] = "好想告诉你",
@@ -6647,7 +6606,7 @@ sgs.LoadTranslationTable{
 ["@Gaobai"] = "告白",
 ["se_gaobai$"] = "image=image/animate/se_gaobai.png",
 ["$se_gaobai"] = "哥哥你真是个不得了的大骗子！是色狼，变态，妹控，萝莉控，而且还是抖M！每次见到我都对我性骚扰，还惹我生气！但无论什么时候都老好人的，又爱管闲事！...迟钝又不讲理，却很温柔...总是...总是欺骗我...但是我喜欢...那样的你...",
-[":se_gaobai"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以令一名男性角色的体力上限增加或减少至4，然后令其将体力补至体力上限。",
+[":se_gaobai"] = "限定技。出牌阶段，你可以令一名男性角色的体力上限增加或减少至4，然后令其将体力补至体力上限。",
 ["Ayase"] = "新垣绫濑",
 ["&Ayase"] = "新垣绫濑",
 ["@Ayase"] = "我的妹妹不可能这么可爱！",
@@ -6789,11 +6748,6 @@ SE_Zishang = sgs.CreateTriggerSkill{
 							data:setValue(damage)
 							damage.from:drawCards(1)
 							damage.from:turnOver()
-							local dest = room:askForPlayerChosen(p, room:getOtherPlayers(p), self:objectName())
-							local re = sgs.RecoverStruct()
-							re.who = dest
-							re.recover=damage.damage
-							room:recover(dest, re, true)
 						end
 					end
 				end
@@ -6859,7 +6813,7 @@ sgs.LoadTranslationTable{
 ["$SE_Zishang7"] = "改变也是一种逃避吧，为什么不能肯定现在的自己和过去的自己呢？",
 ["$SE_Zishang8"] = "既然雪之下贯彻了她自己的方法，那么我也要用自己的方法，堂堂正正，直截了当的，用卑鄙差劲又阴暗的做法。",
 ["$SE_Zishang9"] = "一样的，我们都是最底层世界的居民。",
-[":SE_Zishang"] = "当场上一名其他角色即将受到伤害时，你可以选择由自己承担此伤害，然后令伤害来源的角色牌摸1张牌并翻面，并指定一名除你以外的角色回复与伤害等同的体力值。 ",
+[":SE_Zishang"] = "当场上一名其他角色即将受到伤害时，你可以选择由自己承担此伤害，然后令伤害来源的角色牌摸1张牌并翻面。 ",
 ["SE_Zibi"] = "自闭",
 ["@Zibi_not"] = "大老师",
 ["SE_Zibi_R"] = "恢复一点体力。",
@@ -7066,14 +7020,14 @@ sgs.LoadTranslationTable{
 ["se_huanyuan_Hp"] = "令其恢复至你上一回合结束时的体力和体力上限。",
 --[[["SE_Huwei_help"] = "失去一点体力，令其回复一点体力。",
 ["SE_Huwei_not"] = "不进行技能。",]]
-[":se_huanyuan"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置一张手牌并指定一名角色，你选择一项：令其将手牌补至X（X为你上回合结束阶段结束时该角色的手牌数），或令其将体力和体力上限还原至你上回合结束阶段结束时该角色的体力和体力上限。你不能于你的第一回合使用此技能。 ",
+[":se_huanyuan"] = "出牌阶段限一次，你可以弃置一张手牌并指定一名角色，你选择一项：令其将手牌补至X（X为你上回合结束阶段结束时该角色的手牌数），或令其将体力和体力上限还原至你上回合结束阶段结束时该角色的体力和体力上限。你不能于你的第一回合使用此技能。 ",
 ["se_chengling"] = "橙铃「Lime Bell」",
 ["se_chengling"] = "橙铃「Lime Bell」",
 ["se_chengling$"] = "image=image/animate/se_chengling.png",
 ["@LimeBell"] = "橙铃",
 ["$se_chengling1"] = "我之所以对你言听计从，是为了提高必杀技的级别，扩展可以倒流的时间。然后，就是瞄准了今天这个唯一的机会。我从来都没有成为过你的伙伴！",
 ["$se_chengling2"] = "柠檬召唤！",
-[":se_chengling"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以令至多两名其他角色将武将牌、体力和体力上限恢复至游戏开始时的状态，然后将觉醒复原。",
+[":se_chengling"] = "限定技。出牌阶段，你可以令至多两名其他角色将武将牌、体力和体力上限恢复至游戏开始时的状态，然后将觉醒复原。",
 ["Chiyuri"] = "仓嶋千百合",
 ["&Chiyuri"] = "仓嶋千百合",
 ["@Chiyuri"] = "加速世界",
@@ -7248,12 +7202,12 @@ sgs.LoadTranslationTable{
 ["$SE_Xiangren2"] = "我不会逃！直到就出父亲大人为止！",
 ["$SE_Xiangren3"] = "我的名字是...奇兹那（羁绊）·亚斯汀，所以你的名字应该叫，艾（爱）·亚斯汀。",
 ["$SE_Xiangren_death"] = "",
-[":SE_Xiangren"] = "<font color=\"red\"><b>限定技，</b></font>每当一名男性角色进入濒死状态时，你可以令其获得除该角色以外的角色的各至多一张红色手牌，若其于濒死状态被救回，你与其处于父女状态。每当处于父女状态的角色死亡后，处于父女状态的另一名角色获得三个额外的回合。",
+[":SE_Xiangren"] = "限定技。每当一名男性角色进入濒死状态时，你可以令其获得除该角色以外的角色的各至多一张红色手牌，若其于濒死状态被救回，你与其处于父女状态。每当处于父女状态的角色死亡后，处于父女状态的另一名角色获得三个额外的回合。",
 ["SE_Shenmin"] = "神悯",
 ["SE_ShenminAll"] = "神悯",
 [":SE_ShenminAll"] = "你处于神悯之下。",
 ["$SE_Shenmin"] = "如果神抛弃了世界，我就去拯救这个世界。",
-[":SE_Shenmin"] = "<font color=\"blue\"><b>锁定技,</b></font>每当一名角色死亡后，你回复1点体力；你的手牌上限+X（X为已死亡的人数）。",
+[":SE_Shenmin"] = "锁定技。每当一名角色死亡后，你回复1点体力；你的手牌上限+X（X为已死亡的人数）。",
 ["AiAstin"] = "艾",
 ["&AiAstin"] = "艾",
 ["@AiAstin"] = "神不在的星期天",
@@ -7552,17 +7506,17 @@ sgs.LoadTranslationTable{
 ["$SE_Niepan1"] = "你还真是会玩啊。",
 ["$SE_Niepan2"] = "虽然对我来说你能吓的丧失斗志那是最好...",
 ["$SE_Niepan3"] = "哎呀这就打完了吗？你完全可以在认真点哦。",
-[":SE_Niepan"] = "<font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"blue\"><b>锁定技,</b></font>你受到一次伤害后，回复一点体力。",
+[":SE_Niepan"] = "唤醒技。锁定技。你受到一次伤害后，回复一点体力。",
 ["se_jiangui"] = "奸鬼「灼烂歼鬼（Camael）」",
 ["$se_jiangui1"] = "燃烧吧！灼烂歼鬼（Camael）！",
 ["$se_jiangui2"] = "灼烂歼鬼（Camael）·炮（Megiddo）！",
-[":se_jiangui"] = "<font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定任意名其他角色，对这些角色造成一点火焰伤害，弃置这些角色各两张牌，然后摸三张牌。",
+[":se_jiangui"] = "唤醒技。出牌阶段限一次，你可以指定任意名其他角色，对这些角色造成一点火焰伤害，弃置这些角色各两张牌，然后摸三张牌。",
 ["SE_Wufan"] = "五番「神威灵装·五番（Elohim Gibor）」",
 ["$SE_Wufan1"] = "神威灵装·五番（Elohim Gibor）！",
 ["$SE_Wufan2"] = "拿起枪来。战斗还没结束呢。战争还没结束呢。",
 ["$SE_Wufan3"] = "来吧，我们还能继续厮杀呢。这可是你期盼的战斗，是你希望的争斗啊！",
 ["$SE_Wufan4"] = "喜欢！我也最喜欢你了！最喜欢哥哥了！是世界上最爱的人！",
-[":SE_Wufan"] = "游戏开始时，你获得3枚 Efreet 标记；每当你处于濒死状态被救回，你获得一枚 Efreet 标记。回合开始前，若你没有 Efreet 标记，你失去所有技能。准备阶段，你可以弃置一个 Efreet 标记，并获得<font color=\"brown\"><b>【涅槃】</b></font>和<font color=\"brown\"><b>【灼烂歼鬼（Camael）】</b></font>\n\n<font weight=2><font color=\"brown\"><b>涅槃「伤势复原」：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"blue\"><b>锁定技,</b></font>你受到一次伤害后，回复一点体力。\n\n<font weight=2><font color=\"brown\"><b>奸鬼「灼烂歼鬼（Camael）」：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定任意名其他角色，对这些角色造成一点火焰伤害，弃置这些角色各两张牌，然后摸三张牌。",
+[":SE_Wufan"] = "游戏开始时，你获得3枚 Efreet 标记；每当你处于濒死状态被救回，你获得一枚 Efreet 标记。回合开始前，若你没有 Efreet 标记，你失去所有技能。准备阶段，你可以弃置一个 Efreet 标记，并获得<font color=\"#bc64a4\"><b>「涅槃」</b></font>和<font color=\"#bc64a4\"><b>「灼烂歼鬼（Camael）」</b></font>",
 ["Kotori"] = "五河琴里",
 ["&Kotori"] = "五河琴里",
 ["@Kotori"] = "Date A Live",
@@ -7627,7 +7581,7 @@ SE_Shuangqiang = sgs.CreateTriggerSkill{
 			local p = damage.from
 			if victim and victim:isAlive() then
 				if victim:objectName() ~= player:objectName() and damage.nature == sgs.DamageStruct_Normal then
-					if p:getEquips():length() < 1 then return end
+					if p:getEquips():length() < 2 then return end
 					if room:askForSkillInvoke(player, self:objectName(), data) then
 						room:broadcastSkillInvoke("SE_Shuangqiang")
 						room:doLightbox("SE_Shuangqiang$", 800)
@@ -7723,7 +7677,7 @@ sgs.LoadTranslationTable{
 ["SE_Shuangqiang"] = "双枪「双枪双剑」",
 ["$SE_Shuangqiang1"] = "你逃不掉的！从来没有犯人能逃出我的手心！",
 ["$SE_Shuangqiang2"] = "不可饶恕...就算你跪下来哭着向我道歉...我也饶不了你！",
-[":SE_Shuangqiang"] = " 每当你造成一次普通伤害时，若你的装备区内有牌，你可以将牌堆顶部的四张牌置入弃牌堆，然后令此伤害+X-1（X为其中最多的花色的数量）。",
+[":SE_Shuangqiang"] = " 每当你造成一次普通伤害时，若你的装备区内有至少两张牌，你可以将牌堆顶部的四张牌置入弃牌堆，然后令此伤害+X-1（X为其中最多的花色的数量）。",
 ["SE_Xinlai"] = "信赖「武侦第一条·相信同伴」",
 ["$SE_Xinlai1"] = "我很期待你能够拿出你的实力！",
 ["$SE_Xinlai2"] = "万一遇到危机，我会保护你的！",
@@ -7869,7 +7823,7 @@ sgs.LoadTranslationTable{
 ["SE_Juji_Reki"] = "狙击「SVD」",
 ["$SE_Juji_Reki1"] = "我是...一发子弹。",
 ["$SE_Juji_Reki2"] = "子弹没有感情。因此，没有迷惘。",
-[":SE_Juji_Reki"] = "<font color=\"blue\"><b>锁定技,</b></font>当你与其他角色计算距离时，始终为1；出牌阶段，你使用的【杀】不能被攻击范围内没有你的角色的【闪】响应。",
+[":SE_Juji_Reki"] = "锁定技。当你与其他角色计算距离时，始终为1；出牌阶段，你使用的【杀】不能被攻击范围内没有你的角色的【闪】响应。",
 ["SE_Zhiyuan"] = "支援「援护射击」",
 ["$SE_Zhiyuan1"] = "亚里亚是我的委托人。",
 ["$SE_Zhiyuan2"] = "我是雷姬。我听说委托人白雪失踪了。",
@@ -8368,7 +8322,7 @@ sgs.LoadTranslationTable{
 ["$SE_Qizhuang5"] = "以现在的魔力足够了！",
 ["$SE_Qizhuang6"] = "给我适可而止吧！",
 ["$SE_Qizhuang7"] = "Good night. Have a nice dream.",
-[":SE_Qizhuang"] = "<font color=\"blue\"><b>锁定技,</b></font>游戏开始时，你获得7枚“炼狱桩”标记；你跳过你的出牌阶段；弃牌阶段结束时，若你的手牌小于X，你将手牌补至X-2（X为场上的存活角色）；每当拥有“炼狱桩”标记的角色死亡后，你获得其对应的“炼狱桩”标记。结束阶段结束时，你可以令至多四名其他角色分别获得你的“路西法”“雷维阿坦”“撒旦”“贝露菲格露”标记；结束阶段结束时，你可以令至多两名角色分别获得你的“贝露赛布布”“阿丝磨德乌丝”标记。每当拥有“炼狱桩”标记的角色造成伤害时，你可以获得此标记并根据此标记执行以下效果：\n路西法 - 该角色受到等同于其造成的伤害。\n雷维阿坦 - 你有1/2的几率弃置该角色的两张装备区里的牌。\n撒旦 - 你有1/2几率对该角色造成1点伤害。\n贝露菲格露 -  你有1/2几率防止此伤害。\n贝露赛布布 - 你有1/2几率令该角色摸两张牌。\n阿丝磨德乌丝 - 你有1/2几率令你与该角色各回复1点体力。\n玛蒙 - 你获得1枚“爱の魔法”标记。 \n◆7枚“炼狱桩”标记分别为“路西法”“雷维阿坦”“撒旦”“贝露菲格露”“贝露赛布布”“阿丝磨德乌丝”“玛蒙”标记。",
+[":SE_Qizhuang"] = "锁定技。游戏开始时，你获得7枚“炼狱桩”标记；你跳过你的出牌阶段；弃牌阶段结束时，若你的手牌小于X，你将手牌补至X-2（X为场上的存活角色）；每当拥有“炼狱桩”标记的角色死亡后，你获得其对应的“炼狱桩”标记。结束阶段结束时，你可以令其他角色获得你的标记。每当拥有“炼狱桩”标记的角色造成伤害时，你可以获得此标记并根据此标记执行以下效果：\n路西法 - 该角色受到等同于其造成的伤害。\n雷维阿坦 - 你有1/2的几率弃置该角色的两张装备区里的牌。\n撒旦 - 你有1/2几率对该角色造成1点伤害。\n贝露菲格露 -  你有1/2几率防止此伤害。\n贝露赛布布 - 你有1/2几率令该角色摸两张牌。\n阿丝磨德乌丝 - 你有1/2几率令你与该角色各回复1点体力。\n玛蒙 - 你获得1枚“爱の魔法”标记。 \n◆7枚“炼狱桩”标记分别为“路西法”“雷维阿坦”“撒旦”“贝露菲格露”“贝露赛布布”“阿丝磨德乌丝”“玛蒙”标记。",
 ["SE_Fanhun"] = "返魂【爱の魔法】",
 ["$SE_Fanhun1"] = "把憎恨强加给别人的根本就不是魔法。",
 ["$SE_Fanhun2"] = "真羡慕大家...",
@@ -8489,12 +8443,12 @@ sgs.LoadTranslationTable{
 ["SE_Jiepi"] = "洁癖",
 ["$SE_Jiepi1"] = "切...脏死了...",
 ["$SE_Jiepi2"] = "...跟没打扫一样...全部重做！...",
-[":SE_Jiepi"] = "<font color=\"blue\"><b>锁定技,</b></font>手牌少于你的角色使用的非延时锦囊牌对你无效。你使用的非延时锦囊牌对手牌少于你的角色无效",
+[":SE_Jiepi"] = "锁定技。手牌少于你的角色使用的非延时锦囊牌对你无效。你使用的非延时锦囊牌对手牌少于你的角色无效",
 ["se_zhanjing"] = "斩颈「身高杀手」",
 ["$se_zhanjing1"] = "...都长着一张滑稽的脸啊。",
 ["$se_zhanjing2"] = "给我放老实点。不然我就没办法...漂亮地切下你的肉了好嘛。",
 ["$se_zhanjing3"] = "（斩颈声）",
-[":se_zhanjing"] = "<font color=\"green\"><b>出牌阶段限一次,</b></font>你可以向右依次交换位置至一名角色右侧，然后弃掉该角色一半（向下取整）数量的手牌。若该角色的体力值大于你的体力值，你令其失去一点体力；若该角色体力上限大于你的体力上限，你令其失去一点体力上限。若该角色体力值和体力上限均不大于你，你对其造成一点伤害。",
+[":se_zhanjing"] = "出牌阶段限一次，你可以向右依次交换位置至一名角色右侧，然后弃掉该角色一半（向下取整）数量的手牌。若该角色的体力值大于你的体力值，你令其失去一点体力；若该角色体力上限大于你的体力上限，你令其失去一点体力上限。若该角色体力值和体力上限均不大于你，你对其造成一点伤害。",
 ["Rivaille"] = "利维尔",
 ["&Rivaille"] = "利维尔",
 ["@Rivaille"] = "进击的巨人",
@@ -8618,7 +8572,7 @@ sgs.LoadTranslationTable{
 ["$se_poyi1"] = "那又怎么了，光是启动而不能控制的话...",
 ["$se_poyi2"] = "摩古歪，这家伙的形态要素解析已经可以了。",
 ["$se_poyi3"] = "（摩古歪）还真是一如既往的爱滥用AI的大小姐呢。",
-[":se_poyi"] = "<font color=\"green\"><b>出牌阶段限一次,</b></font>你可以指定一名AI角色X和另一名角色Y，令X的AI重置，然后令X视为对Y使用一张【杀】。 ",
+[":se_poyi"] = "出牌阶段限一次，你可以指定一名AI角色X和另一名角色Y，令X的AI重置，然后令X视为对Y使用一张【杀】。 ",
 ["SE_Guanli"] = "管理",
 ["$SE_Guanli1"] = "好吧，我稍微有点兴趣，就陪你查一下吧。",
 ["$SE_Guanli2"] = "缓冲器都用上也无所谓，给我撑住！",
@@ -8651,7 +8605,7 @@ function askForChooseSkill(riko)
 	local sks = {}
 	local all_generals = sgs.Sanguosha:getLimitedGeneralNames()
 	for i=1, #all_generals do
-		if all_generals[i]=="Ushio" or all_generals[i]=="Nico" or all_generals[i]=="rika2" or all_generals[i]=="mianma" or all_generals[i]=="Chiyo" or all_generals[i]=="Eugen" or all_generals[i]=="Tukasa" or  all_generals[i]=="Sayaka" or all_generals[i]=="Koishi" or all_generals[i]=="Mikoto" or all_generals[i]=="Natsume_Rin" or all_generals[i]=="Kazehaya" or all_generals[i]=="AiAstin" or all_generals[i]=="Reimu" or all_generals[i]=="Louise" then
+		if all_generals[i]=="Ushio" or all_generals[i]=="Nico" or all_generals[i]=="rika2" or all_generals[i]=="mianma" or all_generals[i]=="Chiyo" or all_generals[i]=="Eugen" or all_generals[i]=="Tukasa" or  all_generals[i]=="Sayaka" or all_generals[i]=="Koishi" or all_generals[i]=="Mikoto" or all_generals[i]=="Natsume_Rin" or all_generals[i]=="Kazehaya" or all_generals[i]=="AiAstin" or all_generals[i]=="Reimu" or all_generals[i]=="Louise" or all_generals[i]=="eugeo" then
 			table.remove(all_generals, i)
 			i = i - 1
 		end
@@ -8686,7 +8640,7 @@ function askForChooseSkill(riko)
 			table.insert(toAsk, "Meile")
 		end
 		if #toAsk > 0 then
-			local choice = room:askForChoice(riko, "SE_Yirong", table.concat(toAsk, "+"))
+			local choice = room:askForChoice(riko, "SE_Yirong%", table.concat(toAsk, "+"))
 			if choice ~= "Buyaozhexie" then
 				riko:setTag("SE_YirongSkill", sgs.QVariant(choice))
 				room:acquireSkill(riko, choice)
@@ -8790,19 +8744,20 @@ Riko:addSkill("#SE_Baskervilles_make")
 sgs.LoadTranslationTable{
 ["se_youhuo$"] = "image=image/animate/se_youhuo.png",
 ["SE_Yirong"] = "易容",
+["#SE_Yirong"] = "理子大人要变身成什么呢？",
 ["Buyaozhexie"] = "不要这些！",
 ["Meile"] = "再不选没了！",
 ["$SE_Yirong1"] = "理子明白了！我知道了！原来这么快就就插上FLAG了！",
 ["$SE_Yirong2"] = "理子·峰·罗宾4世，这是理子的真名。",
 ["$SE_Yirong3"] = "你猜的没错~正是理子的说~",
-[":SE_Yirong"] = "回合开始时，出牌阶段开始时，弃牌阶段开始时，你可以声明当前游戏支持的武将包中的一个锁定技，你获得此锁定技直到下一次声明前。",
+[":SE_Yirong"] = "回合开始时，出牌阶段开始时，弃牌阶段开始时，你可以声明当前游戏支持的武将包中的一个锁定技，你获得此锁定技直到下一次声明前。特别地，你不可以声明【灵体】【忍耐】等技能。",
 ["se_youhuo"] = "诱惑",
 ["$se_youhuo1"] = "你要是肯「啊~」一下下的话，我会告诉你很多消息哦~",
 ["$se_youhuo2"] = "这里？还是说...比较喜欢这里？...",
 ["$se_youhuo3"] = "好棒...好棒哦，金次。金次的这种眼神，让理子兴奋了。",
 ["$se_youhuo4"] = "呐，你知道嘛，金次？这可是福利场景哦。",
 ["$se_youhuo5"] = "（舔）谁都不会知道这房间发生什么了哦。",
-[":se_youhuo"] = "<font color=\"Sky Blue\"><b>萌战技，3，武侦，</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置一张手牌并指定一名角色，令其选择一项：1、令你允许的参战角色各获得其一张牌。2、失去一点体力并令你回复一点体力。",
+[":se_youhuo"] = "<font color=\"Sky Blue\"><b>萌战技，3，武侦，</b></font>出牌阶段限一次，你可以弃置一张手牌并指定一名角色，令其选择一项：1、令你允许的参战角色各获得其一张牌。2、失去一点体力并令你回复一点体力。",
 ["Youhuo_Obtain"] = "令该角色获得目标的牌",
 ["Youhuo_Obtain_Not"] = "不令其获得牌。",
 ["se_youhuo_Obtain"] = "令武侦角色获得你的牌",
@@ -8982,7 +8937,7 @@ sgs.LoadTranslationTable{
 [":SE_Shidan"] = "偶数回合的准备阶段开始时，你可以跳过你的判定阶段和摸牌阶段并指定一名其他角色，视为对其使用一张火【杀】。若该角色为上回合使用“七弹”的目标，改为你对其直接造成2点火属性伤害。",
 ["SE_Badan"] = "八弹",
 ["$SE_Badan"] = "不是哦。我还是让时间倒流了而已。来吧来吧，开始吧~",
-[":SE_Badan"] = "<font color=\"red\"><b>限定技，</b></font>回合开始时，你可以将体力值回复至3，并重置你当前的回合为奇数或偶数。",
+[":SE_Badan"] = "限定技。回合开始时，你可以将体力值回复至3，并重置你当前的回合为奇数或偶数。",
 ["SE_Badan_Odd"] = "设定为奇数回合",
 ["SE_Badan_Oven"] = "设定为偶数回合",
 ["Kurumi"] = "时崎狂三",
@@ -9133,10 +9088,10 @@ sgs.LoadTranslationTable{
 ["$SE_Baibian7"] = "【力】",
 ["$SE_Baibian8"] = "【水】",
 ["$SE_Baibian9"] = "【雨】",
-[":SE_Baibian"] = "准备阶段开始时，你需失去所有“百变”和“库洛”以外的技能；若你的体力上限大于6，将你的体力上限设定为6；若你的体力上限小于3，将你的体力上限设定为3。你可以翻开牌堆顶X张牌（X为你失去的你的体力值），根据翻开的牌获得技能，然后获得这些手牌。",--\n<font color=\"red\"><b>♠</b></font>：A，无双，2，烈弓，3，再起，4，奸雄，5，急智，6，奇袭，7，铁骑，8，遗计，9，咆哮，10，死战，J，青囊，Q，绝境，K，八阵\n♥：A，火计，2，空城，3，天香，4，流离，5，节命，6，放逐，7，天义，8，英魂，9，帷幕，10，挑衅，J，享乐，Q，激昂，K，悲歌\n♣：A，龙魂，2，连破，3，枭姬，4，离间，5，据守，6，断粮，7，智迟，8，甘露，9，疠火，10，弓骑，J，当先，Q，智愚，K，称象\n<font color=\"red\"><b>♦</b></font>：A，求援，2，御策，3，缓释，4，血祭，5，离魂，6，漫卷，7，昭烈，8，扶乱，9，倾城，10，裸衣，J，绝汲，Q，争功，K，固守。",
+[":SE_Baibian"] = "准备阶段开始时，你需失去所有“百变”和“库洛”以外的技能；若你的体力上限大于6，将你的体力上限设定为6；若你的体力上限小于3，将你的体力上限设定为3。你可以翻开牌堆顶X张牌（X为你失去的你的体力值），根据翻开的牌获得技能，然后获得这些手牌。",--\n<font color=\"red\"><b>♠</b></font>：A，无双，2，烈弓，3，再起，4，奸雄，5，急智，6，奇袭，7，铁骑，8，遗计，9，咆哮，10，死战，J，青囊，Q，绝境，K，八阵\n♥：A，火计，2，空城，3，天香，4，流离，5，节命，6，放逐，7，天义，8，英魂，9，帷幕，10，挑衅，J，享乐，Q，激昂，K，悲歌\n♣：A，龙魂，2，连破，3，枭姬，4，离间，5，据守，6，断粮，7，智迟，8，甘露，9，疠火，10，弓骑，J，当先，Q，智愚，K，称象\n♦：A，求援，2，御策，3，缓释，4，血祭，5，离魂，6，漫卷，7，昭烈，8，扶乱，9，倾城，10，裸衣，J，绝汲，Q，争功，K，固守。",
 ["SE_Kuluo"] = "库洛",
 ["$SE_Kuluo"] = "",
-[":SE_Kuluo"] = "<font color=\"blue\"><b>锁定技,</b></font>你的手牌上限为52。",
+[":SE_Kuluo"] = "锁定技。你的手牌上限为52。",
 ["Sakura"] = "木之本樱",
 ["&Sakura"] = "木之本樱",
 ["@Sakura"] = "魔卡少女樱",
@@ -9356,41 +9311,11 @@ SE_Huajian_ed = sgs.CreateTriggerSkill{
 	end
 }
 
-Eugeo:addSkill(SE_Rennai)
-Eugeo:addSkill(SE_Huajian)
-extension:addToSkills(se_qingqiangwei)
-extension:addToSkills(SE_Zhanfang)
-extension:addToSkills(SE_Huajian_ed)
-
-sgs.LoadTranslationTable{
-["SE_Rennai$"] = "image=image/animate/SE_Rennai.png",
-["se_qingqiangwei$"] = "image=image/animate/se_qingqiangwei.png",
-["SE_Huajian$"] = "image=image/animate/SE_Huajian.png",
-["Yuzora_Qingqiangwei"] = "令优吉欧的青蔷薇加强。",
-["SE_Rennai"] = "忍耐",
-["$SE_Rennai"] = "",
-[":SE_Rennai"] = "<font color=\"blue\"><b>锁定技,</b></font>当你受到伤害时，你取消该伤害并减少一点体力，然后获得技能“青蔷薇”。直到你的下个准备阶段开始前，当你将要失去体力时，取消之。\n\n<font weight=2><font color=\"brown\"><b>青蔷薇：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>令与你距离为X+1之内的所有角色进入“冻结”状态，直到你的下一回合准备阶段开始前，然后你获得“蔷薇绽放”并失去”青蔷薇”。“冻结”状态下的角色立即进入连环状态。（X为你失去的体力值；“夜空”发动时X++）\n\n<font weight=2><font color=\"brown\"><b>绽放「蔷薇绽放」：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"blue\"><b>锁定技,</b></font>“冻结”状态下的角色造成普通伤害时，所有“冻结”角色受到一点无伤害来源的伤害。“冻结”状态下的角色造成火属性伤害时，取消之并令其解除“冻结”。",
-["se_qingqiangwei"] = "青蔷薇",
-["$se_qingqiangwei"] = "",
-[":se_qingqiangwei"] = "<font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"green\"><b>出牌阶段限一次，</b></font>令与你距离为X+1之内的所有角色进入“冻结”状态，直到你的下一回合准备阶段开始前，然后你获得“蔷薇绽放”并失去”青蔷薇”。“冻结”状态下的角色立即进入连环状态。（X为你失去的体力值；“夜空”发动时X++）\n\n<font weight=2><font color=\"brown\"><b>绽放「蔷薇绽放」：</b></font><font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"blue\"><b>锁定技,</b></font>“冻结”状态下的角色造成伤害时，所有“冻结”角色受到一点无伤害来源的伤害。",
-["SE_Zhanfang"] = "绽放「蔷薇绽放」",
-["$SE_Zhanfang"] = "",
-[":SE_Zhanfang"] = "<font color=\"Yellow\"><b>唤醒技,</b></font><font color=\"blue\"><b>锁定技,</b></font>“冻结”状态下的角色造成普通伤害时，所有“冻结”角色受到一点无伤害来源的无属性伤害。“冻结”状态下的角色造成火属性伤害时，取消之并令其解除“冻结”。",
-["SE_Huajian"] = "化剑",
-["$SE_Huajian"] = "",
-[":SE_Huajian"] = "<font color=\"red\"><b>限定技，</b></font>当你死亡时，你可以指定一名角色。该角色将其装备区内的武器牌收回手牌，并装备“青蔷薇之剑”。每当“青蔷薇之剑”从该角色的手牌区打出、弃置或装备区移出时，该角色重新获得之。",
-["SE_Huajian_ed"] = "化剑",
-["$SE_Huajian_ed"] = "",
-[":SE_Huajian_ed"] = "每当“青蔷薇之剑”从你的手牌区打出、弃置或装备区移出时，你重新获得之。",
-["Eugeo"] = "优吉欧",
-["&Eugeo"] = "优吉欧",
-["@Eugeo"] = "刀剑神域",
-["#Eugeo"] = "青の剑士",
-["~Eugeo"] = "...",
-["designer:Eugeo"] = "Sword Elucidator",
-["cv:Eugeo"] = "",
-["illustrator:Eugeo"] = "SL@原稿修羅場",
-}
+-- Eugeo:addSkill(SE_Rennai)
+-- Eugeo:addSkill(SE_Huajian)
+-- extension:addToSkills(se_qingqiangwei)
+-- extension:addToSkills(SE_Zhanfang)
+-- extension:addToSkills(SE_Huajian_ed)
 
 --古手梨花
 
@@ -9629,7 +9554,7 @@ sgs.LoadTranslationTable{
 ["SE_Poxiao"] = "破晓",
 ["$SE_Poxiao1"] = "我要回到属于我的雏见泽，我有着非常重要的工作，而且...如果不回去的话，我就再也见不到羽入了。我最最最喜欢羽入了~咪啪~（背景音：羽入哽咽中）",
 ["$SE_Poxiao2"] = "看来我不得不放弃成为魔女了，现在的我必须舍弃身为贝伦卡斯特尔的魔女身份，回到古手梨花的位置上来了。",
-[":SE_Poxiao"] = "<font color=\"purple\"><b>觉醒技，</b></font>回合开始时，若你的“碎片”大于你的手牌数，你须增加1点体力上限，然后你失去“升华”并获得“咪啪”。\n\n<font weight=2><font color=\"brown\"><b>咪啪：</b></font>出牌阶段，你可以弃置1枚“碎片”并指定一名角色，直到你的下个回合开始前，你选择一项：令该角色不能使用或打出基本牌，或令该角色不能使用非锦囊牌。",
+[":SE_Poxiao"] = "觉醒技。回合开始时，若你的“碎片”大于你的手牌数，你须增加1点体力上限，然后你失去“升华”并获得“咪啪”。",
 ["se_mipa"] = "咪啪",
 ["@mipa_basic"] = "咪啪-基本牌",
 ["@mipa_notbasic"] = "咪啪-非基本牌",
@@ -9973,7 +9898,7 @@ sgs.LoadTranslationTable{
 ["$luaqice3"] = "（脑补）只要和哥哥在一起，什么都很美味呢~喵~",
 ["$luaqice4"] = "（脑补）只要和哥哥在一起，什么都很美味呢~喵~",
 ["$luaqice5"] = "（脑补）优呢，因为哥哥不在很寂寞啊，于是就过来了~",
-[":luaqice"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>每当你需使用一张牌时，你可以弃置两张牌或失去1点体力并声明你需使用的牌，你视为使用此牌。",
+[":luaqice"] = "出牌阶段限一次，每当你需使用一张牌时，你可以弃置两张牌或失去1点体力并声明你需使用的牌，你视为使用此牌。",
 ["se_chenyan"] = "谶言",
 ["$se_chenyan1"] = "我明白的。",
 ["$se_chenyan2"] = "不管再发生什么事情，我都会待在步的身边的。",
@@ -9985,7 +9910,7 @@ sgs.LoadTranslationTable{
 ["@se_tongling"] = "通灵",
 ["$se_tongling1"] = "步，你给那个女孩戒指了啊...（背景音：步惊吓ING）",
 ["$se_tongling2"] = "太温吞，酸死了，真差劲。",
-[":se_tongling"] = "<font color=\"red\"><b>限定技，</b></font>出牌阶段，你可以选择一项：1、指定一名主公以外的体力值不大于1的其他角色，你杀死该角色，然后令其复活并变身为僵尸。2、指定一名已死亡角色，令其变身为僵尸。",
+[":se_tongling"] = "限定技。出牌阶段，你可以选择一项：1、指定一名主公以外的体力值不大于1的其他角色，你杀死该角色，然后令其复活并变身为僵尸。2、指定一名已死亡角色，令其变身为僵尸。",
 ["Eucliwood"] = "优克莉伍德",
 ["&Eucliwood"] = "优克莉伍德",
 ["@Eucliwood"] = "这就是僵尸吗",
@@ -10032,7 +9957,7 @@ sgs.LoadTranslationTable{
 --["SE_Wumai$"] = "image=image/animate/SE_Wumai.png",
 ["SE_Juyang"] = "惧阳",
 ["$SE_Juyang"] = "",
-[":SE_Juyang"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你受到普通伤害时，你防止此伤害，你须摸一张牌并将你的武将牌翻面。每当你受到火焰伤害时，此伤害+1。",
+[":SE_Juyang"] = "锁定技。每当你受到普通伤害时，你防止此伤害，你须摸一张牌并将你的武将牌翻面。每当你受到火焰伤害时，此伤害+1。",
 ["Eu_Zombie"] = "僵尸",
 ["&Eu_Zombie"] = "僵尸",
 ["@Eu_Zombie"] = "这就是僵尸吗",
@@ -10073,7 +9998,7 @@ SE_Zuozhan = sgs.CreateTriggerSkill{
 						room:doLightbox("SE_Zuozhan$", 800)
 					end
 					local choices = {"1_Zuozhan", "2_Zuozhan", "3_Zuozhan", "4_Zuozhan"}
-					local choice1 = room:askForChoice(Yuri,"SE_Zuozhan1", table.concat(choices,"+"))
+					local choice1 = room:askForChoice(Yuri,"SE_Zuozhan1%from:"..player:objectName(), table.concat(choices,"+"))
 					if not choice1 then return end
 					for i = 1, #choices do
 						if choices[i] == choice1 then
@@ -10081,7 +10006,7 @@ SE_Zuozhan = sgs.CreateTriggerSkill{
 						i = i-1
 						end
 					end
-					local choice2 = room:askForChoice(Yuri,"SE_Zuozhan2", table.concat(choices,"+"))
+					local choice2 = room:askForChoice(Yuri,"SE_Zuozhan2%from:"..player:objectName(), table.concat(choices,"+"))
 					if not choice2 then return end
 					for j = 1, #choices do
 						if choices[j] == choice2 then
@@ -10089,7 +10014,7 @@ SE_Zuozhan = sgs.CreateTriggerSkill{
 						j = j-1
 						end
 					end
-					local choice3 = room:askForChoice(Yuri,"SE_Zuozhan3", table.concat(choices,"+"))
+					local choice3 = room:askForChoice(Yuri,"SE_Zuozhan3%from:"..player:objectName(), table.concat(choices,"+"))
 					if not choice3 then return end
 					for k = 1, #choices do
 						if choices[k] == choice3 then
@@ -10180,11 +10105,14 @@ sgs.LoadTranslationTable{
 ["3_Zuozhan"] = "出牌阶段",
 ["4_Zuozhan"] = "弃牌阶段",
 ["SE_Zuozhan"] = "作战",
+["#SE_Zuozhan1"] = "[第一阶段]让 %from 做什么呢？",
+["#SE_Zuozhan2"] = "[第二阶段]让 %from 做什么呢？",
+["#SE_Zuozhan3"] = "[第三阶段]让 %from 做什么呢？",
+["#SE_Zuozhan4"] = "[第四阶段]让 %from 做什么呢？",
 ["$SE_Zuozhan1"] = "作战名「龙卷风行动」。",
 ["$SE_Zuozhan2"] = "今天的作战计划为「Guild空降计划」。",
 ["$SE_Zuozhan3"] = "那么，作战开始！",
 ["$SE_Zuozhan4"] = "不...今天的作战是「怪物流」。",
-["$SE_Zuozhan"] = "",
 [":SE_Zuozhan"] = "一名角色回合开始时，若其血量不少于你，你可以重新为其分配判定阶段、摸牌阶段、出牌阶段、弃牌阶段的顺序。",
 ["Yuri"] = "仲村由理",
 ["&Yuri"] = "仲村由理",
@@ -10513,7 +10441,7 @@ sgs.LoadTranslationTable{
 ["$Schneewalzer1"] = "不，前辈，是我们的战斗。",
 ["$Schneewalzer2"] = "狮子神子 高神剑巫 诚心祷祝",
 ["$Schneewalzer3"] = "破魔曙光 雪霞神狼 以钢之神威 助我讨尽恶神百鬼",
-[":Schneewalzer"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你对一名角色造成雷属性伤害时，你须将该角色的武将牌上的所有牌置入弃牌堆，然后弃置其所有标记。",
+[":Schneewalzer"] = "锁定技。每当你对一名角色造成雷属性伤害时，你须将该角色的武将牌上的所有牌置入弃牌堆，然后弃置其所有标记。",
 ["se_jianshi"] = "监视",
 ["@surveillance"] = "监视",
 ["$se_jianshi1"] = "我作为剑巫接受了监视学长的任务才来到弦神岛。——等等，监视？",
@@ -10598,9 +10526,9 @@ SE_Guiyin = sgs.CreateTriggerSkill{
 			local use = data:toCardUse()
 			 if use.to:contains(player) then
 				--if use.from:objectName() ~= player:objectName() then
-					if not use.from then return end
-					use.from:gainMark("@Oni")
-					player:gainMark("OniLv")
+				if not use.from then return end
+				use.from:gainMark("@Oni")
+				player:gainMark("OniLv")
 				--end
 				if use.from:objectName() ~= player:objectName() then
 					if not player:hasFlag("guiyin1_used") then
@@ -10650,29 +10578,9 @@ SE_GuiyinDis = sgs.CreateDistanceSkill{
 	end
 }
 
-K1:addSkill(SE_Guiyin)
-K1:addSkill(SE_GuiyinDis)
-extension:insertRelatedSkills("SE_Guiyin", "#SE_GuiyinDis")
-
-
-sgs.LoadTranslationTable{
-["SE_Guiyin$"] = "image=image/animate/SE_Guiyin.png",
-["SE_Guiyin"] = "鬼隐",
-["@Oni"] = "鬼",
-["$SE_Guiyin1"] = "...针？...啊啊啊啊啊！......",
-["$SE_Guiyin2"] = "可恶！...我才不会那么轻易就被杀掉！绝对不会...！",
-["$SE_Guiyin3"] = "那个...果然，好像有人想要我的命...",
-["$SE_Guiyin4"] = "住手啊啊！！！（敲打声）",
-[":SE_Guiyin"] = "<font color=\"blue\"><b>锁定技,</b></font>每当你成为卡牌的目标或受到伤害后，来源获得一个“鬼”标记。当场上“鬼”标记总数大于或等于：\n1：球棒 你与其他角色计算距离时，始终-2.\n3：幻觉 回合结束阶段开始时，每个攻击范围内有你的角色各获得一个“鬼”标记。\n5：L5   出牌阶段结束时，你对所有其他拥有“鬼”标记的角色造成X点伤害，并清空其各自的“鬼”标记。X为该角色“鬼”标记的数量且至多为2（若目标为自己，至多为1）。",
-["K1"] = "前原圭一（鬼隐篇）",
-["&K1"] = "前原圭一",
-["@K1"] = "寒蝉鸣泣之时",
-["#K1"] = "鬼隐の迷途人",
-["~K1"] = "（大石：喂喂，前原先生！）对...对不起...",
-["designer:K1"] = "前原圭一",
-["cv:K1"] = "保志総一朗",
-["illustrator:K1"] = "さよなら転さん…",
-}
+-- K1:addSkill(SE_Guiyin)
+-- K1:addSkill(SE_GuiyinDis)
+-- extension:insertRelatedSkills("SE_Guiyin", "#SE_GuiyinDis")
 
 
 --江之岛盾子
@@ -11187,7 +11095,7 @@ sgs.LoadTranslationTable{
 ["SE_Guiling"] = "归零",
 ["$SE_Guiling1"] = "我每次打麻将，都会变成这个样子..",
 ["$SE_Guiling2"] = "（和）只是这样？（咲）只是这样。",
-[":SE_Guiling"] = "<font color=\"blue\"><b>锁定技,</b></font>摸牌阶段结束时，你失去“咲”标记。",
+[":SE_Guiling"] = "锁定技。摸牌阶段结束时，你失去“咲”标记。",
 
 ["Saki"] = "宮永咲",
 ["&Saki"] = "宮永咲",
@@ -11335,7 +11243,7 @@ sgs.LoadTranslationTable{
 ["$SE_Wuwei2"] = "只要我有此意，痛觉什么的，呵呵...呵呵...啊哈哈哈哈！",
 ["$SE_Wuwei3"] = "这个名为梦之事物啊，并不是什么悲伤的事情哦。",
 ["$SE_Wuwei4"] = "我真是个笨蛋...",
-[":SE_Wuwei"]="<font color=\"blue\"><b>锁定技,</b></font>你每受到一次伤害后，你回复一点体力然后你获得一个“无畏”标记。\n\n回合结束阶段开始时，若你的“无畏”标记大于场上存活角色数（至少为4），你变身为魔女并将你的身份变为内奸（主公时不变），否则你回复一点体力并摸一张牌。\n\n当你使用【杀】时，你可以获得一个“无畏”标记，此【杀】造成伤害时，该伤害+1，你失去一个“无畏”标记。\n\n若你的“无畏”标记大于1，你使用【杀】无次数限制；\n\n若你的“无畏”标记大于2，你使用【杀】无视防具；\n\n若你的“无畏”标记大于场上存活角色数（至少为4）/2，你回合内使用【杀】无视距离；\n\n若你的“无畏”标记大于场上存活角色数（至少为4），你的【杀】不可闪避且你使用【杀】造成伤害时摸一张牌。",
+[":SE_Wuwei"]="锁定技。你每受到一次伤害后，你回复一点体力然后你获得一个“无畏”标记。\n\n回合结束阶段开始时，若你的“无畏”标记大于场上存活角色数（至少为4），你变身为魔女并将你的身份变为内奸（主公时不变），否则你回复一点体力并摸一张牌。\n\n当你使用【杀】时，你可以获得一个“无畏”标记，此【杀】造成伤害时，该伤害+1，你失去一个“无畏”标记。\n\n若你的“无畏”标记大于1，你使用【杀】无次数限制；\n\n若你的“无畏”标记大于2，你使用【杀】无视防具；\n\n若你的“无畏”标记大于场上存活角色数（至少为4）/2，你回合内使用【杀】无视距离；\n\n若你的“无畏”标记大于场上存活角色数（至少为4），你的【杀】不可闪避且你使用【杀】造成伤害时摸一张牌。",
 ["@Wuwei"] = "无畏",
 ["#SE_Wuwei_Armor"] = "沙耶香发动了「无畏」无视了目标的防具。",
 ["#SE_Wuwei_plusOne"] = "沙耶香发动了「无畏」令该伤害+1",
@@ -11807,13 +11715,13 @@ sgs.LoadTranslationTable{
 ["$se_biling4"] = "用掉所有剩下的令咒，让Servant自尽。",
 ["$se_biling5"] = "嗯，成立了，我已经无法再伤害你们了。（打火机声，枪声）仅限我。",
 ["$se_biling6"] = "不好意思，契约让我做不到。",
-[":se_biling"]="<font color=\"red\"><b>限定技，</b></font>你指定一名角色，令其获得效果：你对其造成伤害时，取消之，且其不能成为起源弹的目标。若该角色有副将，令该角色移除自己的副将；若该角色没有副将，其受到你指定的你和其以外的来源的两张【杀】（若无来源则无效）。",
+[":se_biling"]="限定技。你指定一名角色，令其获得效果：你对其造成伤害时，取消之，且其不能成为起源弹的目标。若该角色有副将，令该角色移除自己的副将；若该角色没有副将，其受到你指定的你和其以外的来源的两张【杀】（若无来源则无效）。",
 
 ["@kiri_jianqiao"] = "剑鞘",
 ["se_jianqiao"] = "剑鞘「亚瑟王的治愈之力」",
 ["se_jianqiao$"] = "image=image/animate/se_jianqiao.png",
 ["$se_jianqiao"] = "还活着...还活着...还活着......",
-[":se_jianqiao"]="<font color=\"red\"><b>限定技，</b></font>当一名角色受到造成濒死的伤害时，你可以取消之并令其回复一点体力。",
+[":se_jianqiao"]="限定技。当一名角色受到造成濒死的伤害时，你可以取消之并令其回复一点体力。",
 
 ["Kiritsugu"] = "衛宮切嗣",
 ["&Kiritsugu"] = "衛宮切嗣",
@@ -11958,18 +11866,18 @@ sgs.LoadTranslationTable{
 ["se_banyun"] = "搬运",
 ["$se_banyun1"] = "（音效）",
 ["se_banyun$"] = "image=image/animate/se_banyun.png",
-[":se_banyun"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>指定一名距离为1的其他角色A和任意一名你和A以外的角色B。你带着A随机位移5次，然后你和A以原次序移动到B的左侧。若如此做，你对A造成一点伤害。",
+[":se_banyun"]="出牌阶段限一次，指定一名距离为1的其他角色A和任意一名你和A以外的角色B。你带着A随机位移5次，然后你和A以原次序移动到B的左侧。若如此做，你对A造成一点伤害。",
 
 ["se_jianxi"] = "间隙",
 ["$se_jianxi1"] = "（音效）",
 ["$se_jianxi2"] = "（音效）",
 ["se_jianxi$"] = "image=image/animate/se_jianxi.png",
-[":se_jianxi"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以指定两名角色交换位置。",
+[":se_jianxi"]="出牌阶段限一次，你可以指定两名角色交换位置。",
 
 ["se_shenglong"] = "升龙",
 ["$se_shenglong1"] = "（音效）",
 ["se_shenglong$"] = "image=image/animate/se_shenglong.png",
-[":se_shenglong"]="<font color=\"blue\"><b>锁定技,</b></font>你受到其他角色的伤害时，若伤害来源的手牌数为0，取消之；为1-3，伤害来源受到一点你造成的伤害；为4-6，伤害来源受到两点你造成的伤害；大于6，伤害来源受到三点你造成的伤害。",
+[":se_shenglong"]="锁定技。你受到其他角色的伤害时，若伤害来源的手牌数为0，取消之；为1-3，伤害来源受到一点你造成的伤害；为4-6，伤害来源受到两点你造成的伤害；大于6，伤害来源受到三点你造成的伤害。",
 
 ["Yakumo"] = "社长八云",
 ["&Yakumo"] = "社长八云",
@@ -12424,7 +12332,7 @@ sgs.LoadTranslationTable{
 ["$se_zhenfen3"] = "佐仓千代，16岁，和喜欢的人告白，获得了签名......",
 ["$se_zhenfen4"] = "稍等......不我好像确实说了是粉丝......",
 ["$se_zhenfen5"] = "被当成缠人的女生的话怎么办啊！",
-[":se_zhenfen"]="<font color=\"blue\"><b>锁定技,</b></font>若你于出牌阶段使用了第x张牌，你变身为“欧根亲王”。 x为你的体力值+1",
+[":se_zhenfen"]="锁定技。若你于出牌阶段使用了第x张牌，你变身为“欧根亲王”。 x为你的体力值+1",
 ["@zhenfen_carduse"] = "振奋",
 
 ["se_fupao"] = "辅炮「援护火力」",
@@ -12438,7 +12346,7 @@ sgs.LoadTranslationTable{
 ["se_tuodui"] = "脱队「全身而退」",
 ["$se_tuodui1"] = "诶，你说我是幸运女孩？完全没这回事哦！浅海什么的都不在行啦…",
 ["$se_tuodui2"] = "就这点伤我才不会沉呢！反击了哦！",
-[":se_tuodui"]="<font color=\"blue\"><b>锁定技,</b></font>你成为AOE目标时，将你从目标中排除。当你受到伤害时，你取消之，然后变身为佐仓千代。",
+[":se_tuodui"]="锁定技。你成为AOE目标时，将你从目标中排除。当你受到伤害时，你取消之，然后变身为佐仓千代。",
 
 ["Chiyo"] = "佐仓千代",
 ["&Chiyo"] = "佐仓千代",

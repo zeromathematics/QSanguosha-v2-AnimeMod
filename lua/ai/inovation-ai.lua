@@ -282,13 +282,10 @@ se_diangong_skill.getTurnUseCard=function(self,inclusive)
 	local cards = sgs.QList2Table(self.player:getHandcards())
 	self:sortByUseValue(cards,true)
 	for _,enemy in ipairs(self.enemies) do
-		if enemy:hasSkills("se_qidian|suipian|guangyu") then return end
+		if enemy:hasSkills("se_qidian|guangyu") then return end
 	end
 	for _,acard in ipairs(cards) do
 		if self:getKeepValue(acard)<5 and acard:isBlack() then
-			local number = acard:getNumberString()
-			local card_id = acard:getEffectiveId()
-			local suit = acard:getSuitString()
 			return sgs.Card_Parse("@DiangongCard=.")
 		end
 	end
@@ -297,10 +294,10 @@ end
 sgs.ai_skill_use_func.DiangongCard = function(card,use,self)
 	local target
 	for _,enemy in sgs.list(self.room:getAlivePlayers()) do
-		local pl = true
+		local pl = false
 		for _,card in sgs.list(enemy:getJudgingArea()) do
 			if card:isKindOf("Lightning") then
-				pl = false
+				pl = true
 			end
 		end
 		if pl then
@@ -1401,7 +1398,7 @@ sgs.ai_skill_invoke.jixian = function(self, data)
 	if self.player:getLostHp() > 1 then
 		if self.player:getRole() == "rebel" and self:isWeak(self.room:getLord()) then return true end
 		if self.room:getAlivePlayers():length() == 2 then return true end
-		if self.player:getHp() == 1 and self:getCardsNum("Peach") == 0 and self:getCardsNum("Analeptic") == 0 then return true end
+		if self.player:getHp() <= 1 and self:getCardsNum("Peach") == 0 and self:getCardsNum("Analeptic") == 0 then return true end
 	end
 	for _,p in ipairs(self.friends) do
 		if p:hasSkills("SE_Shuanglang|SE_Mengfeng")then return true end
@@ -1414,6 +1411,12 @@ end
 
 sgs.ai_skill_playerchosen.jixian = function(self, targets)
 	return self:getPriorTarget()
+end
+
+sgs.ai_skill_choice.nangua = function(self, choices, data)
+	if self.player:faceUp() then return "nangua_recover" end
+	if self.player:getHp() < 1 then return "nangua_recover" end
+	return "nangua_turnover"
 end
 
 --诚哥
@@ -1679,6 +1682,12 @@ end
 sgs.ai_skill_choice["jicheng"] = function(self, choices, data)
 	if self:isWeak() and self:getCardsNum("Peach") == 0 and self.player:getHp() == 1 then return "jicheng_recover" end
 	return "jicheng_draw"
+end
+
+
+sgs.ai_skill_invoke.shoushi = function(self, data)
+	local use = data:toCardUse()
+	return not use.card:isKindOf("ExNihilo") and not use.card:isKindOf("AmazingGrace") and not use.card:isKindOf("GodSalvation")
 end
 
 sgs.ai_skill_choice.shoushi = function(self, choices, data)

@@ -124,8 +124,334 @@ sgs.ai_use_value.yaojing = 9
 sgs.ai_use_priority.yaojing  = 6
 
 sgs.ai_skill_choice.gongming = function(self, choices, data)
-	local selfplayer=self.room:findPlayerBySkillName("gongming")
-	if not selfplayer then return end
-	if self:isFriend(selfplayer) and self.player:getHandcardNum() < 6 then return "hedraws" end
+	-- local selfplayer=self.room:findPlayerBySkillName("gongming")
+	-- if not selfplayer then return end
+	-- if self:isFriend(selfplayer) and self.player:getHandcardNum() < 6 then return "hedraws" end
 	return  "youdraw"
 end
+
+
+--杉崎鍵
+sgs.ai_skill_invoke.kurimu = function(self, data)
+	return true
+end
+
+sgs.ai_skill_invoke.minatsu = function(self, data)
+	if #self.enemies == 0 then return false end
+	return true
+end
+
+sgs.ai_skill_invoke.chizuru = function(self, data)
+	return true
+end
+
+sgs.ai_skill_invoke.mafuyu = function(self, data)
+	if #self.enemies == 0 then return false end
+	return true
+end
+
+sgs.ai_skill_playerchosen.kurimu = function(self, targets)
+	for _,friend in ipairs(self.friends) do
+		if friend:getHandcardNum() < 3 and friend:objectName() ~= self.player:objectName() then
+			return friend
+		end
+	end
+	for _,friend in ipairs(self.friends) do
+		if friend:objectName() ~= self.player:objectName() then
+			return friend
+		end
+	end
+	return targets:at(0)
+end
+
+sgs.ai_skill_playerchosen.minatsu = function(self, targets)
+	if #self.enemies == 0 then return self.player end
+	self:sort(self.enemies, "defense")
+	for _,enemy in ipairs(self.enemies) do
+		if enemy then
+			return enemy
+		end
+	end
+	return self.enemies[1]
+end
+
+sgs.ai_skill_playerchosen.chizuru = function(self, targets)
+	local minHp = 100
+	local target
+	for _,friend in ipairs(self.friends) do
+		local hp = friend:getHp()
+		if friend:getHp()==friend:getMaxHp() then
+			hp = 1000
+		end
+		if self:hasSkills(sgs.masochism_skill, friend) then
+			hp = hp - 1
+		end
+		if friend:isLord() then
+			hp = hp - 1
+		end
+		if hp < minHp then
+			minHp = hp
+			target = friend
+		end
+	end
+	if target then
+		return target
+	end
+	return self.player
+end
+
+sgs.ai_skill_playerchosen.mafuyu = function(self, targets)
+	local card_num = 0
+	local target
+	if #self.enemies == 0 then return self.player end
+	for _,enemy in ipairs(self.enemies) do
+		if enemy:getHandcardNum() - enemy:getHp() > card_num then
+			target = enemy
+			card_num = enemy:getHandcardNum() - enemy:getHp()
+		end
+	end
+	if target then
+		return target
+	end
+	return self.enemies[1]
+end
+
+
+sgs.ai_skill_use["@@haremu"] = function(self)
+
+	local target = nil
+	for _, p in sgs.qlist(self.room:getAlivePlayers()) do
+		if p:hasFlag("haremu_target") then
+			target = p
+			break
+		end
+	end
+	if not target then return end
+	if #self.enemies == 0 then return end
+	local cards = sgs.QList2Table(self.player:getHandcards())
+	self:sortByUseValue(cards,true)
+
+	local damaged = sgs.ai_skill_playerchosen.chizuru(self, self.room:getAlivePlayers()):getLostHp()
+	local hurt = damaged > 0
+	local need_help = damaged > 1
+
+	local weak = sgs.ai_skill_playerchosen.minatsu(self, self.room:getAlivePlayers()):getHp() == 1
+
+	if self:isEnemy(target) then
+		if self:isWeak() then return "." end
+		for _,acard in ipairs(cards) do
+			if self:getKeepValue(acard)<5 and acard:getSuit() == sgs.Card_Spade then
+				return "@HaremuCard="..acard:getEffectiveId().."->"..target:objectName()
+			end
+			if self:getKeepValue(acard)<5 and acard:getSuit() == sgs.Card_Heart and need_help then
+				return "@HaremuCard="..acard:getEffectiveId().."->"..target:objectName()
+			end
+			if self:getKeepValue(acard)<5 and acard:getSuit() == sgs.Card_Club and weak then
+				return "@HaremuCard="..acard:getEffectiveId().."->"..target:objectName()
+			end
+		end
+	else
+		for _,acard in ipairs(cards) do
+			if acard:getSuit() == sgs.Card_Spade then
+				return "@HaremuCard="..acard:getEffectiveId().."->"..target:objectName()
+			end
+			if acard:getSuit() == sgs.Card_Heart and hurt then
+				return "@HaremuCard="..acard:getEffectiveId().."->"..target:objectName()
+			end
+			if acard:getSuit() == sgs.Card_Club and weak then
+				return "@HaremuCard="..acard:getEffectiveId().."->"..target:objectName()
+			end
+		end
+	end
+	return "."
+end
+
+sgs.ai_skill_choice.haremu = function(self, choices, data)
+	local player = data:toPlayer()
+
+	if not self:isEnemy(player) then return "haremu_accept" end
+	if self.player:getRole() == "lord" then return "haremu_accept" end
+	return "cancel"
+end
+
+--雷德
+sgs.ai_skill_invoke.gaokang = function(self, data)
+	local damage = data:toDamage()
+	if self:isFriend(damage.to) then
+		if self.player:getHandcardNum() == 1 and damage.to:objectName() == self.player:objectName() then return true end
+		if self:hasSkills(sgs.masochism_skill, damage.to) and damage.to:getHp() > 1 then return false end
+		if self.player:getHandcardNum() == 1 and damage.to:getHp() > 2 then return false end
+		return true
+	end
+end
+
+--优吉欧
+sgs.ai_skill_choice.rennai = function(self, choices, data)
+	choices = choices:split("+")
+	local tp = 1
+	for _,choice in ipairs(choices) do
+		if choice == "rennai_hp" then
+			tp = 0
+			break
+		end
+		if choice == "rennai_gain" then
+			tp = 2
+			break
+		end
+	end
+
+	-- analysis
+	local hp_table = {}
+	local hand_table = {}
+	for _,p in sgs.qlist(self.room:getAlivePlayers()) do
+		if hp_table[p:getHp()] ~= nil then
+			self.room:writeToConsole("old")
+			if self:isFriend(p) then
+				if p:getMark("@Frozen_Eu") > 0 then
+				else
+					hp_table[p:getHp()] = hp_table[p:getHp()] - 2
+				end
+			else
+				if p:getMark("@Frozen_Eu") > 0 then
+					hp_table[p:getHp()] = hp_table[p:getHp()] + 1
+				else
+					hp_table[p:getHp()] = hp_table[p:getHp()] + 3
+				end
+			end
+		else
+			self.room:writeToConsole("new")
+			if self:isFriend(p) then
+				if p:getMark("@Frozen_Eu") > 0 then
+					hp_table[p:getHp()] = 0
+				else
+					hp_table[p:getHp()] = - 2
+				end
+			else
+				if p:getMark("@Frozen_Eu") > 0 then
+					hp_table[p:getHp()] = 1
+				else
+					hp_table[p:getHp()] = 3
+				end
+			end
+		end
+		if hand_table[p:getHandcardNum()] ~= nil then
+			if self:isFriend(p) then
+				if p:getMark("@Frozen_Eu") > 0 then
+				else
+					hand_table[p:getHandcardNum()] = hand_table[p:getHandcardNum()] - 2
+				end
+			else
+				if p:getMark("@Frozen_Eu") > 0 then
+					hand_table[p:getHandcardNum()] = hand_table[p:getHandcardNum()] + 1
+				else
+					hand_table[p:getHandcardNum()] = hand_table[p:getHandcardNum()] + 3
+				end
+			end
+		else
+			if self:isFriend(p) then
+				if p:getMark("@Frozen_Eu") > 0 then
+					hand_table[p:getHandcardNum()] = 0
+				else
+					hand_table[p:getHandcardNum()] = - 2
+				end
+			else
+				if p:getMark("@Frozen_Eu") > 0 then
+					hand_table[p:getHandcardNum()] = 1
+				else
+					hand_table[p:getHandcardNum()] = 3
+				end
+			end
+		end
+	end
+
+	local maxValue = -100000
+	local hp_or_hand
+	local isHp = false
+	for k,v in ipairs(hp_table) do
+		self.room:writeToConsole(k)
+		self.room:writeToConsole(v)
+		if v > maxValue then
+			maxValue = v
+			hp_or_hand = k
+			isHp = true
+		end
+	end
+
+	for k,v in ipairs(hand_table) do
+		if v > maxValue then
+			maxValue = v
+			hp_or_hand = k
+			isHp = false
+		end
+	end
+
+	self.room:writeToConsole(maxValue)
+	self.room:writeToConsole(hp_or_hand)
+
+	if tp == 0 then
+		-- rennai_hp  rennai_lose
+		if isHp then
+			return "rennai_hp"
+		else
+			return "rennai_lose"
+		end
+	elseif tp == 1 then
+		return hp_or_hand
+	else
+		return "rennai_gain"
+	end
+end
+
+sgs.ai_skill_invoke.zhanfang = function(self, data)
+	-- 绽放吧！
+	local use = data:toCardUse()
+	if use.card and self:isEnemy(use.to:first()) then return true end
+	return false
+end
+
+sgs.ai_skill_choice.zhanfang = function(self, choices, data)
+	if self.player:getMark("@Frozen_Eu") > 1 then
+		return "cancel"
+	else
+		return "zhanfang_discard"
+	end
+end
+
+sgs.ai_skill_invoke.huajian = function(self, data)
+	if #self.friends > 1 then return true end
+	return false
+end
+
+sgs.ai_skill_playerchosen.huajian = function(self, targets)
+	local bestChoice
+	local bestP = 0
+	for _,p in ipairs(self.friends_noself) do
+		if p:isAlive() and p:objectName() ~= self.player:objectName() then
+			local point = 0
+			if p:hasSkill("se_erdao") then point = point + 20 end
+			if p:hasSkill("Zhena") then point = point + 10 end
+			if p:hasSkill("se_xunyu") then point = point + 30 end
+			if p:hasSkill("LuaCangshan") then point = point + 9 end
+			if p:hasSkill("LuaSaoshe") then point = point + 30 end
+			if p:getHp() > 2 then point = point + 3 end
+			if p:getHp() <= 1 then point = point - 10 end
+			if point > bestP then
+				bestP = point
+				bestChoice = p
+			end
+		end
+	end
+	if bestChoice then return bestChoice end
+	return self.friends[1]
+end
+
+-- k1
+sgs.ai_skill_choice.guiyin = function(self, choices, data)
+	local k1 = room:findPlayerBySkillName("guiyin")
+	if self:isFriend(k1) then return "guiyin_give" end
+	return "cancel"
+end
+
+
+-- 球棒
+-- 诱说

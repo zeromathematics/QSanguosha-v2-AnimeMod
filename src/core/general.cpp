@@ -129,6 +129,19 @@ QList<const Skill *> General::getVisibleSkillList() const
     return skills;
 }
 
+QList<const Skill *> General::getWakedSkillList() const
+{
+    QList<const Skill *> skills;
+    foreach(QString skill_name, wake_type_skills) {
+        if (skill_name == "mashu" && ServerInfo.DuringGame
+            && ServerInfo.GameMode == "02_1v1" && ServerInfo.GameRuleMode != "Classical")
+            skill_name = "xiaoxi";
+        const Skill *skill = Sanguosha->getSkill(skill_name);
+        skills << skill;
+    }
+    return skills;
+}
+
 QSet<const Skill *> General::getVisibleSkills() const
 {
     return getVisibleSkillList().toSet();
@@ -173,11 +186,22 @@ QString General::getSkillDescription(bool include_name) const
 {
     QString description;
 
-    foreach (const Skill *skill, getVisibleSkillList()) {
+    QList<const Skill *> normal_skills = getVisibleSkillList();
+    foreach(const Skill *skill, normal_skills) {
         QString skill_name = Sanguosha->translate(skill->objectName());
         QString desc = skill->getDescription();
         desc.replace("\n", "<br/>");
         description.append(QString("<b>%1</b>: %2 <br/> <br/>").arg(skill_name).arg(desc));
+    }
+
+    foreach(const Skill *skill, getWakedSkillList()){
+        if (normal_skills.contains(skill)){
+            continue;
+        }
+        QString skill_name = Sanguosha->translate(skill->objectName());
+        QString desc = skill->getDescription();
+        desc.replace("\n", "<br/>");
+        description.append(QString("<font color='#bc64a4'><b>%1</b></font><font color='#d3ccd6'>: %2 </font><br/> <br/>").arg(skill_name).arg(desc));
     }
 
     if (include_name) {

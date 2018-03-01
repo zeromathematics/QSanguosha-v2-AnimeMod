@@ -940,6 +940,12 @@ void Client::onPlayerMakeChoice()
     setStatus(NotActive);
 }
 
+void Client::onPlayerMakeChoice(const QString &choice)
+{
+    replyToServer(S_COMMAND_MULTIPLE_CHOICE, choice);
+    setStatus(NotActive);
+}
+
 void Client::askForSurrender(const QVariant &initiator)
 {
     if (!JsonUtils::isString(initiator)) return;
@@ -1395,7 +1401,14 @@ void Client::askForChoice(const QVariant &ask_str)
     QString skill_name = ask[0].toString();
     QStringList options = ask[1].toString().split("+");
     emit options_got(skill_name, options);
-    setStatus(ExecDialog);
+    if (!(skill_name.contains("guhuo") && !skill_name.isEmpty()) && !skill_name.startsWith("BossModeExpStore") && skill_name != "BossModeExpStore"){
+        setStatus(AskForChoice);
+    }
+    else{
+        setStatus(ExecDialog);
+    }
+    
+    // 
 }
 
 void Client::askForCardChosen(const QVariant &ask_str)

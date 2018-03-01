@@ -58,6 +58,9 @@ void Settings::init()
         
         UIFont = value("UIFont", youyuan).value<QFont>();
         TextEditColor = QColor(value("TextEditColor", "white").toString());
+        SkillDescriptionInToolTipColor = value("SkillDescriptionInToolTipColor", "#FFFF33").toString();
+        SkillDescriptionInOverviewColor = value("SkillDescriptionInOverviewColor", "#FF0080").toString();
+        ToolTipBackgroundColor = value("ToolTipBackgroundColor", "#000000").toString();
     }
 
     CountDownSeconds = value("CountDownSeconds", 3).toInt();

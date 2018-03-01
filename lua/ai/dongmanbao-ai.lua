@@ -475,7 +475,7 @@ end
 
 --sgs.ai_skillInvoke_intention.jinghua = -60
 
-sgs.ai_skill_choice["jinghua"] = function(self, data)
+sgs.ai_skill_choice["jinghua"] = function(self, choices, data)
 	local source = self.player
 	local judge = source:getJudgingArea()
 	if judge:length() > 0 then
@@ -557,7 +557,7 @@ sgs.ai_skill_use_func["#se_paojicard"] = function(card,use,self)
 	end
 end
 
-sgs.ai_skill_choice["se_paoji"] = function(self, choices)
+sgs.ai_skill_choice["se_paoji"] = function(self, choices, data)
 	local choice_table = choices:split("+")
 	local count = self.player:getMark("@ying")
 	if hasJudgePlayer(self, true) then return "paoji_1" end
@@ -2194,7 +2194,7 @@ sgs.ai_use_value["se_shourencard"] = 8
 sgs.ai_use_priority["se_shourencard"] = 2
 sgs.ai_card_intention["se_shourencard"]  = 60
 
-sgs.ai_skill_choice.Pifu_Kanade = function(self, data)
+sgs.ai_skill_choice.Pifu_Kanade = function(self, choices, data)
 	local x = math.random(1,3)
 	if x == 1 then
 		return "Kanade_1"
@@ -3162,90 +3162,6 @@ sgs.ai_use_priority["se_dushecard"] = 4
 sgs.ai_card_intention["se_dushecard"]  = 80
 
 
---杉崎鍵
-sgs.ai_skill_invoke.SE_Kurimu = function(self, data)
-	return true
-end
-
-sgs.ai_skill_invoke.SE_Minatsu = function(self, data)
-	if #self.enemies == 0 then return false end
-	return true
-end
-
-sgs.ai_skill_invoke.SE_Chizuru = function(self, data)
-	return true
-end
-
-sgs.ai_skill_invoke.SE_Mafuyu = function(self, data)
-	if #self.enemies == 0 then return false end
-	return true
-end
-
-sgs.ai_skill_playerchosen.SE_Kurimu = function(self, targets)
-	for _,friend in ipairs(self.friends) do
-		if friend:getHandcardNum() < 3 and friend:objectName() ~= self.player:objectName() then
-			return friend
-		end
-	end
-	for _,friend in ipairs(self.friends) do
-		if friend:objectName() ~= self.player:objectName() then
-			return friend
-		end
-	end
-	return targets:at(0)
-end
-
-sgs.ai_skill_playerchosen.SE_Minatsu = function(self, targets)
-	if #self.enemies == 0 then return self.player end
-	self:sort(self.enemies, "defense")
-	for _,enemy in ipairs(self.enemies) do
-		if enemy then
-			return enemy
-		end
-	end
-	return self.enemies[1]
-end
-
-sgs.ai_skill_playerchosen.SE_Chizuru = function(self, targets)
-	local minHp = 100
-	local target
-	for _,friend in ipairs(self.friends) do
-		local hp = friend:getHp()
-		if friend:getHp()==friend:getMaxHp() then
-			hp = 1000
-		end
-		if self:hasSkills(sgs.masochism_skill, friend) then
-			hp = hp - 1
-		end
-		if friend:isLord() then
-			hp = hp - 1
-		end
-		if hp < minHp then
-			minHp = hp
-			target = friend
-		end
-	end
-	if target then
-		return target
-	end
-	return self.player
-end
-
-sgs.ai_skill_playerchosen.SE_Mafuyu = function(self, targets)
-	local card_num = 0
-	local target
-	if #self.enemies == 0 then return self.player end
-	for _,enemy in ipairs(self.enemies) do
-		if enemy:getHandcardNum() - enemy:getHp() > card_num then
-			target = enemy
-			card_num = enemy:getHandcardNum() - enemy:getHp()
-		end
-	end
-	if target then
-		return target
-	end
-	return self.enemies[1]
-end
 
 --黑雪姬
 
@@ -4243,7 +4159,7 @@ sgs.ai_skill_choice["SE_Fanhun_choose"] = function(self, choices, data)
 	return choice_table[1]
 end
 
-sgs.ai_skill_choice.SE_Fanhun = function(self, data)
+sgs.ai_skill_choice.SE_Fanhun = function(self, choices, data)
 	if self.player:getMark("@Mahou_ai") > 0 then
 		return true
 	end
@@ -4569,66 +4485,7 @@ sgs.ai_skill_choice["SE_Badan"] = function(self, data)
 end
 
 --小樱
---优吉欧
-se_qingqiangwei_skill={}
-se_qingqiangwei_skill.name="se_qingqiangwei"
-table.insert(sgs.ai_skills,se_qingqiangwei_skill)
-se_qingqiangwei_skill.getTurnUseCard=function(self,inclusive)
-	local source = self.player
-	local eNum = 0
-	local fNum = 0
-	for _,p in sgs.qlist(self.room:getAlivePlayers()) do
-		local dist = source:distanceTo(p)
-		if dist <= source:getMaxHp() - source:getHp() + 1 then
-			if self:isFriend(p) then
-				fNum = fNum + 1
-			else
-				eNum = eNum + 1
-			end
-		end
-	end
-	local work = true
-	if eNum == 0 or eNum < fNum+1 then work = false end
-	if work then
-		return sgs.Card_Parse("#se_qingqiangweicard:.:")
-	end
-end
 
-sgs.ai_skill_use_func["#se_qingqiangweicard"] = function(card,use,self)
-	use.card = card
-	return
-end
-sgs.ai_use_value["se_qingqiangweicard"] = 8
-sgs.ai_use_priority["se_qingqiangweicard"] = 10
-
-
-sgs.ai_skill_invoke.SE_Huajian = function(self, data)
-	if #self.friends > 1 then return true end
-	return false
-end
-
-sgs.ai_skill_playerchosen.SE_Huajian = function(self, targets)
-	local bestChoice
-	local bestP = 0
-	for _,p in ipairs(self.friends_noself) do
-		if p:isAlive() and p:objectName() ~= self.player:objectName() then
-			local point = 0
-			if p:hasSkill("se_erdao") then point = point + 20 end
-			if p:hasSkill("Zhena") then point = point + 10 end
-			if p:hasSkill("se_xunyu") then point = point + 30 end
-			if p:hasSkill("LuaCangshan") then point = point + 9 end
-			if p:hasSkill("LuaSaoshe") then point = point + 30 end
-			if p:getHp() > 2 then point = point + 3 end
-			if p:getHp() <= 1 then point = point - 10 end
-			if point > bestP then
-				bestP = point
-				bestChoice = p
-			end
-		end
-	end
-	if bestChoice then return bestChoice end
-	return self.friends[1]
-end
 
 
 --古手梨花
@@ -4761,7 +4618,7 @@ end
 --由理
 sgs.ai_skill_invoke["SE_Zuozhan"] = true
 
-sgs.ai_skill_choice["SE_Zuozhan1"] = function(self, data)
+sgs.ai_skill_choice["SE_Zuozhan1"] = function(self, choices, data)
 	local room = self.room
 	local p = room:getCurrent()
 	if self:isEnemy(p) then
@@ -4772,7 +4629,7 @@ sgs.ai_skill_choice["SE_Zuozhan1"] = function(self, data)
 	return "1_Zuozhan"
 end
 
-sgs.ai_skill_choice["SE_Zuozhan2"] = function(self, data)
+sgs.ai_skill_choice["SE_Zuozhan2"] = function(self, choices, data)
 	local room = self.room
 	local p = room:getCurrent()
 	if self:isEnemy(p) then
@@ -4787,7 +4644,7 @@ sgs.ai_skill_choice["SE_Zuozhan2"] = function(self, data)
 	return "2_Zuozhan"
 end
 
-sgs.ai_skill_choice["SE_Zuozhan3"] = function(self, data)
+sgs.ai_skill_choice["SE_Zuozhan3"] = function(self, choices, data)
 	local room = self.room
 	local p = room:getCurrent()
 	if self:isEnemy(p) then
@@ -4802,7 +4659,7 @@ sgs.ai_skill_choice["SE_Zuozhan3"] = function(self, data)
 	return "3_Zuozhan"
 end
 
-sgs.ai_skill_choice["SE_Zuozhan4"] = function(self, data)
+sgs.ai_skill_choice["SE_Zuozhan4"] = function(self, choices, data)
 	local room = self.room
 	local p = room:getCurrent()
 	if self:isEnemy(p) then
@@ -4888,7 +4745,7 @@ sgs.ai_skill_invoke["SE_Jiawu"] = function(self, data)
 	return true
 end
 
-sgs.ai_skill_choice["SE_Jiawu"] = function(self, data)
+sgs.ai_skill_choice["SE_Jiawu"] = function(self, choices, data)
 	if self.player:hasFlag("SE_Jiawu_EquipCard") then
 		if not self.player:getWeapon() then return "SE_Jiawu_use" end
 		return "SE_Jiawu_give"
@@ -4914,7 +4771,7 @@ sgs.ai_skill_invoke["SE_Lingshang"] = function(self, data)
 	return true
 end
 
-sgs.ai_skill_choice["SE_Lingshang_type"] = function(self, data)
+sgs.ai_skill_choice["SE_Lingshang_type"] = function(self, choices, data)
 	for _,p in ipairs(self.friends) do
 		if self:isWeak(p) then return "BasicCard" end
 	end

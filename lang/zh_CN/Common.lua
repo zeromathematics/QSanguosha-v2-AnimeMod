@@ -16,6 +16,13 @@ CommonTranslationTable = {
 	["wakeskill"] = "觉醒技。",
 	["lordskill"] = "主公技。",
 	["oppphskill"] = "阶段技。",
+	["playonetimeskill"] = "出牌阶段限一次，",
+	["auraskill"] = "光环。",
+	["awakeskill"] = "唤醒技。",
+	["clubskill"] = "社团技。",
+	["clubskilladd"] = "加入条件：",
+	["clubskilleffect"] = "社团效果：",
+	["changeskill"] = "转化技。",
 
 	["Pairs"] = "双将",
 	["XMode"] = "血战到底",

@@ -196,6 +196,12 @@
     <ClCompile Include="..\..\src\ui\chatwidget.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ui\chooseoptionsbox.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ui\graphicsbox.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\ui\button.cpp">
       <Filter>ui</Filter>
     </ClCompile>
@@ -1080,6 +1086,22 @@
     <ClCompile Include="Release\moc_hayate.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+
+    <ClCompile Include="Debug\moc_chooseoptionsbox.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_chooseoptionsbox.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_graphicsbox.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_graphicsbox.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ui\stylehelper.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\server\ai.h">
@@ -1224,6 +1246,12 @@
       <Filter>ui</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\ui\chatwidget.h">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\ui\chooseoptionsbox.h">
+      <Filter>ui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\ui\graphicsbox.h">
       <Filter>ui</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\ui\clientlogbox.h">
@@ -1521,6 +1549,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\core\defines.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ui\stylehelper.h">
+      <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

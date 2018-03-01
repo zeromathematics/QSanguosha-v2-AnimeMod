@@ -19,7 +19,7 @@ tuhao = sgs.CreateTriggerSkill{
 					room:broadcastSkillInvoke(self:objectName())
 					player:setFlags("tuhao_used")
 				end
-				player:drawCards(1) 
+				player:drawCards(1)
 				end
 			if use.card:getSuit() == sgs.Card_Club or use.card:getSuit() == sgs.Card_Spade then
 				if not player:hasFlag("tuhao_black_used") then
@@ -55,7 +55,7 @@ vector = sgs.CreateTriggerSkill
 	name = "vector",
 	frequency = sgs.Skill_NotFrequent,
     events = {sgs.CardEffect},
-	
+
 	on_trigger = function(self, event, player, data)
         local room = player:getRoom()
 		if player:isKongcheng()then return end
@@ -65,7 +65,7 @@ vector = sgs.CreateTriggerSkill
 		if room:askForSkillInvoke(player,self:objectName(),data) and room:askForCard(player, ".|.|.", "vector_Discard", sgs.QVariant(), self:objectName()) then
 			local list = room:getAlivePlayers()
 			for _,q in sgs.qlist(list) do
-				if sgs.Sanguosha:isProhibited(player, q, effect.card) then 
+				if sgs.Sanguosha:isProhibited(player, q, effect.card) then
 					list:removeOne(q)
 				end
 			end
@@ -93,7 +93,7 @@ shouji = sgs.CreateViewAsSkill{
 				card:addSubcard(c:getId())
 			end
 			card:setSkillName(self:objectName())
-			return card 
+			return card
 		end
 	end,
 	enabled_at_play = function(self, player)
@@ -127,10 +127,10 @@ kuro = sgs.General(extension, "kuro", "magic", 4, false, false, false)
 
 
 spreadillness = sgs.CreateTriggerSkill{
-	name = "spreadillness", 
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.EventPhaseEnd},  
-	on_trigger = function(self, event, player, data) 
+	name = "spreadillness",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.EventPhaseEnd},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local phase = player:getPhase()
 		if phase == sgs.Player_Finish then
@@ -154,20 +154,20 @@ spreadillness = sgs.CreateTriggerSkill{
 					end
 				end
 				local z = math.random(1,2)
-				if z == 1 then 
+				if z == 1 then
 					--room:detachSkillFromPlayer(player,"spreadillness",true)
 					player:loseMark("@spreadillness")
 					if not player:hasSkill("spring") then
 						player:gainMark("@immune")
 					end
 				end
-				
+
 				if not player:hasSkill("spring") then
 					room:loseHp(player)
 				end
 			elseif player:getMark("@immune") > 0 then
 				local z = math.random(1,2)
-				if z == 1 then 
+				if z == 1 then
 					player:loseMark("@immune")
 				end
 			end
@@ -181,10 +181,10 @@ spreadillness = sgs.CreateTriggerSkill{
 
 
 spring = sgs.CreateTriggerSkill{
-	name = "spring", 
+	name = "spring",
 	frequency = sgs.Skill_NotFrequent,
-	events = {sgs.DamageInflicted,sgs.EventPhaseStart},  
-	on_trigger = function(self, event, player, data) 
+	events = {sgs.DamageInflicted,sgs.EventPhaseStart},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.DamageInflicted then
 			local damage = data:toDamage()
@@ -214,7 +214,7 @@ spring = sgs.CreateTriggerSkill{
 					end
 				end
 				if get then
-					card1 = room:askForCard(player, ".|club|.|hand|.", "@spreadDiscard",sgs.QVariant(),self:objectName()) 
+					card1 = room:askForCard(player, ".|club|.|hand|.", "@spreadDiscard",sgs.QVariant(),self:objectName())
 					if card1 then
 						player:gainMark("@spreadillness")
 					end
@@ -245,14 +245,14 @@ youpian= sgs.CreateViewAsSkill{
 youpianCARD=sgs.CreateSkillCard{
 	name="youpianCARD",
 	filter = function(self, targets, to_select)
-		return #targets==0 and to_select:getCardCount(true)>0 and to_select:objectName() ~= sgs.Self:objectName() 
+		return #targets==0 and to_select:getCardCount(true)>0 and to_select:objectName() ~= sgs.Self:objectName()
     end,
 	on_use = function(self, room, source, targets)
 		room:setPlayerFlag(source,"youpian_used")
 		local target = targets[1]
-		if target == nil  then return false end	
+		if target == nil  then return false end
 		room:setPlayerMark(target,"youpian_target",1)
-		
+
 		local y = math.random(1,2)
 		if y==1 then
 			local choice = room:askForChoice(target,self:objectName(),"youpianyes+youpianno")
@@ -260,7 +260,7 @@ youpianCARD=sgs.CreateSkillCard{
 				room:loseHp(target)
 				return
 			elseif choice == "youpianno" then
-				return 
+				return
 			end
 		elseif y==2 then
 			local choice = room:askForChoice(target,self:objectName(),"youpianno+youpianyes")
@@ -269,7 +269,7 @@ youpianCARD=sgs.CreateSkillCard{
 				return
 			elseif choice == "youpianno" then
 				room:acquireSkill(target,spreadillness)
-				return 
+				return
 			end
 		end
 	end
@@ -324,8 +324,8 @@ cr = sgs.General(extension, "cr", "real", 4, false, false, false)
 LLJ_reality= sgs.CreateTriggerSkill
 {
 	name = "LLJ_reality",
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.EventPhaseStart, sgs.FinishJudge}, 
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.EventPhaseStart, sgs.FinishJudge},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseStart then
@@ -343,7 +343,7 @@ LLJ_reality= sgs.CreateTriggerSkill
 						room:throwCard(id,player, player)
 						player:gainMark("@force", 1)
 					end
-					
+
 					local judge = sgs.JudgeStruct()
 					judge.who = player
 					judge.negative = false
@@ -382,8 +382,8 @@ LLJ_reality= sgs.CreateTriggerSkill
 LLJ_force= sgs.CreateTriggerSkill
 {
 	name = "LLJ_force",
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.EventPhaseStart, sgs.FinishJudge}, 
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.EventPhaseStart, sgs.FinishJudge},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseStart then
@@ -394,7 +394,7 @@ LLJ_force= sgs.CreateTriggerSkill
 						local id = room:askForCardChosen(player, player, "h", "LLJ_reality")
 						room:throwCard(id,player, player)
 					end
-					
+
 					local judge = sgs.JudgeStruct()
 					judge.who = player
 					judge.negative = false
@@ -436,7 +436,7 @@ LLJ_chihun = sgs.CreateTriggerSkill{
 		local use = data:toCardUse()
 		if use.from:objectName() == player:objectName() and player:hasSkill(self:objectName()) and player:getPhase() == sgs.Player_Play and not player:getCards("hej"):isEmpty() then
 			if use.card:getSuit() == sgs.Card_NoSuit then
-			player:drawCards(2) 
+			player:drawCards(2)
 			end
 		end
 	end
@@ -507,8 +507,8 @@ LLJ_recycle = sgs.CreateTriggerSkill{
 					move2.card_ids =lunhui
 					move2.to = player
 					move2.to_place = sgs.Player_PlaceHand
-					room:moveCardsAtomic(move2,false)	
-					room:broadcastSkillInvoke("LLJ_recycle")	
+					room:moveCardsAtomic(move2,false)
+					room:broadcastSkillInvoke("LLJ_recycle")
 				end
 			end
 		elseif event == sgs.CardsMoveOneTime then
@@ -631,17 +631,17 @@ dandiao = sgs.CreateTriggerSkill{
 				end
 				local onecount=0
 				local whichflu="none"
-				if spade == 1 then onecount=onecount+1 
+				if spade == 1 then onecount=onecount+1
 				whichflu="spade" end
-				if heart == 1 then onecount=onecount+1 
+				if heart == 1 then onecount=onecount+1
 				whichflu="heart" end
-				if club == 1 then onecount=onecount+1 
+				if club == 1 then onecount=onecount+1
 				whichflu="club" end
-				if diamond == 1 then onecount=onecount+1 
+				if diamond == 1 then onecount=onecount+1
 				whichflu="diamond" end
 				if onecount~=1 then whichflu="none" end
-				
-				
+
+
 				--local condition = {}
 				--local conditionrank = {}
 				----储存弃牌堆的花色
@@ -675,55 +675,55 @@ dandiao = sgs.CreateTriggerSkill{
 						damagewillbedone=i
 					end
 				end
-				
-				
+
+
 				--[[
 				i=1
 				while math.max(spade,heart,club,diamond)>0 do
 					local Ah = math.max(spade,heart,club,diamond)
-					if spade==Ah then 
+					if spade==Ah then
 						table.insert(condition,"spade")
 						table.insert(conditionrank,i)
 						spade=-1
 					end
-					if heart==Ah then 
+					if heart==Ah then
 						table.insert(condition,"heart")
 						table.insert(conditionrank,i)
 						heart=-1
 					end
-					if club==Ah then 
-						table.insert(condition,"club") 
+					if club==Ah then
+						table.insert(condition,"club")
 						table.insert(conditionrank,i)
 						club=-1
 					end
-					if diamond==Ah then 
-						table.insert(condition,"diamond") 
+					if diamond==Ah then
+						table.insert(condition,"diamond")
 						table.insert(conditionrank,i)
 						diamond=-1
 					end
 					i=i+1
-				end	
+				end
 				]]
-				
-				
 
-				
+
+
+
 				--[[if spade>Ah and tabcontain(condition, "spade") then table.remove(condition,1)end
 				if heart>Ah and tabcontain(condition, "heart") then table.remove(condition,1) end
 				if club>Ah and tabcontain(condition, "club") then table.remove(condition,1) end
 				if diamond>Ah and tabcontain(condition, "diamond") then table.remove(condition,1) end]]
-					
+
 	            local card1 = room:drawCard()
 				local move = sgs.CardsMoveStruct()
 				move.card_ids:append(card1)
 				move.reason = sgs.CardMoveReason(sgs.CardMoveReason_S_REASON_TURNOVER, player:objectName(), self:objectName(), nil)
 				move.to_place = sgs.Player_PlaceTable
 				room:moveCardsAtomic(move, true)
-				
+
 				local card2 = sgs.Sanguosha:getCard(card1)
 				local suit = card2:getSuitString()
-				
-				if whichflu==suit then 
+
+				if whichflu==suit then
 					if math.random(1, 2) == 1 then
 						room:broadcastSkillInvoke("dandiao", 1)
 					else
@@ -741,7 +741,7 @@ dandiao = sgs.CreateTriggerSkill{
 						room:broadcastSkillInvoke("dandiao", 4)
 					end
 				end
-				
+
 				local move2 = move
 	            move2.to_place = sgs.Player_PlaceHand
 	            move2.to = player
@@ -824,7 +824,7 @@ eastfast = sgs.CreateTriggerSkill{
 										end
 										--goto labels
 								end
-						end		
+						end
 						--::labels::
 						local saves=player:getPile("save")
 						if saves:length()>0 then
@@ -886,19 +886,19 @@ sgs.LoadTranslationTable{
 ["LLJ_reality$"] = "image=image/animate/LLJ_reality.png",
 
 ["rika2"] = "古手梨花",
-["&rika2"] = "古手梨花", 
+["&rika2"] = "古手梨花",
 ["@rika2"] = "寒蝉鸣泣之时",
-["#rika2"] = "无尽轮回の巫女", 
-["~rika2"] = "...", 
+["#rika2"] = "无尽轮回の巫女",
+["~rika2"] = "...",
 ["cv:rika2"] = "田村ゆかり",
 ["designer:rika2"] = "帕秋莉·萝莉姬",
 
 ["lunhui"] = "轮回",
 ["LLJ_recycle"] = "轮回",
-[":LLJ_recycle"] = "<font color=\"blue\"><b>锁定技,</b></font>摸牌阶段，你少摸一张牌（最少为0）。当你使用牌因弃牌、使用结算完毕将要进入弃牌堆时，你可以获得之并置于武将牌上方。回合开始时，回合结束阶段开始时，你获得武将牌上的所有牌。",
+[":LLJ_recycle"] = "锁定技。摸牌阶段，你少摸一张牌（最少为0）。当你使用牌因弃牌、使用结算完毕将要进入弃牌堆时，你可以获得之并置于武将牌上方。回合开始时，回合结束阶段开始时，你获得武将牌上的所有牌。",
 ["$LLJ_recycle1"] = "这样也好，就算你们不主动涉足，惩罚依旧会来临...因为，绵流祭即将开始...",
 ["$LLJ_recycle2"] = "我到底该怎么办...该怎么办...",
-["~rika2"] = "（背景音：蝉鸣）今天，是举行绵流祭的日子...", 
+["~rika2"] = "（背景音：蝉鸣）今天，是举行绵流祭的日子...",
 
 ["killer"] = "夜神月",
 ["LLJ_guilty"] = "罪犯",
@@ -907,10 +907,10 @@ sgs.LoadTranslationTable{
 [":LLJ_chihun"] = "出牌阶段，每当你使用一次指定性技能或使用无色的牌，你摸两张牌。",
 
 ["cr"] = "凉宫春日",
-["&cr"] = "凉宫春日", 
+["&cr"] = "凉宫春日",
 ["@cr"] = "凉宫春日的忧郁",
-["#cr"] = "团长大人", 
-["~cr"] = "你不也觉得那个世界很无聊么？你就不希望有什么更有趣的事情发生么？！", 
+["#cr"] = "团长大人",
+["~cr"] = "你不也觉得那个世界很无聊么？你就不希望有什么更有趣的事情发生么？！",
 ["cv:cr"] = "平野绫",
 ["designer:cr"] = "帕秋莉·萝莉姬",
 
@@ -933,11 +933,11 @@ sgs.LoadTranslationTable{
 ["shouji"]="收集",
 ["$shouji1"]="折木同学，有什么线索吗？",
 ["$shouji2"]="折木同学！一起来调查吧！我很好奇！",
-[":shouji"]="<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以弃置X张牌，依次观看场上所有角色的手牌并选择一张获得之。 X为你的体力值+1。",
+[":shouji"]="出牌阶段限一次，你可以弃置X张牌，依次观看场上所有角色的手牌并选择一张获得之。 X为你的体力值+1。",
 ["tuhao"] = "土豪",
 ["$tuhao1"] = "（里志）奉太郎没听说过【千反田家族】的名号吗！",
 ["$tuhao2"] = "（里志）怎么样！够气派吧！（奉太郎）走吧，千反田她们还等着呢。",
-[":tuhao"] = "<font color=\"blue\"><b>锁定技,</b></font>出牌阶段，每当你使用一张红色的牌，你摸一张牌；每当你使用一张黑色的牌，你须弃置你的任意区域内的一张牌。",
+[":tuhao"] = "锁定技。出牌阶段，每当你使用一张红色的牌，你摸一张牌；每当你使用一张黑色的牌，你须弃置你的任意区域内的一张牌。",
 
 ["vector"]="矢量操纵",
 ["vector_Discard"]="你可以弃置一张手牌，令当前结算的效果转移为场上任意的角色。",
@@ -949,14 +949,14 @@ sgs.LoadTranslationTable{
 ["$vector4"] = "（狂笑）原来是木原君啊！",
 
 ["yehuo"] = "夜祸",
-[":yehuo"] = "<font color=\"blue\"><b>锁定技,</b></font>你的回合开始阶段，如果处于背面朝上，你翻过来行动,并于回合结束阶段翻回背面。回合外，每次被翻回正面，你当收到一点无来源的无属性伤害。",
+[":yehuo"] = "锁定技。你的回合开始阶段，如果处于背面朝上，你翻过来行动,并于回合结束阶段翻回背面。回合外，每次被翻回正面，你当收到一点无来源的无属性伤害。",
 ["spring"] = "源头",
 [":spring"] = "游戏开始阶段，你获得“鼠疫”，“鼠疫”对你无效，你无法获得“抗体”。每当你受到“鼠疫”持有角色伤害或对其造成伤害时，可以获得其所拥有的“鼠疫”，或者给予其自己所拥有的“鼠疫”，并防止此次伤害。不能无视抗体",
 ["spreadillness"] = "鼠疫",
 [":spreadillness"] = "回合结束的时候，失去1点体力，与你距离为1的角色将以80%获得“鼠疫”，距离为2的角色将以50%获得“鼠疫”，持有者将以50%的几率失去“鼠疫”获得免疫。获得免疫者以50%失去“抗体”",
 ["@spreadDiscard"] = "为新的病原体而弃置一张牌。",
 ["lingti"] = "灵体",
-[":lingti"] = "<font color=\"blue\"><b>锁定技,</b></font>你防止你的任何体力减少，每防止一次摸一张牌。",	
+[":lingti"] = "锁定技。你防止你的任何体力减少，每防止一次摸一张牌。",
 ["$lingti1"] = "大~丈~夫~",
 ["xiaoshi"] = "消逝",
 [":xiaoshi"] = "游戏开始时，你的体力上限变为0，你获得X枚“灵体”标记。回合开始阶段开始时，你失去一个“灵体”标记；若你没有“灵体”标记，你立即死亡。X为游戏人数 + 5",
@@ -971,21 +971,21 @@ sgs.LoadTranslationTable{
 ["#mianma"] = "面码",
 ["@mianma"] = "花名未闻",
 ["&mianma"] = "本间芽衣子",
-["~mianma"] = "（仁太）一，二，（大家）找到面麻了！ （面麻）被大家找到...了...", 
+["~mianma"] = "（仁太）一，二，（大家）找到面麻了！ （面麻）被大家找到...了...",
 ["cv:mianma"] = "茅野爱衣",
 ["designer:mianma"] = "帕秋莉·萝莉姬 & Sword Elucidator",
 
 ["acc"] = "原·一方通行",
 ["&acc"] = "原·一方通行",
 ["@acc"] = "魔法禁书目录",
-["~acc"] = "...", 
+["~acc"] = "...",
 ["#acc"] = "level 6",
 ["cv:acc"] = "冈本信彦",
 ["designer:acc"] = "帕秋莉·萝莉姬",
 
 ["qb"] = "QBキュゥべえ",
 ["&qb"] = "QB",
-["~qb"] = "...", 
+["~qb"] = "...",
 ["#qb"] = "魔法少女诱拐犯",
 ["cv:qb"] = "加藤英美里",
 ["designer:qb"] = "帕秋莉·萝莉姬",
@@ -995,16 +995,16 @@ sgs.LoadTranslationTable{
 ["$kuro"] = "佩斯特",
 ["@kuro"] = "问题儿都来自新世界",
 ["#kuro"] = "黑死病魔王",
-["~kuro"] = "...", 
+["~kuro"] = "...",
 ["cv:kuro"] = "",
 ["designer:kuro"] = "帕秋莉·萝莉姬",
 
 
-["jdd"] = "千反田爱瑠", 
-["&jdd"] = "千反田爱瑠", 
-["@jdd"] = "冰菓", 
-["#jdd"] = "我很好奇", 
-["~jdd"] = "太好了，让我想起来了...这样就能好好去送舅舅了...", 
+["jdd"] = "千反田爱瑠",
+["&jdd"] = "千反田爱瑠",
+["@jdd"] = "冰菓",
+["#jdd"] = "我很好奇",
+["~jdd"] = "太好了，让我想起来了...这样就能好好去送舅舅了...",
 ["designer:jdd"] = "帕秋莉·萝莉姬",
 ["cv:jdd"] = "佐藤聡美",
 ["illustrator:jdd"] = "",
@@ -1016,9 +1016,9 @@ sgs.LoadTranslationTable{
 Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
 
 SE_Heimu = sgs.CreateTriggerSkill{
-	name = "SE_Heimu",  
-	frequency = sgs.Skill_Limited, 
-	events = {sgs.AskForPeachesDone, sgs.GameStart}, 
+	name = "SE_Heimu",
+	frequency = sgs.Skill_Limited,
+	events = {sgs.AskForPeachesDone, sgs.GameStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.AskForPeachesDone then
@@ -1047,7 +1047,7 @@ SE_Heimu = sgs.CreateTriggerSkill{
 				end
 			end
 			if not junko then return false end
-			
+
 			if junko:getMark("SE_Heimu_done") == 2 then return false end
 			if junko:isAlive() then return false end
 			if room:askForSkillInvoke(junko, self:objectName()) then
@@ -1055,7 +1055,7 @@ SE_Heimu = sgs.CreateTriggerSkill{
 				room:broadcastSkillInvoke(self:objectName())
 				room:setPlayerProperty(junko, "maxhp", sgs.QVariant(4))
 				room:setPlayerProperty(junko, "hp", sgs.QVariant(4))
-				junko:drawCards(4) 
+				junko:drawCards(4)
 				local derole = de:getRole()
 				local junkorole = junko:getRole()
 				room:setPlayerProperty(junko, "role", sgs.QVariant("lord"))--设置盾子为主公
@@ -1092,7 +1092,7 @@ SE_Heimu = sgs.CreateTriggerSkill{
 					room:damage(da)
 				end
 			end
-			
+
 			junko:gainMark("SE_Heimu_done")
 			return false
 			--以下忘了干啥用的了......
@@ -1130,27 +1130,27 @@ ruler = sgs.CreateTriggerSkill{
 extension:addToSkills(ruler)
 Junko:addWakeTypeSkillForAudio("ruler")
 sgs.LoadTranslationTable{
-["SE_Heimu$"] = "image=image/animate/SE_Heimu.png", 
+["SE_Heimu$"] = "image=image/animate/SE_Heimu.png",
 
 ["SE_Heimu"] = "黑幕",
 ["$SE_Heimu1"] = "真是让我久等了，让本大爷久等了啊。我就等待着像你们这样的人出现。",
 ["$SE_Heimu2"] = "设定为拥有超强体力的姐姐就是战刃骸，设定为既可爱又聪明的妹妹...那就是我...江之岛盾子妹妹！哈哈哈哈哈哈哈！我们姐妹两个放在一起就是【超高校级的绝望】！绝望Sisters！！",
-[":SE_Heimu"] = "<font color=\"red\"><b>限二技，</b></font>游戏结束前，若你已经阵亡，可以以4体力上限满血复活并摸4张牌并对场上所有角色造成1点雷击伤害，之后把你的身份变为主公，胜者为反贼，败者为内奸，并获得[规定『学级』]。\n\n<font weight=2><font color=\"brown\"><b>绝望学园 规定『学级』:</b></font><font color=\"blue\"><b>锁定技，</b></font>场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",
+[":SE_Heimu"] = "<font color=\"red\"><b>限二技，</b></font>游戏结束前，若你已经阵亡，可以以4体力上限满血复活并摸4张牌并对场上所有角色造成1点雷击伤害，之后把你的身份变为主公，胜者为反贼，败者为内奸，并获得[规定『学级』]。",
 
 ["ruler"] = "绝望学园 规定『学级』",
 ["$ruler1"] = "绝望  是会传染的。",
 ["$ruler2"] = "是个人都会绝望。",
 ["$ruler3"] = "嗯，就是这么回事，将作为希望象征的希望峰学园内发生的互相残杀向世界直播这件事....正是人类绝望计划的高潮啊！！",
 ["$ruler4"] = "我只是单纯的在追求绝望而已，这之中并没有任何其他理由了，正因为没有理由，所以也无法找到对策，而无法应对无法理解的这份蛮横，这正是【超高校级绝望】啦！",
-[":ruler"] = "<font color=\"blue\"><b>锁定技，</b></font>场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",
+[":ruler"] = "锁定技。场上的所有角色在体力变动后，体力值调整为不多于你的手牌数。",
 
 
 
-["Junko"] = "江之岛盾子", 
-["&Junko"] = "江之岛盾子", 
-["@Junko"] = "弹丸论破", 
-["#Junko"] = "幕后黑手", 
-["~Junko"] = "噗噗~唔噗噗噗~啊~真是太棒了，这就是死亡的绝望呢，好想将整个世界都染上这份美妙的绝望~", 
+["Junko"] = "江之岛盾子",
+["&Junko"] = "江之岛盾子",
+["@Junko"] = "弹丸论破",
+["#Junko"] = "幕后黑手",
+["~Junko"] = "噗噗~唔噗噗噗~啊~真是太棒了，这就是死亡的绝望呢，好想将整个世界都染上这份美妙的绝望~",
 ["designer:Junko"] = "萝莉姬",
 ["cv:Junko"] = "豊口めぐみ",
 ["illustrator:Junko"] = "",

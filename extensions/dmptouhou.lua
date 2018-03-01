@@ -4,7 +4,7 @@ extension=sgs.Package("dmptouhou")
 
 --[[
 do
-    require  "lua.config" 
+    require  "lua.config"
 	local config = config
 	local kingdoms = config.kingdoms
             table.insert(kingdoms,"touhou")
@@ -16,7 +16,7 @@ local function doLog(logtype,logfrom,logarg,logto,logarg2)
 	alog.type = logtype
 	alog.from = logfrom
 	if logto then
-		alog.to:append(logto)	
+		alog.to:append(logto)
 	end
 	if logarg then
 		alog.arg = logarg
@@ -34,10 +34,10 @@ Satori = sgs.General(extension, "Satori", "touhou", 4, false,false,false)
 
 --明窃
 se_mingqie = sgs.CreateTriggerSkill{
-	name = "se_mingqie",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TargetConfirmed},  
-	on_trigger = function(self, event, player, data) 
+	name = "se_mingqie",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.TargetConfirmed},
+	on_trigger = function(self, event, player, data)
 		local use = data:toCardUse()
 		local targets = use.to
 		local card = use.card
@@ -89,10 +89,10 @@ se_mingqie_target_mod = sgs.CreateTargetModSkill{
 
 --魔炮
 se_mopaocard = sgs.CreateSkillCard{
-	name = "se_mopaocard", 
-	target_fixed = false, 
-	will_throw = true, 
-	filter = function(self, targets, to_select) 
+	name = "se_mopaocard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
 		return #targets == 0
 	end,
 	on_use = function(self, room, source, targets)
@@ -131,7 +131,7 @@ se_mopaocard = sgs.CreateSkillCard{
 				damage.to = tos:at(j)
 				room:damage(damage)
 			end
-			
+
 
 			damage.to = target
 			if target:getEquips():length() == 0 then
@@ -145,20 +145,20 @@ se_mopaocard = sgs.CreateSkillCard{
 }
 
 se_mopao = sgs.CreateViewAsSkill{
-	name = "se_mopao", 
-	n = 0, 
-	view_as = function(self, cards) 
+	name = "se_mopao",
+	n = 0,
+	view_as = function(self, cards)
 		return se_mopaocard:clone()
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getMark("@p_point") > 3 and not player:hasUsed("#se_mopaocard")
-	end, 
+	end,
 }
 
 --无意
 se_wushi = sgs.CreateDistanceSkill{
-	name = "se_wushi", 
-	correct_func = function(self, from, to) 
+	name = "se_wushi",
+	correct_func = function(self, from, to)
 		if from:hasSkill(self:objectName()) then
 			return 99
 		end
@@ -179,7 +179,7 @@ se_wuyi = sgs.CreateTriggerSkill{
 		if player:getPhase() == sgs.Player_Finish and player:hasSkill(self:objectName()) then
 			local wore = math.random(1,10)
 			local hp = player:getHp()
-			local maxhp = player:getMaxHp() 
+			local maxhp = player:getMaxHp()
 			if hp - wore > 3 then
 				room:doLightbox("se_wuyi$", 1500)
 			end
@@ -217,7 +217,7 @@ se_kuixincard = sgs.CreateSkillCard{
             room:setPlayerFlag(effect.to,"se_kuixin_used")
         end
     end
-}   
+}
 se_kuixin = sgs.CreateZeroCardViewAsSkill{
     name = "se_kuixin" ,
     view_as = function()
@@ -230,10 +230,10 @@ se_kuixin = sgs.CreateZeroCardViewAsSkill{
 
 --回想
 se_huixiang = sgs.CreateTriggerSkill{
-	name = "se_huixiang", 
-	frequency = sgs.Skill_Frequent, 
-	events = {sgs.EventPhaseStart,sgs.CardFinished, sgs.CardResponded},  
-	on_trigger = function(self, event, player, data) 
+	name = "se_huixiang",
+	frequency = sgs.Skill_Frequent,
+	events = {sgs.EventPhaseStart,sgs.CardFinished, sgs.CardResponded},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.EventPhaseStart then
 			if player:getPhase() == sgs.Player_RoundStart and player:hasSkill(self:objectName()) and player:getPile("satori_memory"):length() > 0 then
@@ -404,29 +404,29 @@ sgs.LoadTranslationTable{
 
 	["se_mopao"] = "魔炮「终极火花」",
 	["$se_mopao"] = "",
-	[":se_mopao"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>失去4个P点，指定方向和座位，对该路线上的所有角色造成1点伤害。若指定座位的角色装备区没有牌，额外造成2点伤害并将你的武将牌翻面。",
+	[":se_mopao"] = "出牌阶段限一次，失去4个P点，指定方向和座位，对该路线上的所有角色造成1点伤害。若指定座位的角色装备区没有牌，额外造成2点伤害并将你的武将牌翻面。",
 	["se_mopaocard"] = "魔炮「前方高能反应」",
 	["se_mopao$"] = "image=image/animate/se_mopao.png",
 	["left"] = "左侧",
 	["right"] = "右侧",
 
-	["Marisa"] = "霧雨魔理沙", 
-	["&Marisa"] = "霧雨魔理沙", 
-	["@Marisa"] = "東方project", 
-	["#Marisa"] = "蘑菇大盗", 
+	["Marisa"] = "霧雨魔理沙",
+	["&Marisa"] = "霧雨魔理沙",
+	["@Marisa"] = "東方project",
+	["#Marisa"] = "蘑菇大盗",
 	["@p_point"] = "P点",
-	["~Marisa"] = "", 
+	["~Marisa"] = "",
 	["designer:Marisa"] = "Sword Elucidator",
 	["cv:Marisa"] = "",
 	["illustrator:Marisa"] = "えふぇ",
 
 	["se_wushi"] = "遗忘「完全遗忘的存在」",
 	["$se_wushi"] = "",
-	[":se_wushi"] = "<font color=\"blue\"><b>锁定技,</b></font>你与其他角色计算距离时+99，其他角色与你计算距离时+99。",
+	[":se_wushi"] = "锁定技。你与其他角色计算距离时+99，其他角色与你计算距离时+99。",
 
 	["se_wuyi"] = "无意「无意识的花火」",
 	["$se_wuyi"] = "",
-	[":se_wuyi"] = "<font color=\"blue\"><b>锁定技,</b></font>回合结束时你的最大血量随机变为1-10，以此法失去体力时，你令一名角色摸等同于失去的体力值*2的牌。以此法失去体力上限时，你令一名角色失去一点体力；以此法增长体力上限时，你令一名角色回复一点体力。",
+	[":se_wuyi"] = "锁定技。回合结束时你的最大血量随机变为1-10，以此法失去体力时，你令一名角色摸等同于失去的体力值*2的牌。以此法失去体力上限时，你令一名角色失去一点体力；以此法增长体力上限时，你令一名角色回复一点体力。",
 	["se_wuyi_losehp"] = "选择一名角色失去一点体力",
 	["se_wuyi_draw"] = "选择一名角色摸牌",
 	["se_wuyi_recover"] = "选择一名角色回复一点体力",
@@ -447,22 +447,22 @@ sgs.LoadTranslationTable{
 	["se_fuzhi"] = "赋职",
 	["#se_fuzhi_give_message"] = "%from 获得了额外的出牌阶段",
 	["$se_fuzhi"] = "",
-	[":se_fuzhi"] = "<font color=\"orange\"><b>主公技，</b></font>你可以跳过你的出牌阶段，若你手牌数大于你当前体力值，你可指定一名东方势力角色，将手牌数与体力值之差的手牌交给该角色。若如此做，回合结束时，该角色执行一个额外的出牌阶段。",
-	
-	["Koishi"] = "古明地恋", 
-	["&Koishi"] = "古明地恋", 
-	["@Koishi"] = "東方project", 
-	["#Koishi"] = "紧闭的恋之瞳", 
-	["~Koishi"] = "", 
+	[":se_fuzhi"] = "主公技。你可以跳过你的出牌阶段，若你手牌数大于你当前体力值，你可指定一名东方势力角色，将手牌数与体力值之差的手牌交给该角色。若如此做，回合结束时，该角色执行一个额外的出牌阶段。",
+
+	["Koishi"] = "古明地恋",
+	["&Koishi"] = "古明地恋",
+	["@Koishi"] = "東方project",
+	["#Koishi"] = "紧闭的恋之瞳",
+	["~Koishi"] = "",
 	["designer:Koishi"] = "Sword Elucidator",
 	["cv:Koishi"] = "",
 	["illustrator:Koishi"] = "tecoyuke",
 
-	["Satori"] = "古明地覚", 
-	["&Satori"] = "古明地覚", 
-	["#Satori"] = "地底的读心少女", 
-	["@Satori"] = "東方project", 
-	["~Satori"] = "", 
+	["Satori"] = "古明地覚",
+	["&Satori"] = "古明地覚",
+	["#Satori"] = "地底的读心少女",
+	["@Satori"] = "東方project",
+	["~Satori"] = "",
 	["designer:Satori"] = "夜华",
 	["cv:Satori"] = "",
 	["illustrator:Satori"] = "夜华提供",

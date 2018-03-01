@@ -2,6 +2,8 @@
 #include "audio.h"
 #include "engine.h"
 #include "settings.h"
+#include "skin-bank.h"
+#include "stylehelper.h"
 
 static QRectF ButtonRect(0, 0, 189, 46);
 
@@ -156,6 +158,13 @@ void Button::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
 QRectF Button::boundingRect() const
 {
     return QRectF(QPointF(), size);
+}
+
+QFont Button::defaultFont()
+{
+    QFont font = StyleHelper::getFontByFileName("wqy-microhei.ttc");
+    font.setPixelSize(Config.TinyFont.pixelSize());
+    return font;
 }
 
 void Button::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)

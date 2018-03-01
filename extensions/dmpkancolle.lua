@@ -4,7 +4,7 @@ extension=sgs.Package("dmpkancolle")--增加拓展包
 --势力
 --[[
 do
-    require  "lua.config" 
+    require  "lua.config"
 	local config = config
 	local kingdoms = config.kingdoms
             table.insert(kingdoms,"kancolle")
@@ -22,8 +22,8 @@ Fubuki = sgs.General(extension, "Fubuki", "kancolle", 3, false,false,false)
 --吃撑
 se_chichengcard = sgs.CreateSkillCard{
 	name = "se_chichengcard",
-	target_fixed = true, 
-	will_throw = false, 
+	target_fixed = true,
+	will_throw = false,
 	on_use = function(self, room, source, targets)
 		--room:broadcastSkillInvoke("se_chicheng")
 		for _,id in sgs.qlist(self:getSubcards()) do
@@ -37,11 +37,11 @@ se_chichengcard = sgs.CreateSkillCard{
 	end
 }
 se_chicheng = sgs.CreateViewAsSkill{
-	name = "se_chicheng", 
-	n = 999, 
+	name = "se_chicheng",
+	n = 999,
 	view_filter = function(self, selected, to_select)
 		return true
-	end, 
+	end,
 	view_as = function(self, cards)
 		if #cards > 0 then
 			local card = se_chichengcard:clone()
@@ -50,7 +50,7 @@ se_chicheng = sgs.CreateViewAsSkill{
 			end
 			return card
 		end
-	end, 
+	end,
 	enabled_at_play = function(self, player)
 		return player:getHandcardNum() > 0 and not player:hasUsed("#se_chichengcard")
 	end
@@ -88,9 +88,9 @@ se_zhikong=sgs.CreateTriggerSkill{
 					player:setFlags("se_zhikong_on")
 					for _,p in sgs.qlist(room:getOtherPlayers(player)) do
 						if p:getMark("Armor_Nullified") == 0 then
-							room:setPlayerMark(p, "Armor_Nullified", 1) 
+							room:setPlayerMark(p, "Armor_Nullified", 1)
 						else
-							room:setPlayerMark(p, "has_been_Armor_Nullified", 1) 
+							room:setPlayerMark(p, "has_been_Armor_Nullified", 1)
 						end
 					end
 				end
@@ -98,9 +98,9 @@ se_zhikong=sgs.CreateTriggerSkill{
 				player:setFlags("-se_zhikong_on")
 				for _,p in sgs.qlist(room:getOtherPlayers(player)) do
 					if p:getMark("has_been_Armor_Nullified") == 0 then
-						room:setPlayerMark(p, "Armor_Nullified", 0) 
+						room:setPlayerMark(p, "Armor_Nullified", 0)
 					else
-						room:setPlayerMark(p, "has_been_Armor_Nullified", 0) 
+						room:setPlayerMark(p, "has_been_Armor_Nullified", 0)
 					end
 				end
 			end
@@ -121,8 +121,8 @@ se_zhikong=sgs.CreateTriggerSkill{
 
 --雷幕
 se_leimu = sgs.CreateTriggerSkill{
-	name = "se_leimu", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "se_leimu",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.CardsMoveOneTime,sgs.GameStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -165,9 +165,9 @@ se_leimu = sgs.CreateTriggerSkill{
 }
 
 se_yezhan = sgs.CreateTriggerSkill{
-	name = "se_yezhan",  
-	frequency = sgs.Skill_Compulsory, 
-	events = {sgs.DamageCaused, sgs.EventPhaseStart}, 
+	name = "se_yezhan",
+	frequency = sgs.Skill_Compulsory,
+	events = {sgs.DamageCaused, sgs.EventPhaseStart},
 	priority = -1,
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
@@ -184,20 +184,20 @@ se_yezhan = sgs.CreateTriggerSkill{
 				room:doLightbox("se_yezhan$", 2000)
 			end
 		elseif event == sgs.EventPhaseStart and player:hasSkill(self:objectName()) then
-			if player:getPhase()==sgs.Player_RoundStart then 
+			if player:getPhase()==sgs.Player_RoundStart then
 				player:gainMark("@turn_of_kita")
 			end
 		end
-		
-	end, 
+
+	end,
 	can_trigger = function(self, target)
 		return target
 	end
 }
 
 se_mowang = sgs.CreateTriggerSkill{
-	name = "se_mowang", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "se_mowang",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -214,15 +214,15 @@ se_mowang = sgs.CreateTriggerSkill{
 			room:acquireSkill(source, "#SE_Lingshang_end")
 			source:gainMark("@mowang")
 		end
-		
+
 	end
 }
 
 --噩梦
 se_emeng = sgs.CreateTriggerSkill{
-	name = "se_emeng", 
-	frequency = sgs.Skill_Wake, 
-	events = {sgs.EventPhaseStart}, 
+	name = "se_emeng",
+	frequency = sgs.Skill_Wake,
+	events = {sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		room:loseMaxHp(player)
@@ -249,7 +249,7 @@ se_emeng = sgs.CreateTriggerSkill{
 			room:setFixedDistance(p, player, 1)
 		end
 		return false
-	end, 
+	end,
 	can_trigger = function(self, target)
 		if target then
 			if target:isAlive() and target:hasSkill(self:objectName()) then
@@ -265,9 +265,9 @@ se_emeng = sgs.CreateTriggerSkill{
 }
 --狂犬
 se_kuangquan = sgs.CreateTriggerSkill{
-	name = "se_kuangquan",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.DamageCaused}, 
+	name = "se_kuangquan",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.DamageCaused},
 	priority = -3,
 	on_trigger = function(self, event, player, data)
 		local damage = data:toDamage()
@@ -278,7 +278,7 @@ se_kuangquan = sgs.CreateTriggerSkill{
 			room:doLightbox("se_kuangquan$", 1000)
 			room:loseMaxHp(damage.to, 1)
 		end
-	end, 
+	end,
 	can_trigger = function(self, target)
 		return target
 	end
@@ -286,8 +286,8 @@ se_kuangquan = sgs.CreateTriggerSkill{
 
 --冲撞
 se_chongzhuang = sgs.CreateTriggerSkill{
-	name = "se_chongzhuang", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "se_chongzhuang",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -303,7 +303,7 @@ se_chongzhuang = sgs.CreateTriggerSkill{
 			end
 			room:doLightbox("se_chongzhuang$", 1500)
 			local card = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0)
-			card:setSkillName(self:objectName())		
+			card:setSkillName(self:objectName())
 			local use = sgs.CardUseStruct()
 			use.from = source
 			use.to:append(target)
@@ -349,9 +349,9 @@ poi_paoxiao = sgs.CreateTargetModSkill{
 
 --疾风
 se_jifeng = sgs.CreateTriggerSkill{
-	name = "se_jifeng", --必须 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.EventPhaseChanging}, --必须 
+	name = "se_jifeng", --必须
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseChanging}, --必须
 	on_trigger = function(self, event, player, data) --必须
 		local change = data:toPhaseChange()
 		local phase = change.to
@@ -363,8 +363,8 @@ se_jifeng = sgs.CreateTriggerSkill{
 			room:broadcastSkillInvoke(self:objectName())
 			room:doLightbox("se_jifeng$", 400)
 			room:swapSeat(shima, player:getNextAlive())
-		end	
-	end, 
+		end
+	end,
 	can_trigger = function(self, target)
 		return target:getNextAlive():getNextAlive():hasSkill("se_jifeng")
 	end
@@ -372,10 +372,10 @@ se_jifeng = sgs.CreateTriggerSkill{
 
 --回避
 se_huibi = sgs.CreateTriggerSkill{
-	name = "se_huibi", 
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.CardResponded, sgs.CardAsked}, 
-	on_trigger = function(self, event, player, data) 
+	name = "se_huibi",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.CardResponded, sgs.CardAsked},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.CardResponded then
 			local card = data:toCardResponse().m_card
@@ -391,7 +391,7 @@ se_huibi = sgs.CreateTriggerSkill{
 					end
 					player:gainMark("@shimakaze_speed")
 				end
-			end 
+			end
 		elseif event == sgs.CardAsked then
 			local pattern = sgs.Sanguosha:getCurrentCardUsePattern()
 			if pattern == "jink" then
@@ -405,14 +405,14 @@ se_huibi = sgs.CreateTriggerSkill{
 			end
 		end
 		return false
-	end, 
+	end,
 }
 
 
 --欠雷
 se_qianlei = sgs.CreateTriggerSkill{
-	name = "se_qianlei", 
-	frequency = sgs.Skill_NotFrequent, 
+	name = "se_qianlei",
+	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.Dying},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -434,7 +434,7 @@ se_qianlei = sgs.CreateTriggerSkill{
 			room:doLightbox("se_qianlei1$", 1200)
 			room:obtainCard(der, cardid)
 			local card = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0)
-			card:setSkillName(self:objectName())		
+			card:setSkillName(self:objectName())
 			local use = sgs.CardUseStruct()
 			use.from = buki
 			use.to:append(damage.from)
@@ -455,10 +455,10 @@ se_qianlei = sgs.CreateTriggerSkill{
 }
 
 se_shuacun = sgs.CreateTriggerSkill{
-	name = "se_shuacun",  
-	frequency = sgs.Skill_NotFrequent, 
-	events = {sgs.TargetConfirmed, sgs.EventPhaseEnd},  
-	on_trigger = function(self, event, player, data) 
+	name = "se_shuacun",
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.TargetConfirmed, sgs.EventPhaseEnd},
+	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.TargetConfirmed then
 			local use = data:toCardUse()
@@ -529,7 +529,7 @@ sgs.LoadTranslationTable{
 	["$se_chicheng2"] = "那个，提督，吃饭……啊不！作战还没有开始吗！",
 	["$se_chicheng3"] = "烈风？不，不知道的孩子呢。",
 	["$se_chicheng4"] = "流星？和九七（式）舰攻不一样？",
-	[":se_chicheng"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>你可以将X张牌置于你的武将牌上，称为“铝”。若X不小于2，你回复一点体力。X为任意正整数。",
+	[":se_chicheng"] = "出牌阶段限一次，你可以将X张牌置于你的武将牌上，称为“铝”。若X不小于2，你回复一点体力。X为任意正整数。",
 
 	["se_zhikong"] = "制空「铝是用来喷的」",
 	["$se_zhikong1"] = "第一次攻击队，请发舰！",
@@ -549,7 +549,7 @@ sgs.LoadTranslationTable{
 	["$se_yezhan1"] = "给你“通通”的来几下吧！",
 	["$se_yezhan2"] = "好——了，要追击了～。跟上我来！",
 	["$se_yezhan3"] = "嘛……主炮呢……对……嗯……对啊……",
-	[":se_yezhan"] = "<font color=\"blue\"><b>锁定技,</b></font>偶数轮（从你的偶数回合开始时到下个回合开始前），你造成属性伤害时，伤害+1；你的伤害若能造成濒死，伤害+1。",
+	[":se_yezhan"] = "锁定技。偶数轮（从你的偶数回合开始时到下个回合开始前），你造成属性伤害时，伤害+1；你的伤害若能造成濒死，伤害+1。",
 	["se_yezhan$"] = "image=image/animate/se_yezhan.png",
 	["@turn_of_kita"] = "北上的回合数",
 
@@ -566,7 +566,7 @@ sgs.LoadTranslationTable{
 	["$se_emeng1"] = "所罗门的噩梦，让你们见识一下！",
 	["$se_emeng2"] = "那么，让我们举办一场华丽的派对吧！",
 	["$se_emeng3"] = "夕立、突击poi。",
-	[":se_emeng"] = "<font color=\"purple\"><b>觉醒技，</b></font>回合开始时，若你的体力值为1，你失去一点体力上限并获得技能【英姿】【咆哮】和【冲撞】（当你进入濒死时，移动到一名其他角色的左侧并视为对其使用一张【杀】。），你与所有角色计算距离时为1，其他角色与你计算距离时为1。",
+	[":se_emeng"] = "觉醒技。回合开始时，若你的体力值为1，你失去一点体力上限并获得技能【英姿】【咆哮】和【冲撞】（当你进入濒死时，移动到一名其他角色的左侧并视为对其使用一张【杀】。），你与所有角色计算距离时为1，其他角色与你计算距离时为1。",
 	["se_emeng$"] = "image=image/animate/se_emeng.png",
 
 	["se_suo$"] = "所    ",
@@ -628,92 +628,92 @@ sgs.LoadTranslationTable{
 	[":se_shuacun"] = "其他角色出牌阶段若未指定你为目标，其出牌阶段结束时，你可以弃置一半的手牌（向下取整），然后摸取等同你手牌数目的手牌。",
 	["se_shuacun$"] = "image=image/animate/se_qianlei.png",
 
-	["Akagi"] = "赤城", 
-	["&Akagi"] = "赤城", 
-	["#Akagi"] = "一航战吃货", 
-	["@Akagi"] = "艦隊collection", 
-	["~Akagi"] = "一航战的荣耀，不能在这种地方丢掉……！", 
+	["Akagi"] = "赤城",
+	["&Akagi"] = "赤城",
+	["#Akagi"] = "一航战吃货",
+	["@Akagi"] = "艦隊collection",
+	["~Akagi"] = "一航战的荣耀，不能在这种地方丢掉……！",
 	["designer:Akagi"] = "Sword Elucidator",
 	["cv:Akagi"] = "藤田咲",
 	["illustrator:Akagi"] = "",
 
-	["Kitagami"] = "北上", 
-	["&Kitagami"] = "北上", 
-	["#Kitagami"] = "超級北上大人", 
-	["@Kitagami"] = "艦隊collection", 
-	["~Kitagami"] = "嗯……该怎么说呢？这种事也有的嘛……想快点修理去。", 
+	["Kitagami"] = "北上",
+	["&Kitagami"] = "北上",
+	["#Kitagami"] = "超級北上大人",
+	["@Kitagami"] = "艦隊collection",
+	["~Kitagami"] = "嗯……该怎么说呢？这种事也有的嘛……想快点修理去。",
 	["designer:Kitagami"] = "Sword Elucidator",
 	["cv:Kitagami"] = "大坪由佳",
 	["illustrator:Kitagami"] = "custom",
 
-	["Yuudachi"] = "夕立", 
-	["&Yuudachi"] = "夕立", 
-	["#Yuudachi"] = "所罗门的噩梦", 
-	["@Yuudachi"] = "艦隊collection", 
-	["~Yuudachi"] = "真、真是笨蛋！这样就没法战斗了poi！？", 
+	["Yuudachi"] = "夕立",
+	["&Yuudachi"] = "夕立",
+	["#Yuudachi"] = "所罗门的噩梦",
+	["@Yuudachi"] = "艦隊collection",
+	["~Yuudachi"] = "真、真是笨蛋！这样就没法战斗了poi！？",
 	["designer:Yuudachi"] = "Sword Elucidator",
 	["cv:Yuudachi"] = "谷边由美",
 	["illustrator:Yuudachi"] = "リン☆ユウ",
 
-	["poi_kai2"] = "夕立改二", 
-	["&poi_kai2"] = "夕立改二", 
-	["#poi_kai2"] = "所罗门的噩梦", 
-	["@poi_kai2"] = "艦隊collection", 
-	["~poi_kai2"] = "真、真是笨蛋！这样就没法战斗了poi！？", 
+	["poi_kai2"] = "夕立改二",
+	["&poi_kai2"] = "夕立改二",
+	["#poi_kai2"] = "所罗门的噩梦",
+	["@poi_kai2"] = "艦隊collection",
+	["~poi_kai2"] = "真、真是笨蛋！这样就没法战斗了poi！？",
 	["designer:poi_kai2"] = "Sword Elucidator",
 	["cv:poi_kai2"] = "谷边由美",
 	["illustrator:poi_kai2"] = "",
 
-	["Shimakaze"] = "島風", 
-	["&Shimakaze"] = "島風", 
-	["#Shimakaze"] = "海路最速传说", 
-	["@Shimakaze"] = "艦隊collection", 
-	["~Shimakaze"] = "哇啊啊！好痛的啦！", 
+	["Shimakaze"] = "島風",
+	["&Shimakaze"] = "島風",
+	["#Shimakaze"] = "海路最速传说",
+	["@Shimakaze"] = "艦隊collection",
+	["~Shimakaze"] = "哇啊啊！好痛的啦！",
 	["designer:Shimakaze"] = "Sword Elucidator",
 	["cv:Shimakaze"] = "佐仓绫音",
 	["illustrator:Shimakaze"] = "悠久ポン酢",
 
-	["Fubuki"] = "吹雪", 
-	["&Fubuki"] = "吹雪", 
-	["#Fubuki"] = "伪·阿卡林2号机", 
-	["@Fubuki"] = "艦隊collection", 
-	["~Fubuki"] = "怎么会这样！不可以啊！", 
+	["Fubuki"] = "吹雪",
+	["&Fubuki"] = "吹雪",
+	["#Fubuki"] = "伪·阿卡林2号机",
+	["@Fubuki"] = "艦隊collection",
+	["~Fubuki"] = "怎么会这样！不可以啊！",
 	["designer:Fubuki"] = "曦行;Sword Elucidator",
 	["cv:Fubuki"] = "上坂すみれ",
 	["illustrator:Fubuki"] = "",
 
-	["Kongou"] = "金剛", 
-	["&Kongou"] = "金剛", 
-	["#Kongou"] = "Burning Love!", 
-	["@Kongou"] = "艦隊collection", 
-	["~Kongou"] = "", 
+	["Kongou"] = "金剛",
+	["&Kongou"] = "金剛",
+	["#Kongou"] = "Burning Love!",
+	["@Kongou"] = "艦隊collection",
+	["~Kongou"] = "",
 	["designer:Kongou"] = "Sword Elucidator",
 	["cv:Kongou"] = "東山奈央",
 	["illustrator:Kongou"] = "",
 
-	["Naka"] = "那珂", 
-	["&Naka"] = "那珂", 
-	["#Naka"] = "舰队偶像", 
-	["@Naka"] = "艦隊collection", 
-	["~Naka"] = "", 
+	["Naka"] = "那珂",
+	["&Naka"] = "那珂",
+	["#Naka"] = "舰队偶像",
+	["@Naka"] = "艦隊collection",
+	["~Naka"] = "",
 	["designer:Naka"] = "Sword Elucidator",
 	["cv:Naka"] = "佐倉綾音",
 	["illustrator:Naka"] = "",
 
-	["Ikazuchi"] = "雷", 
-	["&Ikazuchi"] = "雷", 
-	["#Ikazuchi"] = "", 
-	["@Ikazuchi"] = "艦隊collection", 
-	["~Ikazuchi"] = "", 
+	["Ikazuchi"] = "雷",
+	["&Ikazuchi"] = "雷",
+	["#Ikazuchi"] = "",
+	["@Ikazuchi"] = "艦隊collection",
+	["~Ikazuchi"] = "",
 	["designer:Ikazuchi"] = "Sword Elucidator",
 	["cv:Ikazuchi"] = "洲崎綾",
 	["illustrator:Ikazuchi"] = "",
 
-	["Inazuma"] = "電", 
-	["&Inazuma"] = "電", 
-	["#Inazuma"] = "", 
-	["@Inazuma"] = "艦隊collection", 
-	["~Inazuma"] = "", 
+	["Inazuma"] = "電",
+	["&Inazuma"] = "電",
+	["#Inazuma"] = "",
+	["@Inazuma"] = "艦隊collection",
+	["~Inazuma"] = "",
 	["designer:Inazuma"] = "Sword Elucidator",
 	["cv:Inazuma"] = "洲崎綾",
 	["illustrator:Inazuma"] = "",

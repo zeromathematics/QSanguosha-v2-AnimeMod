@@ -40,7 +40,11 @@
     ],
     // I realized that some MOD might need a wider background area than the foreground magatamas in order
     // to draw certain effect. The following factor specifies the number of invisible magatama to be appended.
-    "hpExtraSpaceHolder": 1
+    "hpExtraSpaceHolder": 1,
+
+    "graphicsBoxBgColor": [0, 0, 0, 220],
+    "graphicsBoxBorderColor": [166, 150, 122],
+    "graphicsBoxTitleFont": ["wqy-microhei", 16, 2, [228, 213, 160]]
 },
 "room":
 {
@@ -76,7 +80,7 @@
     "horseSuitArea": [48, 2, 21, 17],
     "horsePointArea": [37, -4, 25, 25],
     "equipPointFontBlack": ["DroidSansFallback", [14, 14, 3], 20, [0, 0, 0, 255], 1, 0, [0, 0], [240, 240, 240, 200]],
-    "equipPointFontRed": ["DroidSansFallback", [14, 14, 3], 20, [164, 0, 0, 255], 1, 0, [0, 0], [240, 240, 240, 200]],   
+    "equipPointFontRed": ["DroidSansFallback", [14, 14, 3], 20, [164, 0, 0, 255], 1, 0, [0, 0], [240, 240, 240, 200]],
     "delayedTrickFirstRegion": [143, 20, 28, 28],
     "delayedTrickStep": [0, 26],
     "roleComboBoxPos": [130, 1],

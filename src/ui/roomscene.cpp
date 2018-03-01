@@ -28,6 +28,7 @@
 #include "clientlogbox.h"
 #include "chatwidget.h"
 #include "sprite.h"
+#include "chooseoptionsbox.h"
 
 #include "ui-utils.h"
 
@@ -171,6 +172,12 @@ RoomScene::RoomScene(QMainWindow *main_window)
     connect(ClientInstance, SIGNAL(bg_change(const QString)), SLOT(changeBG(const QString)));
 
     connect(ClientInstance, &Client::skill_updated, this, &RoomScene::updateSkill);
+
+    m_chooseOptionsBox = new ChooseOptionsBox;
+    m_chooseOptionsBox->hide();
+    addItem(m_chooseOptionsBox);
+    m_chooseOptionsBox->setZValue(30000.0);
+    m_chooseOptionsBox->moveBy(-120, 0);
 
     guanxing_box = new GuanxingBox;
     guanxing_box->hide();
@@ -1011,6 +1018,7 @@ void RoomScene::updateTable()
         _m_roomLayout->m_discardPileMinWidth), _m_commonLayout->m_cardNormalHeight);
     m_tablePile->adjustCards();
     card_container->setPos(m_tableCenterPos);
+    m_chooseOptionsBox->setPos(m_tableCenterPos - QPointF(m_chooseOptionsBox->boundingRect().width() / 2, m_chooseOptionsBox->boundingRect().height() / 2));
     guanxing_box->setPos(m_tableCenterPos);
     prompt_box->setPos(m_tableCenterPos);
     pausing_text->setPos(m_tableCenterPos - pausing_text->boundingRect().center());
@@ -1644,6 +1652,17 @@ void RoomScene::chooseKingdom(const QStringList &kingdoms)
 
 void RoomScene::chooseOption(const QString &skillName, const QStringList &options)
 {
+
+    if (!(skillName.contains("guhuo") && !guhuo_log.isEmpty()) && !skillName.startsWith("BossModeExpStore") && skillName != "BossModeExpStore"){
+        QApplication::alert(main_window);
+        if (!main_window->isActiveWindow())
+            Sanguosha->playSystemAudioEffect("pop-up");
+
+        m_chooseOptionsBox->setSkillName(skillName);
+        m_chooseOptionsBox->chooseOption(options);
+        return;
+    }
+
     QDialog *dialog = new QDialog;
     QVBoxLayout *layout = new QVBoxLayout;
     QString title = Sanguosha->translate(skillName);
@@ -2581,6 +2600,9 @@ void RoomScene::updateStatus(Client::Status oldStatus, Client::Status newStatus)
             guanxing_box->clear();
             if (!card_container->retained())
                 card_container->clear();
+        }
+        else if (oldStatus == Client::AskForChoice){
+            m_chooseOptionsBox->clear();
         }
         prompt_box->disappear();
         ClientInstance->getPromptDoc()->clear();

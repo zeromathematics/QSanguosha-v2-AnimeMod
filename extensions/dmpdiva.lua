@@ -81,13 +81,13 @@ se_nitian = sgs.CreateTriggerSkill{
 se_guwu = sgs.CreateTriggerSkill{
 	name = "se_guwu",
 	frequency = sgs.Skill_NotFrequent,
-	events = {sgs.GameStart, sgs.EventAcquireSkill, sgs.QuitDying, sgs.HpRecover, sgs.Death},
+	events = {sgs.GameStart, sgs.EventAcquireSkill, sgs.QuitDying, sgs.HpRecover, sgs.Death, sgs.EventLoseSkill},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.GameStart then
 			-- game start
 			if player:hasSkill(self:objectName()) then
-				player:gainMark("@club_mus")
+				player:gainMark("@amclub_mus")
 			end
 		elseif event == sgs.EventAcquireSkill then
 			-- acquire
@@ -97,16 +97,20 @@ se_guwu = sgs.CreateTriggerSkill{
 						player:loseAllMarks(name)
 					end
 				end
-				player:gainMark("@club_mus")
+				player:gainMark("@amclub_mus")
+			end
+		elseif event == sgs.EventLoseSkill then
+			if data:toString() == self:objectName() then
+				for _,p in sgs.qlist(room:getAlivePlayers()) do
+					p:loseAllMarks("@amclub_mus")
+				end
 			end
 		elseif event == sgs.Death then
 			-- death
 			local death = data:toDeath()
 			if death.who:hasSkill(self:objectName()) then
 				for _,p in sgs.qlist(room:getAlivePlayers()) do
-					if p:getMark("@club_mus") > 0 then
-						p:loseAllMarks("@club_mus")
-					end
+					p:loseAllMarks("@amclub_mus")
 				end
 			end
 		elseif event == sgs.HpRecover then
@@ -133,7 +137,7 @@ se_guwu = sgs.CreateTriggerSkill{
 					local myGodData = sgs.QVariant()
 					myGodData:setValue(mygod)
 					if room:askForChoice(toAsk, self:objectName(), "se_guwu_accept+cancel", myGodData) == "se_guwu_accept" then
-						toAsk:gainMark("@club_mus")
+						toAsk:gainMark("@amclub_mus")
 					end
 				elseif choice == "no_more" then
 					toAsk:setMark("se_guwu_ban", 1)
@@ -145,7 +149,7 @@ se_guwu = sgs.CreateTriggerSkill{
 			local source = dying_data.who
 			local mygod= room:findPlayerBySkillName("se_guwu")
 			if mygod then
-				if mygod:isAlive() and source:isAlive() and source:getMark("@club_mus") > 0 then
+				if mygod:isAlive() and source:isAlive() and source:getMark("@amclub_mus") > 0 then
 					if room:askForSkillInvoke(mygod, "se_guwu", data) then
 						room:broadcastSkillInvoke(self:objectName())
 						local judge = sgs.JudgeStruct()
@@ -162,7 +166,7 @@ se_guwu = sgs.CreateTriggerSkill{
 						else
 							room:doLightbox("se_guwu$", 1200)
 							for _,p in sgs.qlist(room:getAlivePlayers()) do
-								if p:getMark("@club_mus") > 0 then
+								if p:getMark("@amclub_mus") > 0 then
 									p:drawCards(1)
 								end
 							end
@@ -430,7 +434,7 @@ sgs.LoadTranslationTable{
 	[":se_nitian"] = "一名角色判定结束时，你可以弃置一张手牌，令其回复一点体力。延时锦囊进入弃牌堆时，若你的手牌数小于你的体力上限，你可以获得之，否则你摸一张牌。",
 
 	["se_guwu"] = "鼓舞「Fightだよ」",
-	["@club_mus"] = "μ’ｓ",
+	["@amclub_mus"] = "μ’ｓ",
 	["$se_guwu1"] = "好的，就和穗乃果一起来唱歌吧！",
 	["$se_guwu2"] = "嘿，打起精神来挑战一下吧！",
 	["$se_guwu3"] = "哦？好像还可以继续进行练习！那只好继续加油了！",
@@ -439,13 +443,14 @@ sgs.LoadTranslationTable{
 	["no_more"] = "不再邀请这名角色加入",
 	["se_guwu_accept"] = "接受邀请加入「μ’ｓ」",
 	["se_guwu$"] = "image=image/animate/se_guwu.png",
-	[":se_guwu"] = "\n<font color=\"#93DB70\"><b>社团技，</b></font>「μ’ｓ」\n<font color=\"#93DB70\"><b>加入条件：</b></font>一名角色于回合外回复体力时，你可以询问其是否加入「μ’ｓ」。\n<font color=\"#93DB70\"><b>效果：</b></font>每当一名「μ’ｓ」角色离开濒死阶段时，其进行一次判定。若为红色，其回复一点体力，否则所有「μ’ｓ」的角色各摸一张牌。",
+	[":se_guwu"] = "\n社团技。「μ’ｓ」\n加入条件：一名角色于回合外回复体力时，你可以询问其是否加入「μ’ｓ」。\n社团效果：每当一名「μ’ｓ」角色离开濒死阶段时，其进行一次判定。若为红色，其回复一点体力，否则所有「μ’ｓ」的角色各摸一张牌。",
+	["@amclub_mus"] = "社团「μ’ｓ」",
 
 	["se_qiangjing"] = "抢镜「抢镜头的大头小鸟」",
 	["$se_qiangjing1"] = "哇，吓我一跳…",
 	["$se_qiangjing2"] = "耶耶哦",
 	["se_qiangjing$"] = "image=image/animate/se_qiangjing.png",
-	[":se_qiangjing"] = "其他角色在摸牌阶段外摸牌时，你可以进行一次判定：若为<font color=\"red\"><b>♥</b></font>，摸1~?（非平均且有大奖）张牌。",
+	[":se_qiangjing"] = "其他角色在摸牌阶段外摸牌时，你可以进行一次判定：若为♥，摸1~?（非平均且有大奖）张牌。",
 
 	["se_zhifu"] = "制服 「服装制作」",
 	["$se_zhifu1"] = "其实我的手还是非常巧的，所以也在做μ'ｓ的服装。",
@@ -458,7 +463,7 @@ sgs.LoadTranslationTable{
 	["$se_nike1"] = "niconiconi~",
 	["$se_nike2"] = "大家的偶像妮可来了哦～妮可妮可妮~",
 	["$se_nike3"] = "好了，粉丝都在等着妮可♪",
-	[":se_nike"] = "<font color=\"green\"><b>出牌阶段限一次，</b></font>指定包括你在内的任意名角色各弃置X张牌，并回复一点体力。X为你指定的人数/2（向下取整）。",
+	[":se_nike"] = "出牌阶段限一次，指定包括你在内的任意名角色各弃置X张牌，并回复一点体力。X为你指定的人数/2（向下取整）。",
 	["se_nike$"] = "image=image/animate/se_nike.png",
 
 	["se_yanyi"] = "颜艺 「恶意卖萌」",
@@ -466,7 +471,7 @@ sgs.LoadTranslationTable{
 	["$se_yanyi2"] = "努力加油♪",
 	["$se_yanyi3"] = "主人，你是在叫我吗？",
 	["$se_yanyi4"] = "来吧，让全世界都知道妮可的可爱！",
-	[":se_yanyi"] = "<font color=\"blue\"><b>锁定技,</b></font>你每受到一点伤害后，需随机获得一个场上不存在的技能。你回复体力时，需选择一个技能失去。",
+	[":se_yanyi"] = "锁定技。你每受到一点伤害后，需随机获得一个场上不存在的技能。你回复体力时，需选择一个技能失去。",
 	["se_yanyi1$"] = "image=image/animate/se_yanyi1.png",
 	["se_yanyi2$"] = "image=image/animate/se_yanyi2.png",
 	["se_yanyi3$"] = "image=image/animate/se_yanyi3.png",

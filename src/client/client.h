@@ -36,6 +36,7 @@ public:
         AskForShowOrPindian = 0x0C,
         AskForGeneralTaken = 0x0D,
         AskForArrangement = 0x0E,
+        AskForChoice = 0x01000F,
 
         RespondingUse = 0x11,
         RespondingForDiscard = 0x21,
@@ -231,6 +232,7 @@ public slots:
     void signup();
     void onPlayerChooseGeneral(const QString &_name);
     void onPlayerMakeChoice();
+    void onPlayerMakeChoice(const QString &choice);
     void onPlayerChooseCard(int card_id = -2);
     void onPlayerChooseAG(int card_id);
     void onPlayerChoosePlayer(const Player *player);

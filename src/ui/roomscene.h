@@ -19,6 +19,7 @@ class CardContainer;
 class GuanxingBox;
 class QSanButton;
 class QGroupBox;
+class ChooseOptionsBox;
 class BubbleChatBox;
 struct RoomLayout;
 class Photo;
@@ -51,6 +52,7 @@ public:
 
 public slots:
     void doScript();
+    
 };
 
 class DeathNoteDialog : public QDialog
@@ -212,6 +214,11 @@ public slots:
     void doAddRobotAction();
     void fillRobots();
 
+    inline QPointF tableCenterPos()
+    {
+        return m_tableCenterPos;
+    }
+
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -274,6 +281,8 @@ private:
     QList<const Player *> selected_targets;
 
     GuanxingBox *guanxing_box;
+
+    ChooseOptionsBox *m_chooseOptionsBox;
 
     QList<CardItem *> gongxin_items;
 

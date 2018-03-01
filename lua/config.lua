@@ -21,11 +21,18 @@ config = {
 	},
 
 	skill_type_colors = {
-		compulsoryskill = "#0000FF",
-		limitedskill = "#FF0000",
-		wakeskill = "#800080",
+		compulsoryskill = "#89c3eb",
+		limitedskill = "#ec6d71",
+		wakeskill = "#b44c97",
 		lordskill = "#FFA500",
 		oppphskill = "#008000",
+		playonetimeskill = "#68be8d",
+		auraskill = "#fabf14",
+		awakeskill = "#fef263",
+		clubskill = "#f2a0a1",
+		clubskilladd = "#f2a0a1",
+		clubskilleffect = "#f2a0a1",
+		changeskill = "cyan",
 	},
 
 	package_names = {
@@ -45,7 +52,7 @@ config = {
 
 		"Inovation",
 		"Hayate",
-        
+
         "ERCIYUAN",
 --[[
 		"Standard",
