@@ -9,7 +9,7 @@
 #include <QGraphicsProxyWidget>
 
 ChooseOptionsBox::ChooseOptionsBox()
-    //: progressBar(NULL)
+    : progressBar(NULL)
 {
 }
 //====================
@@ -132,6 +132,21 @@ void ChooseOptionsBox::chooseOption(const QStringList &options)
 
         button->setPos(pos);
     }
+    if (ServerInfo.OperationTimeout != 0) {
+        if (!progressBar) {
+            progressBar = new QSanCommandProgressBar();
+            progressBar->setMaximumWidth(boundingRect().width() - 16);
+            progressBar->setMaximumHeight(12);
+            progressBar->setTimerEnabled(true);
+            progressBarItem = new QGraphicsProxyWidget(this);
+            progressBarItem->setWidget(progressBar);
+            progressBar->setHidden(true);
+            progressBarItem->setPos(boundingRect().center().x() - progressBarItem->boundingRect().width() / 2, boundingRect().height() - 20);
+            connect(progressBar, &QSanCommandProgressBar::timedOut, this, &ChooseOptionsBox::reply);
+        }
+        progressBar->setCountdown(QSanProtocol::S_COMMAND_MULTIPLE_CHOICE);
+        progressBar->show();
+    }
 }
 
 void ChooseOptionsBox::reply()
@@ -211,13 +226,13 @@ QString ChooseOptionsBox::translate(const QString &option) const
 
 void ChooseOptionsBox::clear()
 {
-    /*
+    
     if (progressBar != NULL) {
         progressBar->hide();
         progressBar->deleteLater();
         progressBar = NULL;
     }
-    */
+    
     foreach(Button *button, buttons)
         button->deleteLater();
 

@@ -38,7 +38,7 @@ private:
     static const int outerBlankWidth = 37;
 
     QGraphicsProxyWidget *progressBarItem;
-    //QSanCommandProgressBar *progressBar;
+    QSanCommandProgressBar *progressBar;
 
     int getButtonWidth() const;
 
