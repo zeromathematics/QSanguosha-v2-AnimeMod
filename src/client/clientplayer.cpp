@@ -219,6 +219,12 @@ void ClientPlayer::setMark(const QString &mark, int value)
                 mark_text.append(QString("%1").arg(val));
             if (this != Self)
                 mark_text.append("<br>");
+            if (key.startsWith("@amclub_")){
+                if (this != Self)
+                    mark_text.append("<br>");
+                else
+                    mark_text.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+            }
             text.append(mark_text);
             if (key == "@substitute") {
                 QString hp_str = this->property("tishen_hp").toString();
