@@ -140,12 +140,12 @@ void ChooseOptionsBox::chooseOption(const QStringList &options)
             progressBar->setTimerEnabled(true);
             progressBarItem = new QGraphicsProxyWidget(this);
             progressBarItem->setWidget(progressBar);
-            progressBar->setHidden(true);
             progressBarItem->setPos(boundingRect().center().x() - progressBarItem->boundingRect().width() / 2, boundingRect().height() - 20);
             connect(progressBar, &QSanCommandProgressBar::timedOut, this, &ChooseOptionsBox::reply);
         }
         progressBar->setCountdown(QSanProtocol::S_COMMAND_MULTIPLE_CHOICE);
         progressBar->show();
+        progressBar->setHidden(true);
     }
 }
 
