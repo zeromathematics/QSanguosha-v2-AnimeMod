@@ -447,6 +447,12 @@ void PlayerCardContainer::updateMarks()
         _m_markItem->setPos(newRect.topLeft());
     else
         _m_markItem->setPos(newRect.left(), newRect.top() + newRect.height() / 2);
+    if (m_player){
+        _m_markItem->setToolTip(m_player->getMarkDescription());
+    }
+    else{
+        _m_markItem->setToolTip(QString());
+    }
 }
 
 void PlayerCardContainer::_updateEquips()

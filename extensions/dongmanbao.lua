@@ -7671,6 +7671,9 @@ Aria:addSkill(SE_Shuangqiang)
 Aria:addSkill(SE_Xinlai)
 Aria:addSkill(SE_Baskervilles_make)
 sgs.LoadTranslationTable{
+["@Baskervilles"] = "巴斯克维尔",
+[":@Baskervilles"] = "萌战",
+["&@Baskervilles"] = "Sky Blue",
 ["SE_Shuangqiang$"] = "image=image/animate/SE_Shuangqiang.png",
 ["SE_Xinlai$"] = "image=image/animate/SE_Xinlai.png",
 ["SE_Xinlai_Not"] = "不发动",

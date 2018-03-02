@@ -220,6 +220,7 @@ public:
     QList<const Skill *> getVisibleSkillList(bool include_equip = false) const;
     QStringList getAcquiredSkills() const;
     QString getSkillDescription() const;
+    QString getMarkDescription() const;
 
     virtual bool isProhibited(const Player *to, const Card *card, const QList<const Player *> &others = QList<const Player *>()) const;
     bool canSlashWithoutCrossbow(const Card *slash = NULL) const;

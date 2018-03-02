@@ -33,6 +33,7 @@ config = {
 		clubskilladd = "#f2a0a1",
 		clubskilleffect = "#f2a0a1",
 		changeskill = "cyan",
+		moesenskill = "Sky Blue",
 	},
 
 	package_names = {

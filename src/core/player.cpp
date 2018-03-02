@@ -1122,6 +1122,46 @@ QString Player::getSkillDescription() const
     return description;
 }
 
+QString Player::getMarkDescription() const
+{
+    QString description = QString();
+    QMap<QString, QColor> skilltype_color_map;
+    if (Config.value("AutoSkillTypeColorReplacement", true).toBool()) {
+        skilltype_color_map = Sanguosha->getSkillTypeColorMap();
+    }
+
+    foreach(QString mark, getMarkNames()){
+        if (getMark(mark) == 0){
+            continue;
+        }
+        if (mark.startsWith("@amclub_")){
+            if (skilltype_color_map.contains("clubskill")){
+                QString color_name = skilltype_color_map["clubskill"].name();
+                description.prepend(tr("<b>club</b>: ") + QString("<font color=%1><b>%2</b></font>").arg(color_name).arg(Sanguosha->translate(mark)) + " <br/>");
+            }
+            else{
+                description.prepend(tr("<b>club</b>: ") + QString("<b>%1</b>").arg(Sanguosha->translate(mark)) + " <br/>");
+            }
+            
+        }
+        else if (mark.startsWith("@")){
+            if (Sanguosha->translate(":" + mark) != ":" + mark){
+                if (Sanguosha->translate("&" + mark) != "&" + mark){
+                    description.append("<b>" + Sanguosha->translate(":" + mark) + "</b>: " + QString("<font color=\"%1\"><b>%2</b></font>").arg(Sanguosha->translate("&" + mark)).arg(Sanguosha->translate(mark)) + " <br/>");
+                }
+                else{
+                    description.append("<b>" + Sanguosha->translate(":" + mark) + "</b>: " + QString("<b>%1</b>").arg(Sanguosha->translate(mark)) + " <br/>");
+                }
+                
+            }
+            else{
+                description.append("<b>" + QString::number(getMark(mark)) + "</b>" + tr(" of the ") + QString("<b>%1</b>").arg(Sanguosha->translate(mark)) + tr(" mark") + " <br/>");
+            }
+        }
+    }
+    return description;
+}
+
 bool Player::isProhibited(const Player *to, const Card *card, const QList<const Player *> &others) const
 {
     return Sanguosha->isProhibited(this, to, card, others);

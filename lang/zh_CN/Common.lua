@@ -23,6 +23,7 @@ CommonTranslationTable = {
 	["clubskilladd"] = "加入条件：",
 	["clubskilleffect"] = "社团效果：",
 	["changeskill"] = "转化技。",
+	["moesenskill"] = "萌战技，",
 
 	["Pairs"] = "双将",
 	["XMode"] = "血战到底",

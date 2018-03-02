@@ -148,7 +148,7 @@ return {
 	["designer:sugisaki"] = "黑猫roy",
 	["cv:sugisaki"] = "近藤隆",
 	["illustrator:sugisaki"] = "STUDIO DEEN/AIC",
-	["@amclub_haremu"] = "社团「碧阳学园生徒会」",
+	["@amclub_haremu"] = "「碧阳学园生徒会」",
 	["@haremu-use"] =  "你可以交给当前回合角色一张牌令其选择是否加入你的「碧阳学园生徒会」。",
 	["haremu_accept"] = "接受杉崎键邀请并加入「碧阳学园生徒会」",
 
