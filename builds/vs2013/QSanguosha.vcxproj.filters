@@ -1086,7 +1086,6 @@
     <ClCompile Include="Release\moc_hayate.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-
     <ClCompile Include="Debug\moc_chooseoptionsbox.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -1101,6 +1100,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\ui\stylehelper.cpp">
       <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ui\playercardbox.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_playercardbox.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_playercardbox.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1457,6 +1465,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\package\hayate.h">
       <Filter>package</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\ui\playercardbox.h">
+      <Filter>ui</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

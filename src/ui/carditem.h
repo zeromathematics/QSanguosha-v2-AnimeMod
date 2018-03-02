@@ -6,6 +6,7 @@
 
 class FilterSkill;
 class General;
+class QGraphicsDropShadowEffect;
 class Card;
 
 class CardItem : public QSanSelectableItem
@@ -85,6 +86,9 @@ public:
         emit clicked();
     }
 
+    void setOuterGlowColor(const QColor &color);
+    QColor getOuterGlowColor() const;
+
 private slots:
     void currentAnimationDestroyed();
 
@@ -125,6 +129,7 @@ signals:
     void enter_hover();
     void leave_hover();
     void movement_animation_finished();
+    void hoverChanged(const bool &enter);
 };
 
 #endif

@@ -21,7 +21,7 @@ class Client : public QObject
 public:
     enum Status
     {
-        NotActive = 0x00,
+        NotActive = 0x010000,
         Responding = 0x01,
         Playing = 0x02,
         Discarding = 0x03,
@@ -37,12 +37,13 @@ public:
         AskForGeneralTaken = 0x0D,
         AskForArrangement = 0x0E,
         AskForChoice = 0x01000F,
+        AskForCardChosen = 0x010011,
 
-        RespondingUse = 0x11,
-        RespondingForDiscard = 0x21,
-        RespondingNonTrigger = 0x31,
+        RespondingUse = 0x000101,
+        RespondingForDiscard = 0x000201,
+        RespondingNonTrigger = 0x000301,
 
-        ClientStatusBasicMask = 0x0F
+        ClientStatusBasicMask = 0xFF00FF
     };
 
     explicit Client(QObject *parent, const QString &filename = QString());
@@ -228,12 +229,15 @@ public:
     QStringList players_to_choose;
     int m_bossLevel;
 
+    // additional
+    QString text;
+
 public slots:
     void signup();
     void onPlayerChooseGeneral(const QString &_name);
     void onPlayerMakeChoice();
     void onPlayerMakeChoice(const QString &choice);
-    void onPlayerChooseCard(int card_id = -2);
+    void onPlayerChooseCard(int index, int card_id = -2);
     void onPlayerChooseAG(int card_id);
     void onPlayerChoosePlayer(const Player *player);
     void trust();
@@ -302,7 +306,7 @@ signals:
     void suits_got(const QStringList &suits);
     void options_got(const QString &skillName, const QStringList &options);
     void cards_got(const ClientPlayer *player, const QString &flags, const QString &reason, bool handcard_visible,
-        Card::HandlingMethod method, QList<int> disabled_ids);
+        Card::HandlingMethod method, QList<int> disabled_ids, QList<int> handcards);
     void roles_got(const QString &scheme, const QStringList &roles);
     void directions_got();
     void orders_got(QSanProtocol::Game3v3ChooseOrderCommand reason);

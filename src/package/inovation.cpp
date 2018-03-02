@@ -2249,7 +2249,7 @@ public:
         events << EventPhaseEnd;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &) const
     {
         if (triggerEvent == EventPhaseEnd){
             if (player->isAlive() && player->hasSkill("zhuren") && player->getPhase() == Player::Discard && player->tag.contains("zhurenCardNum")){
@@ -2326,7 +2326,7 @@ DiangongCard::DiangongCard()
     will_throw = false;
 }
 
-bool DiangongCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *) const
+bool DiangongCard::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
 {
     /*
     foreach(const Card *card, to_select->getJudgingArea()){
@@ -3382,7 +3382,7 @@ public:
         events << Death;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == Death){
             DeathStruct death = data.value<DeathStruct>();
@@ -3651,7 +3651,7 @@ public:
         return target;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == EnterDying){
             DyingStruct dying = data.value<DyingStruct>();
@@ -3998,7 +3998,7 @@ public:
 TaxianCard::TaxianCard()
 {
 }
-bool TaxianCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+bool TaxianCard::targetFilter(const QList<const Player *> &, const Player *to_select, const Player *Self) const
 {
     return to_select != Self && Self->inMyAttackRange(to_select) && Self->canSlash(to_select);
 }
@@ -4052,7 +4052,7 @@ public:
         view_as_skill = new TaxianVs;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *zuikaku, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == SlashProceed){
             SlashEffectStruct ses = data.value<SlashEffectStruct>();
@@ -4143,7 +4143,7 @@ public:
 
     }
 
-    bool viewFilter(const Card *card) const
+    bool viewFilter(const Card *) const
     {
         return true;
     }
@@ -4340,7 +4340,7 @@ NingjuCard::NingjuCard()
 {
     mute = true;
 }
-bool NingjuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+bool NingjuCard::targetFilter(const QList<const Player *> &, const Player *, const Player *) const
 {
     return true;
 }
@@ -4730,7 +4730,7 @@ public:
         events << CardsMoveOneTime;
     }
 
-    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent event, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (event == CardsMoveOneTime){
 
@@ -4778,7 +4778,7 @@ public:
         return target != NULL && target->hasSkill(this);
     }
 
-    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent event, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (event == CardsMoveOneTime){
 
@@ -4890,7 +4890,7 @@ public:
         return target;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == AskForPeachesDone){
             DyingStruct dying = data.value<DyingStruct>();
@@ -4959,7 +4959,7 @@ public:
         frequency = Frequent;
     }
 
-    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent event, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (event == EnterDying){
             DyingStruct dying = data.value<DyingStruct>();
@@ -5037,7 +5037,7 @@ public:
         frequency = Frequent;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == CardsMoveOneTime){
             CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
@@ -5135,7 +5135,7 @@ public:
         frequency = Wake;
     }
 
-    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &) const
     {
         if (event == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart){
             if (player->getPile("Yandan").length() > player->getHp() && player->getMark("@waked") == 0){
@@ -5344,8 +5344,6 @@ FengzhuDialog *FengzhuDialog::getInstance()
 
 bool FengzhuDialog::isButtonEnabled(const QString &button_name) const
 {
-    const Card *c = map[button_name];
-
     if (Self->hasFlag("fengzhu_used"))
         return false;
 
@@ -6016,7 +6014,7 @@ public:
         events << CardsMoveOneTime;
     }
 
-    bool trigger(TriggerEvent, Room *room, ServerPlayer *mikoto, QVariant &data) const
+    bool trigger(TriggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
         if (move.from && move.from->hasSkill(objectName()) && (!move.to || move.to != move.from) && move.from->getPhase() == Player::NotActive){
@@ -6147,7 +6145,7 @@ public:
         frequency = Wake;
     }
 
-    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &) const
     {
         if (event == EventPhaseStart && player->hasSkill(objectName()) && player->getPhase() == Player::RoundStart){
             int minHp = 100;
@@ -6336,7 +6334,7 @@ public:
         events << EventPhaseStart;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
         if (triggerEvent == EventPhaseStart){
             QList<ServerPlayer *> left = room->getAlivePlayers();

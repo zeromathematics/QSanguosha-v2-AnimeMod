@@ -44,7 +44,8 @@
 
     "graphicsBoxBgColor": [0, 0, 0, 220],
     "graphicsBoxBorderColor": [166, 150, 122],
-    "graphicsBoxTitleFont": ["wqy-microhei", 16, 2, [228, 213, 160]]
+    "graphicsBoxTitleFont": ["wqy-microhei", 16, 2, [228, 213, 160]],
+    "playerCardBoxPlaceNameText": ["@wqy-microhei", 16, 2, [228, 213, 160]]
 
 },
 "room":

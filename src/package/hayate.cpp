@@ -292,7 +292,7 @@ public:
         events << SlashProceed;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == SlashProceed) {
             SlashEffectStruct effect = data.value<SlashEffectStruct>();
@@ -526,7 +526,7 @@ public:
         return target != NULL;
     }
 
-    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
         ServerPlayer *sher = room->findPlayerBySkillName(objectName());
         if (!sher){
@@ -558,7 +558,7 @@ public:
         return player->hasFlag("Yaojing_Active");
     }
 
-    bool viewFilter(const Card *card) const
+    bool viewFilter(const Card *) const
     {
         return true;
     }
@@ -841,7 +841,7 @@ HaremuCard::HaremuCard()
     will_throw = false;
 }
 
-bool HaremuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+bool HaremuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *) const
 {
     return to_select->hasFlag("haremu_target") && targets.length() == 0;
 }
@@ -988,7 +988,7 @@ public:
         return target;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == DamageInflicted){
             DamageStruct damage = data.value<DamageStruct>();
@@ -1151,12 +1151,11 @@ public:
         return target;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == PreCardUsed){
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.from->hasSkill(objectName())) {
-                ServerPlayer *jianyong = use.from;
                 
                 if (use.card->isKindOf("Collateral") || use.card->isKindOf("EquipCard") || use.card->isKindOf("DelayedTrick")){
                     return false;
@@ -1412,7 +1411,7 @@ public:
     {
     }
 
-    int getCorrect(const Player *from, const Player *to) const
+    int getCorrect(const Player *from, const Player *) const
     {
         if (from->hasSkill("guiyin") && from->getMark("OniLv") > 0)
             return -2;
@@ -1456,7 +1455,7 @@ public:
     {
     }
 
-    int getCorrect(const Player *from, const Player *to) const
+    int getCorrect(const Player *from, const Player *) const
     {
         if (from->hasSkill("qiubang"))
             return -2;
@@ -1471,12 +1470,12 @@ YoushuiCard::YoushuiCard()
     will_throw = false;
 }
 
-bool YoushuiCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+bool YoushuiCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *) const
 {
     return to_select->hasFlag("youshui_target") && targets.length() == 0;
 }
 
-void YoushuiCard::use(Room *room, ServerPlayer *player, QList<ServerPlayer *> &targets) const
+void YoushuiCard::use(Room *room, ServerPlayer *, QList<ServerPlayer *> &targets) const
 {
     ServerPlayer *target = targets.at(0);
     if (!target)
@@ -1493,7 +1492,7 @@ public:
         response_pattern = "@@youshui";
     }
 
-    bool viewFilter(const QList<const Card *> &selected, const Card *) const
+    bool viewFilter(const QList<const Card *> &, const Card *) const
     {
         return true;
     }
@@ -1523,7 +1522,7 @@ public:
         return target;
     }
 
-    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         if (triggerEvent == EnterDying){
             DyingStruct dying = data.value<DyingStruct>();

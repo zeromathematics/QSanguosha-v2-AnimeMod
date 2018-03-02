@@ -20,6 +20,7 @@ class GuanxingBox;
 class QSanButton;
 class QGroupBox;
 class ChooseOptionsBox;
+class PlayerCardBox;
 class BubbleChatBox;
 struct RoomLayout;
 class Photo;
@@ -176,7 +177,7 @@ public slots:
     void chooseGeneral(const QStringList &generals);
     void chooseSuit(const QStringList &suits);
     void chooseCard(const ClientPlayer *playerName, const QString &flags, const QString &reason,
-        bool handcard_visible, Card::HandlingMethod method, QList<int> disabled_ids);
+        bool handcard_visible, Card::HandlingMethod method, QList<int> disabled_ids, QList<int> handcards);
     void chooseKingdom(const QStringList &kingdoms);
     void chooseOption(const QString &skillName, const QStringList &options);
     void chooseOrder(QSanProtocol::Game3v3ChooseOrderCommand reason);
@@ -283,6 +284,8 @@ private:
     GuanxingBox *guanxing_box;
 
     ChooseOptionsBox *m_chooseOptionsBox;
+
+    PlayerCardBox *m_playerCardBox;
 
     QList<CardItem *> gongxin_items;
 

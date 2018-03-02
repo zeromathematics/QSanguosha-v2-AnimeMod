@@ -262,6 +262,9 @@ public:
         QColor graphicsBoxBackgroundColor;
         QColor graphicsBoxBorderColor;
         QSanSimpleTextFont graphicsBoxTitleFont;
+
+        //Player Card Box
+        QSanSimpleTextFont playerCardBoxPlaceNameText;
     };
 
     enum GeneralIconSize

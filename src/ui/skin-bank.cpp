@@ -784,6 +784,8 @@ bool QSanRoomSkin::_loadLayoutConfig(const QVariant &layout)
     tryParse(config["graphicsBoxBorderColor"], _m_commonLayout.graphicsBoxBorderColor);
     _m_commonLayout.graphicsBoxTitleFont.tryParse(config["graphicsBoxTitleFont"]);
 
+    _m_commonLayout.playerCardBoxPlaceNameText.tryParse(config["playerCardBoxPlaceNameText"]);
+
     _m_commonLayout.m_cardFootnoteFont.tryParse(config["cardFootnoteFont"]);
 
     JsonArray magatamaFont = config["magatamaFont"].value<JsonArray>();
