@@ -38,7 +38,7 @@ end
 mshengjian=sgs.CreateFilterSkill{
 name="mshengjian",
 view_filter = function(self, to_select)
-return sgs.Self:getWeapon()~=nil and to_select:isRed()
+return sgs.Self and sgs.Self:getWeapon()~=nil and to_select:isRed()
 end,
 view_as = function(self, card)
 local id = card:getEffectiveId()
@@ -57,6 +57,18 @@ events={sgs.CardsMoveOneTime},
 on_trigger=function(self,event,player,data)
 local room = player:getRoom()
 local move = data:toMoveOneTime()
+
+if (move.to_place == sgs.Player_PlaceEquip and move.to:objectName() == player:objectName()) or (move.from_places:contains(sgs.Player_PlaceEquip) and move.from:objectName() == player:objectName()) then
+  card_ids = sgs.QList2Table(move.card_ids)
+  for _,card_id in ipairs(card_ids) do
+    if card_id ~= -1 and sgs.Sanguosha:getCard(card_id):isKindOf("Weapon") then
+      room:getThread():delay(100)
+      room:filterCards(player, player:getCards("he"), true)
+    end
+  end
+end
+
+
 if move.from then
 places = sgs.QList2Table(move.from_places)
 local can_invoke=false

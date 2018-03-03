@@ -1569,7 +1569,7 @@ public:
                 if (!yuri || (yuri->getHp() > player->getHp() && !player->hasClub("@amclub_sss")) || !room->askForSkillInvoke(yuri, objectName(), data))
                     return false;
                 room->broadcastSkillInvoke(objectName());
-                if (yuri == player)
+                if (player->hasClub("@amclub_sss"))
                     room->doLightbox(objectName() + "$", 800);
                 QStringList choices;
                 choices << "1_Zuozhan" << "2_Zuozhan" << "3_Zuozhan" << "4_Zuozhan";
@@ -1692,6 +1692,7 @@ public:
                     return false;
                 }
                 if (room->askForSkillInvoke(yuri, objectName(), data)){
+                    room->broadcastSkillInvoke(objectName());
                     if (room->askForChoice(dying.who, "nishen", "nishen_accept+cancel", QVariant::fromValue(yuri)) == "nishen_accept"){
                         dying.who->addClub("@amclub_sss");
                     }

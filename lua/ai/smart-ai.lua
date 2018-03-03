@@ -1254,7 +1254,7 @@ function sgs.isRolePredictable(classical)
 	local mode = string.lower(global_room:getMode())
 	local isMini = (mode:find("mini") or mode:find("custom_scenario"))
 	if (not mode:find("0") and not isMini) or mode =="02p" or mode =="02_1v1" or mode =="04_1v3"
-		or mode =="08_defense" or mode =="04_boss" or mode == "06_3v3" or mode == "06_XMode" 
+		or mode =="08_defense" or mode =="04_boss" or mode == "06_3v3" or mode == "06_XMode"
 		or (not classical and isMini) then return true end
 	return false
 end
@@ -1772,7 +1772,7 @@ end
 function SmartAI:isEnemy(other, another)
 	if not other then self.room:writeToConsole(debug.traceback()) return end
 	--SE for hei
-	if other:hasSkill("yingdi") and self.player:getMark("@real_hei") == 0 then return false end
+	if other and other:hasSkill("yingdi") and self.player:getMark("@real_hei") == 0 then return false end
 	if another then
 		local of, af = self:isFriend(other), self:isFriend(another)
 		return of ~= nil and af ~= nil and of ~= af
@@ -1940,7 +1940,7 @@ function sgs.evaluateAlivePlayersRole(smartai)
 				sgs.ai_role[p:objectName()] = "loyalist"
 				loyalist = loyalist + 1
 				l_count = l_count + 1
-				
+
 			elseif smartai.player:getRole() == "rebel" then
 				sgs.ai_role[p:objectName()] = "rebel"
 				rebel = rebel + 1
@@ -4052,7 +4052,7 @@ function SmartAI:willUsePeachTo(dying)
 		if not self.player:isLocked(analeptic) and self:getCardId("Analeptic") then return self:getCardId("Analeptic") end
 		if self:getCardId("Peach") then return self:getCardId("Peach") end
 	end
---[[ 
+--[[
 该段代码仅影响某些情况下内奸出桃救主公，但维护麻烦，会导致一些未写入该段的模式出桃错误
 	local mode = string.lower(self.room:getMode())
 	if not (mode == "couple" or mode =="02p" or mode =="02_1v1" or mode =="04_1v3"
@@ -4543,7 +4543,7 @@ function SmartAI:needRetrial(judge)
 	elseif type(callback) == "boolean" then
 		return callback
 	end
-	
+
 	if self:isFriend(who) then
 		return not judge:isGood()
 	elseif self:isEnemy(who) then
@@ -4604,7 +4604,7 @@ function SmartAI:getRetrialCardId(cards, judge, self_card)
 		end
 	end
 	if not hasSpade and #other_suit > 0 then table.insertTable(can_use, other_suit) end
-	
+
 	if reason ~= "lightning" then
 		for _, aplayer in sgs.qlist(self.room:getAllPlayers()) do
 			if aplayer:containsTrick("lightning") then
@@ -4617,7 +4617,7 @@ function SmartAI:getRetrialCardId(cards, judge, self_card)
 			end
 		end
 	end
-	
+
 	if next(can_use) then
 		if self:needToThrowArmor() then
 			for _, c in ipairs(can_use) do
@@ -6672,7 +6672,7 @@ function SmartAI:findPlayerToDamage(damage, source, nature, targets, include_sel
     source = source or nil
     base_value = base_value or 0
     if include_self == nil then include_self = true    end
-    
+
     local victims
     if targets then
         victims = targets
@@ -6689,7 +6689,7 @@ function SmartAI:findPlayerToDamage(damage, source, nature, targets, include_sel
             return nil
         end
     end
-    
+
     local JinXuanDi = self.room:findPlayerBySkillName("wuling")
     local windEffect = ( JinXuanDi and JinXuanDi:getMark("@wind") > 0 )
     if windEffect and nature == sgs.DamageStruct_Fire then
@@ -6699,10 +6699,10 @@ function SmartAI:findPlayerToDamage(damage, source, nature, targets, include_sel
     if thunderEffect and nature == sgs.DamageStruct_Thunder then
         damage = damage + 1
     end
-    
+
     local isSourceFriend = ( source and self:isFriend(source) )
     local isSourceEnemy = ( source and self:isEnemy(source) )
-    
+
     local function getDamageValue(target, self_only)
         local value = 0
         local isFriend = self:isFriend(target)
@@ -6822,20 +6822,20 @@ function SmartAI:findPlayerToDamage(damage, source, nature, targets, include_sel
         end
         return value
     end
-    
+
     local values = {}
     for _,victim in ipairs(victims) do
         values[victim:objectName()] = getDamageValue(victim, false) or 0
     end
-    
+
     local compare_func = function(a, b)
         local valueA = values[a:objectName()] or 0
         local valueB = values[b:objectName()] or 0
         return valueA >= valueB
     end
-    
+
     table.sort(victims, compare_func)
-    
+
     if return_table then
         local result = {}
         for _,victim in ipairs(victims) do
@@ -6845,13 +6845,13 @@ function SmartAI:findPlayerToDamage(damage, source, nature, targets, include_sel
         end
         return result
     end
-    
+
     local victim = victims[1]
     local value = values[victim:objectName()] or 0
     if value > base_value then
         return victim
     end
-    
+
     return nil
 end
 
@@ -7029,4 +7029,3 @@ for _, ascenario in ipairs(sgs.Sanguosha:getModScenarioNames()) do
 		end
 	end
 end
-

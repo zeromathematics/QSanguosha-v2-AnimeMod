@@ -520,7 +520,7 @@ end
 
 sgs.ai_skill_invoke.nishen = function(self, data)
 	local dying = data:toDying()
-	if not self:isEnemy(dying) then return true end
+	if not self:isEnemy(dying.who) then return true end
 	for _,p in ipairs(self.friends) do
 		if self:isWeak(p) then return false end
 	end
