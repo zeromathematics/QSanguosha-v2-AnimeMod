@@ -1203,12 +1203,20 @@ int Room::askForCardChosen(ServerPlayer *player, ServerPlayer *who, const QStrin
         if (flags_copy.contains("j") && !player->canDiscard(who, "j"))
             flags_copy.remove("j");
     }
-    // fengbi special, just DIRTY
-    if (who->hasSkill("fengbi") && who != player && (who->getEquips().count() > 0 || who->getJudgingArea().count() > 0)){
-        foreach(const Card *card, who->getHandcards()){
-            disabled_ids_copy.append(card->getEffectiveId());
+    // dirty
+    bool is_fengbi_h_only = false;
+    if (who->hasSkill("fengbi") && who != player){
+        if (who->getEquips().count() > 0 && flags_copy.contains("e")){
+            flags_copy.replace("h", "");
+        }
+        else if (who->getJudgingArea().count() > 0 && flags_copy.contains("j")){
+            flags_copy.replace("h", "");
+        }
+        else{
+            is_fengbi_h_only = true;
         }
     }
+   
     /*
     if (method == Card::MethodGet) {
         foreach(int card_id, card_ids)
@@ -1271,32 +1279,40 @@ int Room::askForCardChosen(ServerPlayer *player, ServerPlayer *who, const QStrin
                 qShuffle(handcards);
             }
 
-            JsonArray arg;
-            arg << who->objectName();
-            arg << flags_copy;
-            arg << reason;
-            arg << handcard_visible;
-            arg << (int)method;
-            arg << JsonUtils::toJsonArray(disabled_ids_copy);
-            arg << JsonUtils::toJsonArray(handcards);
-            bool success = doRequest(player, S_COMMAND_CHOOSE_CARD, arg, true);
-
-            //@todo: check if the card returned is valid
-            JsonArray clientReply = player->getClientReply().value<JsonArray>();
-            if (!success || clientReply.size() != 2) {
-                // randomly choose a card
+            if (is_fengbi_h_only){
                 QList<const Card *> cards = who->getCards(flags_copy);
                 foreach(int id, disabled_ids_copy)
                     cards.removeOne(Sanguosha->getCard(id));
                 card_id = cards.at(qrand() % cards.length())->getId();
             }
-            else {
-                card_id = clientReply.at(0).toInt();
+            else{
+                JsonArray arg;
+                arg << who->objectName();
+                arg << flags_copy;
+                arg << reason;
+                arg << handcard_visible;
+                arg << (int)method;
+                arg << JsonUtils::toJsonArray(disabled_ids_copy);
+                arg << JsonUtils::toJsonArray(handcards);
+                bool success = doRequest(player, S_COMMAND_CHOOSE_CARD, arg, true);
 
-                int index = clientReply.at(1).toInt();
+                //@todo: check if the card returned is valid
+                JsonArray clientReply = player->getClientReply().value<JsonArray>();
+                if (!success || clientReply.size() != 2) {
+                    // randomly choose a card
+                    QList<const Card *> cards = who->getCards(flags_copy);
+                    foreach(int id, disabled_ids_copy)
+                        cards.removeOne(Sanguosha->getCard(id));
+                    card_id = cards.at(qrand() % cards.length())->getId();
+                }
+                else {
+                    card_id = clientReply.at(0).toInt();
 
-                if (card_id == Card::S_UNKNOWN_CARD_ID)
-                    card_id = handcards.at(index);
+                    int index = clientReply.at(1).toInt();
+
+                    if (card_id == Card::S_UNKNOWN_CARD_ID)
+                        card_id = handcards.at(index);
+                }
             }
         }
     }
