@@ -479,6 +479,9 @@ void RoomScene::handleGameEvent(const QVariant &args)
         PlayerCardContainer *container = (PlayerCardContainer *)_getGenericCardContainer(Player::PlaceHand, player);
         if (!player->hasSkill("huashen"))
             container->stopHuaShen();
+        if (skill_name == "fengbi" && !player->hasSkill("fengbi")){
+            container->updateHandcardNum();
+        }
         container->updateAvatarTooltip();
         break;
     }
@@ -491,6 +494,11 @@ void RoomScene::handleGameEvent(const QVariant &args)
         acquireSkill(player, skill_name);
 
         PlayerCardContainer *container = (PlayerCardContainer *)_getGenericCardContainer(Player::PlaceHand, player);
+
+        if (skill_name == "fengbi" && player->hasSkill("fengbi")){
+            container->updateHandcardNum();
+        }
+
         container->updateAvatarTooltip();
         break;
     }

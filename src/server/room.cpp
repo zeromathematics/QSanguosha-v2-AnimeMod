@@ -1203,6 +1203,12 @@ int Room::askForCardChosen(ServerPlayer *player, ServerPlayer *who, const QStrin
         if (flags_copy.contains("j") && !player->canDiscard(who, "j"))
             flags_copy.remove("j");
     }
+    // fengbi special, just DIRTY
+    if (who->hasSkill("fengbi") && who != player && (who->getEquips().count() > 0 || who->getJudgingArea().count() > 0)){
+        foreach(const Card *card, who->getHandcards()){
+            disabled_ids_copy.append(card->getEffectiveId());
+        }
+    }
     /*
     if (method == Card::MethodGet) {
         foreach(int card_id, card_ids)
