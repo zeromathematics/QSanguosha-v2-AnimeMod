@@ -38,11 +38,7 @@ end
 mshengjian=sgs.CreateFilterSkill{
 name="mshengjian",
 view_filter = function(self, to_select)
-local room=sgs.Sanguosha:currentRoom()
-local player=room:findPlayerBySkillName(self:objectName())
-if player:getWeapon()~=nil then
-return to_select:isRed()
-end
+return sgs.Self:getWeapon()~=nil and to_select:isRed()
 end,
 view_as = function(self, card)
 local id = card:getEffectiveId()

@@ -87,31 +87,22 @@ se_guwu = sgs.CreateTriggerSkill{
 		if event == sgs.GameStart then
 			-- game start
 			if player:hasSkill(self:objectName()) then
-				player:gainMark("@amclub_mus")
+				player:addClub("@amclub_mus")
 			end
 		elseif event == sgs.EventAcquireSkill then
 			-- acquire
 			if player:hasSkill(self:objectName()) then
-				for _,name in sgs.qlist(player:getMarkNames()) do
-					if string.sub(name,1,5)=="@club" then
-						player:loseAllMarks(name)
-					end
-				end
-				player:gainMark("@amclub_mus")
+				player:addClub("@amclub_mus")
 			end
 		elseif event == sgs.EventLoseSkill then
 			if data:toString() == self:objectName() then
-				for _,p in sgs.qlist(room:getAlivePlayers()) do
-					p:loseAllMarks("@amclub_mus")
-				end
+				room:clearClub("@amclub_mus")
 			end
 		elseif event == sgs.Death then
 			-- death
 			local death = data:toDeath()
 			if death.who:hasSkill(self:objectName()) then
-				for _,p in sgs.qlist(room:getAlivePlayers()) do
-					p:loseAllMarks("@amclub_mus")
-				end
+				room:clearClub("@amclub_mus")
 			end
 		elseif event == sgs.HpRecover then
 
@@ -119,15 +110,8 @@ se_guwu = sgs.CreateTriggerSkill{
 
 			local mygod= room:findPlayerBySkillName("se_guwu")
 			if not mygod then return false end
-			local hasClub = false
-			for _,name in ipairs(player:getMarkNames()) do
-				if string.sub(name,1,5)=="@club" then
-					hasClub = true
 
-				end
-			end
-
-			if toAsk and not hasClub and toAsk:getPhase() == sgs.Player_NotActive and toAsk:getMark("se_guwu_ban") == 0 then
+			if toAsk and not player:hasClub() and toAsk:getPhase() == sgs.Player_NotActive and toAsk:getMark("se_guwu_ban") == 0 then
 				-- join
 
 				local toAskData = sgs.QVariant()
@@ -137,7 +121,7 @@ se_guwu = sgs.CreateTriggerSkill{
 					local myGodData = sgs.QVariant()
 					myGodData:setValue(mygod)
 					if room:askForChoice(toAsk, self:objectName(), "se_guwu_accept+cancel", myGodData) == "se_guwu_accept" then
-						toAsk:gainMark("@amclub_mus")
+						toAsk:addClub("@amclub_mus")
 					end
 				elseif choice == "no_more" then
 					toAsk:setMark("se_guwu_ban", 1)
@@ -149,7 +133,7 @@ se_guwu = sgs.CreateTriggerSkill{
 			local source = dying_data.who
 			local mygod= room:findPlayerBySkillName("se_guwu")
 			if mygod then
-				if mygod:isAlive() and source:isAlive() and source:getMark("@amclub_mus") > 0 then
+				if mygod:isAlive() and source:isAlive() and source:hasClub("@amclub_mus") then
 					if room:askForSkillInvoke(mygod, "se_guwu", data) then
 						room:broadcastSkillInvoke(self:objectName())
 						local judge = sgs.JudgeStruct()
@@ -165,10 +149,8 @@ se_guwu = sgs.CreateTriggerSkill{
 							room:recover(judge.who,re,true)
 						else
 							room:doLightbox("se_guwu$", 1200)
-							for _,p in sgs.qlist(room:getAlivePlayers()) do
-								if p:getMark("@amclub_mus") > 0 then
-									p:drawCards(1)
-								end
+							for _,p in sgs.qlist(room:getPlayersByClub("@amclub_mus")) do
+								p:drawCards(1)
 							end
 						end
 					end

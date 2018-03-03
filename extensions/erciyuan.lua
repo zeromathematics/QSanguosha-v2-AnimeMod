@@ -816,7 +816,8 @@ LuaChigui=sgs.CreateTriggerSkill{
 			for _,p in sgs.qlist(others) do
 				local weapon = p:getWeapon()
 				if weapon then
-					if room:askForSkillInvoke(player,weapon:objectName(), data) then
+					local d = sgs.QVariant(weapon:objectName())
+					if room:askForChoice(player, "LuaChigui%to:"..p:objectName().."%log:"..weapon:objectName(), "chigui_gain+cancel", d) == "chigui_gain" then
 						room:broadcastSkillInvoke("LuaChigui")
 						room:loseHp(player)
 						player:obtainCard(weapon)
@@ -3360,9 +3361,9 @@ sgs.LoadTranslationTable{
 	["a"]="令一名角色摸牌",
 	["b"]="令一名角色弃牌",
 	["recover"]="回复1点体力",
+	["draw"]="摸两张牌",
 	["eachdraw"]="该角色摸两张牌",
 	["youdiscard"]="你弃置一张牌",
-	["draw"]="摸两张牌",
 	["throw"]="弃置",
 	["gx"]="以任意顺序置于牌堆顶",
 	["throwtableequip"]="弃置场上一张装备牌",
@@ -3400,6 +3401,8 @@ sgs.LoadTranslationTable{
 	["#odanobuna"]="第六天魔王",
 	["LuaBuwu"]="布武",
 	["LuaChigui"]="赤鬼",
+	["#LuaChigui"] = "是否获得 %to 的 %log ？",
+	["chigui_gain"] = "失去1点体力，获得之，然后再摸1张牌",
 	["LuaTianmoDefense"]="天魔",
 	["yuuta"]="富樫勇太",
 	["@yuuta"]="中二病也要谈恋爱",

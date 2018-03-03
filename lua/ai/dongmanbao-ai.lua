@@ -4615,65 +4615,6 @@ sgs.ai_skill_playerchosen["se_tongling_k"] = function(self, targets)
 	return targets[1]
 end
 
---由理
-sgs.ai_skill_invoke["SE_Zuozhan"] = true
-
-sgs.ai_skill_choice["SE_Zuozhan1"] = function(self, choices, data)
-	local room = self.room
-	local p = room:getCurrent()
-	if self:isEnemy(p) then
-		return "1_Zuozhan"
-	else
-		if p:getHandcardNum() <= p:getHp() then return "4_Zuozhan" else return "2_Zuozhan" end
-	end
-	return "1_Zuozhan"
-end
-
-sgs.ai_skill_choice["SE_Zuozhan2"] = function(self, choices, data)
-	local room = self.room
-	local p = room:getCurrent()
-	if self:isEnemy(p) then
-		if p:getHandcardNum() <= 1 and p:getHp() <= 2 then
-			return "3_Zuozhan"
-		else
-			return "2_Zuozhan"
-		end
-	else
-		if p:getHandcardNum() <= p:getHp() then return "2_Zuozhan" else return "3_Zuozhan" end
-	end
-	return "2_Zuozhan"
-end
-
-sgs.ai_skill_choice["SE_Zuozhan3"] = function(self, choices, data)
-	local room = self.room
-	local p = room:getCurrent()
-	if self:isEnemy(p) then
-		if p:getHandcardNum() <= 1 and p:getHp() <= 2 then
-			return "2_Zuozhan"
-		else
-			return "4_Zuozhan"
-		end
-	else
-		if p:getHandcardNum() <= p:getHp() then return "3_Zuozhan" else return "4_Zuozhan" end
-	end
-	return "3_Zuozhan"
-end
-
-sgs.ai_skill_choice["SE_Zuozhan4"] = function(self, choices, data)
-	local room = self.room
-	local p = room:getCurrent()
-	if self:isEnemy(p) then
-		if p:getHandcardNum() <= 1 and p:getHp() <= 2 then
-			return "4_Zuozhan"
-		else
-			return "3_Zuozhan"
-		end
-	else
-		return "1_Zuozhan"
-	end
-	return "4_Zuozhan"
-end
-
 --雪菜
 sgs.ai_skill_invoke["SE_Shengmu"] = function(self, data)
 	local da = data:toDamage()
@@ -4831,6 +4772,24 @@ sgs.ai_skill_invoke["SE_Tiansuo"] = function(self, data)
 	local use = data:toCardUse()
 	if self:isEnemy(use.to:at(0)) then return true end
 	return false
+end
+
+sgs.ai_skill_cardask["@SE_Tiansuo-discard"] = function(self, data, pattern, target)
+	local jinks = 0
+	local taco = 0
+	local slash = 0
+	local peach = 0
+	local analeptic = 0
+	for _,card in sgs.qlist(self.player:getHandcards()) do
+		if card:isKindOf("Jink") then jinks = jinks + 1 end
+		if card:isKindOf("Tacos") then taco = taco + 1 end
+		if card:isKindOf("Slash") then slash = slash + 1 end
+		if card:isKindOf("Peach") then peach = peach + 1 end
+		if card:isKindOf("Analeptic") then analeptic = analeptic + 1 end
+	end
+	if jinks == 0 then return "." end
+	if jinks + slash + taco < 2 or peach > 0 or (self:isWeak() and analeptic > 0) then return "." end
+	return self:getCardId("Tacos") or self:getCardId("Slash") or self:getCardId("Jink")
 end
 
 sgs.ai_skill_invoke["se_gate"] = true

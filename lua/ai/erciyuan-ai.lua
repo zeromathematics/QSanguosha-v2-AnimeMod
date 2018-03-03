@@ -279,7 +279,7 @@ sgs.ai_card_intention["luagongluecard"]  = 60
 
 
 --信奈
-sgs.ai_skill_invoke.LuaChigui = function(self, data)
+sgs.ai_skill_choice.LuaChigui = function(self, choices, data)
 	local peaches = 0
 	local hand_weapon = 0
 	for _,card in sgs.qlist(self.player:getHandcards()) do
@@ -290,18 +290,18 @@ sgs.ai_skill_invoke.LuaChigui = function(self, data)
 			hand_weapon = hand_weapon + 1
 		end
 	end
-	if self.player:getHp() <= 2 and peaches == 0 then return false end
-	if self.player:getHp() <= 1 and peaches <= 1 then return false end
-	if self.player:getHp() <= 2 and self.player:getWeapon()  then return false end
-	if self.player:getHp() <= 3 and hand_weapon > 0 then return false end
+	if self.player:getHp() <= 2 and peaches == 0 then return "cancel" end
+	if self.player:getHp() <= 1 and peaches <= 1 then return "cancel" end
+	if self.player:getHp() <= 2 and self.player:getWeapon()  then return "cancel" end
+	if self.player:getHp() <= 3 and hand_weapon > 0 then return "cancel" end
 	local dest
-	for _,p in sgs.qlist(room:getOtherPlayers(self.player)) do
-		if p:getWeapon():objectName() == data:toString() then
+	for _,p in sgs.qlist(self.room:getOtherPlayers(self.player)) do
+		if p:getWeapon() and p:getWeapon():objectName() == data:toString() then
 			dest = p
 		end
 	end
-	if self:isEnemy(dest) then return true end
-	return false
+	if self:isEnemy(dest) then return "chigui_gain" end
+	return "cancel"
 end
 
 

@@ -98,7 +98,7 @@ sgs.ai_skill_choice.reijyuu = function(self, choices, data)
 	return "reijyuuMove"
 end
 
-function SmartAI:useCardtacos(card, use)
+function SmartAI:useCardTacos(card, use)
 	for _,p in ipairs(self.enemies) do
 		if p:hasSkill("eastfast") then return end
 	end
@@ -108,10 +108,10 @@ function SmartAI:useCardtacos(card, use)
 	use.card = card
 end
 
-sgs.ai_card_intention.tacos = -40
+sgs.ai_card_intention.Tacos = -40
 
-sgs.ai_keep_value.tacos = 2.5
-sgs.ai_use_value.tacos = 8
-sgs.ai_use_priority.tacos = 4
+sgs.ai_keep_value.Tacos = 2.5
+sgs.ai_use_value.Tacos = 8
+sgs.ai_use_priority.Tacos = 4
 
-sgs.dynamic_value.benefit.tacos = true
+sgs.dynamic_value.benefit.Tacos = true

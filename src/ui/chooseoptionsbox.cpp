@@ -78,7 +78,7 @@ void ChooseOptionsBox::chooseOption(const QStringList &options)
                 QStringList logs = element.split(":");
                 if (!logs.at(1).isEmpty()) {
                     QString log = logs.at(1);
-                    titile_text.replace("%log", log);
+                    titile_text.replace("%log", Sanguosha->translate(log));
                 }
             }
         }

@@ -856,6 +856,17 @@ void ServerPlayer::loseAllMarks(const QString &mark_name)
     loseMark(mark_name, getMark(mark_name));
 }
 
+void ServerPlayer::removeCurrentClub(){
+    if (hasClub()){
+        loseAllMarks(getClubMark());
+    }
+}
+
+void ServerPlayer::addClub(const QString &club_mark){
+    removeCurrentClub();
+    gainMark(club_mark);
+}
+
 void ServerPlayer::addSkill(const QString &skill_name)
 {
     Player::addSkill(skill_name);

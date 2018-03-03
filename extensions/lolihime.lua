@@ -802,7 +802,7 @@ eastfast = sgs.CreateTriggerSkill{
 											room:throwCard(acard, nil, nil)
 										end
 										if choice =="save" then
-											if acard:isKindOf("tacos") then
+											if acard:isKindOf("Tacos") then
 												room:broadcastSkillInvoke("eastfast", 2)
 											end
 											player:addToPile("save", acard, false)

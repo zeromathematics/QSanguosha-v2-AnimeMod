@@ -1109,7 +1109,15 @@ void GameRule::rewardAndPunish(ServerPlayer *killer, ServerPlayer *victim) const
         || killer->getRoom()->getMode() == "04_boss"
         || killer->getRoom()->getMode() == "08_defense")
         return;
-
+    if (killer->getRoom()->getTag("no_reward_or_punish") == victim->objectName()){
+        killer->getRoom()->removeTag("no_reward_or_punish");
+        LogMessage log;
+        log.type = "#no_reward_or_punish";
+        log.from = killer;
+        log.arg = victim->getGeneralName();
+        killer->getRoom()->sendLog(log);
+        return;
+    }
     if (killer->getRoom()->getMode() == "06_3v3") {
         if (Config.value("3v3/OfficialRule", "2016").toString().startsWith("201"))
             killer->drawCards(2, "kill");

@@ -79,6 +79,8 @@ public:
     void setPlayerMark(ServerPlayer *player, const QString &mark, int value);
     void addPlayerMark(ServerPlayer *player, const QString &mark, int add_num = 1);
     void removePlayerMark(ServerPlayer *player, const QString &mark, int remove_num = 1);
+    void clearClub(const QString &club_mark);
+    QList<ServerPlayer *> getPlayersByClub(const QString &club_mark) const;
     void setPlayerCardLimitation(ServerPlayer *player, const QString &limit_list,
         const QString &pattern, bool single_turn);
     void removePlayerCardLimitation(ServerPlayer *player, const QString &limit_list,

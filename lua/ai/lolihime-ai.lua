@@ -157,7 +157,7 @@ sgs.ai_skill_invoke.dandiao = function(self, data)
 	if heart==Ah then table.insert(condition,"heart") end
 	if club==Ah then table.insert(condition,"club") end
 	if diamond==Ah then table.insert(condition,"diamond") end
-	
+
 	spade=0
 	heart=0
 	club=0
@@ -227,7 +227,7 @@ sgs.ai_skill_choice["eastfast"] = function(self, choices, data)
 		end
 	end
 
-	if card:isKindOf("tacos") then return "save" end
+	if card:isKindOf("Tacos") then return "save" end
 	if self:getUseValue(card) > 5 then return "save" end
 	if num > room:getAlivePlayers():length() * 3 and self:getUseValue(card) > 4.5 then return "save" end
 	if num > 2 and self:getUseValue(card) >= 5 then return "save" end
@@ -235,6 +235,5 @@ sgs.ai_skill_choice["eastfast"] = function(self, choices, data)
 end
 
 function sgs.ai_cardneed.eastfast(to, card, self)
-	return card:isKindOf("tacos")
+	return card:isKindOf("Tacos")
 end
-

@@ -1836,6 +1836,21 @@ void Room::removePlayerMark(ServerPlayer *player, const QString &mark, int remov
     setPlayerMark(player, mark, value);
 }
 
+void Room::clearClub(const QString &club_mark){
+    foreach(ServerPlayer *p, getAlivePlayers()){
+        p->loseAllMarks(club_mark);
+    }
+}
+
+QList<ServerPlayer *> Room::getPlayersByClub(const QString &club_mark) const{
+    QList<ServerPlayer *> ps;
+    foreach(ServerPlayer *p, getAlivePlayers()){
+        if (p->hasClub(club_mark))
+            ps.append(p);
+    }
+    return ps;
+}
+
 void Room::setPlayerCardLimitation(ServerPlayer *player, const QString &limit_list,
     const QString &pattern, bool single_turn)
 {

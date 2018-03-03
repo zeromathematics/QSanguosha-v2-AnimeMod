@@ -191,6 +191,10 @@ public:
     virtual void setMark(const QString &mark, int value);
     int getMark(const QString &mark) const;
     QStringList getMarkNames() const;
+    // club
+    bool hasClub(const QString &club_mark) const;
+    bool hasClub() const;
+    QString getClubMark() const;
 
     void setChained(bool chained);
     bool isChained() const;

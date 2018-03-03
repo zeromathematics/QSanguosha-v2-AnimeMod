@@ -856,13 +856,8 @@ void HaremuCard::use(Room *room, ServerPlayer *player, QList<ServerPlayer *> &ta
     player->tag["heremu_targets"] = used;
     room->obtainCard(target, this, true);
     
-    foreach(QString name, target->getMarkNames()){
-        if (name.startsWith("@amclub_")){
-            return;
-        }
-    }
-    if (room->askForChoice(target, "haremu", "haremu_accept+cancel", QVariant::fromValue(player)) == "haremu_accept"){
-        target->gainMark("@amclub_haremu");
+    if (!target->hasClub() && room->askForChoice(target, "haremu", "haremu_accept+cancel", QVariant::fromValue(player)) == "haremu_accept"){
+        target->addClub("@amclub_haremu");
     }
 }
 
@@ -906,31 +901,22 @@ public:
     {
         if (triggerEvent == GameStart){
             if (player->hasSkill(objectName()))
-                player->gainMark("@amclub_haremu");
+                player->addClub("@amclub_haremu");
         }
         else if (triggerEvent == EventAcquireSkill){
             if (player->hasSkill(objectName())){
-                foreach(QString name, player->getMarkNames()){
-                    if (name.startsWith("@club")){
-                        player->loseAllMarks(name);
-                    }
-                }
-                player->gainMark("@amclub_haremu");
+                player->addClub("@amclub_haremu");
             }
         }
         else if (triggerEvent == EventLoseSkill){
             if (data.toString() == objectName()){
-                foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    p->loseAllMarks("@amclub_haremu");
-                }
+                room->clearClub("@amclub_haremu");
             }
         }
         else if (triggerEvent == Death){
             DeathStruct death = data.value<DeathStruct>();
             if (death.who->hasSkill(objectName())){
-                foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    p->loseAllMarks("@amclub_haremu");
-                }
+                room->clearClub("@amclub_haremu");
             }
         }
         else if (triggerEvent == EventPhaseStart){
@@ -960,12 +946,12 @@ public:
 
     int getExtra(const Player *target) const
     {
-        if (target->getMark("@amclub_haremu") == 0){
+        if (!target->hasClub("@amclub_haremu")){
             return 0;
         }
         int i = 1;
         foreach(const Player *p, target->getSiblings()){
-            if (p->isAlive() && p->getMark("@amclub_haremu") > 0){
+            if (p->isAlive() && p->hasClub("@amclub_haremu")){
                 i++;
             }
         }
@@ -1560,6 +1546,166 @@ public:
     }
 };
 
+// yuri
+class Zuozhan : public TriggerSkill
+{
+public:
+    Zuozhan() : TriggerSkill("zuozhan")
+    {
+        frequency = NotFrequent;
+        events << EventPhaseStart << EventPhaseChanging;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart){
+            if (player->getPhase() == Player::Start){
+                ServerPlayer * yuri = room->findPlayerBySkillName(objectName());
+                if (!yuri || (yuri->getHp() > player->getHp() && !player->hasClub("@amclub_sss")) || !room->askForSkillInvoke(yuri, objectName(), data))
+                    return false;
+                room->broadcastSkillInvoke(objectName());
+                if (yuri == player)
+                    room->doLightbox(objectName() + "$", 800);
+                QStringList choices;
+                choices << "1_Zuozhan" << "2_Zuozhan" << "3_Zuozhan" << "4_Zuozhan";
+                QString choice1 = room->askForChoice(yuri, "zuozhan1%from:" + player->objectName(), choices.join("+"));
+                choices.removeAll(choice1);
+                QString choice2 = room->askForChoice(yuri, "zuozhan2%from:" + player->objectName(), choices.join("+"));
+                choices.removeAll(choice2);
+                QString choice3 = room->askForChoice(yuri, "zuozhan3%from:" + player->objectName(), choices.join("+"));
+                choices.removeAll(choice3);
+                QString choice4 = choices.first();
+                QStringList result;
+                result << choice1 << choice2 << choice3 << choice4;
+                
+                player->tag["zuozhan_tag"] = QVariant(result);
+            }
+            else if (player->getPhase() == Player::Finish){
+                player->tag["zuozhan_tag"].clear();
+            }
+        }
+        else if (triggerEvent == EventPhaseChanging){
+            QStringList result = player->tag["zuozhan_tag"].toStringList();
+            if (result.count() == 0){
+                return false;
+            }
+            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
+            if (change.to == Player::NotActive){
+                player->tag["zuozhan_tag"].clear();
+                return false;
+            }
+            QString next = result.first();
+            if (next == "1_Zuozhan"){
+                change.to = Player::Judge;
+            }
+            else if (next == "2_Zuozhan"){
+                change.to = Player::Draw;
+            }
+            else if (next == "3_Zuozhan"){
+                change.to = Player::Play;
+            }
+            else if (next == "4_Zuozhan"){
+                change.to = Player::Discard;
+            }
+            else if (next == "0_Zuozhan"){
+                change.to = Player::Finish;
+            }
+            data.setValue(change);
+            result.removeAt(0);
+            if (result.count() == 0 && next != "0_Zuozhan"){
+                result.append("0_Zuozhan");
+            }
+            player->tag["zuozhan_tag"] = QVariant(result);
+        }
+        return false;
+    }
+};
+
+
+
+class Nishen : public TriggerSkill
+{
+public:
+    Nishen() : TriggerSkill("nishen")
+    {
+        frequency = NotFrequent;
+        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EnterDying;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == GameStart){
+            if (player->hasSkill(objectName()))
+                player->addClub("@amclub_sss");
+        }
+        else if (triggerEvent == EventAcquireSkill){
+            if (player->hasSkill(objectName())){
+                player->addClub("@amclub_sss");
+            }
+        }
+        else if (triggerEvent == EventLoseSkill){
+            if (data.toString() == objectName()){
+                room->clearClub("@amclub_sss");
+            }
+        }
+        else if (triggerEvent == Death){
+            DeathStruct death = data.value<DeathStruct>();
+            if (death.who->hasClub("@amclub_sss") && death.who == player){
+                room->setTag("no_reward_or_punish", QVariant(death.who->objectName()));
+                foreach(ServerPlayer *p, room->getPlayersByClub("@amclub_sss")){
+                    if (p->getLostHp() > 0){
+                        if (room->askForChoice(p, objectName(), "draw+recover", data) == "draw"){
+                            p->drawCards(2);
+                        }
+                        else{
+                            room->recover(p, RecoverStruct(death.who));
+                        }
+                    }
+                    else{
+                        p->drawCards(2);
+                    }
+                }
+            }
+            if (death.who->hasSkill(objectName())){
+                room->clearClub("@amclub_sss");
+            }
+        }
+        else if (triggerEvent == EnterDying){
+            DyingStruct dying = data.value<DyingStruct>();
+            if (!dying.who->hasSkill(objectName())){
+                ServerPlayer *yuri = room->findPlayerBySkillName(objectName());
+                if (!yuri || !yuri->isAlive() || dying.who->hasClub()){
+                    return false;
+                }
+                QStringList used = yuri->tag["sss_targets"].toStringList();
+                if (used.contains(dying.who->objectName())){
+                    return false;
+                }
+                if (room->askForSkillInvoke(yuri, objectName(), data)){
+                    if (room->askForChoice(dying.who, "nishen", "nishen_accept+cancel", QVariant::fromValue(yuri)) == "nishen_accept"){
+                        dying.who->addClub("@amclub_sss");
+                    }
+                    QStringList used = yuri->tag["sss_targets"].toStringList();
+                    used.append(dying.who->objectName());
+                    yuri->tag["sss_targets"] = used;
+                }
+                
+            }
+        }
+        return false;
+    }
+};
+
 HayatePackage::HayatePackage()
     : Package("hayate")
 {
@@ -1605,9 +1751,14 @@ HayatePackage::HayatePackage()
     k1->addWakeTypeSkillForAudio("qiubang");
     k1->addWakeTypeSkillForAudio("youshui");
 
+    General *yuri = new General(this, "yuri", "real", 3, false);
+    yuri->addSkill(new Zuozhan);
+    yuri->addSkill(new Nishen);
+
     addMetaObject<TiaojiaoCard>();
     addMetaObject<HaremuCard>();
     addMetaObject<YoushuiCard>();
+
 }
 
 ADD_PACKAGE(Hayate)

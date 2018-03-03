@@ -447,11 +447,102 @@ end
 
 -- k1
 sgs.ai_skill_choice.guiyin = function(self, choices, data)
-	local k1 = room:findPlayerBySkillName("guiyin")
+	local k1 = self.room:findPlayerBySkillName("guiyin")
 	if self:isFriend(k1) then return "guiyin_give" end
 	return "cancel"
 end
 
 
 -- 球棒
+
 -- 诱说
+
+
+
+--由理
+sgs.ai_skill_invoke["zuozhan"] = true
+
+sgs.ai_skill_choice["zuozhan1"] = function(self, choices, data)
+	local room = self.room
+	local p = room:getCurrent()
+	if self:isEnemy(p) then
+		return "1_Zuozhan"
+	else
+		if p:getHandcardNum() <= p:getHp() then return "4_Zuozhan" else return "2_Zuozhan" end
+	end
+	return "1_Zuozhan"
+end
+
+sgs.ai_skill_choice["zuozhan2"] = function(self, choices, data)
+	local room = self.room
+	local p = room:getCurrent()
+	if self:isEnemy(p) then
+		if p:getHandcardNum() <= 1 and p:getHp() <= 2 then
+			return "3_Zuozhan"
+		else
+			return "2_Zuozhan"
+		end
+	else
+		if p:getHandcardNum() <= p:getHp() then return "2_Zuozhan" else return "3_Zuozhan" end
+	end
+	return "2_Zuozhan"
+end
+
+sgs.ai_skill_choice["zuozhan3"] = function(self, choices, data)
+	local room = self.room
+	local p = room:getCurrent()
+	if self:isEnemy(p) then
+		if p:getHandcardNum() <= 1 and p:getHp() <= 2 then
+			return "2_Zuozhan"
+		else
+			return "4_Zuozhan"
+		end
+	else
+		if p:getHandcardNum() <= p:getHp() then return "3_Zuozhan" else return "4_Zuozhan" end
+	end
+	return "3_Zuozhan"
+end
+
+sgs.ai_skill_choice["zuozhan4"] = function(self, choices, data)
+	local room = self.room
+	local p = room:getCurrent()
+	if self:isEnemy(p) then
+		if p:getHandcardNum() <= 1 and p:getHp() <= 2 then
+			return "4_Zuozhan"
+		else
+			return "3_Zuozhan"
+		end
+	else
+		return "1_Zuozhan"
+	end
+	return "4_Zuozhan"
+end
+
+sgs.ai_skill_invoke.nishen = function(self, data)
+	local dying = data:toDying()
+	if not self:isEnemy(dying) then return true end
+	for _,p in ipairs(self.friends) do
+		if self:isWeak(p) then return false end
+	end
+	return true
+end
+
+sgs.ai_skill_choice.nishen = function(self, choices, data)
+	choices = choices:split("+")
+	local on_join = false
+	for _,choice in ipairs(choices) do
+		if choice == "nishen_accept" then
+			on_join = true
+		end
+	end
+	if on_join then
+		local yuri = self.room:findPlayerBySkillName("nishen")
+		if not yuri then return "cancel" end
+		if self.player:getRole() == "renegade" then return "cancel" end
+		if not self:isEnemy(yuri) then return "nishen_accept" end
+		return "cancel"
+	else
+		if self.player:getHandcardNum() < self.player:getHp() * 2 then return "draw" end
+		return "recover"
+	end
+end

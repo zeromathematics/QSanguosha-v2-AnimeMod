@@ -217,7 +217,7 @@ if SenjyutsuRinkUse then
 				end
 				if not have then
 					group = i
-					break 
+					break
 				end
 			end
 			targets[1]:gainMark(string.format("@SenjyutsuGroup"..group))
@@ -314,7 +314,7 @@ sgs.LoadTranslationTable{
 
 tacos = sgs.CreateBasicCard{
 	name = "tacos",
-	class_name = "tacos",
+	class_name = "Tacos",
 	subtype = "specialcard",
 	target_fixed = true,
 	can_recast = false,
@@ -334,8 +334,8 @@ tacos = sgs.CreateBasicCard{
 		if n==0 then return false end
 		local j=math.random(0,n-1)
 		effect.to:obtainCard(sgs.Sanguosha:getCard(room:getDiscardPile():at(j)))
-		
-		
+
+
 		n=math.floor((room:getDiscardPile():length())*3/4)
 		if n==0 then return false end
 		local cardslist = sgs.IntList()
@@ -354,6 +354,6 @@ tacos:setParent(extension)
 local new_taco2 = tacos:clone(1, 3)
 new_taco2:setParent(extension)
 sgs.LoadTranslationTable{
-	["tacos"] = "tacos",
+	["tacos"] = "饼",
 	[":tacos"] = "基本牌<br />出牌时机：出牌阶段<br />使用目标：自己<br />作用效果：你获得弃牌堆中的一张牌，然后将弃牌堆3/4的牌置于摸牌堆顶。<br />",
 }

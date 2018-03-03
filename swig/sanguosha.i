@@ -204,6 +204,10 @@ public:
     int getMark(const char *mark) const;
     QStringList getMarkNames() const;
 
+    bool hasClub(const char *club_mark) const;
+    bool hasClub() const;
+    QString getClubMark() const;
+
     void setChained(bool chained);
     bool isChained() const;
 
@@ -317,6 +321,9 @@ public:
     void gainMark(const char *mark, int n = 1);
     void loseMark(const char *mark, int n = 1);
     void loseAllMarks(const char *mark_name);
+
+    void removeCurrentClub();
+    void addClub(const char *club_mark);
 
     void setAI(AI *ai);
     AI *getAI() const;
@@ -1083,6 +1090,8 @@ public:
     void setPlayerMark(ServerPlayer *player, const char *mark, int value);
     void addPlayerMark(ServerPlayer *player, const char *mark, int add_num = 1);
     void removePlayerMark(ServerPlayer *player, const char *mark, int remove_num = 1);
+    void clearClub(const char *club_mark);
+    QList<ServerPlayer *> getPlayersByClub(const char *club_mark) const;
     void setPlayerCardLimitation(ServerPlayer *player, const char *limit_list, const char *pattern, bool single_turn);
     void removePlayerCardLimitation(ServerPlayer *player, const char *limit_list, const char *pattern);
     void clearPlayerCardLimitation(ServerPlayer *player, bool single_turn);
