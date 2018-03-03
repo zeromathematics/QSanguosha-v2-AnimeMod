@@ -122,6 +122,12 @@ se_guwu = sgs.CreateTriggerSkill{
 					myGodData:setValue(mygod)
 					if room:askForChoice(toAsk, self:objectName(), "se_guwu_accept+cancel", myGodData) == "se_guwu_accept" then
 						toAsk:addClub("@amclub_mus")
+					else
+						local log =  sgs.LogMessage()
+						log.type = "#refuse_club"
+						log.from = toAsk
+						log.arg = "@amclub_mus"
+						room:sendLog(log)
 					end
 				elseif choice == "no_more" then
 					toAsk:setMark("se_guwu_ban", 1)

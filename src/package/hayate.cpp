@@ -859,6 +859,13 @@ void HaremuCard::use(Room *room, ServerPlayer *player, QList<ServerPlayer *> &ta
     if (!target->hasClub() && room->askForChoice(target, "haremu", "haremu_accept+cancel", QVariant::fromValue(player)) == "haremu_accept"){
         target->addClub("@amclub_haremu");
     }
+    else{
+        LogMessage log;
+        log.type = "#refuse_club";
+        log.from = target;
+        log.arg = "@amclub_sos";
+        room->sendLog(log);
+    }
 }
 
 class HaremuVS : public OneCardViewAsSkill
@@ -1696,6 +1703,13 @@ public:
                     if (room->askForChoice(dying.who, "nishen", "nishen_accept+cancel", QVariant::fromValue(yuri)) == "nishen_accept"){
                         dying.who->addClub("@amclub_sss");
                     }
+                    else{
+                        LogMessage log;
+                        log.type = "#refuse_club";
+                        log.from = dying.who;
+                        log.arg = "@amclub_sos";
+                        room->sendLog(log);
+                    }
                     QStringList used = yuri->tag["sss_targets"].toStringList();
                     used.append(dying.who->objectName());
                     yuri->tag["sss_targets"] = used;
@@ -1760,6 +1774,101 @@ public:
     }
 };
 
+class Yuanwang : public TriggerSkill
+{
+public:
+    Yuanwang() : TriggerSkill("yuanwang")
+    {
+        frequency = NotFrequent;
+        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EventPhaseStart << TurnStart;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == GameStart){
+            if (player->hasSkill(objectName()))
+                player->addClub("@amclub_sos");
+        }
+        else if (triggerEvent == EventAcquireSkill){
+            if (player->hasSkill(objectName())){
+                player->addClub("@amclub_sos");
+            }
+        }
+        else if (triggerEvent == EventLoseSkill){
+            if (data.toString() == objectName()){
+                room->clearClub("@amclub_sos");
+            }
+        }
+        else if (triggerEvent == Death){
+            DeathStruct death = data.value<DeathStruct>();
+            if (death.who->hasSkill(objectName())){
+                room->clearClub("@amclub_sos");
+            }
+        }
+        else if (triggerEvent == EventPhaseStart){
+            ServerPlayer *haruhi = room->findPlayerBySkillName(objectName());
+            if (!haruhi || !haruhi->isAlive()){
+                return false;
+            }
+            if (player->getPhase() == Player::Play && player->hasSkill(objectName())){
+                QList<ServerPlayer *> targets = room->getPlayersWithNoClub();
+                QList<ServerPlayer *> targets_copy = targets;
+                foreach(ServerPlayer *s, targets_copy){
+                    if (s->getKingdom() == "real"){
+                        targets.removeOne(s);
+                    }
+                }
+
+                if (targets.count() == 0){
+                    return false;
+                }
+                ServerPlayer *target = room->askForPlayerChosen(haruhi, targets, objectName(), "@yuanwang", true);
+                if (target){
+                    room->broadcastSkillInvoke(objectName());
+
+                    if (room->askForChoice(target, objectName(), objectName() + "_accept+cancel", QVariant::fromValue(haruhi)) == objectName() + "_accept"){
+                        target->addClub("@amclub_sos");
+                        if (!target->faceUp()){
+                            target->turnOver();
+                        }
+                    }
+                    else{
+                        LogMessage log;
+                        log.type = "#refuse_club";
+                        log.from = target;
+                        log.arg = "@amclub_sos";
+                        room->sendLog(log);
+                    }
+                }
+            }
+            else if (player->getPhase() == Player::RoundStart && player->hasSkill(objectName())){
+                if (room->askForSkillInvoke(player, objectName(), data)){
+                    foreach(ServerPlayer *p, room->getAlivePlayers()){
+                        if (!p->hasClub("@amclub_sos")){
+                            p->turnOver();
+                        }
+                    }
+                    room->setTag("sos_status", QVariant(true));
+                }
+            }
+        }
+        else if (triggerEvent == TurnStart && player->hasSkill(objectName())){
+            if (room->getTag("sos_status").toBool()){
+                room->setTag("sos_status", QVariant(false));
+                foreach(ServerPlayer *p, room->getPlayersByClub("@amclub_sos")){
+                p->turnOver();
+                }
+            }
+        }
+        return false;
+    }
+};
+
 HayatePackage::HayatePackage()
     : Package("hayate")
 {
@@ -1811,6 +1920,7 @@ HayatePackage::HayatePackage()
 
     General *haruhi = new General(this, "haruhi", "real", 3, false);
     haruhi->addSkill(new Mengxian);
+    haruhi->addSkill(new Yuanwang);
 
     addMetaObject<TiaojiaoCard>();
     addMetaObject<HaremuCard>();

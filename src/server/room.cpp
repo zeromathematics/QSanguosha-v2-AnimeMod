@@ -1838,7 +1838,9 @@ void Room::removePlayerMark(ServerPlayer *player, const QString &mark, int remov
 
 void Room::clearClub(const QString &club_mark){
     foreach(ServerPlayer *p, getAlivePlayers()){
-        p->loseAllMarks(club_mark);
+        if (p->hasClub(club_mark)){
+            p->removeCurrentClub();
+        }
     }
 }
 
@@ -1846,6 +1848,15 @@ QList<ServerPlayer *> Room::getPlayersByClub(const QString &club_mark) const{
     QList<ServerPlayer *> ps;
     foreach(ServerPlayer *p, getAlivePlayers()){
         if (p->hasClub(club_mark))
+            ps.append(p);
+    }
+    return ps;
+}
+
+QList<ServerPlayer *> Room::getPlayersWithNoClub() const{
+    QList<ServerPlayer *> ps;
+    foreach(ServerPlayer *p, getAlivePlayers()){
+        if (!p->hasClub())
             ps.append(p);
     }
     return ps;

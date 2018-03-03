@@ -1092,6 +1092,7 @@ public:
     void removePlayerMark(ServerPlayer *player, const char *mark, int remove_num = 1);
     void clearClub(const char *club_mark);
     QList<ServerPlayer *> getPlayersByClub(const char *club_mark) const;
+    QList<ServerPlayer *> getPlayersWithNoClub() const;
     void setPlayerCardLimitation(ServerPlayer *player, const char *limit_list, const char *pattern, bool single_turn);
     void removePlayerCardLimitation(ServerPlayer *player, const char *limit_list, const char *pattern);
     void clearPlayerCardLimitation(ServerPlayer *player, bool single_turn);

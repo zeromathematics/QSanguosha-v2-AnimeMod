@@ -858,12 +858,23 @@ void ServerPlayer::loseAllMarks(const QString &mark_name)
 
 void ServerPlayer::removeCurrentClub(){
     if (hasClub()){
-        loseAllMarks(getClubMark());
+        QString club_mark = getClubMark();
+        LogMessage log;
+        log.type = "#quit_club";
+        log.from = this;
+        log.arg = club_mark;
+        room->sendLog(log);
+        loseAllMarks(club_mark);
     }
 }
 
 void ServerPlayer::addClub(const QString &club_mark){
     removeCurrentClub();
+    LogMessage log;
+    log.type = "#join_club";
+    log.from = this;
+    log.arg = club_mark;
+    room->sendLog(log);
     gainMark(club_mark);
 }
 

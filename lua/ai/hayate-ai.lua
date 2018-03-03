@@ -552,3 +552,17 @@ sgs.ai_skill_choice["mengxian"] = function(self, choices, data)
 	if self.player:getHandcardNum() > self.player:getHp() + 3 then return "equip" end
 	return "trick"
 end
+
+sgs.ai_skill_choice.yuanwang = function(self, choices, data)
+	local haruhi = self.room:findPlayerBySkillName("yuanwang")
+	if not haruhi then return "cancel" end
+	if self:isFriend(haruhi) then return "yuanwang_accept" end
+	return "cancel"
+	end
+
+	sgs.ai_skill_playerchosen.yuanwang = function(self, targets)
+		for _,p in sgs.qlist(targets) do
+			if self:isFriend(p) then return p end
+		end
+		return
+	end
