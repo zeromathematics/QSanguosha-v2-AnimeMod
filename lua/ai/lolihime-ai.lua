@@ -112,11 +112,6 @@ end
 sgs.ai_use_value["shoujicard"] = 8
 sgs.ai_use_priority["shoujicard"]  = 5
 
-sgs.ai_skill_choice["LLJ_reality"] = function(self, choices, data)
-	if self.player:getHandcardNum() > self.player:getHp() + 3 then return "zhuangbei12" end
-	return "jinang12"
-end
-
 sgs.ai_skill_invoke.SE_Xinyuan = function(self, data)
 	if #self.friends <= 1 then return false end
 	return true

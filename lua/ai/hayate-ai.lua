@@ -546,3 +546,9 @@ sgs.ai_skill_choice.nishen = function(self, choices, data)
 		return "recover"
 	end
 end
+
+--春日
+sgs.ai_skill_choice["mengxian"] = function(self, choices, data)
+	if self.player:getHandcardNum() > self.player:getHp() + 3 then return "equip" end
+	return "trick"
+end

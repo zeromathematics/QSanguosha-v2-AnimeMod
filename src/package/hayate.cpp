@@ -1707,6 +1707,59 @@ public:
     }
 };
 
+class Mengxian : public TriggerSkill
+{
+public:
+    Mengxian() : TriggerSkill("mengxian")
+    {
+        frequency = Frequent;
+        events << EventPhaseStart << FinishJudge;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart){
+            if (player->getPhase() == Player::Draw){
+                while (player->askForSkillInvoke(objectName(), data)){
+                    QString equip = (player->isKongcheng() ? "" : "+equip");
+                    QString choice = room->askForChoice(player, objectName(), "basic+trick" + equip);
+                    if (choice == "equip"){
+                        room->throwCard(room->askForCardChosen(player, player, "h", objectName()), player, player);
+                    }
+                    JudgeStruct judge;
+                    judge.who = player;
+                    judge.negative = false;
+                    judge.play_animation = false;
+                    judge.time_consuming = true;
+                    judge.reason = objectName();
+                    judge.pattern = choice == "equip" ? "EquipCard" : (choice == "trick" ? "TrickCard" : "BasicCard");
+                    room->judge(judge);
+                    if ((judge.card->isKindOf("BasicCard") && choice == "basic") || (judge.card->isKindOf("TrickCard") && choice == "trick") || (judge.card->isKindOf("EquipCard") && choice == "equip")){
+                        if (judge.card->isKindOf("BasicCard"))
+                            room->broadcastSkillInvoke(objectName(), 1);
+                        else if (judge.card->isKindOf("TrickCard"))
+                            room->broadcastSkillInvoke(objectName(), 2);
+                        else
+                            room->broadcastSkillInvoke(objectName(), 3);
+                        room->doLightbox(objectName() + "$", 500);
+                        break;
+                    }
+                        
+                    
+                }
+            }
+            
+        }
+        else if (triggerEvent == FinishJudge){
+            JudgeStruct *judge = data.value<JudgeStruct *>();
+            if (judge->reason == objectName())
+                player->obtainCard(judge->card);
+                return true;
+        }
+        return false;
+    }
+};
+
 HayatePackage::HayatePackage()
     : Package("hayate")
 {
@@ -1755,6 +1808,9 @@ HayatePackage::HayatePackage()
     General *yuri = new General(this, "yuri", "real", 3, false);
     yuri->addSkill(new Zuozhan);
     yuri->addSkill(new Nishen);
+
+    General *haruhi = new General(this, "haruhi", "real", 3, false);
+    haruhi->addSkill(new Mengxian);
 
     addMetaObject<TiaojiaoCard>();
     addMetaObject<HaremuCard>();

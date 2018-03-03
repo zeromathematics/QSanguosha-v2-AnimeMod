@@ -319,11 +319,11 @@ xiaoshi = sgs.CreateTriggerSkill
 	priority = 7
 }
 ------------------------------------
-cr = sgs.General(extension, "cr", "real", 4, false, false, false)
+-- cr = sgs.General(extension, "cr", "real", 4, false, false, false)
 
-LLJ_reality= sgs.CreateTriggerSkill
+mengxian= sgs.CreateTriggerSkill
 {
-	name = "LLJ_reality",
+	name = "mengxian",
 	frequency = sgs.Skill_Frequent,
 	events = {sgs.EventPhaseStart, sgs.FinishJudge},
 	on_trigger = function(self, event, player, data)
@@ -333,13 +333,13 @@ LLJ_reality= sgs.CreateTriggerSkill
 				local broadcasted = false
 				while player:askForSkillInvoke(self:objectName()) do
 					if not broadcasted then
-						room:broadcastSkillInvoke("LLJ_reality", 1)
-						room:doLightbox("LLJ_reality$", 500)
+						room:broadcastSkillInvoke("mengxian", 1)
+						room:doLightbox("mengxian$", 500)
 						broadcasted = true
 					end
 					local choice = room:askForChoice(player,self:objectName(),"jiben12+jinang12+zhuangbei12")
 					if choice == "zhuangbei12" then
-						local id = room:askForCardChosen(player, player, "h", "LLJ_reality")
+						local id = room:askForCardChosen(player, player, "h", "mengxian")
 						room:throwCard(id,player, player)
 						player:gainMark("@force", 1)
 					end
@@ -359,11 +359,11 @@ LLJ_reality= sgs.CreateTriggerSkill
 						break
 					end
 					if judge.card:isKindOf("BasicCard") then
-						room:broadcastSkillInvoke("LLJ_reality", 2)
+						room:broadcastSkillInvoke("mengxian", 2)
 					elseif judge.card:isKindOf("TrickCard") then
-						room:broadcastSkillInvoke("LLJ_reality", 3)
+						room:broadcastSkillInvoke("mengxian", 3)
 					else
-						room:broadcastSkillInvoke("LLJ_reality", 4)
+						room:broadcastSkillInvoke("mengxian", 4)
 					end
 				end
 			end
@@ -391,7 +391,7 @@ LLJ_force= sgs.CreateTriggerSkill
 				while player:askForSkillInvoke(self:objectName()) do
 					local choice = room:askForChoice(player,self:objectName(),"jiben12+jinang12+zhuangbei12")
 					if choice == "zhuangbei12" then
-						local id = room:askForCardChosen(player, player, "h", "LLJ_reality")
+						local id = room:askForCardChosen(player, player, "h", "mengxian")
 						room:throwCard(id,player, player)
 					end
 
@@ -863,7 +863,7 @@ sgs.LoadTranslationTable{
 rika2:addSkill(LLJ_recycle)
 --killer:addSkill(LLJ_guilty)
 --killer:addSkill(LLJ_DN)
-cr:addSkill(LLJ_reality)
+-- cr:addSkill(mengxian)
 mianma:addSkill(xiaoshi)
 mianma:addSkill(lingti)
 mianma:addSkill(SE_Xinyuan)
@@ -883,7 +883,7 @@ sgs.LoadTranslationTable{
 ["xiaoshi$"] = "image=image/animate/xiaoshi.png",
 ["eastfast$"] = "image=image/animate/eastfast.png",
 ["dandiao$"] = "image=image/animate/dandiao.png",
-["LLJ_reality$"] = "image=image/animate/LLJ_reality.png",
+
 
 ["rika2"] = "古手梨花",
 ["&rika2"] = "古手梨花",
@@ -906,20 +906,8 @@ sgs.LoadTranslationTable{
 ["LLJ_chihun"] = "炽魂",
 [":LLJ_chihun"] = "出牌阶段，每当你使用一次指定性技能或使用无色的牌，你摸两张牌。",
 
-["cr"] = "凉宫春日",
-["&cr"] = "凉宫春日",
-["@cr"] = "凉宫春日的忧郁",
-["#cr"] = "团长大人",
-["~cr"] = "你不也觉得那个世界很无聊么？你就不希望有什么更有趣的事情发生么？！",
-["cv:cr"] = "平野绫",
-["designer:cr"] = "帕秋莉·萝莉姬",
 
-["LLJ_reality"] = "梦现",
-["$LLJ_reality1"] = "我对一般的人类没有兴趣，如果你们中谁是宇宙人，未来人，异世界人或者超能力者的话，就到我这里来！",
-["$LLJ_reality2"] = "（长门神）通俗地说，我是相当于宇宙人的存在。",
-["$LLJ_reality3"] = "（朝比奈学姐）我不是这个时代的人，是从更远的未来来的。",
-["$LLJ_reality4"] = "（古泉）如您明察，我是超能力者。",
-[":LLJ_reality"] = "摸牌阶段开始时，你可以声明一种牌的类别，然后进行判定并你获得判定牌。你重复该过程直到判定牌不为你所声明的类别。若你声明的是武器牌，你需要弃置一张手牌。",
+
 ["LLJ_force"] = "强制",
 [":LLJ_force"] = "出牌阶段，你可以弃置8个标记，并获得场上一张装备牌",
 ["jiben12"] = "基本牌",
