@@ -18,15 +18,15 @@ public:
     Yingdi() : TriggerSkill("yingdi")
     {
         frequency = Compulsory;
-        events << CardUsed << Damage << EventPhaseStart << EventLoseSkill;
+        events << TargetConfirmed << Damage << EventPhaseStart << EventLoseSkill;
     }
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (triggerEvent == CardUsed){
+        if (triggerEvent == TargetConfirmed){
 
             CardUseStruct use = data.value<CardUseStruct>();
-            if (!use.card || !use.card->isKindOf("Slash")){
+            if (!use.card || (!use.card->isKindOf("Slash") && !use.card->isKindOf("Duel") && !use.card->isKindOf("FireAttack"))){
                 return false;
             }
             if (!use.from || use.from->getMark("@real_hei") > 0){
@@ -44,8 +44,9 @@ public:
                 if (!to->hasSkill(objectName())){
                     continue;
                 }
-                return true;
+                use.nullified_list << to->objectName();
             }
+            data = QVariant::fromValue(use);
         }
         else if (triggerEvent == Damage){
             DamageStruct damage = data.value<DamageStruct>();
@@ -1780,7 +1781,7 @@ public:
     Yuanwang() : TriggerSkill("yuanwang")
     {
         frequency = NotFrequent;
-        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EventPhaseStart << TurnStart << EventPhaseChanging << TargetConfirmed << CardUsed;
+        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EventPhaseStart << TurnStart << EventPhaseChanging << TargetConfirmed << CardUsed << TrickCardCanceling << SlashProceed;
     }
 
     bool triggerable(const ServerPlayer *target) const
@@ -1871,8 +1872,9 @@ public:
                     }
                 }
             }
+            // wear
             if (player->getPhase() == Player::Play  && is_sos_turn && player->hasClub("@amclub_sos") && rand() % 10 == 0){
-                // wear
+                
                 QStringList names;
                 foreach(int id, room->getDrawPile()){
                     if (Sanguosha->getCard(id)->isKindOf("Armor")){
@@ -1905,9 +1907,9 @@ public:
                 is_sos_turn = true;
             }
 
-
+            // endless august
             if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos")){ 
-                // endless august
+               
                 int max_rate = 5;
                 foreach(const Card *card, player->getJudgingArea()){
                     if (card->isKindOf("Indulgence")){
@@ -1977,6 +1979,23 @@ public:
                     player->tag["sos_august_piles"] = piles;
                 }
                 
+            }
+            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos")){
+                int max_rate = 5;
+                foreach(const Card *card, haruhi->getJudgingArea()){
+                    if (card->isKindOf("SupplyShortage")){
+                        max_rate = 30;
+                    }
+                }
+                if (rand() % 100 < max_rate){
+                    LogMessage log;
+                    log.type = "$yuanwang_closed_space";
+                    room->sendLog(log);
+                    room->doAura(haruhi, "closedSpace");
+                }
+            }
+            if (player->getPhase() == Player::Finish && room->getAura() == "closedSpace"){
+                room->clearAura();
             }
             
         }
@@ -2150,9 +2169,10 @@ public:
             }
             
         }
+        // card back
         else if (triggerEvent == CardUsed && is_sos_turn){
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.from && use.from->hasClub("@amclub_sos") && use.card && !use.card->isVirtualCard() && (use.card->isKindOf("BasicCard") || use.card->isKindOf("TrickCard")) && rand() % 100 < 8){
+            if (use.from && use.from->hasClub("@amclub_sos") && use.card && !use.card->isVirtualCard() && (use.card->isKindOf("BasicCard") || use.card->isKindOf("TrickCard")) && rand() % 100 < 6){
                 LogMessage log;
                 log.type = "$yuanwang_card_back";
                 log.from = use.from;
@@ -2161,6 +2181,20 @@ public:
                 room->obtainCard(use.from, use.card);
             }
 
+        }
+        else if (triggerEvent == TrickCardCanceling && is_sos_turn && room->getAura() == "closedSpace") {
+            LogMessage log;
+            log.type = "$yuanwang_closed_space_effect";
+            room->sendLog(log);
+            return true;
+        }
+        else if (triggerEvent == SlashProceed && is_sos_turn && room->getAura() == "closedSpace") {
+            SlashEffectStruct effect = data.value<SlashEffectStruct>();
+            LogMessage log;
+            log.type = "$yuanwang_closed_space_effect";
+            room->sendLog(log);
+            room->slashResult(effect, NULL);
+            return true;
         }
         return false;
     }

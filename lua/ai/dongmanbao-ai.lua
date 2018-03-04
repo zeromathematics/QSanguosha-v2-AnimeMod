@@ -2166,33 +2166,40 @@ se_shouren_skill={}
 se_shouren_skill.name="se_shouren"
 table.insert(sgs.ai_skills,se_shouren_skill)
 se_shouren_skill.getTurnUseCard=function(self,inclusive)
-	local source = self.player
-	if source:hasFlag("se_shourencard_used") then return end
-	if #self.enemies == 0 then return end
+	local source = self.player -- 来源
+	if source:hasFlag("se_shourencard_used") then return end -- 如果来源用过了这个技能，就不能再用了（因为出限1）
+	if #self.enemies == 0 then return end -- 没有敌人的话不必用了
+	--关于敌人的判断，self.enemies是一个table，对于单个角色用self:isEnemy(dest)来判断
+	-- 这里经常会判断的还有，如果需要手牌的技能，那么没手牌就别用了之类的
+
+	--万事俱备，可以走下一个函数了
 	return sgs.Card_Parse("#se_shourencard:.:")
 end
 
 sgs.ai_skill_use_func["#se_shourencard"] = function(card,use,self)
-	local target
-	local minHp = 100
+	local target --预备一个目标
+	local minHp = 100  -- 当前场上的最低体力
 	for _,enemy in ipairs(self.enemies) do
 		local hp = enemy:getHp()
-		if self:hasSkills(sgs.masochism_skill, enemy) then hp = hp - 1 end
-		if hp < minHp then
-			minHp = hp
-			target = enemy
+		if self:hasSkills(sgs.masochism_skill, enemy) then hp = hp - 1 end  -- 如果这人有卖血技能，因为是体力流失，所以价值更高，少算这个人一血
+		if hp < minHp then --如果这人比最低体力少
+			minHp = hp --更新最低体力
+			target = enemy  --目标换成这个人
 		end
 	end
-	if target then
-		use.card = sgs.Card_Parse("#se_shourencard:.:")
-		if use.to then use.to:append(target) end
+	-- 这样就获得了场上最适合被手刃的人
+
+	-- 注意：这是老版本的手刃，现在的版本翻人会失去立场，应该考虑重写这个判断
+	if target then --如果找到了目标
+		use.card = sgs.Card_Parse("#se_shourencard:.:")   --用的卡是手刃
+		if use.to then use.to:append(target) end  --把目标加入用的角色，就可以了
 		return
 	end
 end
 
-sgs.ai_use_value["se_shourencard"] = 8
-sgs.ai_use_priority["se_shourencard"] = 2
-sgs.ai_card_intention["se_shourencard"]  = 60
+sgs.ai_use_value["se_shourencard"] = 8  --这个技能卡的价值
+sgs.ai_use_priority["se_shourencard"] = 2  --回合内使用这个牌的优先度，手刃应该属于比较靠后的，10到0
+sgs.ai_card_intention["se_shourencard"]  = 60 --这个牌的敌意，-100到100，负数是好意，正数是敌意
 
 sgs.ai_skill_choice.Pifu_Kanade = function(self, choices, data)
 	local x = math.random(1,3)
