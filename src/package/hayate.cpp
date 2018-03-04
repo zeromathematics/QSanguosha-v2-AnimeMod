@@ -1911,7 +1911,7 @@ public:
                 int max_rate = 5;
                 foreach(const Card *card, player->getJudgingArea()){
                     if (card->isKindOf("Indulgence")){
-                        max_rate = 50;
+                        max_rate = 30;
                     }
                 }
                 if (rand() % 100 < max_rate){
