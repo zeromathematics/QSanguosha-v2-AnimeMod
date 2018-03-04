@@ -1817,6 +1817,30 @@ public:
                 return false;
             }
             if (player->getPhase() == Player::Play && player->hasSkill(objectName())){
+                // get money!
+                if (rand() % 10 < 3){
+                    QList<ServerPlayer *> victims;
+                    foreach(ServerPlayer *p, room->getAlivePlayers()){
+                        if (p->hasClub() && p->getClubMark() != "@amclub_sos" && !p->isKongcheng()){
+                            victims << p;
+                        }
+                    }
+                    if (victims.count() > 0){
+                        ServerPlayer *target = victims.at(rand() % victims.count());
+                        int id = target->getRandomHandCardId();
+                        if (id != -1){
+                            room->doLightbox(objectName() + "_obtain$", 500);
+                            LogMessage log;
+                            log.type = "$yuanwang_obtain";
+                            log.arg = target->getClubMark();
+                            log.from = target;
+                            log.card_str = QString::number(id);
+                            room->sendLog(log);
+                            room->obtainCard(haruhi, id);
+                        }
+                    }
+                }
+                // invite others
                 QList<ServerPlayer *> targets = room->getPlayersWithNoClub();
                 QList<ServerPlayer *> targets_copy = targets;
                 foreach(ServerPlayer *s, targets_copy){
@@ -1859,68 +1883,76 @@ public:
             }
 
 
-            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos") && rand() % 20 == 0){ // 
-
-                QList<QVariant> card_ids;
-                QList<QVariant> equip_ids;
-                QList<QVariant> judge_ids;
-                foreach(const Card *card, player->getHandcards()){
-                    if (card->isVirtualCard()){
-                        foreach(int id, card->getSubcards()){
+            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos")){ // 
+                int max_rate = 5;
+                foreach(const Card *card, player->getJudgingArea()){
+                    if (card->isKindOf("Indulgence")){
+                        max_rate = 50;
+                    }
+                }
+                if (rand() % 100 < max_rate){
+                    QList<QVariant> card_ids;
+                    QList<QVariant> equip_ids;
+                    QList<QVariant> judge_ids;
+                    foreach(const Card *card, player->getHandcards()){
+                        if (card->isVirtualCard()){
+                            foreach(int id, card->getSubcards()){
+                                if (id != -1){
+                                    card_ids << QVariant(id);
+                                }
+                            }
+                        }
+                        else{
+                            int id = card->getEffectiveId();
                             if (id != -1){
                                 card_ids << QVariant(id);
                             }
                         }
+
                     }
-                    else{
+                    foreach(const Card *card, player->getEquips()){
                         int id = card->getEffectiveId();
                         if (id != -1){
-                            card_ids << QVariant(id);
+                            equip_ids << QVariant(id);
                         }
                     }
-                    
-                }
-                foreach(const Card *card, player->getEquips()){
-                    int id = card->getEffectiveId();
-                    if (id != -1){
-                        equip_ids << QVariant(id);
+                    foreach(const Card *card, player->getJudgingArea()){
+                        int id = card->getEffectiveId();
+                        if (id != -1){
+                            judge_ids << QVariant(id);
+                        }
                     }
-                }
-                foreach(const Card *card, player->getJudgingArea()){
-                    int id = card->getEffectiveId();
-                    if (id != -1){
-                        judge_ids << QVariant(id);
+                    QVariant cards, equips, judges, marks, piles;
+                    cards.setValue(card_ids);
+                    equips.setValue(equip_ids);
+                    judges.setValue(judge_ids);
+                    QMap<QString, QVariant> marks_map;
+                    foreach(QString mark, player->getMarkNames()){
+                        marks_map[mark] = QVariant(player->getMark(mark));
                     }
-                }
-                QVariant cards, equips, judges, marks, piles;
-                cards.setValue(card_ids);
-                equips.setValue(equip_ids);
-                judges.setValue(judge_ids);
-                QMap<QString, QVariant> marks_map;
-                foreach(QString mark, player->getMarkNames()){
-                    marks_map[mark] = QVariant(player->getMark(mark));
-                }
-                marks.setValue(marks_map);
-                QMap<QString, QVariant> piles_map;
-                foreach(QString pile, player->getPileNames()){
-                    QVariant temp;
-                    QList<QVariant> templst;
-                    foreach(int id, player->getPile(pile)){
-                        templst << QVariant(id);
+                    marks.setValue(marks_map);
+                    QMap<QString, QVariant> piles_map;
+                    foreach(QString pile, player->getPileNames()){
+                        QVariant temp;
+                        QList<QVariant> templst;
+                        foreach(int id, player->getPile(pile)){
+                            templst << QVariant(id);
+                        }
+                        temp.setValue(templst);
+                        piles_map[pile] = temp;
                     }
-                    temp.setValue(templst);
-                    piles_map[pile] = temp;
-                }
-                piles.setValue(piles_map);
+                    piles.setValue(piles_map);
 
-                player->tag["sos_august_turn"] = QVariant(true);
-                player->tag["sos_august_cards"] = cards;
-                player->tag["sos_august_equips"] = equips;
-                player->tag["sos_august_judges"] = judges;
-                player->tag["sos_august_hp"] = QVariant(player->getHp());
-                player->tag["sos_august_max_hp"] = QVariant(player->getMaxHp());
-                player->tag["sos_august_marks"] = marks;
-                player->tag["sos_august_piles"] = piles;
+                    player->tag["sos_august_turn"] = QVariant(true);
+                    player->tag["sos_august_cards"] = cards;
+                    player->tag["sos_august_equips"] = equips;
+                    player->tag["sos_august_judges"] = judges;
+                    player->tag["sos_august_hp"] = QVariant(player->getHp());
+                    player->tag["sos_august_max_hp"] = QVariant(player->getMaxHp());
+                    player->tag["sos_august_marks"] = marks;
+                    player->tag["sos_august_piles"] = piles;
+                }
+                
             }
             
         }
@@ -2096,7 +2128,7 @@ public:
         }
         else if (triggerEvent == CardUsed && is_sos_turn){
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.from && use.from->hasClub("@amclub_sos") && use.card && !use.card->isVirtualCard() && (use.card->isKindOf("BasicCard") || use.card->isKindOf("TrickCard")) && rand() % 10 == 0){
+            if (use.from && use.from->hasClub("@amclub_sos") && use.card && !use.card->isVirtualCard() && (use.card->isKindOf("BasicCard") || use.card->isKindOf("TrickCard")) && rand() % 100 < 8){
                 LogMessage log;
                 log.type = "$yuanwang_card_back";
                 log.from = use.from;

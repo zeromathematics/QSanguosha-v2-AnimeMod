@@ -268,10 +268,10 @@ return {
 	["~haruhi"] = "你不也觉得那个世界很无聊么？你就不希望有什么更有趣的事情发生么？！",
 	["cv:haruhi"] = "平野绫",
 	["designer:haruhi"] = "帕秋莉·萝莉姬",
-	["$yuanwang_add_phase_draw"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 在奇怪的时间点获得了一个额外的摸牌阶段！",
-	["$yuanwang_add_phase_play"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 在奇怪的时间点获得了一个额外的出牌阶段！",
-	["$yuanwang_mikuru_beam"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 对 %to 发射了光线！",
-	["$yuanwang_card_back"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 收回了使用的 %card ！",
-	["$yuanwang_august"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 进行了永无止境的八月！",
-
+	["$yuanwang_add_phase_draw"] = "由于 <font color=\"#f2a0a1\"><b>团长大人</b></font> 的力量， %from 在奇怪的时间点获得了一个额外的摸牌阶段！",
+	["$yuanwang_add_phase_play"] = "由于 <font color=\"#f2a0a1\"><b>团长大人</b></font> 的力量， %from 在奇怪的时间点获得了一个额外的出牌阶段！",
+	["$yuanwang_mikuru_beam"] = "由于 <font color=\"#f2a0a1\"><b>团长大人</b></font> 的力量， %from 对 %to 发射了光线！",
+	["$yuanwang_card_back"] = "由于 <font color=\"#f2a0a1\"><b>团长大人</b></font> 的力量， %from 收回了使用的 %card ！",
+	["$yuanwang_august"] = "由于 <font color=\"#f2a0a1\"><b>团长大人</b></font> 的力量， %from 进行了永无止境的八月！",
+	["$yuanwang_obtain"] = "<font color=\"#f2a0a1\"><b>团长大人</b></font> 明抢了 %arg 社员 %from 的 %card ！",
 }
