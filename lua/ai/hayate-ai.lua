@@ -558,11 +558,11 @@ sgs.ai_skill_choice.yuanwang = function(self, choices, data)
 	if not haruhi then return "cancel" end
 	if self:isFriend(haruhi) then return "yuanwang_accept" end
 	return "cancel"
-	end
+end
 
-	sgs.ai_skill_playerchosen.yuanwang = function(self, targets)
-		for _,p in sgs.qlist(targets) do
-			if self:isFriend(p) then return p end
-		end
-		return
+sgs.ai_skill_playerchosen.yuanwang = function(self, targets)
+	for _,p in sgs.qlist(targets) do
+		if self:isFriend(p) then return p end
 	end
+	return
+end

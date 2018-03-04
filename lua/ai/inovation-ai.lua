@@ -455,6 +455,7 @@ sgs.ai_view_as.touzhi = function(card, player, card_place)
 	local suit = card:getSuitString()
 	local number = card:getNumberString()
 	local card_id = card:getEffectiveId()
+	if player:getPhase() ~= sgs.Player_Play then return end
 	if card:isKindOf("TrickCard") and not card:isKindOf("AOE") and not card:isKindOf("GodSalvation") and not card:isKindOf("AmazingGrace")  and not card:isKindOf("Collateral") then
 		return ("slash:touzhi[%s:%s]=%d"):format(suit, number, card_id)
 	end
