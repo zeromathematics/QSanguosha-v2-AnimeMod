@@ -1830,7 +1830,7 @@ public:
                         ServerPlayer *target = victims.at(rand() % victims.count());
                         int id = target->getRandomHandCardId();
                         if (id != -1){
-                            room->doLightbox(objectName() + "_obtain$", 500);
+                            //room->doLightbox(objectName() + "_obtain$", 500);
                             LogMessage log;
                             log.type = "$yuanwang_obtain";
                             log.arg = target->getClubMark();
@@ -1882,7 +1882,7 @@ public:
                     }
                 }
                 if (names.count() > 0){
-                    room->doLightbox(objectName() + "_wear$", 800);
+                    //room->doLightbox(objectName() + "_wear$", 800);
                     QString name = names.at(rand() % names.count());
                     int card_id = room->getCardFromPile(name);
                     if (card_id != -1){
@@ -2199,6 +2199,8 @@ public:
         return false;
     }
 };
+
+
 
 HayatePackage::HayatePackage()
     : Package("hayate")

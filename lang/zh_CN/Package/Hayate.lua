@@ -278,4 +278,5 @@ return {
 	["$yuanwang_closed_space"] = "<font color=\"#f2a0a1\"><b>团长大人</b></font> 很不爽，开启了「闭锁空间」！",
 	["$yuanwang_closed_space_effect"] = "<font color=\"#f2a0a1\"><b>团长大人</b></font> 的「闭锁空间」下，任何【杀】或【锦囊牌】不可被响应。",
 	["closedSpace"] = "「闭锁空间」",
+	["yuanwang$"] = "image=image/animate/yuanwang.png",
 }

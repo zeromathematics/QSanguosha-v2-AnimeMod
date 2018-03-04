@@ -4174,6 +4174,15 @@ sgs.ai_skill_choice.SE_Fanhun = function(self, choices, data)
 end
 
 --兵长
+sgs.ai_skill_invoke.SE_Jiepi = function(self, data)
+	local use = data:toCardUse()
+	if not use.card then return true end
+	if (use.card:isKindOf("KeyTrick") and self.player:getLostHp() == 0) or use.card:isKindOf("GodSalvation") or use.card:isKindOf("AmazingGrace") then return false end
+	if use.from and self:isFriend(use.from) and not use.card:isKindOf("AOE") then return false end
+	return true
+end
+
+
 se_zhanjing_skill={}
 se_zhanjing_skill.name="se_zhanjing"
 table.insert(sgs.ai_skills,se_zhanjing_skill)

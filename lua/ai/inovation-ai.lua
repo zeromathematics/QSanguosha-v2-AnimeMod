@@ -720,10 +720,9 @@ sgs.ai_card_intention.NuequCard = function(self, card, from, tos)
 	return 100
 end
 
-sgs.ai_skill_choice["BurningLove"] = function(self, choices, data)
+sgs.ai_skill_invoke["BurningLove"] = function(self, data)
 	local damage = data:toDamage()
-	if self:isFriend(damage.to) then return "BLRecover" end
-	return "BLDamage"
+	return self:isFriend(damage.to)
 end
 
 

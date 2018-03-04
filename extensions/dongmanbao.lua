@@ -8369,34 +8369,32 @@ sgs.LoadTranslationTable{
 
 
 SE_Jiepi = sgs.CreateTriggerSkill{
-        name = "SE_Jiepi",
-        frequency = sgs.Skill_Compulsory,
-        events = {sgs.CardEffect, sgs.CardEffected},
-        on_trigger = function(self, event, player, data)
-			local effect = data:toCardEffect()
-			local source = effect.from
-			local target = effect.to
-			local card = effect.card
-			if target and source then
-				local room = source:getRoom()
-				if target:objectName() ~= source:objectName() then
-					if card:getTypeId() == sgs.Card_Trick then
-						if source:hasSkill(self:objectName()) and source:getHandcardNum() > target:getHandcardNum() then
-							room:broadcastSkillInvoke("SE_Jiepi")
-							return true
-						end
-						if target:hasSkill(self:objectName()) and source:getHandcardNum() < target:getHandcardNum() then
-							room:broadcastSkillInvoke("SE_Jiepi")
-							return true
-						end
+    name = "SE_Jiepi",
+    frequency = sgs.Skill_NotFrequent,
+    events = {sgs.TargetConfirming},
+    on_trigger = function(self, event, player, data)
+			local room = player:getRoom()
+			if event == sgs.TargetConfirming then
+				local use = data:toCardUse()
+				if not use.card or not use.to:contains(player) or not player:hasSkill(self:objectName()) or not use.from then return false end
+				if use.card:isNDTrick() then
+					if use.from:getHandcardNum() > player:getHandcardNum() and room:askForSkillInvoke(player, self:objectName(), data) then
+						room:broadcastSkillInvoke(self:objectName())
+						use.to:removeOne(player)
+						data:setValue(use)
 					end
 				end
+				if use.card:isKindOf("DelayedTrick") and use.from:getHandcardNum() < player:getHandcardNum() and room:askForSkillInvoke(player, self:objectName(), data) then
+					room:broadcastSkillInvoke(self:objectName())
+					room:throwCard(use.card, player, player)
+				end
 			end
+
 			return false
-        end,
-        can_trigger = function(self, target)
+    end,
+  	can_trigger = function(self, target)
 			return target
-        end
+  	end
 }
 
 se_zhanjing=sgs.CreateViewAsSkill{
@@ -8467,7 +8465,7 @@ sgs.LoadTranslationTable{
 ["SE_Jiepi"] = "洁癖",
 ["$SE_Jiepi1"] = "切...脏死了...",
 ["$SE_Jiepi2"] = "...跟没打扫一样...全部重做！...",
-[":SE_Jiepi"] = "锁定技。手牌少于你的角色使用的非延时锦囊牌对你无效。你使用的非延时锦囊牌对手牌少于你的角色无效",
+[":SE_Jiepi"] = "你成为手牌多于你的角色的非延时锦囊牌的目标时，你可以取消之。手牌少于你的角色对你使用延时锦囊牌时，你可以弃置之。",
 ["se_zhanjing"] = "斩颈「身高杀手」",
 ["$se_zhanjing1"] = "...都长着一张滑稽的脸啊。",
 ["$se_zhanjing2"] = "给我放老实点。不然我就没办法...漂亮地切下你的肉了好嘛。",

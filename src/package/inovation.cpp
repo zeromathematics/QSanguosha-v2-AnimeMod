@@ -3487,7 +3487,7 @@ class BurningLove : public TriggerSkill
 public:
     BurningLove() : TriggerSkill("BurningLove")
     {
-        frequency = Compulsory;
+        frequency = NotFrequent;
         events << DamageCaused;
     }
     int getPriority(TriggerEvent) const
@@ -3500,15 +3500,10 @@ public:
         DamageStruct damage = data.value<DamageStruct>();
         if (triggerEvent == DamageCaused){
             if (damage.from->hasSkill(objectName()) && damage.nature == DamageStruct::Fire && damage.from->isAlive() && damage.card->isKindOf("FireSlash")){
-                if (room->askForChoice(kongou, objectName(), "BLRecover+BLDamage", data) == "BLRecover"){
-                    room->broadcastSkillInvoke(objectName(), 2);
+                if (room->askForSkillInvoke(kongou, objectName(), data)){
+                    room->broadcastSkillInvoke(objectName());
                     room->recover(damage.to, RecoverStruct(damage.to));
                     return true;
-                }
-                else{
-                    room->broadcastSkillInvoke(objectName(), 1);
-                    damage.damage += 1;
-                    data.setValue(damage);
                 }
             }
         }
@@ -5753,7 +5748,7 @@ public:
         if (triggerEvent == TargetConfirmed){
             CardUseStruct use = data.value<CardUseStruct>();
             foreach(ServerPlayer *p, use.to){
-                if (p->hasSkill(objectName()) && p == player && p!=use.from){
+                if (p->hasSkill(objectName()) && p == player && use.from && p != use.from){
                     if (use.from->getMark("@zuzhou") == 0){
                         room->broadcastSkillInvoke(objectName());
                     }

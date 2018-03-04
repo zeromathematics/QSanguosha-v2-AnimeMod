@@ -194,7 +194,9 @@ spring = sgs.CreateTriggerSkill{
 			if not sp then return false end
 			if not room:askForSkillInvoke(sp, self:objectName(), data) then return false end
 			--room:detachSkillFromPlayer(damage.from,"spreadillness",true)
-			damage.from:loseMark("@spreadillness")
+			if damage.from then
+				damage.from:loseMark("@spreadillness")
+			end
 			--room:acquireSkill(damage.to,spreadillness)
 			if damage.to:getMark("@spreadillness") == 0 then
 				damage.to:gainMark("@spreadillness")

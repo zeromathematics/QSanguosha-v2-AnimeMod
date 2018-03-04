@@ -523,7 +523,7 @@ return {
 	["BurningLove"] = "Burning Love！",
 	["$BurningLove1"] = "Burning Love！！",
 	["$BurningLove2"] = "Burning Valentine Love！！",
-	[":BurningLove"] = "锁定技。每当你使用火属性的【杀】造成伤害时，你需要选择一项：1，令该伤害改为回复一点体力。2，令该伤害+1。",
+	[":BurningLove"] = "每当你使用火属性的【杀】造成伤害时，你可以令该伤害改为回复一点体力。",
 	["BLRecover"] = "令该伤害改为回复一点体力",
 	["BLDamage"] = "令该伤害+1",
 	["Kongou"] = "金剛",

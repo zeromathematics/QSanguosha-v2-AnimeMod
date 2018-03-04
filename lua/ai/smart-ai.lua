@@ -5564,9 +5564,6 @@ function SmartAI:aoeIsEffective(card, to, source)
 	if source:hasSkill("Xuwu") then
 		return true
 	end
-	if source:hasSkill("SE_Jiepi") and source:getHandcardNum() > to:getHandcardNum() then
-		return false
-	end
 	if to:hasSkill("SE_Jiepi") and to:getHandcardNum() > source:getHandcardNum() then
 		return false
 	end
@@ -5960,9 +5957,6 @@ function SmartAI:hasTrickEffective(card, to, from)
 	if to:hasSkills("wuyan|hongyan") and card:isKindOf("Lightning") then return false end
 
 	--SE 锦囊有效
-	if from:hasSkill("SE_Jiepi") and from:getHandcardNum() > to:getHandcardNum() then
-		return false
-	end
 	if to:hasSkill("SE_Jiepi") and to:getHandcardNum() > from:getHandcardNum() then
 		return false
 	end
