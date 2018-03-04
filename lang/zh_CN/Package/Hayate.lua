@@ -274,4 +274,5 @@ return {
 	["$yuanwang_card_back"] = "由于 <font color=\"#f2a0a1\"><b>团长大人</b></font> 的力量， %from 收回了使用的 %card ！",
 	["$yuanwang_august"] = "由于 <font color=\"#f2a0a1\"><b>团长大人</b></font> 的力量， %from 进行了永无止境的八月！",
 	["$yuanwang_obtain"] = "<font color=\"#f2a0a1\"><b>团长大人</b></font> 明抢了 %arg 社员 %from 的 %card ！",
+	["$yuanwang_wear"] = "<font color=\"#f2a0a1\"><b>团长大人</b></font> 强制社员 %from 穿上了 %card ！",
 }

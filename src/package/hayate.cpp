@@ -1871,19 +1871,43 @@ public:
                     }
                 }
             }
+            if (player->getPhase() == Player::Play  && is_sos_turn && player->hasClub("@amclub_sos") && rand() % 10 == 0){
+                // wear
+                QStringList names;
+                foreach(int id, room->getDrawPile()){
+                    if (Sanguosha->getCard(id)->isKindOf("Armor")){
+                        names << Sanguosha->getCard(id)->objectName();
+                    }
+                }
+                if (names.count() > 0){
+                    room->doLightbox(objectName() + "_wear$", 800);
+                    QString name = names.at(rand() % names.count());
+                    int card_id = room->getCardFromPile(name);
+                    if (card_id != -1){
+                        LogMessage log;
+                        log.type = "$yuanwang_wear";
+                        log.from = player;
+                        log.card_str = QString::number(card_id);
+                        room->sendLog(log);
+                        room->installEquip(player, name);
+                    }
+                    
+                }
+            }
             if (player->getPhase() == Player::RoundStart && player->hasSkill(objectName())){
                 foreach(ServerPlayer *p, room->getAlivePlayers()){
                     if (!p->hasClub("@amclub_sos")){
                         p->turnOver();
                     }
                 }
-                room->doLightbox(objectName() + "$", 800);
+                room->doLightbox(objectName() + "$", 500);
                 room->setTag("sos_status", QVariant(true));
                 is_sos_turn = true;
             }
 
 
-            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos")){ // 
+            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos")){ 
+                // endless august
                 int max_rate = 5;
                 foreach(const Card *card, player->getJudgingArea()){
                     if (card->isKindOf("Indulgence")){
