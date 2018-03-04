@@ -1803,7 +1803,7 @@ void Room::setPlayerMark(ServerPlayer *player, const QString &mark, int value)
         if (value > 0){
             foreach(QString pmark, player->getMarkNames()){
                 if (pmark.startsWith("@amclub_")){
-                    player->loseAllMarks(pmark);
+                    setPlayerMark(player, pmark, 0);
                 }
             }
         }

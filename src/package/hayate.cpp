@@ -159,7 +159,7 @@ public:
                     data.setValue(damage);
 
                     LogMessage log;
-                    log.type = "#diansuo_source_change";
+                    log.type = "$diansuo_source_change";
                     log.from = a;
                     room->sendLog(log);
                 }
@@ -269,7 +269,7 @@ public:
 
                     // need a broadcast
                     LogMessage log;
-                    log.type = "#diansuo_effect";
+                    log.type = "$diansuo_effect";
                     log.from = a;
                     log.arg = old->getGeneralName();
                     log.arg2 = use.card->objectName();
@@ -298,7 +298,7 @@ public:
             SlashEffectStruct effect = data.value<SlashEffectStruct>();
             if (effect.from && effect.from->hasSkill(objectName()) && effect.from->getWeapon() && effect.from->getWeapon()->isKindOf("DoubleSword") && effect.to){
                 LogMessage log;
-                log.type = "#jiesha_effect";
+                log.type = "$jiesha_effect";
                 log.from = effect.to;
                 log.arg = effect.slash->objectName();
                 room->sendLog(log);
@@ -861,7 +861,7 @@ void HaremuCard::use(Room *room, ServerPlayer *player, QList<ServerPlayer *> &ta
     }
     else{
         LogMessage log;
-        log.type = "#refuse_club";
+        log.type = "$refuse_club";
         log.from = target;
         log.arg = "@amclub_sos";
         room->sendLog(log);
@@ -1083,14 +1083,14 @@ public:
             else if (damage.to->hasSkill(objectName()) && damage.to->getMark("@Patience") > 0){
                 if (damage.from){
                     LogMessage log;
-                    log.type = "#rennai_effect";
+                    log.type = "$rennai_effect";
                     log.arg = damage.from->getGeneralName();
                     room->sendLog(log);
                     calcFreeze(room, damage.to);
                 }
                 else if (damage.card){
                     LogMessage log;
-                    log.type = "#rennai_effect";
+                    log.type = "$rennai_effect";
                     log.arg = damage.card->getClassName();
                     room->sendLog(log);
                     calcFreeze(room, damage.to);
@@ -1102,7 +1102,7 @@ public:
         else if (triggerEvent == PreHpLost && TriggerSkill::triggerable(player)){
             if (player->hasSkill(objectName()) && player->getMark("@Patience") > 0){
                 LogMessage log;
-                log.type = "#rennai_effect2";
+                log.type = "$rennai_effect2";
                 room->sendLog(log);
                 calcFreeze(room, player);
                 return true;
@@ -1188,7 +1188,7 @@ public:
             CardEffectStruct effect = data.value<CardEffectStruct>();
             if (effect.from && effect.from->hasSkill(objectName()) && effect.to && effect.to->getMark("@Frozen_Eu") > 0){
                 LogMessage log;
-                log.type = "#zhanfang_effect";
+                log.type = "$zhanfang_effect";
                 log.from = effect.to;
                 log.arg = effect.card->objectName();
                 room->sendLog(log);
@@ -1200,7 +1200,7 @@ public:
             SlashEffectStruct effect = data.value<SlashEffectStruct>();
             if (effect.from && effect.from->hasSkill(objectName()) && effect.to && effect.to->getMark("@Frozen_Eu") > 0){
                 LogMessage log;
-                log.type = "#zhanfang_effect";
+                log.type = "$zhanfang_effect";
                 log.from = effect.to;
                 log.arg = effect.slash->objectName();
                 room->sendLog(log);
@@ -1705,7 +1705,7 @@ public:
                     }
                     else{
                         LogMessage log;
-                        log.type = "#refuse_club";
+                        log.type = "$refuse_club";
                         log.from = dying.who;
                         log.arg = "@amclub_sos";
                         room->sendLog(log);
@@ -1780,7 +1780,7 @@ public:
     Yuanwang() : TriggerSkill("yuanwang")
     {
         frequency = NotFrequent;
-        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EventPhaseStart << TurnStart;
+        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EventPhaseStart << TurnStart << EventPhaseChanging << TargetConfirmed << CardUsed;
     }
 
     bool triggerable(const ServerPlayer *target) const
@@ -1790,6 +1790,7 @@ public:
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
+        bool is_sos_turn = room->getTag("sos_status").toBool();
         if (triggerEvent == GameStart){
             if (player->hasSkill(objectName()))
                 player->addClub("@amclub_sos");
@@ -1839,31 +1840,271 @@ public:
                     }
                     else{
                         LogMessage log;
-                        log.type = "#refuse_club";
+                        log.type = "$refuse_club";
                         log.from = target;
                         log.arg = "@amclub_sos";
                         room->sendLog(log);
                     }
                 }
             }
-            else if (player->getPhase() == Player::RoundStart && player->hasSkill(objectName())){
-                if (room->askForSkillInvoke(player, objectName(), data)){
-                    foreach(ServerPlayer *p, room->getAlivePlayers()){
-                        if (!p->hasClub("@amclub_sos")){
-                            p->turnOver();
+            if (player->getPhase() == Player::RoundStart && player->hasSkill(objectName())){
+                foreach(ServerPlayer *p, room->getAlivePlayers()){
+                    if (!p->hasClub("@amclub_sos")){
+                        p->turnOver();
+                    }
+                }
+                room->doLightbox(objectName() + "$", 800);
+                room->setTag("sos_status", QVariant(true));
+                is_sos_turn = true;
+            }
+
+
+            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos") && rand() % 20 == 0){ // 
+
+                QList<QVariant> card_ids;
+                QList<QVariant> equip_ids;
+                QList<QVariant> judge_ids;
+                foreach(const Card *card, player->getHandcards()){
+                    if (card->isVirtualCard()){
+                        foreach(int id, card->getSubcards()){
+                            if (id != -1){
+                                card_ids << QVariant(id);
+                            }
                         }
                     }
-                    room->setTag("sos_status", QVariant(true));
+                    else{
+                        int id = card->getEffectiveId();
+                        if (id != -1){
+                            card_ids << QVariant(id);
+                        }
+                    }
+                    
                 }
+                foreach(const Card *card, player->getEquips()){
+                    int id = card->getEffectiveId();
+                    if (id != -1){
+                        equip_ids << QVariant(id);
+                    }
+                }
+                foreach(const Card *card, player->getJudgingArea()){
+                    int id = card->getEffectiveId();
+                    if (id != -1){
+                        judge_ids << QVariant(id);
+                    }
+                }
+                QVariant cards, equips, judges, marks, piles;
+                cards.setValue(card_ids);
+                equips.setValue(equip_ids);
+                judges.setValue(judge_ids);
+                QMap<QString, QVariant> marks_map;
+                foreach(QString mark, player->getMarkNames()){
+                    marks_map[mark] = QVariant(player->getMark(mark));
+                }
+                marks.setValue(marks_map);
+                QMap<QString, QVariant> piles_map;
+                foreach(QString pile, player->getPileNames()){
+                    QVariant temp;
+                    QList<QVariant> templst;
+                    foreach(int id, player->getPile(pile)){
+                        templst << QVariant(id);
+                    }
+                    temp.setValue(templst);
+                    piles_map[pile] = temp;
+                }
+                piles.setValue(piles_map);
+
+                player->tag["sos_august_turn"] = QVariant(true);
+                player->tag["sos_august_cards"] = cards;
+                player->tag["sos_august_equips"] = equips;
+                player->tag["sos_august_judges"] = judges;
+                player->tag["sos_august_hp"] = QVariant(player->getHp());
+                player->tag["sos_august_max_hp"] = QVariant(player->getMaxHp());
+                player->tag["sos_august_marks"] = marks;
+                player->tag["sos_august_piles"] = piles;
             }
+            
         }
         else if (triggerEvent == TurnStart && player->hasSkill(objectName())){
             if (room->getTag("sos_status").toBool()){
                 room->setTag("sos_status", QVariant(false));
+                is_sos_turn = false;
                 foreach(ServerPlayer *p, room->getPlayersByClub("@amclub_sos")){
                 p->turnOver();
                 }
             }
+        }
+        else if (triggerEvent == EventPhaseChanging && is_sos_turn && player->hasClub("@amclub_sos")){
+            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
+            if (change.to != Player::Draw && change.to != Player::Play && change.to != Player::NotActive && is_sos_turn && player->hasClub("@amclub_sos") && rand() % 100 < 3){ 
+                change.to = rand() % 2 == 0 ? Player::Draw : Player::Play;
+                if (change.to == Player::Play && player->getHandcardNum() < 3 && rand() % 5 > 1){
+                    change.to = Player::Draw;
+                }
+                data.setValue(change);
+                LogMessage log;
+                log.type = change.to == Player::Draw ? "$yuanwang_add_phase_draw" : "$yuanwang_add_phase_play";
+                log.from = player;
+                room->sendLog(log);
+                player->insertPhase(change.to);
+            }
+            if (change.to == Player::NotActive && player->isAlive() && player->tag["sos_august_turn"].toBool()){
+                player->tag["sos_august_turn"] = QVariant(false);
+
+                LogMessage log;
+                log.type = "$yuanwang_august";
+                log.from = player;
+                room->sendLog(log);
+                
+                QList<int> handcard_ids;
+                foreach(QVariant q, player->tag["sos_august_cards"].toList()){
+                    handcard_ids << q.toInt();
+                }
+                QList<int> equips_ids;
+                foreach(QVariant q, player->tag["sos_august_equips"].toList()){
+                    equips_ids << q.toInt();
+                }
+                QList<int> judges_ids;
+                foreach(QVariant q, player->tag["sos_august_judges"].toList()){
+                    judges_ids << q.toInt();
+                }
+                QMap<QString, QVariant> marks_raw_map = player->tag["sos_august_marks"].toMap();
+                QMap<QString, int> marks_map;
+                foreach(QString key, marks_raw_map.keys()){
+                    marks_map[key] = marks_raw_map[key].toInt();
+                }
+                QMap<QString, QVariant> piles_raw_map = player->tag["sos_august_piles"].toMap();
+                QMap<QString, QList<int>> piles_map;
+                foreach(QString key, piles_raw_map.keys()){
+                    QList<int> temp;
+                    foreach(QVariant v, piles_raw_map[key].toList()){
+                        temp << v.toInt();
+                    }
+                    piles_map[key] = temp;
+                }
+                int hp = player->tag["sos_august_hp"].toInt();
+                int maxhp = player->tag["sos_august_max_hp"].toInt();
+
+
+
+                player->tag["sos_august_cards"].clear();
+                player->tag["sos_august_equips"].clear();
+                player->tag["sos_august_judges"].clear();
+                player->tag["sos_august_hp"].clear();
+                player->tag["sos_august_max_hp"].clear();
+                player->tag["sos_august_marks"].clear();
+                player->tag["sos_august_piles"].clear();
+
+                QList<int> ids;
+                
+                foreach(const Card *card, player->getHandcards()){
+                    if (!handcard_ids.contains(card->getEffectiveId()) && !equips_ids.contains(card->getEffectiveId()) && !judges_ids.contains(card->getEffectiveId())){
+                        ids << card->getEffectiveId();
+                    }
+                    if (handcard_ids.contains(card->getEffectiveId())){
+                        handcard_ids.removeOne(card->getEffectiveId());
+                    }
+                }
+                room->moveCardsAtomic(CardsMoveStruct(ids, NULL, Player::DiscardPile, CardMoveReason(CardMoveReason::S_REASON_UNKNOWN, QString())), true);
+                room->getThread()->delay(200);
+
+                QList<int> eids;
+                foreach(const Card *card, player->getEquips()){
+                    if (!handcard_ids.contains(card->getEffectiveId()) && !equips_ids.contains(card->getEffectiveId()) && !judges_ids.contains(card->getEffectiveId())){
+                        eids << card->getEffectiveId();
+                    }
+                    if (equips_ids.contains(card->getEffectiveId())){
+                        equips_ids.removeOne(card->getEffectiveId());
+                    }
+                }
+                room->moveCardsAtomic(CardsMoveStruct(eids, player, NULL, Player::PlaceEquip, Player::DiscardPile, CardMoveReason(CardMoveReason::S_REASON_UNKNOWN, QString())), true);
+                room->getThread()->delay(200);
+                
+                QList<int> jids;
+                foreach(const Card *card, player->getJudgingArea()){
+                    if (!handcard_ids.contains(card->getEffectiveId()) && !equips_ids.contains(card->getEffectiveId()) && !judges_ids.contains(card->getEffectiveId())){
+                        jids << card->getEffectiveId();
+                    }
+                    if (judges_ids.contains(card->getEffectiveId())){
+                        judges_ids.removeOne(card->getEffectiveId());
+                    }
+                }
+                room->moveCardsAtomic(CardsMoveStruct(jids, player, NULL, Player::PlaceDelayedTrick, Player::DiscardPile, CardMoveReason(CardMoveReason::S_REASON_UNKNOWN, QString())), true);
+
+                room->getThread()->delay(200);
+                foreach(QString mark, player->getMarkNames()){
+                    if (!marks_map.keys().contains(mark))
+                        room->setPlayerMark(player, mark, 0);
+                }
+                foreach(QString mark, marks_map.keys()){
+                    room->setPlayerMark(player, mark, marks_map[mark]);
+                }
+
+                room->getThread()->delay(100);
+                room->moveCardsAtomic(CardsMoveStruct(handcard_ids, player, Player::PlaceHand, CardMoveReason(CardMoveReason::S_REASON_UNKNOWN, QString())), true);
+                room->getThread()->delay(200);
+                room->moveCardsAtomic(CardsMoveStruct(equips_ids, player, Player::PlaceEquip, CardMoveReason(CardMoveReason::S_REASON_UNKNOWN, QString())), true);
+                room->getThread()->delay(200);
+                room->moveCardsAtomic(CardsMoveStruct(judges_ids, player, Player::PlaceDelayedTrick, CardMoveReason(CardMoveReason::S_REASON_UNKNOWN, QString())), true);
+
+                foreach(QString pile, player->getPileNames()){
+                    if (!piles_map.keys().contains(pile)){
+                        QList<ServerPlayer *> opens;
+                        foreach(ServerPlayer *p, room->getAlivePlayers()){
+                            if (player->pileOpen(pile, p->objectName())){
+                                opens << p;
+                            }
+                        }
+                        room->getThread()->delay(200);
+                        player->clearOnePrivatePile(pile);
+                        room->getThread()->delay(200);
+                        player->addToPile(pile, piles_map[pile], opens.count() > 1, opens);
+                    }
+                    else{
+                        room->getThread()->delay(200);
+                        player->clearOnePrivatePile(pile);
+                    }
+                        
+                }
+
+                foreach(QString pile, piles_map.keys()){
+                    room->getThread()->delay(200);
+                    if (player->getPile(pile).count() == 0)
+                        player->addToPile(pile, piles_map[pile]);
+                }
+
+
+                room->setPlayerProperty(player, "maxhp", maxhp);
+                room->setPlayerProperty(player, "hp", hp);
+                player->gainAnExtraTurn();
+            }
+        }
+        else if (triggerEvent == TargetConfirmed && is_sos_turn){
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.from && use.from == player && use.from->hasClub("@amclub_sos") && use.card && use.card->isBlack() && use.to.count() == 1 && use.from != use.to.first() && rand() % 20 == 0){
+                ServerPlayer *target = use.to.first();
+                if (target->hasClub("@amclub_sos")){
+                    return false;
+                }
+                LogMessage log;
+                log.type =  "$yuanwang_mikuru_beam";
+                log.from = use.from;
+                log.to = use.to;
+                room->sendLog(log);
+                room->damage(DamageStruct(objectName(), use.from, use.to.first(), 1, DamageStruct::Thunder));
+            }
+            
+        }
+        else if (triggerEvent == CardUsed && is_sos_turn){
+            CardUseStruct use = data.value<CardUseStruct>();
+            if (use.from && use.from->hasClub("@amclub_sos") && use.card && !use.card->isVirtualCard() && (use.card->isKindOf("BasicCard") || use.card->isKindOf("TrickCard")) && rand() % 10 == 0){
+                LogMessage log;
+                log.type = "$yuanwang_card_back";
+                log.from = use.from;
+                log.card_str = QString::number(use.card->getEffectiveId());
+                room->sendLog(log);
+                room->obtainCard(use.from, use.card);
+            }
+
         }
         return false;
     }

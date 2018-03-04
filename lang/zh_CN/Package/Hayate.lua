@@ -4,7 +4,7 @@ return {
 	["hayate"] = "疾風Pack",
 	["yingdi"] = "影帝",
 	[":yingdi"] = "锁定技。若你未对一名AI造成过伤害，且你的身份未标明，这名AI始终视你为相同身份（主公则视你为忠臣）；若你未对一名人类玩家造成过伤害，这名玩家对你使用的【杀】无效。你的回合开始时，若场上身份数为2，你失去该技能并获得“截杀”。",
-	["#jiesha_effect"] = "%from 受到“截杀”的影响，无法响应 %arg 的效果。",
+	["$jiesha_effect"] = "%from 受到“截杀”的影响，无法响应 %arg 的效果。",
 	["@diansuo_target"] = "电锁目标",
 	["diansuo_cause"] = "电锁　「将X移至目标的相邻位置并视为X对其造成等同数量的雷属性伤害」",
 	["diansuo_target"] = "电锁　「将X移至目标的相邻位置，并令X成为唯一目标」",
@@ -23,8 +23,8 @@ return {
 	["designer:hei"] = "Sword Elucidator",
 	["cv:hei"] = "木内秀信",
 	["illustrator:hei"] = "",
-	["#diansuo_effect"] = "%from 受到「电锁」的影响， 代替 %arg 成为 %arg2 的目标。",
-	["#diansuo_source_change"] = "%from 受到「电锁」的影响， 代替 黑 成为 伤害的来源。",
+	["$diansuo_effect"] = "%from 受到「电锁」的影响， 代替 %arg 成为 %arg2 的目标。",
+	["$diansuo_source_change"] = "%from 受到「电锁」的影响， 代替 黑 成为 伤害的来源。",
 
 	["diarmuid"]="迪卢木多",
 	["@diarmuid"]="Fate Zero",
@@ -56,7 +56,7 @@ return {
 	["cv:tsukushi"]="田村ゆかり",
 	["illustrator:tsukushi"] = "J.C.Staff",
 	["~tsukushi"]="不要。。我不会再放开了。。。",
-	[":tiaojiao"]="<font color=\"#68be8d\"><b>出牌阶段限一次，</b></font>你可以令一名角色选择一项：对一名你指定的其他角色使用一张【杀】，或令你获得其区域内的一张牌。",
+	[":tiaojiao"]="出牌阶段限一次，你可以令一名角色选择一项：对一名你指定的其他角色使用一张【杀】，或令你获得其区域内的一张牌。",
 	[":gangqu"]="结束阶段开始时，若你没有“钢”，你可以将一张手牌置于你的武将牌上，称为“钢”，你可以令同类型的牌对你无效直至你下一回合的准备阶段。你的准备阶段开始时，若你的武将牌上有“钢”，你需获得一张“钢”。",
 	["$tiaojiao1"]="啊！！！“绷”~~~",
 	["$tiaojiao2"]="现在就把你赶出去！再也不让你踏进这个家门半步了！",
@@ -156,9 +156,9 @@ return {
 	[":gaokang"]="与你距离为1以内的角色受到非属性伤害时，若你有手牌，你可以弃置一张牌，可令伤害-1。若你因此而失去所有手牌，该角色摸两张牌。",
 	["$gaokang"]="可以观测他们想对本机造成伤害，但苦于没有手段，推测他们的文明低下。",
 
-	["#zhanfang_effect"] = "%from 受到“绽放”的影响，无法响应 %arg 的效果。",
-	["#rennai_effect"] = "受到“忍耐”的影响，阻止了 %arg 的伤害。",
-	["#rennai_effect2"] = "受到“忍耐”的影响，阻止了失去体力。",
+	["$zhanfang_effect"] = "%from 受到“绽放”的影响，无法响应 %arg 的效果。",
+	["$rennai_effect"] = "受到“忍耐”的影响，阻止了 %arg 的伤害。",
+	["$rennai_effect2"] = "受到“忍耐”的影响，阻止了失去体力。",
 	["rennai_gain"] = "获得一个“冻结”标记",
 	["rennai_lose"] = "失去一个“冻结”标记",
 	["rennai_hp"] = "根据体力值",
@@ -246,7 +246,6 @@ return {
 	["illustrator:yuri"] = "キチロク",
 	["recover"]="回复1点体力",
 	["draw"]="摸两张牌",
-	["#no_reward_or_punish"] = "%from 杀死 %arg 不执行奖惩",
 
 	["mengxian"] = "梦现",
 
@@ -257,7 +256,7 @@ return {
 	["mengxian$"] = "image=image/animate/mengxian.png",
 
 	["yuanwang"] = "愿望",
-	[":yuanwang"] = "社团技，「SOS团」\n加入条件：出牌阶段开始时，你可以询问一名其他非现世角色是否加入你的「SOS团」。若其加入，将其翻至正面。\n社团效果：你的回合开始时，你可以令「SOS团」以外的角色翻面，然后进行一次有趣的行动。你的下一回合开始前，令所有「SOS团」的角色翻面。",
+	[":yuanwang"] = "社团技，「SOS团」\n加入条件：出牌阶段开始时，你可以询问一名其他非现世角色是否加入你的「SOS团」。若其加入，将其翻至正面。\n社团效果：你的回合开始时，令「SOS团」以外的角色翻面，「SOS团」角色随机获得一些有趣的效果。你的下一回合开始前，令所有「SOS团」的角色翻面。",
 	["$yuanwang1"] = "我对一般的人类没有兴趣，如果你们中谁是宇宙人，未来人，异世界人或者超能力者的话，就到我这里来！",
 	["@amclub_sos"] = "「SOS团」",
 	["@yuanwang"] = "选择一名角色，询问其是否加入「SOS团」",
@@ -269,5 +268,10 @@ return {
 	["~haruhi"] = "你不也觉得那个世界很无聊么？你就不希望有什么更有趣的事情发生么？！",
 	["cv:haruhi"] = "平野绫",
 	["designer:haruhi"] = "帕秋莉·萝莉姬",
+	["$yuanwang_add_phase_draw"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 在奇怪的时间点获得了一个额外的摸牌阶段！",
+	["$yuanwang_add_phase_play"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 在奇怪的时间点获得了一个额外的出牌阶段！",
+	["$yuanwang_mikuru_beam"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 对 %to 发射了光线！",
+	["$yuanwang_card_back"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 收回了使用的 %card ！",
+	["$yuanwang_august"] = "由于<font color=\"#f2a0a1\"><b>团长大人</b></font>的力量， %from 进行了永无止境的八月！",
 
 }
