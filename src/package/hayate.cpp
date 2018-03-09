@@ -2201,6 +2201,165 @@ public:
 };
 
 
+MojuCard::MojuCard()
+{
+}
+
+bool MojuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *) const
+{
+    return targets.length() == 0;
+}
+
+void MojuCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const
+{
+    ServerPlayer *target = targets.at(0);
+    if (!target)
+        return;
+
+    int card_id = this->getSubcards().at(0);
+    if (card_id == -1)
+        return;
+    Card *card = Sanguosha->getCard(card_id);
+    room->moveCardTo(card, target, Player::PlaceEquip);
+    QList<ServerPlayer *> players;
+    foreach(ServerPlayer *p, room->getAlivePlayers()){
+        foreach(const Card *c, p->getEquips()){
+            if (c->getSuit() == card->getSuit()){
+                players.append(p);
+                break;
+            }     
+        }
+        if (!players.contains(p)){
+            foreach(const Card *c, p->getJudgingArea()){
+                if (c->getSuit() == card->getSuit()){
+                    players.append(p);
+                    break;
+                }
+            }
+        }
+    }
+    if (players.count() == 0){
+        return;
+    }
+    ServerPlayer *from = room->askForPlayerChosen(source, players, "moju", "@moju-from:::" + card->getSuitString());
+    QList<int> disabled;
+    foreach(const Card *c, from->getEquips()){
+        if (c->getSuit() != card->getSuit()){
+            disabled.append(c->getEffectiveId());
+        }
+    }
+    foreach(const Card *c, from->getJudgingArea()){
+        if (c->getSuit() != card->getSuit()){
+            disabled.append(c->getEffectiveId());
+        }
+    }
+    int from_id = room->askForCardChosen(source, from, "ej", objectName(), false, Card::MethodNone, disabled);
+    Player::Place place = room->getCardPlace(from_id);
+    const Card *from_card = Sanguosha->getCard(from_id);
+    QList<ServerPlayer *> tos;
+
+    int equip_index = -1;
+    if (place == Player::PlaceEquip){
+        const EquipCard *equip = qobject_cast<const EquipCard *>(from_card->getRealCard());
+        equip_index = static_cast<int>(equip->location());
+    }
+    foreach(ServerPlayer *p, room->getOtherPlayers(from)){
+        if (equip_index != -1) {
+            if (p->getEquip(equip_index) == NULL)
+                tos << p;
+        }
+        else {
+            if (!source->isProhibited(p, from_card) && !p->containsTrick(from_card->objectName()))
+                tos << p;
+        }
+    }
+    ServerPlayer *to = room->askForPlayerChosen(source, tos, "moju_to", "@moju-to:::" + from_card->objectName());
+    if (to)
+        room->moveCardTo(from_card, from, to, place,
+        CardMoveReason(CardMoveReason::S_REASON_TRANSFER,
+        source->objectName(), "moju", QString()));
+}
+
+class Moju : public OneCardViewAsSkill
+{
+public:
+    Moju() : OneCardViewAsSkill("moju"){
+
+    }
+
+    bool viewFilter(const Card *card) const
+    {
+        return card->isKindOf("EquipCard");
+    }
+
+    const Card *viewAs(const Card *originalCard) const
+    {
+        MojuCard *mjc = new MojuCard();
+        mjc->addSubcard(originalCard);
+        mjc->setSkillName("moju");
+        return mjc;
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("MojuCard");
+    }
+};
+
+
+class Jiejie : public TriggerSkill
+{
+public:
+    Jiejie() : TriggerSkill("jiejie")
+    {
+        frequency = NotFrequent;
+        events << DamageInflicted;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == DamageInflicted){
+            DamageStruct damage = data.value<DamageStruct>();
+            ServerPlayer *hakaze = room->findPlayerBySkillName(objectName());
+            
+            if (damage.to && hakaze && !room->getCurrent()->hasFlag("jiejie_used") && room->askForSkillInvoke(damage.to, objectName(), data)){
+                LogMessage log;
+                log.type = "$jiejie_asked";
+                log.from = damage.to;
+                room->sendLog(log);
+                room->broadcastSkillInvoke(objectName(), 1);
+                room->getCurrent()->setFlags("jiejie_used");
+                QList<int> card_ids = room->getNCards(damage.to->getLostHp() + 1, false);
+                room->fillAG(card_ids, hakaze);
+                int id = room->askForAG(hakaze, card_ids, false, objectName());
+                room->clearAG(hakaze);
+                room->showCard(hakaze, id);
+                room->obtainCard(hakaze, id);
+                if (id != -1){
+                    const Card *card = Sanguosha->getCard(id);
+                    foreach(const Card* c, damage.to->getEquips()){
+                        if (card->getColor() == c->getColor()){
+                            damage.damage -= 1;
+                            data.setValue(damage);
+                            room->broadcastSkillInvoke(objectName(), rand() % 2 + 1);
+                            room->doLightbox(objectName() + "$", 800);
+                            room->setEmotion(damage.to, "shield");
+                            return false;
+                        }
+                    }
+                    
+                }
+            }
+        }
+       
+        return false;
+    }
+};
 
 HayatePackage::HayatePackage()
     : Package("hayate")
@@ -2255,10 +2414,14 @@ HayatePackage::HayatePackage()
     haruhi->addSkill(new Mengxian);
     haruhi->addSkill(new Yuanwang);
 
+    General *hakaze = new General(this, "hakaze", "magic", 3, false);
+    hakaze->addSkill(new Moju);
+    hakaze->addSkill(new Jiejie);
+
     addMetaObject<TiaojiaoCard>();
     addMetaObject<HaremuCard>();
     addMetaObject<YoushuiCard>();
-
+    addMetaObject<MojuCard>();
 }
 
 ADD_PACKAGE(Hayate)

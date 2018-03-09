@@ -2315,7 +2315,7 @@ luaposhiArmor = sgs.CreateTriggerSkill{
 --------------------------------------------------------------连锁@fuwaaika
 LuaLiansuo = sgs.CreateTriggerSkill{
 	name = "LuaLiansuo",
-	events = {sgs.CardsMoveOneTime,sgs.EventPhaseEnd},
+	events = {sgs.CardsMoveOneTime,sgs.EventPhaseStart},
 	frequency = sgs.Skill_NotFrequent,
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
@@ -2332,23 +2332,22 @@ LuaLiansuo = sgs.CreateTriggerSkill{
 			if source:objectName() == aika:objectName() then return end
 			if bit32.band(move.reason.m_reason, sgs.CardMoveReason_S_MASK_BASIC_REASON) ~= sgs.CardMoveReason_S_REASON_DISCARD then return end
 			if topc ~= sgs.Player_DiscardPile then return end
+			local broadcasted = false
 			for _,id in sgs.qlist(move.card_ids) do
-				if aika:getMark("aikadraw") < 2 then
+				if aika:getMark("aikadraw") < 4 then
 					if aika:askForSkillInvoke(self:objectName(), data) then
 						aika:drawCards(1)
-						if aika:getMark("aikadraw") == 0 then
+						if not broadcasted then
+							broadcasted = true
 							room:broadcastSkillInvoke("LuaLiansuo")
 						end
 						room:addPlayerMark(aika,"aikadraw",1)
 					end
 				end
 			end
-		elseif event == sgs.EventPhaseEnd then
-			local phase = player:getPhase()
-			if phase == sgs.Player_Finish then
-				local aika = room:findPlayerBySkillName(self:objectName())
-				if aika == nil then return end
-				room:setPlayerMark(aika,"aikadraw",0)
+		elseif event == sgs.EventPhaseStart and player:hasSkill(self:objectName()) then
+			if player:getPhase() == sgs.Player_RoundStart then
+				room:setPlayerMark(player,"aikadraw",0)
 			end
 		end
 	end,
@@ -3539,7 +3538,7 @@ sgs.LoadTranslationTable{
 	[":LuaQisi"]="【杀】或非延时类锦囊对你生效前，你可以弃置一张“丝”，若该角色的攻击范围小于“丝”点数的一半（向下取整），取消之。",
 	[":luayukong"]="出牌阶段限一次，你可以弃置一张“丝”，然后你计算和其他角色的距离为1，直到回合结束。",
 	[":luaposhi"]="出牌阶段限一次，你可失去1点体力，然后你无视与其他角色的距离和其他角色的防具；且你使用杀时无使用次数限制，直到回合结束。",
-	[":LuaLiansuo"]="每名其他角色的回合限两次，其他角色的牌因弃置而置入弃牌堆时，你可以摸一张牌",
+	[":LuaLiansuo"]="回合外限四次，其他角色的牌因弃置而置入弃牌堆时，你可以摸一张牌",
 	[":LuaYinguo"]="限定技。你死亡后，可以将所有手牌交给至多两名男性角色，然后指定的角色再摸等同于交给其手牌张数的牌。",
 	[":slyanhuo"]="出牌阶段，你可以将一张手牌背面朝上置于武将牌上，称为“惑”（惑最多为当前场上人数且最多为4），然后你摸一张牌。其他角色的出牌阶段限一次，可以翻开一张你的“惑”。你受到伤害后，可令伤害来源翻开你指定的一张“惑”。",
 	[":zhahu"]="锁定技。翻开“惑”的角色须执行以下效果并弃置“惑”，黑桃，回复1点体力，红桃，失去1点体力，梅花，摸两张牌，方块，你弃置其一张牌；准备阶段开始时，你须翻开你所有的“惑”。",

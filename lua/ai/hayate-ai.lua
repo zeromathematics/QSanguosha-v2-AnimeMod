@@ -566,3 +566,10 @@ sgs.ai_skill_playerchosen.yuanwang = function(self, targets)
 	end
 	return
 end
+
+
+sgs.ai_skill_invoke.jiejie = function(self, targets)
+	local hakaze = self.room:findPlayerBySkillName("jiejie")
+	if not hakaze then return false end
+	return not self:isEnemy(hakaze)
+end

@@ -129,7 +129,7 @@ Ayase = sgs.General(extension, "Ayase", "real", 3, false,false,false)
 Hikigaya = sgs.General(extension, "Hikigaya", "real", 4, true,false,false)
 Chiyuri = sgs.General(extension, "Chiyuri", "science", 3, false,false,false)
 AiAstin = sgs.General(extension, "AiAstin", "magic", 3, false,false,false)
-Hakaze = sgs.General(extension, "Hakaze", "magic", 3, false,false,false)
+-- Hakaze = sgs.General(extension, "Hakaze", "magic", 3, false,false,false)
 Kotori = sgs.General(extension, "Kotori", "magic", 3, false,false,false)
 --Kotori_sub = sgs.General(extension, "Kotori_sub", "magic", 3, true,true,true)
 Kotori_white = sgs.General(extension, "Kotori_white", "magic", 3, false,true,true)
@@ -1047,11 +1047,7 @@ se_shixianMark = sgs.CreateTriggerSkill{
 		player:loseAllMarks("@time")
 		--KOF
 		local room = player:getRoom()
-		if room:getAllPlayers(true):length() == 2 then
-			player:gainMark("@time", 2)
-		else
-			player:gainMark("@time", 3)
-		end
+		player:gainMark("@time", 2)
 	end
 }
 
@@ -3112,7 +3108,7 @@ sgs.LoadTranslationTable{
 ["$se_shouren1"] = "「Guardskill Handsonic」",
 ["$se_shouren2"] = "「Handsonic Version2」",
 ["#addMaxHp"] = "%from 增加 %arg 点体力上限。",
-[":se_shouren"] = "出牌阶段限一次，你可以指定一名角色，令其失去1点体力。若如此做且该角色的体力值变为0，你令其将武将牌翻面，然后失去技能“立场”。",
+[":se_shouren"] = "出牌阶段限一次，你可以指定一名角色，令其失去1点体力。若如此做且该角色的体力值变为0，你令其将武将牌翻面，然后失去技能“力场”。",
 ["Kanade"] = "立华奏",
 ["&Kanade"] = "立华奏",
 ["@Kanade"] = "Angel Beats!",
@@ -7244,38 +7240,41 @@ sgs.LoadTranslationTable{
 SE_Gongpin = sgs.CreateTriggerSkill{
 	name = "SE_Gongpin",
 	frequency = sgs.Skill_Frequent,
-	events = {sgs.Damage, sgs.EventLoseSkill},
+	events = {sgs.Damage, sgs.EventLoseSkill,sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		local damage = data:toDamage()
 		if event == sgs.Damage then
 			local list = room:getAlivePlayers()
 			for _,p in sgs.qlist(list) do
-				if p:hasSkill("SE_Gongpin") then
-					if math.floor(p:getMark("@MagicEquip") / 3) * 3 == p:getMark("@MagicEquip") then
-						room:broadcastSkillInvoke(self:objectName())
-					end
-					--KOF
-					if room:getAllPlayers(true):length() == 2 then
-						p:gainMark("@MagicEquip",1)
-						return false
-					end
+				if p:hasSkill(self:objectName()) and p:getMark("MagicEquipCount") < 4 then
+					p:addMark("MagicEquipCount")
+
 					if room:getDrawPile():length()< 3 then room:swapPile() end
 					local cards = room:getDrawPile()
 					local get = false
+					local ndtricks = sgs.IntList()
 					for i = 1, 3, 1 do
 						local cardsid1=cards:at(i-1)
 						room:showCard(p,cardsid1)
 						local card=sgs.Sanguosha:getCard(cardsid1)
 						if card:isNDTrick() then
 							get = true
+							ndtricks:append(cardsid1)
 						end
 						local reason=sgs.CardMoveReason()
 						reason.m_reason   = sgs.CardMoveReason_S_REASON_THROW
 						reason.m_playerId = p:objectName()
 						room:moveCardTo(card, nil, sgs.Player_DiscardPile, reason,true)
 					end
-					if get then p:gainMark("@MagicEquip",1) end
+					if get then
+						room:broadcastSkillInvoke(self:objectName())
+						room:fillAG(ndtricks, p)
+						local id = room:askForAG(p, ndtricks, false, self:objectName())
+						if id ~= -1 then room:obtainCard(p, id) end
+						room:clearAG(p)
+						p:gainMark("@MagicEquip",1)
+					end
 				end
 			end
 		elseif event == sgs.EventLoseSkill then
@@ -7283,6 +7282,10 @@ SE_Gongpin = sgs.CreateTriggerSkill{
 				for _,p in sgs.qlist(room:getAlivePlayers()) do
 					p:loseAllMarks("@Kekkai")
 				end
+			end
+		elseif event == sgs.EventPhaseStart and player:hasSkill(self:objectName()) then
+			if player:getPhase() == sgs.Player_RoundStart then
+				player:setMark("MagicEquipCount",0)
 			end
 		end
 		return false
@@ -7292,11 +7295,11 @@ SE_Gongpin = sgs.CreateTriggerSkill{
 	end
 }
 
-se_jiejie=sgs.CreateViewAsSkill{
-	name="se_jiejie",
+jiejie=sgs.CreateViewAsSkill{
+	name="jiejie",
 	n = 0,
 	view_as = function(self, cards)
-		return se_jiejiecard:clone()
+		return jiejiecard:clone()
 	end,
 	enabled_at_play = function(self, player)
 		if player:getMark("@MagicEquip") > 0 then
@@ -7306,8 +7309,8 @@ se_jiejie=sgs.CreateViewAsSkill{
 }
 
 
-se_jiejiecard = sgs.CreateSkillCard{
-	name = "se_jiejiecard",
+jiejiecard = sgs.CreateSkillCard{
+	name = "jiejiecard",
 	target_fixed = false,
 	will_throw = true,
 	filter = function(self, targets, to_select) --必须
@@ -7315,13 +7318,13 @@ se_jiejiecard = sgs.CreateSkillCard{
 	end,
 	on_use = function(self, room, source, targets)
 		source:loseMark("@MagicEquip")
-		room:doLightbox("se_jiejie$", 800)
+		room:doLightbox("jiejie$", 800)
 		targets[1]:gainMark("@Kekkai")
 	end,
 }
 
-se_jiejieEffect = sgs.CreateTriggerSkill{
-	name = "#se_jiejieEffect",
+jiejieEffect = sgs.CreateTriggerSkill{
+	name = "#jiejieEffect",
 	frequency = sgs.Skill_Compulsory,
 	events = {sgs.DamageCaused},
 	on_trigger = function(self, event, player, data)
@@ -7330,7 +7333,7 @@ se_jiejieEffect = sgs.CreateTriggerSkill{
 			local damage = data:toDamage()
 			local pld = damage.to
 			if pld:getMark("@Kekkai") > 0 then
-				room:broadcastSkillInvoke("se_jiejie")
+				room:broadcastSkillInvoke("jiejie")
 				room:setEmotion(pld, "shield")
 				damage.damage = damage.damage - 1
 				data:setValue(damage)
@@ -7345,34 +7348,14 @@ se_jiejieEffect = sgs.CreateTriggerSkill{
 	end
 }
 
-Hakaze:addSkill(SE_Gongpin)
-Hakaze:addSkill(se_jiejie)
-Hakaze:addSkill(se_jiejieEffect)
-extension:insertRelatedSkills("se_jiejie", "#se_jiejieEffect")
-
-sgs.LoadTranslationTable{
-["se_jiejie$"] = "image=image/animate/se_jiejie.png",
-["@MagicEquip"] = "魔道具",
-["@Kekkai"] = "结界",
-["SE_Gongpin"] = "贡品「文明贡品」",
-["$SE_Gongpin1"] = "如此高度的文明产物...为什么会恰巧落在我的附近...",
-["$SE_Gongpin2"] = "...左门藏的贡品没那么容易找到...那么就直接把其他供物送来了吗...",
-["$SE_Gongpin3"] = "把那个魔具给我！我要用那个贡品重新强化这个防御场！",
-[":SE_Gongpin"] = "每当一名角色造成一次伤害时，你可以将牌堆顶部的三张牌依次置入弃牌堆，若其中存在非延时类锦囊牌，你获得一枚“魔道具”标记。 ",
-["se_jiejie"] = "结界「守护之魔法」",
-["$se_jiejie1"] = "听我调遣！",
-["$se_jiejie2"] = "不懂也无所谓！...",
-["$se_jiejie3"] = "就算悖论而行！爱花！...我也不会让你回去！",
-[":se_jiejie"] = "出牌阶段，你可以弃置1枚“魔道具”标记并指定一名没有“结界”标记的角色，你令其获得1枚“结界”标记。每当拥有“结界”标记的角色受到伤害时，其须弃置1枚“结界”标记并令此伤害-1。",
-["Hakaze"] = "鎖部葉風",
-["&Hakaze"] = "鎖部葉風",
-["@Hakaze"] = "绝园的暴风雨",
-["#Hakaze"] = "初始的魔法使",
-["~Hakaze"] = "为什么...为什么会变成这样...我...我相信至今的理究竟是什么...",
-["designer:Hakaze"] = "Sword Elucidator",
-["cv:Hakaze"] = "沢城みゆき",
-["illustrator:Hakaze"] = "pixiv いやくん",
-}
+-- Hakaze:addSkill(SE_Gongpin)
+-- Hakaze:addSkill(jiejie)
+-- Hakaze:addSkill(jiejieEffect)
+-- extension:insertRelatedSkills("jiejie", "#jiejieEffect")
+--
+-- sgs.LoadTranslationTable{
+--
+-- }
 
 
 

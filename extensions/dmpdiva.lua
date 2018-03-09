@@ -55,18 +55,12 @@ se_nitian = sgs.CreateTriggerSkill{
 				end
 			end
 			if newMove.card_ids:length() > 0 then
-				if honoka:getHandcardNum() >= honoka:getMaxHp() then
-					honoka:drawCards(1)
-					return false
-				end
-				if room:askForChoice(honoka,self:objectName(),"se_nitian_gain+se_nitian_draw") == "se_nitian_gain" then
+				if honoka:getHandcardNum() <= honoka:getHp() then
 					newMove.to = honoka
 					newMove.to_place = sgs.Player_PlaceHand
 					newMove.reason = sgs.CardMoveReason(0x27,"","se_nitian","")
 					room:broadcastSkillInvoke(self:objectName())
 					room:moveCardsAtomic(newMove, true)
-				else
-					honoka:drawCards(1)
 				end
 			end
 			return false
@@ -419,7 +413,7 @@ sgs.LoadTranslationTable{
 	["$se_nitian2"] = "为了达成目标，只有向前！",
 	["$se_nitian3"] = "穗乃果的微笑，有没有能传递给大家呢？",
 	["$se_nitian4"] = "辛苦啦！今天也努力了！！",
-	[":se_nitian"] = "一名角色判定结束时，你可以弃置一张手牌，令其回复一点体力。延时锦囊进入弃牌堆时，若你的手牌数小于你的体力上限，你可以获得之，否则你摸一张牌。",
+	[":se_nitian"] = "一名角色判定结束时，你可以弃置一张手牌，令其回复一点体力。延时锦囊进入弃牌堆时，锁定技。若你的手牌数小于你的体力值，你获得之。",
 
 	["se_guwu"] = "鼓舞「Fightだよ」",
 	["$se_guwu1"] = "好的，就和穗乃果一起来唱歌吧！",

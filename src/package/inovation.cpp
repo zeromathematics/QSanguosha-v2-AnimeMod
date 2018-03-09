@@ -1102,7 +1102,7 @@ public:
                 return false;
             if (!use.to.at(0)->hasSkill(objectName()))
                 return false;
-            if (use.to.at(0)->getMark("huanxing_used") > 3 || !use.to.at(0)->askForSkillInvoke(objectName(), data))
+            if (!use.to.at(0)->askForSkillInvoke(objectName(), data))
                 return false;
             foreach(ServerPlayer* p, room->getAlivePlayers()){
                 if (p->getMark("@huanxing_target") > 0){
@@ -1111,9 +1111,6 @@ public:
                 }
             }
             use.from->gainMark("@huanxing_target");
-            if (room->getAlivePlayers().length() == 2){
-                use.to.at(0)->addMark("huanxing_used");
-            }
             room->broadcastSkillInvoke(objectName(), rand() % 4 + 1);
             room->doLightbox("huanxing$", 300);
             room->akarinPlayer(use.to.at(0), use.from);
@@ -2002,41 +1999,29 @@ public:
     }
     int getPriority(TriggerEvent) const
     {
-        return 5;
+        return -2;
     }
 
-    bool trigger(TriggerEvent , Room *room, ServerPlayer *, QVariant &data) const
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         DamageStruct damage = data.value<DamageStruct>();
-        if (!damage.card->isKindOf("Slash") || !damage.from->hasSkill(objectName()) || !damage.from->getWeapon() || !damage.from->askForSkillInvoke(objectName(), data))
-            return false;
-        room->broadcastSkillInvoke(objectName());
-        room->doLightbox("Zhena$", 2500);
-        room->loseHp(damage.from, damage.from->getHp());
-        if (damage.from->isAlive())
-            room->recover(damage.from, RecoverStruct(damage.from, NULL, 1));
-        damage.nature = DamageStruct::Fire;
-        damage.damage = damage.to->getHp();
-        data.setValue(damage);
+        if (triggerEvent == DamageCaused){
+            if (damage.nature != DamageStruct::Fire || !damage.from->hasSkill(objectName()) || damage.from->getPhase() != Player::Play || damage.from->hasFlag("zhena_used") || !damage.from->askForSkillInvoke(objectName(), data))
+                return false;
+            room->broadcastSkillInvoke(objectName());
+            room->doLightbox("Zhena$", 2500);
+
+            damage.from->setFlags("zhena_used");
+
+            damage.damage += damage.to->getHp();
+            data.setValue(damage);
+
+            if (damage.from->getHp() > 1)
+                room->loseHp(damage.from, damage.from->getHp() - 1);
+
+            
+        }
         return false;
-    }
-};
-
-
-class ZhenaSlashMod : public TargetModSkill
-{
-public:
-    ZhenaSlashMod() : TargetModSkill("#Zhena")
-    {
-        frequency = NotCompulsory;
-    }
-
-    int getResidueNum(const Player *from, const Card *) const
-    {
-        if (from->hasSkill(this))
-            return 1000;
-        else
-            return 0;
     }
 };
 
@@ -2050,24 +2035,25 @@ public:
     }
     int getPriority(TriggerEvent) const
     {
-        return -2;
+        return 2;
     }
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *, QVariant &data) const
     {
         DamageStruct damage = data.value<DamageStruct>();
-        if (triggerEvent == DamageCaused){
-            if (damage.from->hasSkill(objectName()) && damage.nature == DamageStruct::Fire && damage.from->isAlive()){
-                room->broadcastSkillInvoke(objectName(), 1);
-                damage.damage += 1;
-                data.setValue(damage);
-            }
-        }
-        else if (triggerEvent == DamageInflicted){
-            if (damage.to->hasSkill(objectName()) && damage.nature != DamageStruct::Normal && damage.to->isAlive()){
+        if (triggerEvent == DamageInflicted){
+            if (damage.to->hasSkill(objectName()) && damage.nature == DamageStruct::Fire && damage.to->isAlive()){
                 room->broadcastSkillInvoke(objectName(), 2);
+                damage.to->drawCards(damage.to->getLostHp());
                 return true;
             }
+        }
+        else{
+            if (!damage.card->isKindOf("Slash") && !damage.card->isKindOf("Duel") || !damage.from->hasSkill(objectName())){
+                return false;
+            }
+            damage.nature = DamageStruct::Fire;
+            data.setValue(damage);
         }
 
         return false;
@@ -5506,7 +5492,7 @@ const Card *FengzhuCard::validateInResponse(ServerPlayer *sanae) const
 
     room->setPlayerFlag(sanae, "fengzhu_used");
 
-    if (sanae && sanae->isAlive() && sanae->hasSkill("fengzhu")){
+    if (sanae && sanae->isAlive() && sanae->hasSkill("fengzhu") && !sanae->isKongcheng()){
         const Card* card = room->askForCardShow(sanae, sanae, "fengzhu");
         if (card){
             JudgeStruct judge;
@@ -6453,8 +6439,6 @@ InovationPackage::InovationPackage()
 
     General *Shana = new General(this, "Shana", "magic", 3, false);
     Shana->addSkill(new Zhena);
-    Shana->addSkill(new ZhenaSlashMod);
-    related_skills.insertMulti("zhena", "#zhena");
     Shana->addSkill(new Tianhuo);
 
     General *akarin = new General(this, "Akarin", "real", 3, false);

@@ -355,5 +355,5 @@ local new_taco2 = tacos:clone(1, 3)
 new_taco2:setParent(extension)
 sgs.LoadTranslationTable{
 	["tacos"] = "饼",
-	[":tacos"] = "基本牌<br />出牌时机：出牌阶段<br />使用目标：自己<br />作用效果：你获得弃牌堆中的一张牌，然后将弃牌堆3/4的牌置于摸牌堆顶。<br />",
+	[":tacos"] = "基本牌<br />出牌时机：出牌阶段<br />使用目标：自己<br />作用效果：你获得弃牌堆中的一张牌，然后将弃牌堆3/4的牌置于牌堆顶。<br />",
 }
