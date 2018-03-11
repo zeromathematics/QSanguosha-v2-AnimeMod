@@ -6,10 +6,11 @@ function sgs.CreateTriggerSkill(spec)
 	assert(type(spec.on_trigger) == "function")
 	if spec.frequency then assert(type(spec.frequency) == "number") end
 	if spec.limit_mark then assert(type(spec.limit_mark) == "string") end
-
+	if spec.club_name then assert(type(spec.club_name) == "string") end
 	local frequency = spec.frequency or sgs.Skill_NotFrequent
 	local limit_mark = spec.limit_mark or ""
-	local skill = sgs.LuaTriggerSkill(spec.name, frequency, limit_mark)
+	local club_name = spec.club_name or ""
+	local skill = sgs.LuaTriggerSkill(spec.name, frequency, limit_mark, club_name)
 
 	if type(spec.guhuo_type) == "string" and spec.guhuo_type ~= "" then skill:setGuhuoDialog(guhuo_type) end
 

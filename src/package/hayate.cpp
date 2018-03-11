@@ -226,7 +226,7 @@ public:
                     can = true;
                 }
                 else if (left_distance < right_distance){
-                    
+
                     ServerPlayer *current = old->getNext();
                     while (current != use.from){
                         if (current == a){
@@ -250,7 +250,7 @@ public:
                         }
                     }
                 }
-                
+
                 if (can && room->askForSkillInvoke(hei, objectName() + "_target", data)){
                     if (left_distance < right_distance){
 
@@ -276,7 +276,7 @@ public:
                     log.arg2 = use.card->objectName();
                     room->sendLog(log);
                 }
-                
+
             }
         }
         return false;
@@ -342,7 +342,7 @@ public:
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (triggerEvent == TargetConfirmed) 
+        if (triggerEvent == TargetConfirmed)
         {
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.from && use.from->hasSkill(objectName()) && use.card->isKindOf("Slash") && use.from == player){
@@ -622,7 +622,7 @@ public:
                 else{
                     room->doAura(player, objectName());
                 }
-                
+
             }
         }
         else if (triggerEvent == CardUsed) {
@@ -644,7 +644,7 @@ public:
                         room->doAura(ranka, "xingjian");
                         return false;
                     }
-                    
+
                 }
                 room->clearAura();
             }
@@ -854,15 +854,15 @@ void HaremuCard::use(Room *room, ServerPlayer *player, QList<ServerPlayer *> &ta
     used.append(target->objectName());
     player->tag["heremu_targets"] = used;
     room->obtainCard(target, this, true);
-    
+
     if (!target->hasClub() && room->askForChoice(target, "haremu", "haremu_accept+cancel", QVariant::fromValue(player)) == "haremu_accept"){
-        target->addClub("@amclub_haremu");
+        target->addClub("bekiyou");
     }
     else{
         LogMessage log;
         log.type = "$refuse_club";
         log.from = target;
-        log.arg = "@amclub_sos";
+        log.arg = "haremu";
         room->sendLog(log);
     }
 }
@@ -893,8 +893,9 @@ class Haremu : public TriggerSkill
 public:
     Haremu() : TriggerSkill("haremu")
     {
-        frequency = NotFrequent;
-        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EventPhaseStart;
+        frequency = Club;
+        club_name = "bekiyou",
+        events << EventPhaseStart;
         view_as_skill = new HaremuVS;
     }
 
@@ -905,27 +906,7 @@ public:
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (triggerEvent == GameStart){
-            if (player->hasSkill(objectName()))
-                player->addClub("@amclub_haremu");
-        }
-        else if (triggerEvent == EventAcquireSkill){
-            if (player->hasSkill(objectName())){
-                player->addClub("@amclub_haremu");
-            }
-        }
-        else if (triggerEvent == EventLoseSkill){
-            if (data.toString() == objectName()){
-                room->clearClub("@amclub_haremu");
-            }
-        }
-        else if (triggerEvent == Death){
-            DeathStruct death = data.value<DeathStruct>();
-            if (death.who->hasSkill(objectName())){
-                room->clearClub("@amclub_haremu");
-            }
-        }
-        else if (triggerEvent == EventPhaseStart){
+        if (triggerEvent == EventPhaseStart){
             if (player->isFemale() && !player->hasSkill(objectName()) && player->getPhase() == Player::Play){
                 ServerPlayer *key = room->findPlayerBySkillName(objectName());
                 if (!key || !key->isAlive()){
@@ -952,12 +933,12 @@ public:
 
     int getExtra(const Player *target) const
     {
-        if (!target->hasClub("@amclub_haremu")){
+        if (!target->hasClub("bekiyou")){
             return 0;
         }
         int i = 1;
         foreach(const Player *p, target->getSiblings()){
-            if (p->isAlive() && p->hasClub("@amclub_haremu")){
+            if (p->isAlive() && p->hasClub("bekiyou")){
                 i++;
             }
         }
@@ -1022,7 +1003,7 @@ public:
         if (room->askForChoice(player, objectName(), "rennai_hp+rennai_handcardnum") == "rennai_hp"){
             QStringList hps;
             foreach(ServerPlayer *p, room->getAlivePlayers()){
-                
+
                 if (!hps.contains(QString::number(p->getHp()))){
                     hps.append(QString::number(p->getHp()));
                 }
@@ -1031,7 +1012,7 @@ public:
             if (room->askForChoice(player, objectName(), "rennai_gain+rennai_lose", QVariant("hp+" + QString::number(targetHp))) == "rennai_gain"){
                 foreach(ServerPlayer *p, room->getAlivePlayers()){
                     if (p->getHp() == targetHp){
-                        p->gainMark("@Frozen_Eu"); 
+                        p->gainMark("@Frozen_Eu");
                     }
                 }
             }
@@ -1094,7 +1075,7 @@ public:
                     room->sendLog(log);
                     calcFreeze(room, damage.to);
                 }
-                
+
                 return true;
             }
         }
@@ -1148,7 +1129,7 @@ public:
         if (triggerEvent == PreCardUsed){
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.from->hasSkill(objectName())) {
-                
+
                 if (use.card->isKindOf("Collateral") || use.card->isKindOf("EquipCard") || use.card->isKindOf("DelayedTrick")){
                     return false;
                 }
@@ -1156,7 +1137,7 @@ public:
                     return false;
                 }
                 ServerPlayer *target = use.to.first();
-                
+
                 if (target->getMark("@Frozen_Eu") > 0 && room->askForSkillInvoke(use.from, objectName(), data)){
                     use.to.clear();
                     foreach(ServerPlayer *p, room->getAlivePlayers()){
@@ -1169,7 +1150,7 @@ public:
                     data = QVariant::fromValue(use);
                 }
             }
-            
+
 
         }
         else if (triggerEvent == CardFinished){
@@ -1249,7 +1230,7 @@ public:
                 if (dest->getWeapon()){
                     room->obtainCard(dest, dest->getWeapon());
                 }
-                
+
                 CardsMoveStruct move;
                 move.card_ids.append(num);
                 move.to = dest;
@@ -1275,7 +1256,7 @@ public:
                                 return false;
                             }
                         }
-                        
+
                     }
                 }
             }
@@ -1285,7 +1266,7 @@ public:
             if (use.from->objectName() != room->getTag("huajian_target").toString() || !use.card){
                 return false;
             }
-            
+
             foreach(int id, use.card->getSubcards()){
                 if (Sanguosha->getCard(id)->objectName() == "GreenRose"){
                     foreach(ServerPlayer *p, room->getAlivePlayers()){
@@ -1323,7 +1304,7 @@ public:
             damage.from->gainMark("@Oni");
             damage.to->gainMark("OniLv");
         }
-        
+
         else if (triggerEvent == EventPhaseStart){
             if (player->hasSkill(objectName()) && player->getPhase() == Player::Finish && player->getMark("OniLv") > 2){
                 room->broadcastSkillInvoke(objectName(), 3);
@@ -1545,7 +1526,7 @@ public:
                     }
                     dying.who->tag["youshuiNum"] = QVariant(0);
                 }
-                
+
             }
         }
         return false;
@@ -1572,10 +1553,10 @@ public:
         if (triggerEvent == EventPhaseStart){
             if (player->getPhase() == Player::Start){
                 ServerPlayer * yuri = room->findPlayerBySkillName(objectName());
-                if (!yuri || (yuri->getHp() > player->getHp() && !player->hasClub("@amclub_sss")) || !room->askForSkillInvoke(yuri, objectName(), data))
+                if (!yuri || (yuri->getHp() > player->getHp() && !player->hasClub("sss")) || !room->askForSkillInvoke(yuri, objectName(), data))
                     return false;
                 room->broadcastSkillInvoke(objectName());
-                if (player->hasClub("@amclub_sss"))
+                if (player->hasClub("sss"))
                     room->doLightbox(objectName() + "$", 800);
                 QStringList choices;
                 choices << "1_Zuozhan" << "2_Zuozhan" << "3_Zuozhan" << "4_Zuozhan";
@@ -1588,7 +1569,7 @@ public:
                 QString choice4 = choices.first();
                 QStringList result;
                 result << choice1 << choice2 << choice3 << choice4;
-                
+
                 player->tag["zuozhan_tag"] = QVariant(result);
             }
             else if (player->getPhase() == Player::Finish){
@@ -1639,8 +1620,9 @@ class Nishen : public TriggerSkill
 public:
     Nishen() : TriggerSkill("nishen")
     {
-        frequency = NotFrequent;
-        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EnterDying;
+        frequency = Club;
+        club_name = "sss",
+        events << EnterDying << Death;
     }
 
     bool triggerable(const ServerPlayer *target) const
@@ -1650,25 +1632,11 @@ public:
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (triggerEvent == GameStart){
-            if (player->hasSkill(objectName()))
-                player->addClub("@amclub_sss");
-        }
-        else if (triggerEvent == EventAcquireSkill){
-            if (player->hasSkill(objectName())){
-                player->addClub("@amclub_sss");
-            }
-        }
-        else if (triggerEvent == EventLoseSkill){
-            if (data.toString() == objectName()){
-                room->clearClub("@amclub_sss");
-            }
-        }
-        else if (triggerEvent == Death){
+        if (triggerEvent == Death){
             DeathStruct death = data.value<DeathStruct>();
-            if (death.who->hasClub("@amclub_sss") && death.who == player){
+            if (death.who->hasClub("sss") && death.who == player){
                 room->setTag("no_reward_or_punish", QVariant(death.who->objectName()));
-                foreach(ServerPlayer *p, room->getPlayersByClub("@amclub_sss")){
+                foreach(ServerPlayer *p, room->getPlayersByClub("sss")){
                     if (p->getLostHp() > 0){
                         if (room->askForChoice(p, objectName(), "draw+recover", data) == "draw"){
                             p->drawCards(2);
@@ -1681,9 +1649,6 @@ public:
                         p->drawCards(2);
                     }
                 }
-            }
-            if (death.who->hasSkill(objectName())){
-                room->clearClub("@amclub_sss");
             }
         }
         else if (triggerEvent == EnterDying){
@@ -1700,20 +1665,20 @@ public:
                 if (room->askForSkillInvoke(yuri, objectName(), data)){
                     room->broadcastSkillInvoke(objectName());
                     if (room->askForChoice(dying.who, "nishen", "nishen_accept+cancel", QVariant::fromValue(yuri)) == "nishen_accept"){
-                        dying.who->addClub("@amclub_sss");
+                        dying.who->addClub("sss");
                     }
                     else{
                         LogMessage log;
                         log.type = "$refuse_club";
                         log.from = dying.who;
-                        log.arg = "@amclub_sos";
+                        log.arg = "sss";
                         room->sendLog(log);
                     }
                     QStringList used = yuri->tag["sss_targets"].toStringList();
                     used.append(dying.who->objectName());
                     yuri->tag["sss_targets"] = used;
                 }
-                
+
             }
         }
         return false;
@@ -1757,11 +1722,11 @@ public:
                         room->doLightbox(objectName() + "$", 500);
                         break;
                     }
-                        
-                    
+
+
                 }
             }
-            
+
         }
         else if (triggerEvent == FinishJudge){
             JudgeStruct *judge = data.value<JudgeStruct *>();
@@ -1778,8 +1743,9 @@ class Yuanwang : public TriggerSkill
 public:
     Yuanwang() : TriggerSkill("yuanwang")
     {
-        frequency = NotFrequent;
-        events << GameStart << EventAcquireSkill << EventLoseSkill << Death << EventPhaseStart << TurnStart << EventPhaseChanging << TargetConfirmed << CardUsed << TrickCardCanceling << SlashProceed;
+        frequency = Club;
+        club_name = "sos",
+        events << EventPhaseStart << TurnStart << EventPhaseChanging << TargetConfirmed << CardUsed << TrickCardCanceling << SlashProceed;
     }
 
     bool triggerable(const ServerPlayer *target) const
@@ -1790,27 +1756,7 @@ public:
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         bool is_sos_turn = room->getTag("sos_status").toBool();
-        if (triggerEvent == GameStart){
-            if (player->hasSkill(objectName()))
-                player->addClub("@amclub_sos");
-        }
-        else if (triggerEvent == EventAcquireSkill){
-            if (player->hasSkill(objectName())){
-                player->addClub("@amclub_sos");
-            }
-        }
-        else if (triggerEvent == EventLoseSkill){
-            if (data.toString() == objectName()){
-                room->clearClub("@amclub_sos");
-            }
-        }
-        else if (triggerEvent == Death){
-            DeathStruct death = data.value<DeathStruct>();
-            if (death.who->hasSkill(objectName())){
-                room->clearClub("@amclub_sos");
-            }
-        }
-        else if (triggerEvent == EventPhaseStart){
+        if (triggerEvent == EventPhaseStart){
             ServerPlayer *haruhi = room->findPlayerBySkillName(objectName());
             if (!haruhi || !haruhi->isAlive()){
                 return false;
@@ -1820,7 +1766,7 @@ public:
                 if (rand() % 10 < 3){
                     QList<ServerPlayer *> victims;
                     foreach(ServerPlayer *p, room->getAlivePlayers()){
-                        if (p->hasClub() && p->getClubMark() != "@amclub_sos" && !p->isKongcheng()){
+                        if (p->hasClub() && p->getClubName() != "sos" && !p->isKongcheng()){
                             victims << p;
                         }
                     }
@@ -1831,7 +1777,7 @@ public:
                             //room->doLightbox(objectName() + "_obtain$", 500);
                             LogMessage log;
                             log.type = "$yuanwang_obtain";
-                            log.arg = target->getClubMark();
+                            log.arg = target->getClubName();
                             log.from = target;
                             log.card_str = QString::number(id);
                             room->sendLog(log);
@@ -1856,7 +1802,7 @@ public:
                     room->broadcastSkillInvoke(objectName());
 
                     if (room->askForChoice(target, objectName(), objectName() + "_accept+cancel", QVariant::fromValue(haruhi)) == objectName() + "_accept"){
-                        target->addClub("@amclub_sos");
+                        target->addClub("sos");
                         if (!target->faceUp()){
                             target->turnOver();
                         }
@@ -1865,14 +1811,14 @@ public:
                         LogMessage log;
                         log.type = "$refuse_club";
                         log.from = target;
-                        log.arg = "@amclub_sos";
+                        log.arg = "sos";
                         room->sendLog(log);
                     }
                 }
             }
             // wear
-            if (player->getPhase() == Player::Play  && is_sos_turn && player->hasClub("@amclub_sos") && rand() % 10 == 0){
-                
+            if (player->getPhase() == Player::Play  && is_sos_turn && player->hasClub("sos") && rand() % 10 == 0){
+
                 QStringList names;
                 foreach(int id, room->getDrawPile()){
                     if (Sanguosha->getCard(id)->isKindOf("Armor")){
@@ -1891,12 +1837,12 @@ public:
                         room->sendLog(log);
                         room->installEquip(player, name);
                     }
-                    
+
                 }
             }
             if (player->getPhase() == Player::RoundStart && player->hasSkill(objectName())){
                 foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    if (!p->hasClub("@amclub_sos")){
+                    if (!p->hasClub("sos")){
                         p->turnOver();
                     }
                 }
@@ -1906,8 +1852,8 @@ public:
             }
 
             // endless august
-            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos")){ 
-               
+            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("sos")){
+
                 int max_rate = 5;
                 foreach(const Card *card, player->getJudgingArea()){
                     if (card->isKindOf("Indulgence")){
@@ -1976,9 +1922,9 @@ public:
                     player->tag["sos_august_marks"] = marks;
                     player->tag["sos_august_piles"] = piles;
                 }
-                
+
             }
-            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("@amclub_sos")){
+            if (player->getPhase() == Player::RoundStart && is_sos_turn && player->hasClub("sos")){
                 int max_rate = 5;
                 foreach(const Card *card, haruhi->getJudgingArea()){
                     if (card->isKindOf("SupplyShortage")){
@@ -1995,20 +1941,20 @@ public:
             if (player->getPhase() == Player::Finish && room->getAura() == "closedSpace"){
                 room->clearAura();
             }
-            
+
         }
         else if (triggerEvent == TurnStart && player->hasSkill(objectName())){
             if (room->getTag("sos_status").toBool()){
                 room->setTag("sos_status", QVariant(false));
                 is_sos_turn = false;
-                foreach(ServerPlayer *p, room->getPlayersByClub("@amclub_sos")){
+                foreach(ServerPlayer *p, room->getPlayersByClub("sos")){
                 p->turnOver();
                 }
             }
         }
-        else if (triggerEvent == EventPhaseChanging && is_sos_turn && player->hasClub("@amclub_sos")){
+        else if (triggerEvent == EventPhaseChanging && is_sos_turn && player->hasClub("sos")){
             PhaseChangeStruct change = data.value<PhaseChangeStruct>();
-            if (change.to != Player::Draw && change.to != Player::Play && change.to != Player::NotActive && is_sos_turn && player->hasClub("@amclub_sos") && rand() % 100 < 3){ 
+            if (change.to != Player::Draw && change.to != Player::Play && change.to != Player::NotActive && is_sos_turn && player->hasClub("sos") && rand() % 100 < 3){
                 change.to = rand() % 2 == 0 ? Player::Draw : Player::Play;
                 if (change.to == Player::Play && player->getHandcardNum() < 3 && rand() % 5 > 1){
                     change.to = Player::Draw;
@@ -2027,7 +1973,7 @@ public:
                 log.type = "$yuanwang_august";
                 log.from = player;
                 room->sendLog(log);
-                
+
                 QList<int> handcard_ids;
                 foreach(QVariant q, player->tag["sos_august_cards"].toList()){
                     handcard_ids << q.toInt();
@@ -2068,7 +2014,7 @@ public:
                 player->tag["sos_august_piles"].clear();
 
                 QList<int> ids;
-                
+
                 foreach(const Card *card, player->getHandcards()){
                     if (!handcard_ids.contains(card->getEffectiveId()) && !equips_ids.contains(card->getEffectiveId()) && !judges_ids.contains(card->getEffectiveId())){
                         ids << card->getEffectiveId();
@@ -2091,7 +2037,7 @@ public:
                 }
                 room->moveCardsAtomic(CardsMoveStruct(eids, player, NULL, Player::PlaceEquip, Player::DiscardPile, CardMoveReason(CardMoveReason::S_REASON_UNKNOWN, QString())), true);
                 room->getThread()->delay(200);
-                
+
                 QList<int> jids;
                 foreach(const Card *card, player->getJudgingArea()){
                     if (!handcard_ids.contains(card->getEffectiveId()) && !equips_ids.contains(card->getEffectiveId()) && !judges_ids.contains(card->getEffectiveId())){
@@ -2136,7 +2082,7 @@ public:
                         room->getThread()->delay(200);
                         player->clearOnePrivatePile(pile);
                     }
-                        
+
                 }
 
                 foreach(QString pile, piles_map.keys()){
@@ -2153,9 +2099,9 @@ public:
         }
         else if (triggerEvent == TargetConfirmed && is_sos_turn){
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.from && use.from == player && use.from->hasClub("@amclub_sos") && use.card && use.card->isBlack() && use.to.count() == 1 && use.from != use.to.first() && rand() % 20 == 0){
+            if (use.from && use.from == player && use.from->hasClub("sos") && use.card && use.card->isBlack() && use.to.count() == 1 && use.from != use.to.first() && rand() % 20 == 0){
                 ServerPlayer *target = use.to.first();
-                if (target->hasClub("@amclub_sos")){
+                if (target->hasClub("sos")){
                     return false;
                 }
                 LogMessage log;
@@ -2165,12 +2111,12 @@ public:
                 room->sendLog(log);
                 room->damage(DamageStruct(objectName(), use.from, use.to.first(), 1, DamageStruct::Thunder));
             }
-            
+
         }
         // card back
         else if (triggerEvent == CardUsed && is_sos_turn){
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.from && use.from->hasClub("@amclub_sos") && use.card && !use.card->isVirtualCard() && (use.card->isKindOf("BasicCard") || use.card->isKindOf("TrickCard")) && rand() % 100 < 6){
+            if (use.from && use.from->hasClub("sos") && use.card && !use.card->isVirtualCard() && (use.card->isKindOf("BasicCard") || use.card->isKindOf("TrickCard")) && rand() % 100 < 6){
                 LogMessage log;
                 log.type = "$yuanwang_card_back";
                 log.from = use.from;
@@ -2225,7 +2171,7 @@ void MojuCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targ
             if (c->getSuit() == card->getSuit()){
                 players.append(p);
                 break;
-            }     
+            }
         }
         if (!players.contains(p)){
             foreach(const Card *c, p->getJudgingArea()){
@@ -2324,7 +2270,7 @@ public:
         if (triggerEvent == DamageInflicted){
             DamageStruct damage = data.value<DamageStruct>();
             ServerPlayer *hakaze = room->findPlayerBySkillName(objectName());
-            
+
             if (damage.to && hakaze && !room->getCurrent()->hasFlag("jiejie_used") && room->askForSkillInvoke(damage.to, objectName(), data)){
                 LogMessage log;
                 log.type = "$jiejie_asked";
@@ -2350,11 +2296,11 @@ public:
                             return false;
                         }
                     }
-                    
+
                 }
             }
         }
-       
+
         return false;
     }
 };

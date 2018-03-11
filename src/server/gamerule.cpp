@@ -145,6 +145,9 @@ bool GameRule::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *play
                     if (skill->getFrequency() == Skill::Limited && !skill->getLimitMark().isEmpty()
                         && (!skill->isLordSkill() || player->hasLordSkill(skill->objectName())))
                         room->setPlayerMark(player, skill->getLimitMark(), 1);
+                    if (skill->getFrequency() == Skill::Club && !skill->getClubName().isEmpty()
+                        && (!skill->isLordSkill() || player->hasLordSkill(skill->objectName())))
+                        player->addClub(skill->getClubName());
                 }
             }
             room->setTag("FirstRound", true);
@@ -938,6 +941,8 @@ void GameRule::doBossModeDifficultySettings(ServerPlayer *lord) const
                 foreach (const Skill *skill, p->getSkillList()) {
                     if (skill->getFrequency() == Skill::Limited && !skill->getLimitMark().isEmpty())
                         room->setPlayerMark(p, skill->getLimitMark(), 1);
+                    if (skill->getFrequency() == Skill::Club && !skill->getClubName().isEmpty())
+                        p->addClub(skill->getClubName());
                 }
             }
         }

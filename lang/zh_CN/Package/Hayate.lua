@@ -148,7 +148,7 @@ return {
 	["designer:sugisaki"] = "黑猫roy",
 	["cv:sugisaki"] = "近藤隆",
 	["illustrator:sugisaki"] = "STUDIO DEEN/AIC",
-	["@amclub_haremu"] = "「碧阳学园生徒会」",
+	["bekiyou"] = "「碧阳学园生徒会」",
 	["@haremu-use"] =  "你可以交给当前回合角色一张牌令其选择是否加入你的「碧阳学园生徒会」。",
 	["haremu_accept"] = "接受杉崎键邀请并加入「碧阳学园生徒会」",
 
@@ -217,7 +217,7 @@ return {
 	["@youshui-use"] = "你可以交给进入濒死的玩家X张牌；若其离开濒死状态，其需交给你2X张牌。",
 
 	["zuozhan$"] = "image=image/animate/SE_Zuozhan.png",
-	["@amclub_sss"] = "「死后世界战线」",
+	["sss"] = "「死后世界战线」",
 	["1_Zuozhan"] = "判定阶段",
 	["2_Zuozhan"] = "摸牌阶段",
 	["3_Zuozhan"] = "出牌阶段",
@@ -259,7 +259,7 @@ return {
 	["yuanwang"] = "愿望",
 	[":yuanwang"] = "社团技，「SOS团」\n加入条件：出牌阶段开始时，你可以询问一名其他非现世角色是否加入你的「SOS团」。若其加入，将其翻至正面。\n社团效果：你的回合开始时，令「SOS团」以外的角色翻面，「SOS团」角色随机获得一些有趣的效果。你的下一回合开始前，令所有「SOS团」的角色翻面。",
 	["$yuanwang1"] = "我对一般的人类没有兴趣，如果你们中谁是宇宙人，未来人，异世界人或者超能力者的话，就到我这里来！",
-	["@amclub_sos"] = "「SOS团」",
+	["sos"] = "「SOS团」",
 	["@yuanwang"] = "选择一名角色，询问其是否加入「SOS团」",
 	["yuanwang_accept"] =  "接受团长的邀请并加入「SOS团」",
 	["haruhi"] = "凉宫春日",

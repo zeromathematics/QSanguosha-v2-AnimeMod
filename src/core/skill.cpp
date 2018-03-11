@@ -13,7 +13,7 @@
 
 
 Skill::Skill(const QString &name, Frequency frequency)
-    : frequency(frequency), limit_mark(QString()), lord_skill(false), attached_lord_skill(false)
+    : frequency(frequency), limit_mark(QString()), club_name(QString()), lord_skill(false), attached_lord_skill(false)
 {
     static QChar lord_symbol('$');
     static QChar attached_lord_symbol('&');
@@ -152,6 +152,16 @@ Skill::Frequency Skill::getFrequency(const Player *) const
 QString Skill::getLimitMark() const
 {
     return limit_mark;
+}
+
+QString Skill::getClubName() const
+{
+    return club_name;
+}
+
+QString Skill::getClubMark() const
+{
+    return "@amclub_" + club_name;
 }
 
 QStringList Skill::getSources() const

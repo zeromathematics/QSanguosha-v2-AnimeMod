@@ -906,20 +906,20 @@ QStringList Player::getMarkNames() const
 }
 
 
-bool Player::hasClub(const QString &club_mark) const
+bool Player::hasClub(const QString &club_name) const
 {
-    return getMark(club_mark) > 0;
+    return getMark("@amclub_" + club_name) > 0;
 }
 
 bool Player::hasClub() const
 {
-    return getClubMark() != "";
+    return getClubName() != "";
 }
 
-QString Player::getClubMark() const{
+QString Player::getClubName() const{
     foreach(QString name, getMarkNames()){
         if (name.startsWith("@amclub_")){
-            return name;
+            return name.right(name.length() - 8);
         }
     }
     return "";
@@ -1157,7 +1157,7 @@ QString Player::getMarkDescription() const
         if (mark.startsWith("@amclub_")){
             if (skilltype_color_map.contains("clubskill")){
                 QString color_name = skilltype_color_map["clubskill"].name();
-                description.prepend(tr("<b>club</b>: ") + QString("<font color=%1><b>%2</b></font>").arg(color_name).arg(Sanguosha->translate(mark)) + " <br/>");
+                description.prepend(tr("<b>club</b>: ") + QString("<font color=%1><b>%2</b></font>").arg(color_name).arg(Sanguosha->translate(mark.right(mark.length() - 8))) + " <br/>");
             }
             else{
                 description.prepend(tr("<b>club</b>: ") + QString("<b>%1</b>").arg(Sanguosha->translate(mark)) + " <br/>");

@@ -2,11 +2,12 @@
 #include "util.h"
 #include "wind.h"
 
-LuaTriggerSkill::LuaTriggerSkill(const char *name, Frequency frequency, const char *limit_mark)
+LuaTriggerSkill::LuaTriggerSkill(const char *name, Frequency frequency, const char *limit_mark, const char *club_name)
     : TriggerSkill(name), on_trigger(0), can_trigger(0), dynamic_frequency(0)
 {
     this->frequency = frequency;
     this->limit_mark = QString(limit_mark);
+    this->club_name = QString(club_name);
     this->priority = (frequency == Skill::Wake) ? 3 : 2;
     this->guhuo_type = "";
 }

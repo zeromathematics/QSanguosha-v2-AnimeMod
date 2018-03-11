@@ -12,7 +12,7 @@ class LuaTriggerSkill : public TriggerSkill
     Q_OBJECT
 
 public:
-    LuaTriggerSkill(const char *name, Frequency frequency, const char *limit_mark);
+    LuaTriggerSkill(const char *name, Frequency frequency, const char *limit_mark, const char *club_name);
     inline void addEvent(TriggerEvent triggerEvent)
     {
         events << triggerEvent;

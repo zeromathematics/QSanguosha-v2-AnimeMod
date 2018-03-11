@@ -222,7 +222,7 @@ void QSanSkillButton::setSkill(const Skill *skill)
     Q_ASSERT(skill != NULL);
 
     Skill::Frequency freq = skill->getFrequency(Self);
-    if (freq == Skill::Frequent
+    if (freq == Skill::Frequent || freq == Skill::Club
         || (freq == Skill::NotFrequent && skill->inherits("TriggerSkill") && !skill->inherits("WeaponSkill")
         && !skill->inherits("ArmorSkill") && _m_viewAsSkill == NULL)) {
         setStyle(QSanButton::S_STYLE_TOGGLE);

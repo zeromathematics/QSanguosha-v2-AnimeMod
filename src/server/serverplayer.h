@@ -66,7 +66,7 @@ public:
     void loseAllMarks(const QString &mark_name);
 
     void removeCurrentClub();
-    void addClub(const QString &club_mark);
+    void addClub(const QString &club_name);
 
     virtual void addSkill(const QString &skill_name);
     virtual void loseSkill(const QString &skill_name);

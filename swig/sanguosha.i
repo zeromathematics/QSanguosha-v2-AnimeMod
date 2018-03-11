@@ -204,9 +204,9 @@ public:
     int getMark(const char *mark) const;
     QStringList getMarkNames() const;
 
-    bool hasClub(const char *club_mark) const;
+    bool hasClub(const char *club_name) const;
     bool hasClub() const;
-    QString getClubMark() const;
+    QString getClubName() const;
 
     void setChained(bool chained);
     bool isChained() const;
@@ -323,7 +323,7 @@ public:
     void loseAllMarks(const char *mark_name);
 
     void removeCurrentClub();
-    void addClub(const char *club_mark);
+    void addClub(const char *club_name);
 
     void setAI(AI *ai);
     AI *getAI() const;
@@ -992,7 +992,7 @@ extern Engine *Sanguosha;
 
 class Skill: public QObject {
 public:
-    enum Frequency { Frequent, NotFrequent, Compulsory, Limited, Wake, NotCompulsory };
+    enum Frequency { Frequent, NotFrequent, Compulsory, Limited, Wake, Club, NotCompulsory };
 
     explicit Skill(const char *name, Frequency frequent = NotFrequent);
     bool isLordSkill() const;
@@ -1090,8 +1090,8 @@ public:
     void setPlayerMark(ServerPlayer *player, const char *mark, int value);
     void addPlayerMark(ServerPlayer *player, const char *mark, int add_num = 1);
     void removePlayerMark(ServerPlayer *player, const char *mark, int remove_num = 1);
-    void clearClub(const char *club_mark);
-    QList<ServerPlayer *> getPlayersByClub(const char *club_mark) const;
+    void clearClub(const char *club_name);
+    QList<ServerPlayer *> getPlayersByClub(const char *club_name) const;
     QList<ServerPlayer *> getPlayersWithNoClub() const;
     void setPlayerCardLimitation(ServerPlayer *player, const char *limit_list, const char *pattern, bool single_turn);
     void removePlayerCardLimitation(ServerPlayer *player, const char *limit_list, const char *pattern);

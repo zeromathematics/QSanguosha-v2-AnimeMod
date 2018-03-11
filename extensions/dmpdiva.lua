@@ -74,31 +74,12 @@ se_nitian = sgs.CreateTriggerSkill{
 --鼓舞
 se_guwu = sgs.CreateTriggerSkill{
 	name = "se_guwu",
-	frequency = sgs.Skill_NotFrequent,
-	events = {sgs.GameStart, sgs.EventAcquireSkill, sgs.QuitDying, sgs.HpRecover, sgs.Death, sgs.EventLoseSkill},
+	frequency = sgs.Skill_Club,
+	club_name = "mus",
+	events = {sgs.QuitDying, sgs.HpRecover},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if event == sgs.GameStart then
-			-- game start
-			if player:hasSkill(self:objectName()) then
-				player:addClub("@amclub_mus")
-			end
-		elseif event == sgs.EventAcquireSkill then
-			-- acquire
-			if player:hasSkill(self:objectName()) then
-				player:addClub("@amclub_mus")
-			end
-		elseif event == sgs.EventLoseSkill then
-			if data:toString() == self:objectName() then
-				room:clearClub("@amclub_mus")
-			end
-		elseif event == sgs.Death then
-			-- death
-			local death = data:toDeath()
-			if death.who:hasSkill(self:objectName()) then
-				room:clearClub("@amclub_mus")
-			end
-		elseif event == sgs.HpRecover then
+		if event == sgs.HpRecover then
 
 			local toAsk = player
 
@@ -115,12 +96,12 @@ se_guwu = sgs.CreateTriggerSkill{
 					local myGodData = sgs.QVariant()
 					myGodData:setValue(mygod)
 					if room:askForChoice(toAsk, self:objectName(), "se_guwu_accept+cancel", myGodData) == "se_guwu_accept" then
-						toAsk:addClub("@amclub_mus")
+						toAsk:addClub("mus")
 					else
 						local log =  sgs.LogMessage()
 						log.type = "#refuse_club"
 						log.from = toAsk
-						log.arg = "@amclub_mus"
+						log.arg = "mus"
 						room:sendLog(log)
 					end
 				elseif choice == "no_more" then
@@ -133,7 +114,7 @@ se_guwu = sgs.CreateTriggerSkill{
 			local source = dying_data.who
 			local mygod= room:findPlayerBySkillName("se_guwu")
 			if mygod then
-				if mygod:isAlive() and source:isAlive() and source:hasClub("@amclub_mus") then
+				if mygod:isAlive() and source:isAlive() and source:hasClub("mus") then
 					if room:askForSkillInvoke(mygod, "se_guwu", data) then
 						room:broadcastSkillInvoke(self:objectName())
 						local judge = sgs.JudgeStruct()
@@ -149,7 +130,7 @@ se_guwu = sgs.CreateTriggerSkill{
 							room:recover(judge.who,re,true)
 						else
 							room:doLightbox("se_guwu$", 1200)
-							for _,p in sgs.qlist(room:getPlayersByClub("@amclub_mus")) do
+							for _,p in sgs.qlist(room:getPlayersByClub("mus")) do
 								p:drawCards(1)
 							end
 						end
@@ -425,7 +406,7 @@ sgs.LoadTranslationTable{
 	["se_guwu_accept"] = "接受邀请加入「μ’ｓ」",
 	["se_guwu$"] = "image=image/animate/se_guwu.png",
 	[":se_guwu"] = "\n社团技，「μ’ｓ」\n加入条件：一名角色于回合外回复体力时，你可以询问其是否加入「μ’ｓ」。\n社团效果：每当一名「μ’ｓ」角色离开濒死阶段时，其进行一次判定。若为红色，其回复一点体力，否则所有「μ’ｓ」的角色各摸一张牌。",
-	["@amclub_mus"] = "「μ’ｓ」",
+	["mus"] = "「μ’ｓ」",
 
 	["se_qiangjing"] = "抢镜「抢镜头的大头小鸟」",
 	["$se_qiangjing1"] = "哇，吓我一跳…",

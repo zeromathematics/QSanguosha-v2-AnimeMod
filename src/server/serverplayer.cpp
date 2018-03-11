@@ -822,14 +822,15 @@ bool ServerPlayer::isSkipped(Player::Phase phase)
 void ServerPlayer::gainMark(const QString &mark, int n)
 {
     int value = getMark(mark) + n;
-
-    LogMessage log;
-    log.type = "#GetMark";
-    log.from = this;
-    log.arg = mark;
-    log.arg2 = QString::number(n);
-
-    room->sendLog(log);
+    if (!mark.startsWith("@amclub_")){
+        LogMessage log;
+        log.type = "#GetMark";
+        log.from = this;
+        log.arg = mark;
+        log.arg2 = QString::number(n);
+        room->sendLog(log);
+    }
+    
     room->setPlayerMark(this, mark, value);
 }
 
@@ -841,13 +842,15 @@ void ServerPlayer::loseMark(const QString &mark, int n)
         value = 0; n = getMark(mark);
     }
 
-    LogMessage log;
-    log.type = "#LoseMark";
-    log.from = this;
-    log.arg = mark;
-    log.arg2 = QString::number(n);
-
-    room->sendLog(log);
+    if (!mark.startsWith("@amclub_")){
+        LogMessage log;
+        log.type = "#LoseMark";
+        log.from = this;
+        log.arg = mark;
+        log.arg2 = QString::number(n);
+        room->sendLog(log);
+    }
+    
     room->setPlayerMark(this, mark, value);
 }
 
@@ -858,24 +861,24 @@ void ServerPlayer::loseAllMarks(const QString &mark_name)
 
 void ServerPlayer::removeCurrentClub(){
     if (hasClub()){
-        QString club_mark = getClubMark();
+        QString club_name = getClubName();
         LogMessage log;
-        log.type = "#quit_club";
+        log.type = "$quit_club";
         log.from = this;
-        log.arg = club_mark;
+        log.arg = club_name;
         room->sendLog(log);
-        loseAllMarks(club_mark);
+        loseAllMarks("@amclub_" + club_name);
     }
 }
 
-void ServerPlayer::addClub(const QString &club_mark){
+void ServerPlayer::addClub(const QString &club_name){
     removeCurrentClub();
     LogMessage log;
     log.type = "$join_club";
     log.from = this;
-    log.arg = club_mark;
+    log.arg = club_name;
     room->sendLog(log);
-    gainMark(club_mark);
+    gainMark("@amclub_" + club_name);
 }
 
 void ServerPlayer::addSkill(const QString &skill_name)
