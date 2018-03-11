@@ -32,7 +32,7 @@ LuaProhibitSkill::LuaProhibitSkill(const char *name)
 {
 }
 
-LuaViewAsSkill::LuaViewAsSkill(const char *name, const char *response_pattern, bool response_or_use, const char *expand_pile)
+LuaViewAsSkill::LuaViewAsSkill(const char *name, const char *response_pattern, bool response_or_use, const char *expand_pile, const char *limit_mark)
     : ViewAsSkill(name), view_filter(0), view_as(0), should_be_visible(0),
     enabled_at_play(0), enabled_at_response(0), enabled_at_nullification(0)
 {
@@ -40,6 +40,10 @@ LuaViewAsSkill::LuaViewAsSkill(const char *name, const char *response_pattern, b
     this->response_or_use = response_or_use;
     this->expand_pile = expand_pile;
     this->guhuo_type = "";
+    this->limit_mark = QString(limit_mark);
+    if (QString(limit_mark).count() > 0){
+        this->frequency = Limited;
+    }
 }
 
 QDialog *LuaViewAsSkill::getDialog() const
@@ -72,7 +76,7 @@ LuaTargetModSkill::LuaTargetModSkill(const char *name, const char *pattern)
 }
 
 LuaInvaliditySkill::LuaInvaliditySkill(const char *name)
-    : InvaliditySkill(name)
+    : InvaliditySkill(name), skill_valid(0)
 {
 }
 

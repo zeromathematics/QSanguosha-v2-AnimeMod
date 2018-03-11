@@ -4922,33 +4922,33 @@ sgs.ai_skill_choice["se_origin"] = function(self, choices, data)
 	return "use_normal"
 end
 
-se_bilingvs_skill={}
-se_bilingvs_skill.name="se_bilingvs"
-table.insert(sgs.ai_skills,se_bilingvs_skill)
-se_bilingvs_skill.getTurnUseCard=function(self,inclusive)
+se_biling_skill={}
+se_biling_skill.name="se_biling"
+table.insert(sgs.ai_skills,se_biling_skill)
+se_biling_skill.getTurnUseCard=function(self,inclusive)
 	if self.player:getMark("@Biling_kiri") == 0 then return end
 	if #self.enemies == 0 then return end
 	for _,enemy in ipairs(self.enemies) do
 		if enemy:getGeneral2() then
-			return sgs.Card_Parse("#se_bilingvscard:.:")
+			return sgs.Card_Parse("#se_bilingcard:.:")
 		end
 	end
 	if #self.enemies == 1 or #self.friends == 1 then return end
 	for _,enemy in ipairs(self.enemies) do
 		if enemy:getHp() <= 1 and self:slashIsEffective(sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0), enemy) then
-			return sgs.Card_Parse("#se_bilingvscard:.:")
+			return sgs.Card_Parse("#se_bilingcard:.:")
 		end
 	end
 	if self.player:getHp() == 1 then
 		for _,enemy in ipairs(self.enemies) do
 			if enemy:getHp() <= 2 and self:slashIsEffective(sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0), enemy) then
-				return sgs.Card_Parse("#se_bilingvscard:.:")
+				return sgs.Card_Parse("#se_bilingcard:.:")
 			end
 		end
 	end
 end
 
-sgs.ai_skill_use_func["#se_bilingvscard"] = function(card,use,self)
+sgs.ai_skill_use_func["#se_bilingcard"] = function(card,use,self)
 	if self.player:getMark("@Biling_kiri") == 0 then return end
 	if #self.enemies == 0 then return end
 	local target
@@ -4978,7 +4978,7 @@ sgs.ai_skill_use_func["#se_bilingvscard"] = function(card,use,self)
 
 	if not target then return end
 	if use.to then use.to:append(target) end
-	use.card = sgs.Card_Parse("#se_bilingvscard:.:")
+	use.card = sgs.Card_Parse("#se_bilingcard:.:")
 	return
 end
 
@@ -4996,9 +4996,9 @@ sgs.ai_skill_playerchosen["se_biling"] = function(self, targets)
 	end
 end
 
-sgs.ai_use_value["se_bilingvscard"] = 8
-sgs.ai_use_priority["se_bilingvscard"]  = 1.8
-sgs.ai_card_intention.se_bilingvscard = 100
+sgs.ai_use_value["se_bilingcard"] = 8
+sgs.ai_use_priority["se_bilingcard"]  = 1.8
+sgs.ai_card_intention.se_bilingcard = 100
 
 sgs.ai_skill_invoke["se_jianqiao"] = function(self, data)
 	local damage = data:toDamage()

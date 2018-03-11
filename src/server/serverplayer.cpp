@@ -871,7 +871,7 @@ void ServerPlayer::removeCurrentClub(){
 void ServerPlayer::addClub(const QString &club_mark){
     removeCurrentClub();
     LogMessage log;
-    log.type = "#join_club";
+    log.type = "$join_club";
     log.from = this;
     log.arg = club_mark;
     room->sendLog(log);

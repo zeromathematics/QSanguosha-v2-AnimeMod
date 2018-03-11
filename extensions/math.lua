@@ -382,6 +382,16 @@ end
 end
 }
 
+-- lonelinessInvalidity = sgs.CreateInvaliditySkill{
+--   name="#loneliness-inv",
+--   skill_valid = function(self, player, skill)
+--     return player:getMark("Loneliness"..skill:objectName()) == 0
+--   end,
+-- }
+
+
+
+
 Ozhiaicard=sgs.CreateSkillCard{
 name="Ozhiaicard",
 target_fixed=false,
@@ -1036,7 +1046,7 @@ oumashu:addSkill(confession)
 oumashu:addSkill(voideffect)
 oumashu:addSkill(Ozhiai)
 oumashu:addSkill(Ozhiai_tri)
-oumashu:addSkill("#loneliness-inv")
+-- oumashu:addSkill(lonelinessInvalidity)
 oumashu:addWakeTypeSkillForAudio("loneliness")
 oumashu:addWakeTypeSkillForAudio("shiming")
 extension:insertRelatedSkills("void", "#voideffect")
@@ -1069,6 +1079,7 @@ if not sgs.Sanguosha:getSkill("loneliness") then
 Skills:append(loneliness)
 end
 sgs.Sanguosha:addSkills(Skills)
+-- extension:insertRelatedSkills("loneliness", "#loneliness-inv")
 
 local Skills = sgs.SkillList()
 if not sgs.Sanguosha:getSkill("shiming") then

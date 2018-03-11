@@ -135,6 +135,28 @@ function sgs.CreateAttackRangeSkill(spec)
 	return skill
 end
 
+function sgs.CreateDetachEffectSkill(spec)
+	assert(type(spec.name) == "string")
+	if spec.pilename then assert(type(spec.pilename) == "string") end
+	local pilename = spec.pilename or ""
+	local name = spec.name
+	spec.name = "#"..spec.name.."-clear"
+	spec.events = sgs.EventLoseSkill
+
+	function spec.on_trigger(skill, event, player, data)
+		if data:toString() == name then
+			if string.len(pilename) > 0 then
+				player:removePileByName(pilename)
+			else
+				if type(spec.on_skill_detached) == "function" then spec.on_skill_detached(skill, player:getRoom(), player) end
+			end
+		end
+		return false
+	end
+
+	return sgs.CreateTriggerSkill(spec)
+end
+
 function sgs.CreateMasochismSkill(spec)
 	assert(type(spec.on_damaged) == "function")
 
@@ -499,8 +521,9 @@ function sgs.CreateViewAsSkill(spec)
 	local response_or_use = spec.response_or_use or false
 	if spec.expand_pile then assert(type(spec.expand_pile) == "string") end
 	local expand_pile = spec.expand_pile or ""
+	local limit_mark = spec.limit_mark or ""
 
-	local skill = sgs.LuaViewAsSkill(spec.name, response_pattern, response_or_use, expand_pile)
+	local skill = sgs.LuaViewAsSkill(spec.name, response_pattern, response_or_use, expand_pile, limit_mark)
 	local n = spec.n or 0
 
 	function skill:view_as(cards)
@@ -529,8 +552,9 @@ function sgs.CreateOneCardViewAsSkill(spec)
 	if spec.filter_pattern then assert(type(spec.filter_pattern) == "string") end
 	if spec.expand_pile then assert(type(spec.expand_pile) == "string") end
 	local expand_pile = spec.expand_pile or ""
+	local limit_mark = spec.limit_mark or ""
 
-	local skill = sgs.LuaViewAsSkill(spec.name, response_pattern, response_or_use, expand_pile)
+	local skill = sgs.LuaViewAsSkill(spec.name, response_pattern, response_or_use, expand_pile, limit_mark)
 
 	if type(spec.guhuo_type) == "string" and spec.guhuo_type ~= "" then skill:setGuhuoDialog(guhuo_type) end
 
@@ -564,8 +588,9 @@ function sgs.CreateZeroCardViewAsSkill(spec)
 	if spec.response_pattern then assert(type(spec.response_pattern) == "string") end
 	local response_pattern = spec.response_pattern or ""
 	local response_or_use = spec.response_or_use or false
+	local limit_mark = spec.limit_mark or ""
 
-	local skill = sgs.LuaViewAsSkill(spec.name, response_pattern, response_or_use, "")
+	local skill = sgs.LuaViewAsSkill(spec.name, response_pattern, response_or_use, "", limit_mark)
 
 	if type(spec.guhuo_type) == "string" and spec.guhuo_type ~= "" then skill:setGuhuoDialog(guhuo_type) end
 

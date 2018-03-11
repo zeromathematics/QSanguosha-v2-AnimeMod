@@ -327,8 +327,6 @@ public:
 
 
 
-
-
 // akame
 
 
@@ -1219,7 +1217,7 @@ class Huajian : public TriggerSkill
 public:
     Huajian() : TriggerSkill("huajian")
     {
-        frequency = NotFrequent;
+        frequency = Limited;
         events << Death << CardsMoveOneTime << CardUsed;
         global = true;
     }
@@ -2361,11 +2359,44 @@ public:
     }
 };
 
+class Qifen : public TriggerSkill
+{
+public:
+    Qifen() : TriggerSkill("qifen")
+    {
+        frequency = NotFrequent;
+        events << EventPhaseStart;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart){
+            if (player->getPhase() == Player::Finish && room->askForSkillInvoke(player, objectName(), data)){
+                foreach(ServerPlayer *p, room->getAlivePlayers()){
+                    p->drawCards(1);
+                }
+                room->broadcastSkillInvoke(objectName());
+                if (player->getLostHp() == 0)
+                    return false;
+                room->doLightbox(objectName() + "$", 800);
+                foreach(ServerPlayer* p, room->getOtherPlayers(player)){
+                    if (!p->isNude()){
+                        room->obtainCard(player, room->askForCardChosen(player, p, "he", objectName()));
+                    }
+                }
+            }
+        }
+        return false;
+    }
+};
+
+
+
 HayatePackage::HayatePackage()
     : Package("hayate")
 {
     General *hei = new General(this, "hei", "science", 4);
-    skills << new Jiesha << new LonelinessInvalidity << new Gaokang << new Qiubang << new QiubangDis << new Youshui;
+    skills << new Jiesha << new Gaokang << new Qiubang << new QiubangDis << new Youshui << new LonelinessInvalidity;
     hei->addSkill(new Yingdi);
     hei->addSkill(new Diansuo);
     hei->addWakeTypeSkillForAudio("jiesha");

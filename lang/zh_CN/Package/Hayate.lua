@@ -161,6 +161,7 @@ return {
 	["$rennai_effect2"] = "受到“忍耐”的影响，阻止了失去体力。",
 	["rennai_gain"] = "获得一个“冻结”标记",
 	["rennai_lose"] = "失去一个“冻结”标记",
+	["@Frozen_Eu"] = "冻结",
 	["rennai_hp"] = "根据体力值",
 	["rennai_handcardnum"] = "根据手牌数",
 	["rennai$"] = "image=image/animate/SE_Rennai.png",

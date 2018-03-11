@@ -6330,6 +6330,7 @@ public:
                         room->broadcastSkillInvoke(objectName());
                         room->doLightbox("kaiqi$", 800);
                     }
+                    i++;
 
                     left.removeOne(target);
                     QList<int> card_ids = player->getPile("huanshu");

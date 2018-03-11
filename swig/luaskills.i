@@ -6,7 +6,7 @@ public:
     void setGlobal(bool global);
     void insertPriorityTable(TriggerEvent triggerEvent, int priority);
     void setGuhuoDialog(const char *type);
-    
+
     virtual Frequency getFrequency(const Player *target) const;
 
     virtual bool triggerable(const ServerPlayer *target, Room *room) const;
@@ -15,7 +15,7 @@ public:
     LuaFunction on_trigger;
     LuaFunction can_trigger;
     LuaFunction dynamic_frequency;
-    
+
     int priority;
 };
 
@@ -103,6 +103,7 @@ public:
     LuaFunction is_prohibited;
 };
 
+
 class ViewAsSkill: public Skill {
 public:
     ViewAsSkill(const QString &name);
@@ -119,7 +120,7 @@ public:
 
 class LuaViewAsSkill: public ViewAsSkill {
 public:
-    LuaViewAsSkill(const char *name, const char *response_pattern, bool response_or_use, const char *expand_pile);
+    LuaViewAsSkill(const char *name, const char *response_pattern, bool response_or_use, const char *expand_pile, const char *limit_mark);
 
     virtual bool viewFilter(const QList<const Card *> &selected, const Card *to_select) const;
     virtual const Card *viewAs(const QList<const Card *> &cards) const;
@@ -665,6 +666,7 @@ int LuaAttackRangeSkill::getFixed(const Player *target, bool include_weapon) con
 
     return extra;
 }
+
 
 bool LuaInvaliditySkill::isSkillValid(const Player *player, const Skill *skill) const
 {
