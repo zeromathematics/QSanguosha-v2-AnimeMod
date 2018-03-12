@@ -937,28 +937,6 @@ se_tiaoyue = sgs.CreateViewAsSkill{
 	end
 }
 
-
-se_shixian = sgs.CreateViewAsSkill{
-	name = "se_shixian",
-	n = 999,
-	view_filter = function(self, selected, to_select)
-		return true
-	end,
-	view_as = function(self, cards)
-		if #cards > 0 then
-			local se_shixian_Card = se_shixiancard:clone()
-			for i=1, #cards, 1 do
-				local id = cards[i]:getId()
-				se_shixian_Card:addSubcard(id)
-			end
-			return se_shixian_Card
-		end
-	end,
-	enabled_at_play = function(self, player)
-		return player:getMark("@time") > 0 and player:getMark("Benhuihe") == 0 and player:getMark("@timepoint") == 0
-	end
-}
-
 se_shixiancard = sgs.CreateSkillCard{
 	name = "se_shixiancard",
 	target_fixed = true,
@@ -982,31 +960,46 @@ se_shixiancard = sgs.CreateSkillCard{
 	end
 }
 
-se_shixianEnd = sgs.CreateTriggerSkill{
-	name = "#se_shixianEnd",
-	frequency = sgs.Skill_Compulsory,
-	events = {sgs.EventPhaseStart},
-	on_trigger = function(self, event, player, data)
-		if player:isAlive() and player:hasSkill(self:objectName()) then
-			if player:getPhase() == sgs.Player_Finish then
-				if player:getMark("Benhuihe") > 0 then
-					player:loseAllMarks("Benhuihe")
-				end
+se_shixianVS = sgs.CreateViewAsSkill{
+	name = "se_shixian",
+	n = 999,
+	view_filter = function(self, selected, to_select)
+		return true
+	end,
+	view_as = function(self, cards)
+		if #cards > 0 then
+			local se_shixian_Card = se_shixiancard:clone()
+			for i=1, #cards, 1 do
+				local id = cards[i]:getId()
+				se_shixian_Card:addSubcard(id)
 			end
+			return se_shixian_Card
 		end
+	end,
+	enabled_at_play = function(self, player)
+		return player:getMark("@time") > 0 and player:getMark("Benhuihe") == 0 and player:getMark("@timepoint") == 0
 	end
 }
 
-se_shixianMark = sgs.CreateTriggerSkill{
-	name = "#se_shixianMark",
+se_shixian = sgs.CreateTriggerSkill{
+	name = "se_shixian",
+	view_as_skill = se_shixianVS,
 	frequency = sgs.Skill_Compulsory,
-	events = {sgs.GameStart},
+	events = {sgs.GameStart, sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
-		player:loseAllMarks("Benhuihe")
-		player:loseAllMarks("@time")
-		--KOF
-		local room = player:getRoom()
-		player:gainMark("@time", 2)
+		if event == sgs.GameStart and player:hasSkill(self:objectName()) then
+			player:loseAllMarks("Benhuihe")
+			player:loseAllMarks("@time")
+			player:gainMark("@time", 2)
+		elseif event == sgs.EventPhaseStart then
+			if player:isAlive() and player:hasSkill(self:objectName()) then
+				if player:getPhase() == sgs.Player_Finish then
+					if player:getMark("Benhuihe") > 0 then
+						player:loseAllMarks("Benhuihe")
+					end
+				end
+			end
+		end
 	end
 }
 
@@ -1025,14 +1018,18 @@ se_shixianKeep = sgs.CreateMaxCardsSkill{
 	end
 }
 
+se_shixianClear = sgs.CreateDetachEffectSkill{
+	name = "se_shixian",
+	pilename = "shikongcundang",
+}
+
 Okarin:addSkill(se_shixian)
-Okarin:addSkill(se_shixianMark)
-Okarin:addSkill(se_shixianEnd)
-extension:insertRelatedSkills("se_shixian", "#se_shixianEnd")
-extension:insertRelatedSkills("se_shixian", "#se_shixianMark")
+Okarin:addSkill(se_shixianClear)
+Okarin:addSkill(se_shixianKeep)
+extension:insertRelatedSkills("se_shixian", "#se_shixian-clear")
 extension:insertRelatedSkills("se_shixian", "#se_shixianKeep")
 Okarin:addSkill(se_tiaoyue)
-Okarin:addSkill(se_shixianKeep)
+
 sgs.LoadTranslationTable{
 ["se_shixian"] = "时线「世界线1.41」",
 ["shixian"] = "时线「世界线1.41」",
@@ -8308,6 +8305,11 @@ SE_Wumai = sgs.CreateTriggerSkill{
 	end
 }
 
+SE_WumaiClear = sgs.CreateDetachEffectSkill{
+	name = "SE_Wumai",
+	pilename = "Fragments",
+}
+
 SE_Poxiao = sgs.CreateTriggerSkill{
 	name = "SE_Poxiao",
 	frequency = sgs.Skill_Wake,
@@ -8443,6 +8445,8 @@ se_mipaClear = sgs.CreateDetachEffectSkill{
 
 Rika:addSkill(SE_Shenghua)
 Rika:addSkill(SE_Wumai)
+Rika:addSkill(SE_WumaiClear)
+extension:insertRelatedSkills("SE_Wumai", "#SE_Wumai-clear")
 Rika:addSkill(SE_Poxiao)
 extension:addToSkills(se_mipa)
 extension:addToSkills(se_mipaClear)
@@ -10142,47 +10146,6 @@ sgs.LoadTranslationTable{
 ["illustrator:Majyo"] = "",
 }
 
-
-se_gate=sgs.CreateTriggerSkill{
-	name="#se_gate",
-	frequency=sgs.Skill_Frequent,
-	events={sgs.EventPhaseStart},
-	view_as_skill = se_gatevs,
-	on_trigger=function(self,event,player,data)
-		local room = player:getRoom()
-		if event == sgs.EventPhaseStart and player:getPhase() == sgs.Player_RoundStart and player:hasSkill(self:objectName()) then
-			local weapon_id = -1
-			for _,id in sgs.qlist(room:getDrawPile()) do
-				if sgs.Sanguosha:getCard(id):isKindOf("Weapon") then
-					weapon_id = id
-					break
-				end
-			end
-			if weapon_id == -1 then
-				for _,id in sgs.qlist(room:getDiscardPile()) do
-					if sgs.Sanguosha:getCard(id):isKindOf("Weapon") then
-						weapon_id = id
-						break
-					end
-				end
-			end
-			if weapon_id == -1 then
-				for _,p in sgs.qlist(room:getOtherPlayers(player)) do
-					if p:getWeapon() then
-						weapon_id = p:getWeapon():getEffectiveId()
-						break
-					end
-				end
-			end
-			if weapon_id == -1 then return end
-			if not player:askForSkillInvoke("se_gate", data) then return false end
-			room:broadcastSkillInvoke("se_gate", math.random(1, 3))
-			player:addToPile("pika_gob", weapon_id)
-		end
-	end
-}
-
-
 se_gatecard = sgs.CreateSkillCard{
 	name = "se_gatecard",
 	target_fixed = true,
@@ -10263,6 +10226,50 @@ se_gatevs = sgs.CreateViewAsSkill{
 	end
 }
 
+se_gate=sgs.CreateTriggerSkill{
+	name="se_gate",
+	frequency=sgs.Skill_Frequent,
+	events={sgs.EventPhaseStart},
+	view_as_skill = se_gatevs,
+	on_trigger=function(self,event,player,data)
+		local room = player:getRoom()
+		if event == sgs.EventPhaseStart and player:getPhase() == sgs.Player_RoundStart and player:hasSkill(self:objectName()) then
+			local weapon_id = -1
+			for _,id in sgs.qlist(room:getDrawPile()) do
+				if sgs.Sanguosha:getCard(id):isKindOf("Weapon") then
+					weapon_id = id
+					break
+				end
+			end
+			if weapon_id == -1 then
+				for _,id in sgs.qlist(room:getDiscardPile()) do
+					if sgs.Sanguosha:getCard(id):isKindOf("Weapon") then
+						weapon_id = id
+						break
+					end
+				end
+			end
+			if weapon_id == -1 then
+				for _,p in sgs.qlist(room:getOtherPlayers(player)) do
+					if p:getWeapon() then
+						weapon_id = p:getWeapon():getEffectiveId()
+						break
+					end
+				end
+			end
+			if weapon_id == -1 then return end
+			if not player:askForSkillInvoke("se_gate", data) then return false end
+			room:broadcastSkillInvoke("se_gate", math.random(1, 3))
+			player:addToPile("pika_gob", weapon_id)
+		end
+	end
+}
+
+se_gateClear = sgs.CreateDetachEffectSkill{
+	name = "se_gate",
+	pilename = "pika_gob",
+}
+
 SE_Tiansuo = sgs.CreateTriggerSkill{
 	name = "SE_Tiansuo",
 	frequency = sgs.Skill_NotFrequent,
@@ -10302,8 +10309,8 @@ SE_Tiansuo = sgs.CreateTriggerSkill{
 
 
 Kinpika:addSkill(se_gate)
-Kinpika:addSkill(se_gatevs)
-extension:insertRelatedSkills("se_gate", "#se_gate")
+Kinpika:addSkill(se_gateClear)
+extension:insertRelatedSkills("se_gate", "#se_gate-clear")
 Kinpika:addSkill(SE_Tiansuo)
 
 
@@ -10959,10 +10966,47 @@ sgs.LoadTranslationTable{
 
 --佐仓千代
 
+se_linmoVS = sgs.CreateOneCardViewAsSkill{
+    name = "se_linmo",
+    view_filter = function(self, card)
+    	if sgs.Self:getPile("drawing"):length() == 0 then return false end
+    	local tp
+			local copy_id = sgs.Self:getPile("copying"):at(0)
+			if copy_id == -1 then return false end
 
+    	if sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("BasicCard") then tp = "BasicCard" end
+    	if sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("TrickCard") then tp = "TrickCard" end
+    	if sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("EquipCard") then tp = "EquipCard" end
+    	if not tp then return false end
+        if not card:isKindOf(tp) then return false end
+        if sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Slash") then
+	        if sgs.Sanguosha:getCurrentCardUseReason() == sgs.CardUseStruct_CARD_USE_REASON_PLAY then
+	            local slash = sgs.Sanguosha:cloneCard("slash", sgs.Card_SuitToBeDecided, -1)
+	            slash:addSubcard(card:getEffectiveId())
+	            slash:deleteLater()
+	            return slash:isAvailable(sgs.Self)
+	        end
+	    end
+	    return true
+    end,
+    view_as = function(self, originalCard)
+    	local name = sgs.Sanguosha:getCard(sgs.Self:getPile("drawing"):at(0)):objectName()
+        local slash = sgs.Sanguosha:cloneCard(name, originalCard:getSuit(), originalCard:getNumber())
+        slash:addSubcard(originalCard:getId())
+        slash:setSkillName(self:objectName())
+        return slash
+    end,
+    enabled_at_play = function(self, player)
+        return sgs.Slash_IsAvailable(player)
+    end,
+    enabled_at_response = function(self, player, pattern)
+        return (pattern == "slash" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Slash")) or (pattern == "jink" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Jink")) or (pattern == "nullification" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Nullification"))
+    end
+}
 
-se_linmo_trigger = sgs.CreateTriggerSkill{
-	name = "#se_linmo_trigger",
+se_linmo = sgs.CreateTriggerSkill{
+	name = "se_linmo",
+	view_as_skill = se_linmoVS,
 	frequency = sgs.Skill_NotFrequent,
 	events = {sgs.CardUsed, sgs.EventPhaseChanging},
 	priority = -100,
@@ -11002,42 +11046,12 @@ se_linmo_trigger = sgs.CreateTriggerSkill{
 	end,
 }
 
-se_linmo = sgs.CreateOneCardViewAsSkill{
-    name = "se_linmo",
-    view_filter = function(self, card)
-    	if sgs.Self:getPile("drawing"):length() == 0 then return false end
-    	local tp
-			local copy_id = sgs.Self:getPile("copying"):at(0)
-			if copy_id == -1 then return false end
-
-    	if sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("BasicCard") then tp = "BasicCard" end
-    	if sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("TrickCard") then tp = "TrickCard" end
-    	if sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("EquipCard") then tp = "EquipCard" end
-    	if not tp then return false end
-        if not card:isKindOf(tp) then return false end
-        if sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Slash") then
-	        if sgs.Sanguosha:getCurrentCardUseReason() == sgs.CardUseStruct_CARD_USE_REASON_PLAY then
-	            local slash = sgs.Sanguosha:cloneCard("slash", sgs.Card_SuitToBeDecided, -1)
-	            slash:addSubcard(card:getEffectiveId())
-	            slash:deleteLater()
-	            return slash:isAvailable(sgs.Self)
-	        end
-	    end
-	    return true
-    end,
-    view_as = function(self, originalCard)
-    	local name = sgs.Sanguosha:getCard(sgs.Self:getPile("drawing"):at(0)):objectName()
-        local slash = sgs.Sanguosha:cloneCard(name, originalCard:getSuit(), originalCard:getNumber())
-        slash:addSubcard(originalCard:getId())
-        slash:setSkillName(self:objectName())
-        return slash
-    end,
-    enabled_at_play = function(self, player)
-        return sgs.Slash_IsAvailable(player)
-    end,
-    enabled_at_response = function(self, player, pattern)
-        return (pattern == "slash" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Slash")) or (pattern == "jink" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Jink")) or (pattern == "nullification" and sgs.Sanguosha:getCard(sgs.Self:getPile("copying"):at(0)):isKindOf("Nullification"))
-    end
+se_linmoClear = sgs.CreateDetachEffectSkill{
+	name = "se_linmo",
+	on_skill_detached = function(self, room, player)
+		player:removePileByName("drawing")
+		player:removePileByName("copying")
+	end,
 }
 
 se_zhenfen = sgs.CreateTriggerSkill{
@@ -11174,8 +11188,8 @@ se_tuodui = sgs.CreateTriggerSkill{
 }
 
 Chiyo:addSkill(se_linmo)
-Chiyo:addSkill(se_linmo_trigger)
-extension:insertRelatedSkills("se_linmo", "#se_linmo_trigger")
+Chiyo:addSkill(se_linmoClear)
+extension:insertRelatedSkills("se_linmo", "#se_linmo-clear")
 Chiyo:addSkill(se_zhenfen)
 Chiyo:addSkill(se_zhenfenClear)
 extension:insertRelatedSkills("se_zhenfen", "#se_zhenfen-clear")

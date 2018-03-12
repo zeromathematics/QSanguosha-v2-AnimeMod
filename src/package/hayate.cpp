@@ -18,7 +18,7 @@ public:
     Yingdi() : TriggerSkill("yingdi")
     {
         frequency = Compulsory;
-        events << TargetConfirmed << Damage << EventPhaseStart << EventLoseSkill;
+        events << TargetConfirmed << Damage << EventPhaseStart;
     }
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
@@ -71,18 +71,27 @@ public:
                 }
             }
         }
-        else if (triggerEvent == EventLoseSkill){
-            if (data.toString() == objectName()){
-                foreach(ServerPlayer *player, room->getAlivePlayers()){
-                    if (player->getMark("@real_hei") > 0){
-                        player->loseAllMarks("@real_hei");
-                    }
-                }
-            }
-        }
         return false;
     }
 };
+
+class YingdiClear : public DetachEffectSkill
+{
+public:
+    YingdiClear() : DetachEffectSkill("yingdi")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *player, room->getAlivePlayers()){
+            if (player->getMark("@real_hei") > 0){
+                player->loseAllMarks("@real_hei");
+            }
+        }
+    }
+};
+
 
 class Diansuo : public TriggerSkill
 {
@@ -90,7 +99,7 @@ public:
     Diansuo() : TriggerSkill("diansuo")
     {
         frequency = NotFrequent;
-        events << EventPhaseStart << EventLoseSkill << DamageCaused << TargetConfirming;
+        events << EventPhaseStart << DamageCaused << TargetConfirming;
     }
     bool triggerable(const ServerPlayer *target) const
     {
@@ -107,15 +116,6 @@ public:
                         }
                     }
                     room->askForPlayerChosen(player, room->getAlivePlayers(), objectName())->gainMark("@diansuo_target");
-                }
-            }
-        }
-        else if (triggerEvent == EventLoseSkill) {
-            if (data.toString() == objectName()){
-                foreach(ServerPlayer *player, room->getAlivePlayers()){
-                    if (player->getMark("@diansuo_target") > 0){
-                        player->loseAllMarks("@diansuo_target");
-                    }
                 }
             }
         }
@@ -280,6 +280,23 @@ public:
             }
         }
         return false;
+    }
+};
+
+class DiansuoClear : public DetachEffectSkill
+{
+public:
+    DiansuoClear() : DetachEffectSkill("diansuo")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *player, room->getAlivePlayers()){
+            if (player->getMark("@diansuo_target") > 0){
+                player->loseAllMarks("@diansuo_target");
+            }
+        }
     }
 };
 
@@ -576,7 +593,7 @@ class Yaojing : public TriggerSkill
 public:
     Yaojing() : TriggerSkill("yaojing")
     {
-        events << EventPhaseChanging << CardUsed << EventLoseSkill << Death;
+        events << EventPhaseChanging << CardUsed << Death;
         view_as_skill = new YaojingVS;
     }
 
@@ -635,20 +652,6 @@ public:
                 }
             }
         }
-        else if (triggerEvent == EventLoseSkill){
-            if (data.toString() == objectName() && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
-                player->tag["yaojing_times"] = QVariant(0);
-                if (room->getAura() == "MacrossF"){
-                    ServerPlayer *ranka = room->findPlayerBySkillName("xingjian");
-                    if (ranka &&ranka->isAlive()){
-                        room->doAura(ranka, "xingjian");
-                        return false;
-                    }
-
-                }
-                room->clearAura();
-            }
-        }
         else if (triggerEvent == Death){
             DeathStruct death = data.value<DeathStruct>();
             if (death.who->hasSkill(objectName()) && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
@@ -666,6 +669,30 @@ public:
         }
 
         return false;
+    }
+};
+
+class YaojingClear : public DetachEffectSkill
+{
+public:
+    YaojingClear() : DetachEffectSkill("yaojing")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        if ( room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
+            player->tag["yaojing_times"] = QVariant(0);
+            if (room->getAura() == "MacrossF"){
+                ServerPlayer *ranka = room->findPlayerBySkillName("xingjian");
+                if (ranka &&ranka->isAlive()){
+                    room->doAura(ranka, "xingjian");
+                    return;
+                }
+
+            }
+            room->clearAura();
+        }
     }
 };
 
@@ -777,7 +804,7 @@ public:
     Mafuyu() : TriggerSkill("mafuyu")
     {
         frequency = NotFrequent;
-        events << CardsMoveOneTime << EventPhaseStart << EventLoseSkill << Death;
+        events << CardsMoveOneTime << EventPhaseStart << Death;
     }
 
     bool triggerable(const ServerPlayer *target) const
@@ -816,13 +843,6 @@ public:
                 }
             }
         }
-        else if (triggerEvent == EventLoseSkill){
-            if (data.toString() == objectName()){
-                foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    p->loseAllMarks("@mafuyu");
-                }
-            }
-        }
         else if (triggerEvent == Death){
             DeathStruct death = data.value<DeathStruct>();
             if (death.who->hasSkill(objectName())){
@@ -834,6 +854,22 @@ public:
         return false;
     }
 };
+
+class MafuyuClear : public DetachEffectSkill
+{
+public:
+    MafuyuClear() : DetachEffectSkill("mafuyu")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *p, room->getAlivePlayers()){
+            p->loseAllMarks("@mafuyu");
+        }
+    }
+};
+
 
 HaremuCard::HaremuCard()
 {
@@ -991,7 +1027,7 @@ public:
     Rennai() : TriggerSkill("rennai")
     {
         frequency = Compulsory;
-        events << DamageInflicted << PreHpLost << EventPhaseStart << EventLoseSkill << Death;
+        events << DamageInflicted << PreHpLost << EventPhaseStart << Death;
     }
 
     bool triggerable(const ServerPlayer *target) const
@@ -1091,13 +1127,6 @@ public:
         else if (triggerEvent == EventPhaseStart && player->getPhase() == Player::RoundStart){
             player->loseAllMarks("@Patience");
         }
-        else if (triggerEvent == EventLoseSkill && TriggerSkill::triggerable(player)){
-            if (data.toString() == objectName()){
-                foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    p->loseAllMarks("@Frozen_Eu");
-                }
-            }
-        }
         else if (triggerEvent == Death){
             DeathStruct death = data.value<DeathStruct>();
             if (death.who->hasSkill(objectName())){
@@ -1107,6 +1136,21 @@ public:
             }
         }
         return false;
+    }
+};
+
+class RennaiClear : public DetachEffectSkill
+{
+public:
+    RennaiClear() : DetachEffectSkill("rennai")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *p, room->getAlivePlayers()){
+            p->loseAllMarks("@Frozen_Eu");
+        }
     }
 };
 
@@ -1290,7 +1334,7 @@ public:
     Guiyin() : TriggerSkill("guiyin")
     {
         frequency = Compulsory;
-        events << Damaged << EventPhaseStart << EventPhaseEnd << TargetConfirmed << EventLoseSkill << Death;
+        events << Damaged << EventPhaseStart << EventPhaseEnd << TargetConfirmed << Death;
     }
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
@@ -1302,7 +1346,7 @@ public:
                 player->setFlags("guiyin2_sound_used");
             }
             damage.from->gainMark("@Oni");
-            damage.to->gainMark("OniLv");
+            damage.to->setMark("OniLv", damage.to->getMark("OniLv") + 1);
         }
 
         else if (triggerEvent == EventPhaseStart){
@@ -1311,7 +1355,7 @@ public:
                 foreach(ServerPlayer *p, room->getOtherPlayers(player)){
                     if (p->inMyAttackRange(player)){
                         p->gainMark("@Oni");
-                        player->gainMark("OniLv");
+                        player->setMark("OniLv", player->getMark("OniLv") + 1);
                     }
                 }
             }
@@ -1366,14 +1410,34 @@ public:
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.to.contains(player) && use.from && use.card && !use.card->isKindOf("SkillCard")){
                 use.from->gainMark("@Oni");
-                player->gainMark("OniLv");
+                player->setMark("OniLv", player->getMark("OniLv") + 1);
                 if (use.from != player && !player->hasFlag("guiyin1_sound_used")){
                     room->broadcastSkillInvoke(objectName(), 1);
                     player->setFlags("guiyin1_sound_used");
                 }
             }
         }
+        else if (triggerEvent == Death){
+            foreach(ServerPlayer *p, room->getAlivePlayers()){
+                p->loseAllMarks("@Oni");
+            }
+        }
         return false;
+    }
+};
+
+class GuiyinClear : public DetachEffectSkill
+{
+public:
+    GuiyinClear() : DetachEffectSkill("guiyin")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *p, room->getAlivePlayers()){
+            p->loseAllMarks("@Oni");
+        }
     }
 };
 
@@ -2344,7 +2408,11 @@ HayatePackage::HayatePackage()
     General *hei = new General(this, "hei", "science", 4);
     skills << new Jiesha << new Gaokang << new Qiubang << new QiubangDis << new Youshui << new LonelinessInvalidity;
     hei->addSkill(new Yingdi);
+    hei->addSkill(new YingdiClear);
+    related_skills.insertMulti("yingdi", "#yingdi-clear");
     hei->addSkill(new Diansuo);
+    hei->addSkill(new DiansuoClear);
+    related_skills.insertMulti("diansuo", "#diansuo-clear");
     hei->addWakeTypeSkillForAudio("jiesha");
 
     General * diarmuid = new General(this, "diarmuid", "magic", 4);
@@ -2358,27 +2426,35 @@ HayatePackage::HayatePackage()
     General *sheryl = new General(this, "sheryl", "diva", 3, false);
     sheryl->addSkill(new Yaojing);
     sheryl->addSkill(new YaojingMaxCards);
+    sheryl->addSkill(new YaojingClear);
     sheryl->addSkill(new Gongming);
     related_skills.insertMulti("yaojing", "#yaojing");
+    related_skills.insertMulti("yaojing", "#yaojing-clear");
 
     General *sugisaki = new General(this, "sugisaki", "real", 3);
     sugisaki->addSkill(new Kurimu);
     sugisaki->addSkill(new Minatsu);
     sugisaki->addSkill(new Chizuru);
     sugisaki->addSkill(new Mafuyu);
+    sugisaki->addSkill(new MafuyuClear);
+    related_skills.insertMulti("mafuyu", "#mafuyu-clear");
     sugisaki->addSkill(new Haremu);
     sugisaki->addSkill(new HaremuMaxCards);
     related_skills.insertMulti("haremu", "#haremu");
 
     General *eugeo = new General(this, "eugeo", "science", 3);
     eugeo->addSkill(new Rennai);
+    eugeo->addSkill(new RennaiClear);
+    related_skills.insertMulti("rennai", "#rennai-clear");
     eugeo->addSkill(new Zhanfang);
     eugeo->addSkill(new Huajian);
 
     General *k1 = new General(this, "k1", "real", 4);
     k1->addSkill(new Guiyin);
     k1->addSkill(new GuiyinDis);
+    k1->addSkill(new GuiyinClear);
     related_skills.insertMulti("guiyin", "#guiyin");
+    related_skills.insertMulti("guiyin", "#guiyin-clear");
     related_skills.insertMulti("qiubang", "#qiubang");
     k1->addWakeTypeSkillForAudio("qiubang");
     k1->addWakeTypeSkillForAudio("youshui");

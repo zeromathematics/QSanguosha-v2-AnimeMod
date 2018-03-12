@@ -55,7 +55,10 @@ se_chicheng = sgs.CreateViewAsSkill{
 		return player:getHandcardNum() > 0 and not player:hasUsed("#se_chichengcard")
 	end
 }
-
+se_chichengClear = sgs.CreateDetachEffectSkill{
+	name = "se_chicheng",
+	pilename = "akagi_lv",
+}
 
 
 --制空
@@ -501,6 +504,8 @@ se_shuacun = sgs.CreateTriggerSkill{
 
 
 Akagi:addSkill(se_chicheng)
+Akagi:addSkill(se_chichengClear)
+extension:insertRelatedSkills("se_chicheng", "#se_chicheng-clear")
 Akagi:addSkill(se_zhikong)
 Kitagami:addSkill(se_leimu)
 Kitagami:addSkill(se_yezhan)

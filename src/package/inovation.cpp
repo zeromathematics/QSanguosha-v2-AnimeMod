@@ -1014,7 +1014,7 @@ class SE_Touming : public TriggerSkill
 public:
     SE_Touming() : TriggerSkill("SE_Touming")
     {
-        events << EventPhaseStart << EventPhaseEnd;
+        events << EventPhaseStart << EventPhaseEnd << Death;
         frequency = NotFrequent;
     }
 
@@ -1045,8 +1045,27 @@ public:
                 akarin->drawCards((room->getAlivePlayers().length() + 1)/2);
             }
         }
+        else if (triggerEvent == Death){
+            DeathStruct death = data.value<DeathStruct>();
+            if (death.who != akarin)
+                return false;
+            room->removeAkarinEffect(akarin);
+        }
 
         return false;
+    }
+};
+
+class SE_ToumingClear : public DetachEffectSkill
+{
+public:
+    SE_ToumingClear() : DetachEffectSkill("SE_Touming")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        room->removeAkarinEffect(player);
     }
 };
 
@@ -2421,7 +2440,7 @@ public:
     Shouyang() : TriggerSkill("shouyang")
     {
         frequency = Compulsory;
-        events << DamageInflicted << Death << EventAcquireSkill << EventLoseSkill;
+        events << DamageInflicted << Death << EventAcquireSkill;
     }
     int getPriority(TriggerEvent) const
     {
@@ -2431,12 +2450,6 @@ public:
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (triggerEvent == EventAcquireSkill && data.toString() == objectName()){
-            room->askForPlayerChosen(player, room->getOtherPlayers(player), objectName(), "@Daolu-Tomo")->gainMark("@Tomo");
-        }
-        else if (triggerEvent == EventLoseSkill && data.toString() == objectName()){
-            foreach(ServerPlayer *p, room->getAlivePlayers()){
-                p->loseAllMarks("@Tomo");
-            }
             room->askForPlayerChosen(player, room->getOtherPlayers(player), objectName(), "@Daolu-Tomo")->gainMark("@Tomo");
         }
         else if (triggerEvent == DamageInflicted){
@@ -2494,6 +2507,21 @@ public:
     bool triggerable(const ServerPlayer *target) const
     {
         return target != NULL;
+    }
+};
+
+class ShouyangClear : public DetachEffectSkill
+{
+public:
+    ShouyangClear() : DetachEffectSkill("shouyang")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *p, room->getAlivePlayers()){
+            p->loseAllMarks("@Tomo");
+        }
     }
 };
 
@@ -3543,7 +3571,7 @@ class Eryu : public TriggerSkill
 public:
     Eryu() : TriggerSkill("eryu")
     {
-        events << CardsMoveOneTime << EventLoseSkill;
+        events << CardsMoveOneTime;
         view_as_skill = new EryuVs;
     }
 
@@ -3604,17 +3632,27 @@ public:
                 return true;
             }
         }
-        else if (triggerEvent == EventLoseSkill){
-            if (data.toString() == objectName()){
-                foreach(ServerPlayer *player, room->getAlivePlayers()){
-                    if (player->getMark("@EryuMark") > 0){
-                        player->loseAllMarks("@EryuMark");
-                    }
-                }
-            }
-        }
 
         return false;
+    }
+};
+
+
+
+class EryuClear : public DetachEffectSkill
+{
+public:
+    EryuClear() : DetachEffectSkill("eryu")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *player, room->getAlivePlayers()){
+            if (player->getMark("@EryuMark") > 0){
+                player->loseAllMarks("@EryuMark");
+            }
+        }
     }
 };
 
@@ -4626,7 +4664,7 @@ class Xingjian : public TriggerSkill
 public:
     Xingjian() : TriggerSkill("xingjian")
     {
-        events << EventPhaseStart << EventLoseSkill << Death;
+        events << EventPhaseStart << Death;
         frequency = Wake;
     }
 
@@ -4672,19 +4710,6 @@ public:
                 }
             }
         }
-        else if (event == EventLoseSkill){
-            if (data.toString() == objectName() && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
-                if (room->getAura() == "MacrossF"){
-                    ServerPlayer *sher = room->findPlayerBySkillName("yaojing");
-                    if (sher &&sher->isAlive()){
-                        room->doAura(sher, "yaojing");
-                        return false;
-                    }
-
-                }
-                room->clearAura();
-            }
-        }
         else if (event == Death){
             DeathStruct death = data.value<DeathStruct>();
             if (death.who->hasSkill(objectName()) && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
@@ -4700,6 +4725,29 @@ public:
             }
         }
         return false;
+    }
+};
+
+class XingjianClear : public DetachEffectSkill
+{
+public:
+    XingjianClear() : DetachEffectSkill("xingjian")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        if ( room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF")){
+            if (room->getAura() == "MacrossF"){
+                ServerPlayer *sher = room->findPlayerBySkillName("yaojing");
+                if (sher &&sher->isAlive()){
+                    room->doAura(sher, "yaojing");
+                    return;
+                }
+
+            }
+            room->clearAura();
+        }
     }
 };
 
@@ -4750,7 +4798,7 @@ class Jianshi : public TriggerSkill
 public:
     Jianshi() : TriggerSkill("jianshi")
     {
-        events << CardsMoveOneTime << Death << EventLoseSkill;
+        events << CardsMoveOneTime << Death;
         frequency = Compulsory;
     }
 
@@ -4839,23 +4887,31 @@ public:
                 }
             }
         }
-        else if (event == EventLoseSkill){
-            if (data.toString() == objectName()){
-                foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    if (p->getMark("@Jianshi_akarin")){
-                        foreach(ServerPlayer *q, room->getOtherPlayers(p)){
-                            if (!q->hasSkill(objectName())){
-                                room->removeAkarinEffect(p, q);
-                            }
-                        }
-                        p->loseAllMarks("@Jianshi_akarin");
-                    }
-                }
-            }
-        }
         return false;
     }
 
+};
+
+class JianshiClear : public DetachEffectSkill
+{
+public:
+    JianshiClear() : DetachEffectSkill("jianshi")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *p, room->getAlivePlayers()){
+            if (p->getMark("@Jianshi_akarin")){
+                foreach(ServerPlayer *q, room->getOtherPlayers(p)){
+                    if (!q->hasSkill(objectName())){
+                        room->removeAkarinEffect(p, q);
+                    }
+                }
+                p->loseAllMarks("@Jianshi_akarin");
+            }
+        }
+    }
 };
 
 class Qiyue : public TriggerSkill
@@ -5726,7 +5782,7 @@ public:
     Zuzhou() : TriggerSkill("zuzhou")
     {
         frequency = Compulsory;
-        events << TargetConfirmed << EventPhaseEnd << EventLoseSkill << Death;
+        events << TargetConfirmed << EventPhaseEnd << Death;
     }
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
@@ -5773,13 +5829,6 @@ public:
                 }
             }
         }
-        else if (triggerEvent == EventLoseSkill){
-            if (data.toString() == objectName()){
-                foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    p->loseAllMarks("@zuzhou");
-                }
-            }
-        }
 
         return false;
     }
@@ -5787,6 +5836,21 @@ public:
     bool triggerable(const ServerPlayer *target) const
     {
         return target != NULL;
+    }
+};
+
+class ZuzhouClear : public DetachEffectSkill
+{
+public:
+    ZuzhouClear() : DetachEffectSkill("zuzhou")
+    {
+    }
+
+    void onSkillDetached(Room *room, ServerPlayer *player) const
+    {
+        foreach(ServerPlayer *p, room->getAlivePlayers()){
+            p->loseAllMarks("@zuzhou");
+        }
     }
 };
 
@@ -6394,8 +6458,9 @@ InovationPackage::InovationPackage()
     tomoya->addSkill(new ZhurenTrigger);
     related_skills.insertMulti("zhuren", "#zhuren");
     tomoya->addSkill(new Daolu);
-    skills << new Diangong << new DiangongTrigger << new Shouyang << new Haixing << new Tanyan;
+    skills << new Diangong << new DiangongTrigger << new Shouyang << new Haixing << new Tanyan << new ShouyangClear;
     related_skills.insertMulti("diangong", "#diangong");
+    related_skills.insertMulti("shouyang", "#shouyang-clear");
     tomoya->addWakeTypeSkillForAudio("diangong");
     tomoya->addWakeTypeSkillForAudio("shouyang");
     tomoya->addWakeTypeSkillForAudio("haixing");
@@ -6417,6 +6482,8 @@ InovationPackage::InovationPackage()
 
     General *KKotori = new General(this, "KKotori", "magic", 3, false);
     KKotori->addSkill(new Jianshi);
+    KKotori->addSkill(new JianshiClear);
+    related_skills.insertMulti("jianshi", "#jianshi-clear");
     KKotori->addSkill(new Qiyue);
 
     //General *Shizuru = new General(this, "Shizuru", "science", 3, false);
@@ -6444,6 +6511,8 @@ InovationPackage::InovationPackage()
 
     General *akarin = new General(this, "Akarin", "real", 3, false);
     akarin->addSkill(new SE_Touming);
+    akarin->addSkill(new SE_ToumingClear);
+    related_skills.insertMulti("SE_Touming", "#SE_Touming-clear");
     akarin->addSkill(new SE_Tuanzi);
 
     General *akari = new General(this, "Akari", "science", 3, false);
@@ -6466,6 +6535,8 @@ InovationPackage::InovationPackage()
 
     General *Zuikaku = new General(this, "Zuikaku", "kancolle", 3, false);
     Zuikaku->addSkill(new Eryu);
+    Zuikaku->addSkill(new EryuClear);
+    related_skills.insertMulti("eryu", "#eryu-clear");
     Zuikaku->addSkill(new Zheyi);
     skills << new Youdiz;
     Zuikaku->addWakeTypeSkillForAudio("youdiz");
@@ -6491,6 +6562,8 @@ InovationPackage::InovationPackage()
     //General *Mikumo = new General(this, "Mikumo", "diva", 3, false);
     General *Ranka = new General(this, "Ranka", "diva", 3, false);
     Ranka->addSkill(new Xingjian);
+    Ranka->addSkill(new XingjianClear);
+    related_skills.insertMulti("xingjian", "#xingjian-clear");
     Ranka->addSkill(new Goutong);
     //General *Umi = new General(this, "Umi", "diva", 3, false);
     //General *Maki = new General(this, "Maki", "diva", 3, false);
@@ -6539,8 +6612,10 @@ InovationPackage::InovationPackage()
     General *Fear = new General(this, "Fear", "real", 3, false);
     Fear->addSkill(new Zuzhou);
     Fear->addSkill(new ZuzhouMaxCards);
+    Fear->addSkill(new ZuzhouClear);
     Fear->addSkill(new Jiguan);
     related_skills.insertMulti("zuzhou", "#zuzhou");
+    related_skills.insertMulti("zuzhou", "#zuzhou-clear");
 
     General *Dalian = new General(this, "Dalian", "magic", 3, false);
     Dalian->addSkill(new Shuji);
