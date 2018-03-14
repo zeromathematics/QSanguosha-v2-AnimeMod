@@ -578,6 +578,11 @@ renzha = sgs.CreateTriggerSkill{
 			end
 	end,
 }
+
+renzhaClear = sgs.CreateDetachEffectSkill{
+	name = "renzha",
+	pilename = "zha",
+}
 --------------------------------------------------------------好船@itomakoto
 haochuantimes = sgs.CreateTriggerSkill{
 	name = "#haochuantimes",
@@ -950,100 +955,7 @@ luablackflame = sgs.CreateViewAsSkill{
 		return not player:hasUsed("#luablackflamecard")
 	end
 }
---------------------------------------------------------------钢躯@tsukushi
-LuaGqset = sgs.CreateTriggerSkill{
-	name = "LuaGqset",
-	frequency = sgs.Skill_NotFrequent,
-	events = {sgs.EventPhaseStart},
-	on_trigger = function(self,event,player,data)
-		local room = player:getRoom()
-		if player:getPhase() == sgs.Player_Finish then
-			if not player:isKongcheng() then
-				local gang = player:getPile("gang")
-				local gangnum = gang:length()
-				if gangnum == 0 then
-					if room:askForSkillInvoke(player, self:objectName(), data) then
-						local idn = room:askForCardChosen(player,player,"h",self:objectName())
-						player:addToPile("gang",idn)
-					end
-				end
-			end
-		end
-		if player:getPhase() == sgs.Player_Start then
-			local gang = player:getPile("gang")
-			local gangnum = gang:length()
-			local idx = -1
-			if gangnum > 0 then
-				idx = gang:first()
-				room:throwCard(idx,player)
-				gangnum = gang:length()
-			end
-		end
-	end,
-}
-LuaGqef = sgs.CreateTriggerSkill{
-	name = "#LuaGqef",
-	frequency = sgs.Skill_Compulsory,
-	events = {sgs.CardEffect,sgs.CardEffected},
-	on_trigger = function(self, event, player, data)
-		local room = player:getRoom()
-			local gang = player:getPile("gang")
-			local gangnum = gang:length()
-				if gangnum > 0  then
-						local effect = data:toCardEffect()
-						local target = effect.to
-						local card = effect.card
-						local card_type = card:getTypeId()
-						local gangcardid = gang:first()
-						local gangcard = sgs.Sanguosha:getCard(gangcardid)
-						local gangcard_type = gangcard:getTypeId()
-						if target:objectName() == player:objectName() then
-							if card_type == gangcard_type then
-							room:broadcastSkillInvoke("LuaGqset")
-							room:doLightbox("LuaGqset$", 800)
-							return true
-							end
-						end
-			end
-	end,
-}
---------------------------------------------------------------调教@tsukushi
-luatiaojiaocard = sgs.CreateSkillCard{
-	name = "luatiaojiaocard",
-	target_fixed = false,
-	will_throw = true,
-	filter = function(self, targets, to_select)
-		if #targets == 0 then
-			return to_select:objectName() ~= sgs.Self:objectName()
-		end
-		return false
-	end,
-	on_effect = function(self, effect)
-		local source = effect.from
-		local dest = effect.to
-		local room = source:getRoom()
-		local list = room:getAlivePlayers()
-		local dead = room:askForPlayerChosen(source,list,self:objectName())
-		local prompt = string.format("@TiaojiaoSlash:%s:%s:%s",source:getGeneralName(),dest:getGeneralName(),dead:getGeneralName())
-		--room:broadcastSkillInvoke("luatiaojiao")
-		if not room:askForUseSlashTo(dest, dead, prompt) then
-			if not dest:isNude() then
-				local cardn = room:askForCardChosen(source, dest, "hej", self:objectName())
-				room:obtainCard(source,cardn,false)
-			end
-		end
-	end
-}
-luatiaojiao = sgs.CreateViewAsSkill{
-	name = "luatiaojiao",
-	n = 0,
-	view_as = function(self, cards)
-		return luatiaojiaocard:clone()
-	end,
-	enabled_at_play = function(self, player)
-		return not player:hasUsed("#luatiaojiaocard")
-	end
-}
+
 --------------------------------------------------------------布棋@Batora
 LuaBuqi = sgs.CreateTriggerSkill{
 	name = "LuaBuqi",
@@ -1788,6 +1700,11 @@ LuaJianyong = sgs.CreateTriggerSkill{
 		end
 	end,
 }
+
+LuaJianyongClear = sgs.CreateDetachEffectSkill{
+	name = "LuaJianyong",
+	pilename = "yong",
+}
 --------------------------------------------------------------剑制@redarcher
 LuaJianzhi = sgs.CreateTriggerSkill{
 	name = "LuaJianzhi",
@@ -2164,6 +2081,11 @@ LuaWenle = sgs.CreateTriggerSkill{
 			end
 		end
 	end,
+}
+
+LuaWenleClear = sgs.CreateDetachEffectSkill{
+	name = "LuaWenle",
+	pilename = "si",
 }
 --------------------------------------------------------------御空@runaria
 luayukongcard = sgs.CreateSkillCard{
@@ -2546,6 +2468,11 @@ slyanhuo = sgs.CreateTriggerSkill
 		end
 		return false
 	end
+}
+
+slyanhuoClear = sgs.CreateDetachEffectSkill{
+	name = "slyanhuo",
+	pilename = "confuse",
 }
 --------------------------------------------------------------诈唬@slsty
 zhahu = sgs.CreateTriggerSkill
@@ -3208,7 +3135,10 @@ extension:addToSkills(LuaXiuluo)
 
 itomakoto:addSkill(luarenzha)
 itomakoto:addSkill(renzha)
+itomakoto:addSkill(renzhaClear)
 itomakoto:addSkill(haochuantimes)
+extension:insertRelatedSkills("luarenzha", "#haochuantimes")
+extension:insertRelatedSkills("renzha", "#renzha-clear")
 ayanami:addSkill(weixiao)
 ayanami:addSkill(nvshen)
 keima:addSkill(LuaShenzhi)
@@ -3220,49 +3150,56 @@ odanobuna:addSkill(LuaChigui)
 odanobuna:addSkill(LuaBuwu)
 odanobuna:addSkill(LuaTianmo)
 odanobuna:addSkill(LuaTianmoDefense)
+extension:insertRelatedSkills("LuaTianmoDefense", "#LuaTianmo")
 yuuta:addSkill(LuaWangxiang)
 yuuta:addSkill(luablackflame)
--- tsukushi:addSkill(LuaGqset)
--- tsukushi:addSkill(LuaGqef)
--- tsukushi:addSkill(luatiaojiao)
 batora:addSkill(LuaBuqi)
 mao_maoyu:addSkill(luaboxue)
--- sheryl:addSkill(LuaYaojing)
--- sheryl:addSkill(LuaGongming)
--- sheryl:addSkill(LuaYaojingSound)
 aoitori:addSkill(LuaLuowang)
 kyouko:addSkill(LuaLuoshen)
--- diarmuid:addSkill(LuaPomo)
--- diarmuid:addSkill(LuaBimie)
--- diarmuid:addSkill(LuaBimieHprcvForbidden)
--- diarmuid:addSkill(LuaBimieLost)
 ikarishinji:addSkill(LuaBaozou)
 ikarishinji:addSkill(LuaXinbi)
 ikarishinji:addSkill(LuaBaozouDying)
 ikarishinji:addSkill(LuaBaozouSound)
+extension:insertRelatedSkills("LuaBaozou", "#LuaBaozouDying")
+extension:insertRelatedSkills("LuaBaozou", "#LuaBaozouSound")
 redarcher:addSkill(luatouying)
 redarcher:addSkill(LuaGongqi)
 redarcher:addSkill(LuaGongqiTargetMod)
 redarcher:addSkill(luatouyingClear)
+extension:insertRelatedSkills("luatouying", "#luatouyingClear")
+extension:insertRelatedSkills("LuaGongqi", "#LuaGongqi-target")
 redarcher:addSkill(LuaJianyong)
+redarcher:addSkill(LuaJianyongClear)
+extension:insertRelatedSkills("LuaJianyong", "#LuaJianyong-clear")
 redarcher:addSkill(LuaJianzhi)
 redo:addSkill(LuaRedoWake)
 redo:addSkill(LuaChamberStart)
 redo:addSkill(LuaChamberMove)
 redo:addSkill(LuaJiguangMod)
 redo:addSkill(LuaRedoNoSlash)
-
+extension:insertRelatedSkills("LuaChamberMove", "#LuaChamberStart")
+extension:insertRelatedSkills("LuaChamberMove", "#LuaRedoNoSlash")
+extension:insertRelatedSkills("LuaJiguangAsk", "#LuaJiguangMod")
 runaria:addSkill(luayukongMod)
 runaria:addSkill(luayukong)
+extension:insertRelatedSkills("luayukong", "#luayukongMod")
 runaria:addSkill(LuaWenle)
+runaria:addSkill(LuaWenleClear)
+extension:insertRelatedSkills("LuaWenle", "#LuaWenle-clear")
 runaria:addSkill(LuaQisi)
 fuwaaika:addSkill(luaposhi)
 fuwaaika:addSkill(luaposhiDistance)
 fuwaaika:addSkill(luaposhiTMS)
 fuwaaika:addSkill(luaposhiArmor)
+extension:insertRelatedSkills("luaposhi", "#luaposhiDistance")
+extension:insertRelatedSkills("luaposhi", "#luaposhiTMS")
+extension:insertRelatedSkills("luaposhi", "#luaposhiArmor")
 fuwaaika:addSkill(LuaLiansuo)
 fuwaaika:addSkill(LuaYinguo)
 slsty:addSkill(slyanhuo)
+slsty:addSkill(slyanhuoClear)
+extension:insertRelatedSkills("slyanhuo", "#slyanhuo-clear")
 slsty:addSkill(zhahu)
 rokushikimei:addSkill(LuaHeartlead)
 rokushikimei:addSkill(LuaPositionMove)
@@ -3275,9 +3212,13 @@ hibiki:addSkill(LuaGungnir)
 kntsubasa:addSkill(LuaCangshan)
 kntsubasa:addSkill(LuaCangshanTrig)
 kntsubasa:addSkill(LuaCangshanTMS)
+extension:insertRelatedSkills("LuaCangshan", "#LuaCangshanTrig")
+extension:insertRelatedSkills("LuaCangshan", "#LuaCangshanTMS")
 kntsubasa:addSkill(luayuehuang)
 kntsubasa:addSkill(luayuehuangSlash)
 kntsubasa:addSkill(luayuehuangClear)
+extension:insertRelatedSkills("luayuehuang", "#luayuehuangSlash")
+extension:insertRelatedSkills("luayuehuang", "#luayuehuangClear")
 kntsubasa:addSkill(LuaZessho)
 khntmiku:addSkill(LuaZessho)
 khntmiku:addSkill(LuaJingming)

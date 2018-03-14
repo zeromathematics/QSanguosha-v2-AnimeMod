@@ -488,6 +488,14 @@ public:
     }
 };
 
+class GangquClear : public DetachEffectSkill
+{
+public:
+    GangquClear() : DetachEffectSkill("gangqu", "gang")
+    {
+    }
+};
+
 TiaojiaoCard::TiaojiaoCard()
 {
 }
@@ -2421,6 +2429,8 @@ HayatePackage::HayatePackage()
 
     General *tsukushi = new General(this, "tsukushi", "real", 3, false);
     tsukushi->addSkill(new Gangqu);
+    tsukushi->addSkill(new GangquClear);
+    related_skills.insertMulti("gangqu", "#gangqu-clear");
     tsukushi->addSkill(new Tiaojiao);
 
     General *sheryl = new General(this, "sheryl", "diva", 3, false);

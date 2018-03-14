@@ -556,7 +556,14 @@ LLJ_recycle = sgs.CreateTriggerSkill{
 	end,
 }
 
-
+LLJ_recycleClear = sgs.CreateDetachEffectSkill{
+	name = "LLJ_recycle",
+	on_skill_detached = function(self, room, player)
+		for _,p in sgs.qlist(room:getAlivePlayers()) do
+			room:removeFixedDistance(player, p, 1)
+		end
+	end,
+}
 
 -------芽衣子 补充
 SE_Xinyuan = sgs.CreateTriggerSkill{
@@ -863,6 +870,8 @@ sgs.LoadTranslationTable{
 
 
 rika2:addSkill(LLJ_recycle)
+rika2:addSkill(LLJ_recycleClear)
+extension:insertRelatedSkills("LLJ_recycle", "#LLJ_recycle-clear")
 --killer:addSkill(LLJ_guilty)
 --killer:addSkill(LLJ_DN)
 -- cr:addSkill(mengxian)

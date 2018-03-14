@@ -306,6 +306,11 @@ se_huixiang = sgs.CreateTriggerSkill{
 	end
 }
 
+se_huixiangClear = sgs.CreateDetachEffectSkill{
+	name = "se_huixiang",
+	pilename = "satori_memory",
+}
+
 se_fuzhi = sgs.CreateTriggerSkill{
     name = "se_fuzhi$" ,
     events = {sgs.EventPhaseChanging} ,
@@ -391,8 +396,11 @@ Koishi:addSkill(se_wushi)
 Koishi:addSkill(se_wuyi)
 Satori:addSkill(se_kuixin)
 Satori:addSkill(se_huixiang)
+Satori:addSkill(se_huixiangClear)
+extension:insertRelatedSkills("se_huixiang", "#se_huixiang-clear")
 Satori:addSkill(se_fuzhi)
 Satori:addSkill(se_fuzhi_give)
+extension:insertRelatedSkills("se_fuzhi$", "#se_fuzhi-give$")
 
 sgs.LoadTranslationTable{
 	["touhou"] = "东方",

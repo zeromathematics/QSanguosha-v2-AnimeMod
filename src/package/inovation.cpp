@@ -3387,6 +3387,14 @@ public:
     }
 };
 
+class HongzhaClear : public DetachEffectSkill
+{
+public:
+    HongzhaClear() : DetachEffectSkill("hongzha", "Kansaiki")
+    {
+    }
+};
+
 class Kuisi : public TriggerSkill
 {
 public:
@@ -5141,7 +5149,6 @@ public:
 
         return false;
     }
-
 };
 
 class YandanMaxCards : public MaxCardsSkill
@@ -5162,6 +5169,14 @@ public:
     }
 };
 
+
+class YandanClear : public DetachEffectSkill
+{
+public:
+    YandanClear() : DetachEffectSkill("yandan", "Yandan")
+    {
+    }
+};
 
 class Xiwang : public TriggerSkill
 {
@@ -5361,6 +5376,14 @@ public:
             }
         }
         return false;
+    }
+};
+
+class XinyangClear : public DetachEffectSkill
+{
+public:
+    XinyangClear() : DetachEffectSkill("xinyang", "xinyang")
+    {
     }
 };
 
@@ -5994,6 +6017,14 @@ public:
 
 };
 
+class JiguanClear : public DetachEffectSkill
+{
+public:
+    JiguanClear() : DetachEffectSkill("jiguan", "jiguan")
+    {
+    }
+};
+
 //misaka mikoto
 class Paoji : public TriggerSkill
 {
@@ -6526,7 +6557,10 @@ InovationPackage::InovationPackage()
 
     General *Kaga = new General(this, "Kaga", "kancolle", 4, false);
     Kaga->addSkill(new Weishi);
+   
     Kaga->addSkill(new Hongzha);
+    Kaga->addSkill(new HongzhaClear);
+    related_skills.insertMulti("hongzha", "#hongzha-clear");
 
     General *Kongou = new General(this, "Kongou", "kancolle", 4, false);
     Kongou->addSkill(new Nuequ);
@@ -6573,6 +6607,8 @@ InovationPackage::InovationPackage()
     //General *Youmu = new General(this, "Youmu", "touhou", 4, false);
     General *Sanae = new General(this, "Sanae", "touhou", 3, false);
     Sanae->addSkill(new Xinyang);
+    Sanae->addSkill(new XinyangClear);
+    related_skills.insertMulti("xinyang", "#xinyang-clear");
     Sanae->addSkill(new Fengzhu);
     //General *Yukari = new General(this, "Yukari", "touhou", 4, false);
     //General *Emilia = new General(this, "Emilia", "magic", 3, false);
@@ -6588,8 +6624,10 @@ InovationPackage::InovationPackage()
     //General *Ako = new General(this, "Ako", "real", 3, false);
     General *NMakoto = new General(this, "NMakoto", "real", 4);
     NMakoto->addSkill(new Yandan);
+    NMakoto->addSkill(new YandanClear);
     NMakoto->addSkill(new YandanMaxCards);
     related_skills.insertMulti("yandan", "#yandan");
+    related_skills.insertMulti("yandan", "#yandan-clear");
     NMakoto->addSkill(new Xiwang);
     skills << new Lunpo << new LunpoInvalidity;
     related_skills.insertMulti("lunpo", "#lunpo-inv");
@@ -6614,8 +6652,10 @@ InovationPackage::InovationPackage()
     Fear->addSkill(new ZuzhouMaxCards);
     Fear->addSkill(new ZuzhouClear);
     Fear->addSkill(new Jiguan);
+    Fear->addSkill(new JiguanClear);
     related_skills.insertMulti("zuzhou", "#zuzhou");
     related_skills.insertMulti("zuzhou", "#zuzhou-clear");
+    related_skills.insertMulti("jiguan", "#jiguan-clear");
 
     General *Dalian = new General(this, "Dalian", "magic", 3, false);
     Dalian->addSkill(new Shuji);
