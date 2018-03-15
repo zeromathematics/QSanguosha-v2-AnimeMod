@@ -919,7 +919,8 @@ void MapoTofu::onEffect(const CardEffectStruct &effect) const
     damage.to = effect.to;
     damage.damage = effect.to->getHp() > 0 ? effect.to->getHp() - 1: 0;
     int toDamge = damage.damage;
-    damage.chain = false;
+    // damage.chain = false;
+    damage.chain = true;
     damage.nature = DamageStruct::Fire;
     effect.to->getRoom()->damage(damage);
     LogMessage log;

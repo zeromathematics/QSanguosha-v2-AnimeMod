@@ -33,7 +33,7 @@ QVariant LogMessage::toVariant() const
 
 DamageStruct::DamageStruct()
     : from(NULL), to(NULL), card(NULL), damage(1), nature(Normal), chain(false),
-    transfer(false), by_user(true), reason(QString()), transfer_reason(QString())
+    transfer(false), by_user(true), reason(QString()), transfer_reason(QString()), prevented(false)
 {
 }
 
