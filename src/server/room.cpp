@@ -5209,6 +5209,31 @@ Player::Place Room::getCardPlace(int card_id) const
     return place_map.value(card_id);
 }
 
+QList<int> Room::getCardIdsOnTable(const Card *virtual_card) const
+{
+    if (virtual_card == NULL)
+        return QList<int>();
+    if (!virtual_card->isVirtualCard()) {
+        QList<int> ids;
+        ids << virtual_card->getEffectiveId();
+        return getCardIdsOnTable(ids);
+    }
+    else {
+        return getCardIdsOnTable(virtual_card->getSubcards());
+    }
+    return QList<int>();
+}
+
+QList<int> Room::getCardIdsOnTable(const QList<int> &card_ids) const
+{
+    QList<int> r;
+    foreach(int id, card_ids) {
+        if (getCardPlace(id) == Player::PlaceTable)
+            r << id;
+    }
+    return r;
+}
+
 ServerPlayer *Room::getLord() const
 {
     ServerPlayer *the_lord = m_players.first();

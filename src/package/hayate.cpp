@@ -1349,12 +1349,15 @@ public:
     {
         if (triggerEvent == Damaged){
             DamageStruct damage = data.value<DamageStruct>();
-            if (damage.from && damage.from != player && !player->hasFlag("guiyin2_sound_used")){
-                room->broadcastSkillInvoke(objectName(), 2);
-                player->setFlags("guiyin2_sound_used");
+            if (damage.from && damage.from != player && damage.to->hasSkill(objectName())){
+                if (!player->hasFlag("guiyin2_sound_used")){
+                    room->broadcastSkillInvoke(objectName(), 2);
+                    player->setFlags("guiyin2_sound_used");
+                }
+                damage.from->gainMark("@Oni");
+                room->setPlayerMark(damage.to, "OniLv", damage.to->getMark("OniLv") + 1);
             }
-            damage.from->gainMark("@Oni");
-            damage.to->setMark("OniLv", damage.to->getMark("OniLv") + 1);
+            
         }
 
         else if (triggerEvent == EventPhaseStart){
@@ -1363,7 +1366,7 @@ public:
                 foreach(ServerPlayer *p, room->getOtherPlayers(player)){
                     if (p->inMyAttackRange(player)){
                         p->gainMark("@Oni");
-                        player->setMark("OniLv", player->getMark("OniLv") + 1);
+                        room->setPlayerMark(player, "OniLv", player->getMark("OniLv") + 1);
                     }
                 }
             }
@@ -1374,7 +1377,7 @@ public:
                 room->doLightbox(objectName() + "$", 2000);
                 foreach(ServerPlayer *p, room->getAlivePlayers()){
                     if (p->getMark("@Oni") > 0){
-                        room->damage(DamageStruct(objectName(), player, p, p->getMark("@Oni") > 2 ? (p == player ? 1 : 2) : p->getMark("@Oni")));
+                        room->damage(DamageStruct(objectName(), player, p, p->getMark("@Oni") > 1 ? (p == player ? 1 : 2) : p->getMark("@Oni")));
                         p->loseAllMarks("@Oni");
                     }
                 }
@@ -1418,7 +1421,7 @@ public:
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.to.contains(player) && use.from && use.card && !use.card->isKindOf("SkillCard")){
                 use.from->gainMark("@Oni");
-                player->setMark("OniLv", player->getMark("OniLv") + 1);
+                room->setPlayerMark(player, "OniLv", player->getMark("OniLv") + 1);
                 if (use.from != player && !player->hasFlag("guiyin1_sound_used")){
                     room->broadcastSkillInvoke(objectName(), 1);
                     player->setFlags("guiyin1_sound_used");
@@ -1426,9 +1429,13 @@ public:
             }
         }
         else if (triggerEvent == Death){
-            foreach(ServerPlayer *p, room->getAlivePlayers()){
+            DeathStruct death = data.value<DeathStruct>();
+            if (player == death.who && death.who->hasSkill(objectName())){
+                foreach(ServerPlayer *p, room->getAlivePlayers()){
                 p->loseAllMarks("@Oni");
             }
+            }
+
         }
         return false;
     }
@@ -1472,12 +1479,12 @@ public:
     Qiubang() : TriggerSkill("qiubang")
     {
         frequency = NotFrequent;
-        events << TargetConfirmed;
+        events << TargetConfirming;
     }
 
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-         if (triggerEvent == TargetConfirmed){
+        if (triggerEvent == TargetConfirming){
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.to.count() == 1 && use.to.first()->objectName() == player->objectName() && player->isAlive() && use.from && use.from != player && use.card && use.card->isBlack() && !use.card->isKindOf("SkillCard") && room->askForSkillInvoke(player, objectName(), data)){
                 room->broadcastSkillInvoke(objectName());
@@ -1485,7 +1492,12 @@ public:
                 player->drawCards(used - 3 > 3 ? 3 : (used - 3 < 1 ? 1 : used - 3));
                 player->tag["QiubangUsed"] = QVariant(player->tag["QiubangUsed"].toInt() + 1);
                 const Card *card = use.card;
-                use.card = Sanguosha->cloneCard("duel", card->getSuit(), card->getNumber(), card->getFlags());
+                if (card->isKindOf("DelayedTrick")){
+                    room->moveCardTo(card, use.to.first(), NULL, Player::DiscardPile, CardMoveReason(CardMoveReason::S_REASON_NATURAL_ENTER, use.to.first()->objectName()), false);
+                }
+                Card *duel = Sanguosha->cloneCard("duel", card->getSuit(), card->getNumber(), card->getFlags());
+                duel->addSubcard(card);
+                use.card = duel;
                 data.setValue(use);
             }
         }

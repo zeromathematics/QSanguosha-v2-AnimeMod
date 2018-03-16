@@ -277,6 +277,17 @@ bool GameRule::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *play
             }
             card_use = data.value<CardUseStruct>();
 
+            if (card_use.card && !(card_use.card->isVirtualCard() && card_use.card->getSubcards().isEmpty())
+                && !card_use.card->targetFixed() && card_use.to.isEmpty()) {
+                QList<int> table_cardids = room->getCardIdsOnTable(card_use.card);
+                if (!table_cardids.isEmpty()) {
+                    DummyCard dummy(table_cardids);
+                    CardMoveReason reason(CardMoveReason::S_REASON_NATURAL_ENTER, QString());
+                    room->throwCard(&dummy, reason, NULL);
+                    break;
+                }
+            }
+
             try {
                 QVariantList jink_list_backup;
                 if (card_use.card->isKindOf("Slash")) {
