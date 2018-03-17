@@ -1044,6 +1044,9 @@ public:
     }
 
     void calcFreeze(Room *room, ServerPlayer *player) const{
+        if (!player || player->isDead()){
+            return;
+        }
         if (room->askForChoice(player, objectName(), "rennai_hp+rennai_handcardnum") == "rennai_hp"){
             QStringList hps;
             foreach(ServerPlayer *p, room->getAlivePlayers()){
@@ -1207,9 +1210,9 @@ public:
         }
         else if (triggerEvent == CardFinished){
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.card->hasFlag("zhanfang_card")){
+            if (use.from->isAlive() && use.card->hasFlag("zhanfang_card")){
                 foreach(ServerPlayer *p, use.to){
-                    if (p->getEquips().count() > 0 && room->askForChoice(p, objectName(), "zhanfang_discard+cancel", data) == "zhanfang_discard"){
+                    if (p->isAlive() && p->getEquips().count() > 0 && room->askForChoice(p, objectName(), "zhanfang_discard+cancel", data) == "zhanfang_discard"){
                         room->throwCard(room->askForCardChosen(p, p, "e", objectName()), p);
                         p->loseMark("@Frozen_Eu");
                     }
@@ -1218,7 +1221,7 @@ public:
         }
         else if (triggerEvent == TrickCardCanceling){
             CardEffectStruct effect = data.value<CardEffectStruct>();
-            if (effect.from && effect.from->hasSkill(objectName()) && effect.to && effect.to->getMark("@Frozen_Eu") > 0){
+            if (effect.from && effect.from->isAlive() && effect.from->hasSkill(objectName()) && effect.to && effect.to->getMark("@Frozen_Eu") > 0){
                 LogMessage log;
                 log.type = "$zhanfang_effect";
                 log.from = effect.to;
@@ -1230,7 +1233,7 @@ public:
         }
         else if (triggerEvent == SlashProceed){
             SlashEffectStruct effect = data.value<SlashEffectStruct>();
-            if (effect.from && effect.from->hasSkill(objectName()) && effect.to && effect.to->getMark("@Frozen_Eu") > 0){
+            if (effect.from && effect.from->isAlive() && effect.from->hasSkill(objectName()) && effect.to && effect.to->getMark("@Frozen_Eu") > 0){
                 LogMessage log;
                 log.type = "$zhanfang_effect";
                 log.from = effect.to;
@@ -1264,15 +1267,16 @@ public:
     {
         if (triggerEvent == Death){
             DeathStruct death = data.value<DeathStruct>();
-            if (death.who == player && player->hasSkill(objectName())){
+            if (player && death.who == player && player->hasSkill(objectName())){
                 int num = -1;
-                for (int i = 219; i < 250; i++){
+
+                for (int i = 0; i < Sanguosha->getCardCount(); i++){
                     if (Sanguosha->getCard(i)->objectName() == "GreenRose"){
                         num = i;
                     }
                 }
                 if (num == -1){
-                    num = 56;
+                    return false;
                 }
                 if (room->getTag("huajian_used").toBool() || !room->askForSkillInvoke(player, objectName(), data)){
                     return false;
