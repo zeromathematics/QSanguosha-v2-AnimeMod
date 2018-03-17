@@ -186,6 +186,7 @@ return {
 	["illustrator:eugeo"] = "SL@原稿修羅場",
 
 	["guiyin$"] = "image=image/animate/SE_Guiyin.png",
+	["guiyin_detach$"] = "image=image/animate/guiyin_detach.png",
 	["guiyin"] = "鬼隐",
 	["@Oni"] = "鬼",
 	["OniLv"] = "病毒等级",
@@ -255,7 +256,7 @@ return {
 	["$mengxian3"] = "（古泉）如您明察，我是超能力者。",
 	[":mengxian"] = "摸牌阶段开始时，你可以声明一种牌的类别，然后进行判定并你获得判定牌。你重复该过程直到判定牌为你所声明的类别。若你声明的是武器牌，你需要弃置一张手牌。",
 	["mengxian$"] = "image=image/animate/mengxian.png",
-
+	["yuanwang$"] = "image=image/animate/yuanwang.png",
 	["yuanwang"] = "愿望",
 	[":yuanwang"] = "社团技，「SOS团」\n加入条件：出牌阶段开始时，你可以询问一名其他非现世角色是否加入你的「SOS团」。若其加入，将其翻至正面。\n社团效果：你的回合开始时，令「SOS团」以外的角色翻面，「SOS团」角色随机获得一些有趣的效果。你的下一回合开始前，令所有「SOS团」的角色翻面。",
 	["$yuanwang1"] = "我对一般的人类没有兴趣，如果你们中谁是宇宙人，未来人，异世界人或者超能力者的话，就到我这里来！",
