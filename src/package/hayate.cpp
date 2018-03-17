@@ -2389,6 +2389,11 @@ public:
     }
 };
 
+
+// rena
+
+
+
 class Qifen : public TriggerSkill
 {
 public:

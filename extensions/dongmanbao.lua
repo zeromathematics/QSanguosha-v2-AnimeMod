@@ -2849,10 +2849,9 @@ KeaiStart =  sgs.CreateTriggerSkill{
 	events={sgs.GameStart,  sgs.EventAcquireSkill},
 	on_trigger=function(self,event,player,data)
 		if event == sgs.GameStart or (event == sgs.EventAcquireSkill and data:toString() == "Keai") then
-			player:loseAllMarks("@Putong_Rena")
-			player:loseAllMarks("@Heihua_Rena")
-
-			player:gainMark("@Putong_Rena")
+			if player:getMark("@Heihua_Rena") == 0 and player:getMark("@Putong_Rena") == 0 then
+				player:gainMark("@Putong_Rena")
+			end
 		end
 	end
 }
@@ -2864,16 +2863,17 @@ ChaidaoChange = sgs.CreateTriggerSkill{
 	events = {sgs.Damaged},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if player:getMark("@Putong_Rena") > 0 and player:hasSkill("Chaidao") then
+		if player:getMark("@Heihua_Rena") == 0 and player:hasSkill("Chaidao") then
 			room:broadcastSkillInvoke("Chaidao")
-			player:loseMark("@Putong_Rena")
+			player:loseAllMarks("@Heihua_Rena")
+			player:loseAllMarks("@Putong_Rena")
 			room:doLightbox("Chaidao$", 800)
+			player:gainMark("@Heihua_Rena")
 			if player:getGeneralName() == "Rena" then
 				room:changeHero(player, "Rena_black",false, false, false, false)
-			else
+			elseif player:getGeneral2Name() == "Rena" then
 				room:changeHero(player, "Rena_black",false, false, true, false)
 			end
-			player:gainMark("@Heihua_Rena")
 		end
 	end
 }
@@ -2887,13 +2887,15 @@ ZizhuChange = sgs.CreateTriggerSkill{
 		if event == sgs.EventPhaseEnd and player:getPhase()==sgs.Player_Finish then
 			if player:getMark("@Heihua_Rena") > 0 and player:hasSkill("Zizhu") then
 				room:broadcastSkillInvoke("Zizhu")
-				player:loseMark("@Heihua_Rena")
+				player:loseAllMarks("@Heihua_Rena")
+				player:loseAllMarks("@Putong_Rena")
 				if player:getGeneralName() == "Rena_black" then
 					room:changeHero(player, "Rena",false, false, false, false)
-				else
+				elseif player:getGeneral2Name() == "Rena_black" then
 					room:changeHero(player, "Rena",false, false, true, false)
+				elseif player:hasSkill("Keai") then
+					player:gainMark("@Putong_Rena")
 				end
-				player:gainMark("@Putong_Rena")
 			end
 		end
 	end
