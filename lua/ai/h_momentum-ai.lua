@@ -169,27 +169,28 @@ sgs.ai_skill_invoke.fenming = function(self, data)
 	local value = 0
 	local players = self.room:getAlivePlayers()
 	for _, p in sgs.qlist(players) do
-		if not p:isChained() or p:isKongcheng() then continue end
-		local HandcardNum = p:getHandcardNum()
-		local v = 1 / HandcardNum
-		local v1, v2 = 0, 0
-		if HandcardNum == 1 then
-			if p:hasSkill("kongcheng") then v1 = v1 - 1 end
-			if p:hasSkill("zhiji") and p:getMark("zhiji") == 0 then v1 = v1 - 1 end
-			if p:hasSkill("beifa") then
-				local canSlash
-				for _, pp in ipairs(self:getEnemies(p)) do
-					if pp:canSlash(friend, slash, true) then canSlash = true break end
+		if p:isChained() and not p:isKongcheng() then
+			local HandcardNum = p:getHandcardNum()
+			local v = 1 / HandcardNum
+			local v1, v2 = 0, 0
+			if HandcardNum == 1 then
+				if p:hasSkill("kongcheng") then v1 = v1 - 1 end
+				if p:hasSkill("zhiji") and p:getMark("zhiji") == 0 then v1 = v1 - 1 end
+				if p:hasSkill("beifa") then
+					local canSlash
+					for _, pp in ipairs(self:getEnemies(p)) do
+						if pp:canSlash(friend, slash, true) then canSlash = true break end
+					end
+					v1 = canSlash and - 1 or 1
 				end
-				v1 = canSlash and - 1 or 1
+				if p:hasSkill("hengzheng") and #self:getEnemies(p) > 2 then v1 = v1 - 1 end
 			end
-			if p:hasSkill("hengzheng") and #self:getEnemies(p) > 2 then v1 = v1 - 1 end
-		end
-		local v2 = (self:getLeastHandcardNum(p) - HandcardNum - 1) or 0
-		v = v + math.max(v1, v2)
+			local v2 = (self:getLeastHandcardNum(p) - HandcardNum - 1) or 0
+			v = v + math.max(v1, v2)
 
-		if self:isFriend(p) then value = value - v
-		else value = value + v
+			if self:isFriend(p) then value = value - v
+			else value = value + v
+			end
 		end
 	end
 

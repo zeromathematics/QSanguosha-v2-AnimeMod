@@ -1,5 +1,5 @@
--- module("extensions.dmpdiva",package.seeall)--游戏包
-extension=sgs.Package("dmpdiva")--增加拓展包
+-- module("DMPDivas.dmpdiva",package.seeall)--游戏包
+DMPDiva=sgs.Package("dmpdiva")--增加拓展包
 
 --势力
 --[[
@@ -12,9 +12,9 @@ do
 end
 ]]
 
-Honoka = sgs.General(extension, "Honoka", "diva", 3, false,false,false)
-MKotori = sgs.General(extension, "MKotori", "diva", 3, false,false,false)
-Nico = sgs.General(extension, "Nico", "diva", 3, false,false,false)
+Honoka = sgs.General(DMPDiva, "Honoka", "diva", 3, false,false,false)
+MKotori = sgs.General(DMPDiva, "MKotori", "diva", 3, false,false,false)
+Nico = sgs.General(DMPDiva, "Nico", "diva", 3, false,false,false)
 
 --逆天
 se_nitian = sgs.CreateTriggerSkill{
@@ -476,3 +476,5 @@ sgs.LoadTranslationTable{
 	["cv:Nico"] = "德井青空",
 	["illustrator:Nico"] = "ゆらん@C88三日目東ノ04a",
 }
+
+return DMPDiva

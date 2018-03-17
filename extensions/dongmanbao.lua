@@ -1,5 +1,5 @@
--- module("extensions.dongmanbao",package.seeall)--游戏包
-extension=sgs.Package("dongmanbao")--增加拓展包
+-- module("Dongmanbaos.dongmanbao",package.seeall)--游戏包
+Dongmanbao=sgs.Package("dongmanbao")--增加拓展包
 
 --势力
 --[[
@@ -85,85 +85,85 @@ end
 
 -------------------------------------------------------------------------------------------------------------
 --完成
---Mikoto = sgs.General(extension, "Mikoto", "science", 4, false,false,false)
-Louise = sgs.General(extension, "Louise", "magic", 3, false,false,false)
-Saito = sgs.General(extension, "Saito", "magic", 4, true,true,false)
-Eustia = sgs.General(extension, "Eustia", "magic", 3,false, false, false)
-Touma = sgs.General(extension, "Touma", "science", 4)
-Okarin = sgs.General(extension, "Okarin", "science", 4)
---Nanami = sgs.General(extension, "Nanami", "real", 3, false)
-Taiga = sgs.General(extension, "Taiga", "real", 3, false)
-SE_Kirito = sgs.General(extension, "SE_Kirito", "science", 3)
-SE_Asuna = sgs.General(extension, "SE_Asuna", "science", 3, false)
-SE_Eren = sgs.General(extension, "SE_Eren", "science", 4)
-Kuroko = sgs.General(extension, "Kuroko", "science", 3, false,false,false)
-HYui = sgs.General(extension, "HYui", "real", 3, false,false,false)
---HYui_sub = sgs.General(extension, "HYui_sub", "real", 3, false,true,true)
-Alice = sgs.General(extension, "Alice", "science", 3, false,false,false)
-Sakamoto = sgs.General(extension, "Sakamoto", "science", 4)
-Kanade = sgs.General(extension, "Kanade", "real", 3, false,false,false)
-Rena = sgs.General(extension, "Rena", "real", 3, false,false,false)
-Rena_black = sgs.General(extension, "Rena_black", "real", 3, false,true,true)
-Saber = sgs.General(extension, "Saber", "magic", 4, false,false,false)
-Kirei = sgs.General(extension, "Kirei", "magic", 3, true,false,false)
---Tomoya = sgs.General(extension, "Tomoya", "real", 4, true,false,false)
---Tomoya_sub = sgs.General(extension, "Tomoya_sub", "real", 4, true,true,true)
-Accelerator = sgs.General(extension, "Accelerator", "science", 1, true,true,false)
-Shino = sgs.General(extension, "Shino", "science", 3, false,false,false)
-Misaka_Imouto = sgs.General(extension, "Misaka_Imouto", "science", 2, false,false,false)
-Tukasa = sgs.General(extension, "Tukasa", "real", 3, false,false,false)
---Natsume_Rin = sgs.General(extension, "Natsume_Rin", "real", 99, false,false,false)
---Natsume_Rin_sub = sgs.General(extension, "Natsume_Rin_sub", "real", 99, false,true,true)
-Lelouch = sgs.General(extension, "Lelouch", "science", 2, true,true,false)
-Leafa = sgs.General(extension, "Leafa", "science", 3, false,false,false)
-Reimu = sgs.General(extension, "Reimu", "touhou", 3, false,false,false)
-Kuroneko = sgs.General(extension, "Kuroneko", "real", 3, false,false,false)
--- Sugisaki = sgs.General(extension, "Sugisaki", "real", 3, true,false,false)
-Kuroyukihime = sgs.General(extension, "Kuroyukihime", "science", 4, false,false,false)
---Kuroyukihime_sub = sgs.General(extension, "Kuroyukihime_sub", "science", 4, false,true,true)
-Nagase = sgs.General(extension, "Nagase", "real", 3, false,false,false)
-Kazehaya = sgs.General(extension, "Kazehaya", "real", 3, true,false,false)
---Kazehaya_sub = sgs.General(extension, "Kazehaya_sub", "real", 3, true,true,true)
-Ayase = sgs.General(extension, "Ayase", "real", 3, false,false,false)
---Akarin = sgs.General(extension, "Akarin", "real", 3, false,false,false)
-Hikigaya = sgs.General(extension, "Hikigaya", "real", 4, true,false,false)
-Chiyuri = sgs.General(extension, "Chiyuri", "science", 3, false,false,false)
-AiAstin = sgs.General(extension, "AiAstin", "magic", 3, false,false,false)
--- Hakaze = sgs.General(extension, "Hakaze", "magic", 3, false,false,false)
-Kotori = sgs.General(extension, "Kotori", "magic", 3, false,false,false)
---Kotori_sub = sgs.General(extension, "Kotori_sub", "magic", 3, true,true,true)
-Kotori_white = sgs.General(extension, "Kotori_white", "magic", 3, false,true,true)
-Aria = sgs.General(extension, "Aria", "science", 3, false,false,false)
-Reki = sgs.General(extension, "Reki", "science", 3, false,false,false)
-Ange = sgs.General(extension, "Ange", "magic", 3, false,false,false)
---Ange2 = sgs.General(extension, "Ange2", "magic", 3, true,true,true)
-Rivaille = sgs.General(extension, "Rivaille", "science", 3, true,false,false)
-Asagi = sgs.General(extension, "Asagi", "magic", 3, false,false,false)
-Riko = sgs.General(extension, "Riko", "science", 2, false,false,false)
-Kurumi = sgs.General(extension, "Kurumi", "magic", 3, false,false,false)
-Sakura = sgs.General(extension, "Sakura", "magic", 3, false,false,false)
--- Eugeo = sgs.General(extension, "Eugeo", "science", 3, true,false,false)
---Eugeo_sub = sgs.General(extension, "Eugeo_sub", "science", 3, true,true,true)
-Rika = sgs.General(extension, "Rika", "real", 3, false,false,false)
-Eucliwood = sgs.General(extension, "Eucliwood", "magic", 3, false,false,false)
-Eu_Zombie = sgs.General(extension, "Eu_Zombie", "magic", 5, true,true,true)
--- Yuri = sgs.General(extension, "Yuri", "real", 3, false,false,false)
-Setsuna = sgs.General(extension, "Setsuna", "diva", 3, false,false,false)
-Yukina = sgs.General(extension, "Yukina", "magic", 3, false,false,false)
--- K1 = sgs.General(extension, "K1", "real", 4, true,false,false)
---Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
-Batora = sgs.General(extension, "Batora", "magic", 4, true,true,false)
-Shirayuki = sgs.General(extension, "Shirayuki", "science", 4, false,false,false)
-Saki = sgs.General(extension, "Saki", "real", 4, false,false,false)
-Sayaka = sgs.General(extension, "Sayaka", "magic", 3, false,false,false)
-Majyo = sgs.General(extension, "Majyo", "magic", 4, false,true,true)
-Kinpika = sgs.General(extension, "Kinpika", "magic", 3, true,false,false)
-Kiritsugu = sgs.General(extension, "Kiritsugu", "magic", 4, true,false,false)
-Yakumo = sgs.General(extension, "Yakumo", "magic", 4, true,true,false)
-Yukino = sgs.General(extension, "Yukino", "real", 3, false,false,false)
-Yyui = sgs.General(extension, "Yyui", "real", 3, false,false,false)
-Chiyo = sgs.General(extension, "Chiyo", "real", 3, false,false,false)
-Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
+--Mikoto = sgs.General(Dongmanbao, "Mikoto", "science", 4, false,false,false)
+Louise = sgs.General(Dongmanbao, "Louise", "magic", 3, false,false,false)
+Saito = sgs.General(Dongmanbao, "Saito", "magic", 4, true,true,false)
+Eustia = sgs.General(Dongmanbao, "Eustia", "magic", 3,false, false, false)
+Touma = sgs.General(Dongmanbao, "Touma", "science", 4)
+Okarin = sgs.General(Dongmanbao, "Okarin", "science", 4)
+--Nanami = sgs.General(Dongmanbao, "Nanami", "real", 3, false)
+Taiga = sgs.General(Dongmanbao, "Taiga", "real", 3, false)
+SE_Kirito = sgs.General(Dongmanbao, "SE_Kirito", "science", 3)
+SE_Asuna = sgs.General(Dongmanbao, "SE_Asuna", "science", 3, false)
+SE_Eren = sgs.General(Dongmanbao, "SE_Eren", "science", 4)
+Kuroko = sgs.General(Dongmanbao, "Kuroko", "science", 3, false,false,false)
+HYui = sgs.General(Dongmanbao, "HYui", "real", 3, false,false,false)
+--HYui_sub = sgs.General(Dongmanbao, "HYui_sub", "real", 3, false,true,true)
+Alice = sgs.General(Dongmanbao, "Alice", "science", 3, false,false,false)
+Sakamoto = sgs.General(Dongmanbao, "Sakamoto", "science", 4)
+Kanade = sgs.General(Dongmanbao, "Kanade", "real", 3, false,false,false)
+Rena = sgs.General(Dongmanbao, "Rena", "real", 3, false,false,false)
+Rena_black = sgs.General(Dongmanbao, "Rena_black", "real", 3, false,true,true)
+Saber = sgs.General(Dongmanbao, "Saber", "magic", 4, false,false,false)
+Kirei = sgs.General(Dongmanbao, "Kirei", "magic", 3, true,false,false)
+--Tomoya = sgs.General(Dongmanbao, "Tomoya", "real", 4, true,false,false)
+--Tomoya_sub = sgs.General(Dongmanbao, "Tomoya_sub", "real", 4, true,true,true)
+Accelerator = sgs.General(Dongmanbao, "Accelerator", "science", 1, true,true,false)
+Shino = sgs.General(Dongmanbao, "Shino", "science", 3, false,false,false)
+Misaka_Imouto = sgs.General(Dongmanbao, "Misaka_Imouto", "science", 2, false,false,false)
+Tukasa = sgs.General(Dongmanbao, "Tukasa", "real", 3, false,false,false)
+--Natsume_Rin = sgs.General(Dongmanbao, "Natsume_Rin", "real", 99, false,false,false)
+--Natsume_Rin_sub = sgs.General(Dongmanbao, "Natsume_Rin_sub", "real", 99, false,true,true)
+Lelouch = sgs.General(Dongmanbao, "Lelouch", "science", 2, true,true,false)
+Leafa = sgs.General(Dongmanbao, "Leafa", "science", 3, false,false,false)
+Reimu = sgs.General(Dongmanbao, "Reimu", "touhou", 3, false,false,false)
+Kuroneko = sgs.General(Dongmanbao, "Kuroneko", "real", 3, false,false,false)
+-- Sugisaki = sgs.General(Dongmanbao, "Sugisaki", "real", 3, true,false,false)
+Kuroyukihime = sgs.General(Dongmanbao, "Kuroyukihime", "science", 4, false,false,false)
+--Kuroyukihime_sub = sgs.General(Dongmanbao, "Kuroyukihime_sub", "science", 4, false,true,true)
+Nagase = sgs.General(Dongmanbao, "Nagase", "real", 3, false,false,false)
+Kazehaya = sgs.General(Dongmanbao, "Kazehaya", "real", 3, true,false,false)
+--Kazehaya_sub = sgs.General(Dongmanbao, "Kazehaya_sub", "real", 3, true,true,true)
+Ayase = sgs.General(Dongmanbao, "Ayase", "real", 3, false,false,false)
+--Akarin = sgs.General(Dongmanbao, "Akarin", "real", 3, false,false,false)
+Hikigaya = sgs.General(Dongmanbao, "Hikigaya", "real", 4, true,false,false)
+Chiyuri = sgs.General(Dongmanbao, "Chiyuri", "science", 3, false,false,false)
+AiAstin = sgs.General(Dongmanbao, "AiAstin", "magic", 3, false,false,false)
+-- Hakaze = sgs.General(Dongmanbao, "Hakaze", "magic", 3, false,false,false)
+Kotori = sgs.General(Dongmanbao, "Kotori", "magic", 3, false,false,false)
+--Kotori_sub = sgs.General(Dongmanbao, "Kotori_sub", "magic", 3, true,true,true)
+Kotori_white = sgs.General(Dongmanbao, "Kotori_white", "magic", 3, false,true,true)
+Aria = sgs.General(Dongmanbao, "Aria", "science", 3, false,false,false)
+Reki = sgs.General(Dongmanbao, "Reki", "science", 3, false,false,false)
+Ange = sgs.General(Dongmanbao, "Ange", "magic", 3, false,false,false)
+--Ange2 = sgs.General(Dongmanbao, "Ange2", "magic", 3, true,true,true)
+Rivaille = sgs.General(Dongmanbao, "Rivaille", "science", 3, true,false,false)
+Asagi = sgs.General(Dongmanbao, "Asagi", "magic", 3, false,false,false)
+Riko = sgs.General(Dongmanbao, "Riko", "science", 2, false,false,false)
+Kurumi = sgs.General(Dongmanbao, "Kurumi", "magic", 3, false,false,false)
+Sakura = sgs.General(Dongmanbao, "Sakura", "magic", 3, false,false,false)
+-- Eugeo = sgs.General(Dongmanbao, "Eugeo", "science", 3, true,false,false)
+--Eugeo_sub = sgs.General(Dongmanbao, "Eugeo_sub", "science", 3, true,true,true)
+Rika = sgs.General(Dongmanbao, "Rika", "real", 3, false,false,false)
+Eucliwood = sgs.General(Dongmanbao, "Eucliwood", "magic", 3, false,false,false)
+Eu_Zombie = sgs.General(Dongmanbao, "Eu_Zombie", "magic", 5, true,true,true)
+-- Yuri = sgs.General(Dongmanbao, "Yuri", "real", 3, false,false,false)
+Setsuna = sgs.General(Dongmanbao, "Setsuna", "diva", 3, false,false,false)
+Yukina = sgs.General(Dongmanbao, "Yukina", "magic", 3, false,false,false)
+-- K1 = sgs.General(Dongmanbao, "K1", "real", 4, true,false,false)
+--Junko = sgs.General(Dongmanbao, "Junko", "real", 3, false,false,false)
+Batora = sgs.General(Dongmanbao, "Batora", "magic", 4, true,true,false)
+Shirayuki = sgs.General(Dongmanbao, "Shirayuki", "science", 4, false,false,false)
+Saki = sgs.General(Dongmanbao, "Saki", "real", 4, false,false,false)
+Sayaka = sgs.General(Dongmanbao, "Sayaka", "magic", 3, false,false,false)
+Majyo = sgs.General(Dongmanbao, "Majyo", "magic", 4, false,true,true)
+Kinpika = sgs.General(Dongmanbao, "Kinpika", "magic", 3, true,false,false)
+Kiritsugu = sgs.General(Dongmanbao, "Kiritsugu", "magic", 4, true,false,false)
+Yakumo = sgs.General(Dongmanbao, "Yakumo", "magic", 4, true,true,false)
+Yukino = sgs.General(Dongmanbao, "Yukino", "real", 3, false,false,false)
+Yyui = sgs.General(Dongmanbao, "Yyui", "real", 3, false,false,false)
+Chiyo = sgs.General(Dongmanbao, "Chiyo", "real", 3, false,false,false)
+Eugen = sgs.General(Dongmanbao, "Eugen", "kancolle", 3, false,true,false)
 
 
 
@@ -280,9 +280,9 @@ Eugen = sgs.General(extension, "Eugen", "kancolle", 3, false,true,false)
 
 -- Mikoto:addSkill(YingbiGet)
 -- Mikoto:addSkill(Yingbi)
--- extension:insertRelatedSkills("#YingbiGet", "Yingbi")
+-- Dongmanbao:insertRelatedSkills("#YingbiGet", "Yingbi")
 -- Mikoto:addSkill(Dianci)
--- extension:addToSkills(se_paoji)
+-- Dongmanbao:addToSkills(se_paoji)
 -- Mikoto:addWakeTypeSkillForAudio("se_paoji")
 
 
@@ -419,8 +419,8 @@ Beizeng = sgs.CreateTriggerSkill{
 Louise:addSkill(XuwuDistance)
 Louise:addSkill(Xuwu)
 Louise:addSkill(XuwuClear)
-extension:insertRelatedSkills("Xuwu", "#XuwuDistance")
-extension:insertRelatedSkills("Xuwu", "#Xuwu-clear")
+Dongmanbao:insertRelatedSkills("Xuwu", "#XuwuDistance")
+Dongmanbao:insertRelatedSkills("Xuwu", "#Xuwu-clear")
 Louise:addSkill(se_cairen)
 Louise:addSkill(Beizeng)
 
@@ -1026,8 +1026,8 @@ se_shixianClear = sgs.CreateDetachEffectSkill{
 Okarin:addSkill(se_shixian)
 Okarin:addSkill(se_shixianClear)
 Okarin:addSkill(se_shixianKeep)
-extension:insertRelatedSkills("se_shixian", "#se_shixian-clear")
-extension:insertRelatedSkills("se_shixian", "#se_shixianKeep")
+Dongmanbao:insertRelatedSkills("se_shixian", "#se_shixian-clear")
+Dongmanbao:insertRelatedSkills("se_shixian", "#se_shixianKeep")
 Okarin:addSkill(se_tiaoyue)
 
 sgs.LoadTranslationTable{
@@ -1335,7 +1335,7 @@ SixuDef = sgs.CreateTriggerSkill{
 Taiga:addSkill(Zhudao)
 Taiga:addSkill(Sixu)
 Taiga:addSkill(SixuDef)
-extension:insertRelatedSkills("Sixu", "#SixuDef")
+Dongmanbao:insertRelatedSkills("Sixu", "#SixuDef")
 
 sgs.LoadTranslationTable{
 ["Zhudao"] = "竹刀「萌虎必杀」",
@@ -1785,7 +1785,7 @@ SE_Qixin = sgs.CreateTriggerSkill{
 }
 
 SE_Eren:addSkill(se_chouyuan)
-extension:addToSkills(SE_Qixin)
+Dongmanbao:addToSkills(SE_Qixin)
 SE_Eren:addWakeTypeSkillForAudio("SE_Qixin")
 
 
@@ -2061,14 +2061,14 @@ se_jieshucard = sgs.CreateSkillCard{
 Kuroko:addSkill(se_chongjing)
 Kuroko:addSkill(se_chongjingMark)
 Kuroko:addSkill(se_chongjingStart)
-extension:insertRelatedSkills("se_chongjing", "#se_chongjingMark")
-extension:insertRelatedSkills("se_chongjing", "#se_chongjingStart")
+Dongmanbao:insertRelatedSkills("se_chongjing", "#se_chongjingMark")
+Dongmanbao:insertRelatedSkills("se_chongjing", "#se_chongjingStart")
 Kuroko:addSkill(se_shunshan)
 Kuroko:addSkill(se_jieshu)
 
-extension:addToSkills(se_chongjing_Attack)
-extension:addToSkills(se_shunshanKeep)
-extension:addToSkills(se_shunshanStopped)
+Dongmanbao:addToSkills(se_chongjing_Attack)
+Dongmanbao:addToSkills(se_shunshanKeep)
+Dongmanbao:addToSkills(se_shunshanStopped)
 Kuroko:addWakeTypeSkillForAudio("se_chongjing_Attack")
 sgs.LoadTranslationTable{
 ["se_shunshan"] = "瞬闪「空间移动能力」",
@@ -2259,12 +2259,12 @@ zhuchangCloneGet = sgs.CreateTriggerSkill{
 
 
 HYui:addSkill(dai)
-extension:addToSkills(zhuchangClone)
+Dongmanbao:addToSkills(zhuchangClone)
 HYui:addSkill(daiVS)
-extension:insertRelatedSkills("dai", "#daiVS")
+Dongmanbao:insertRelatedSkills("dai", "#daiVS")
 HYui:addSkill(zhuchang)
 HYui:addSkill(zhuchangCloneGet)
-extension:insertRelatedSkills("zhuchang", "#zhuchangCloneGet")
+Dongmanbao:insertRelatedSkills("zhuchang", "#zhuchangCloneGet")
 
 sgs.LoadTranslationTable{
 ["dai"] = "呆  「天然呆」",
@@ -3056,9 +3056,9 @@ Rena:addSkill(KeaiStart)
 Rena:addSkill(Chaidao)
 Rena:addSkill(ChaidaoChange)
 Rena:addSkill(ZizhuChange)
-extension:insertRelatedSkills("Keai", "#KeaiStart")
-extension:insertRelatedSkills("Zizhu", "#ZizhuChange")
-extension:insertRelatedSkills("Chaidao", "#ChaidaoChange")
+Dongmanbao:insertRelatedSkills("Keai", "#KeaiStart")
+Dongmanbao:insertRelatedSkills("Zizhu", "#ZizhuChange")
+Dongmanbao:insertRelatedSkills("Chaidao", "#ChaidaoChange")
 Rena_black:addSkill("Zizhu")
 Rena_black:addSkill("Keai")
 Rena_black:addSkill("#KeaiStart")
@@ -3593,19 +3593,19 @@ DaoluC = sgs.CreateTriggerSkill{
 --[[
 Tomoya:addSkill(se_zhuren)
 Tomoya:addSkill(se_zhuren_End)
-extension:insertRelatedSkills("se_zhuren", "#se_zhuren_End")
+Dongmanbao:insertRelatedSkills("se_zhuren", "#se_zhuren_End")
 Tomoya:addSkill(Daolu)
 
-extension:addToSkills(se_diangong_def)
-extension:addToSkills(se_diangong)
-extension:insertRelatedSkills("se_diangong", "#se_diangong_def")
-extension:addToSkills(Shouyang_ed)
-extension:addToSkills(Shouyang)
-extension:insertRelatedSkills("Shouyang", "#Shouyang_ed")
-extension:addToSkills(Haixing)
-extension:addToSkills(DaoluA)
-extension:addToSkills(DaoluB)
-extension:addToSkills(DaoluC)
+Dongmanbao:addToSkills(se_diangong_def)
+Dongmanbao:addToSkills(se_diangong)
+Dongmanbao:insertRelatedSkills("se_diangong", "#se_diangong_def")
+Dongmanbao:addToSkills(Shouyang_ed)
+Dongmanbao:addToSkills(Shouyang)
+Dongmanbao:insertRelatedSkills("Shouyang", "#Shouyang_ed")
+Dongmanbao:addToSkills(Haixing)
+Dongmanbao:addToSkills(DaoluA)
+Dongmanbao:addToSkills(DaoluB)
+Dongmanbao:addToSkills(DaoluC)
 
 
 Tomoya:addWakeTypeSkillForAudio("se_diangong")
@@ -3783,7 +3783,7 @@ Accelerator:addSkill(Heiyi)
 Accelerator:addSkill(Baiyi)
 Accelerator:addSkill(Wangluo)
 Accelerator:addSkill(WangluoLaugh)
-extension:insertRelatedSkills("Wangluo", "#WangluoLaugh")
+Dongmanbao:insertRelatedSkills("Wangluo", "#WangluoLaugh")
 sgs.LoadTranslationTable{
 ["Fanshe"] = "反射「矢量操作1」",
 ["Fanshe$"] = "image=image/animate/Fanshe.png",
@@ -3932,7 +3932,7 @@ se_jianyucard = sgs.CreateSkillCard{
 
 Shino:addSkill(SE_Juji)
 Shino:addSkill(SE_JujiClear)
-extension:insertRelatedSkills("SE_Juji", "#SE_Juji-clear")
+Dongmanbao:insertRelatedSkills("SE_Juji", "#SE_Juji-clear")
 Shino:addSkill(se_jianyu)
 
 sgs.LoadTranslationTable{
@@ -4058,7 +4058,7 @@ SE_Weigong_end = sgs.CreateMaxCardsSkill{
 Misaka_Imouto:addSkill(se_qidian)
 Misaka_Imouto:addSkill(SE_Weigong)
 Misaka_Imouto:addSkill(SE_Weigong_end)
-extension:insertRelatedSkills("SE_Weigong", "#SE_Weigong_end")
+Dongmanbao:insertRelatedSkills("SE_Weigong", "#SE_Weigong_end")
 
 sgs.LoadTranslationTable{
 ["se_qidian"] = "起电「电力驱动」",
@@ -4396,10 +4396,10 @@ se_liaoli=sgs.CreateTriggerSkill{
 Tukasa:addSkill(SE_Maoshi)
 Tukasa:addSkill(se_zhiyu)
 Tukasa:addSkill(se_zhiyuGetRe)
-extension:insertRelatedSkills("se_zhiyu", "#se_zhiyuGetRe")
+Dongmanbao:insertRelatedSkills("se_zhiyu", "#se_zhiyuGetRe")
 Tukasa:addSkill(se_liaolivs)
 Tukasa:addSkill(se_liaoli)
-extension:insertRelatedSkills("se_liaoli", "#se_liaoli")
+Dongmanbao:insertRelatedSkills("se_liaoli", "#se_liaoli")
 
 
 sgs.LoadTranslationTable{
@@ -4580,7 +4580,7 @@ SE_Zhihui = sgs.CreateTriggerSkill{
 
 Lelouch:addSkill(SE_Geass_start)
 Lelouch:addSkill(SE_Geass)
-extension:insertRelatedSkills("SE_Geass", "#SE_Geass_start")
+Dongmanbao:insertRelatedSkills("SE_Geass", "#SE_Geass_start")
 Lelouch:addSkill(SE_Zhihui)
 
 sgs.LoadTranslationTable{
@@ -4888,7 +4888,7 @@ SE_Nagong = sgs.CreateTriggerSkill{
 
 Reimu:addSkill(SE_Mengfeng)
 Reimu:addSkill(SE_MengfengGive)
-extension:insertRelatedSkills("SE_Mengfeng", "#SE_MengfengGive")
+Dongmanbao:insertRelatedSkills("SE_Mengfeng", "#SE_MengfengGive")
 Reimu:addSkill(SE_Nagong)
 
 sgs.LoadTranslationTable{
@@ -5236,8 +5236,8 @@ SE_Chaopin = sgs.CreateTriggerSkill{
 Kuroyukihime:addSkill(se_xunyu)
 Kuroyukihime:addSkill(SE_Heiyang)
 Kuroyukihime:addSkill(se_xunyu_damage)
-extension:insertRelatedSkills("se_xunyu", "#se_xunyu_damage")
-extension:addToSkills(SE_Chaopin)
+Dongmanbao:insertRelatedSkills("se_xunyu", "#se_xunyu_damage")
+Dongmanbao:addToSkills(SE_Chaopin)
 Kuroyukihime:addWakeTypeSkillForAudio("SE_Chaopin")
 
 sgs.LoadTranslationTable{
@@ -5558,8 +5558,8 @@ SE_Lianmu = sgs.CreateTriggerSkill{
 Kazehaya:addSkill(SE_Xiuse)
 Kazehaya:addSkill(SE_Shuanglang)
 Kazehaya:addSkill(SE_Lianmu)
-extension:addToSkills(SE_Shuanglang_target)
-extension:insertRelatedSkills("SE_Shuanglang", "#SE_Shuanglang_target")
+Dongmanbao:addToSkills(SE_Shuanglang_target)
+Dongmanbao:insertRelatedSkills("SE_Shuanglang", "#SE_Shuanglang_target")
 
 sgs.LoadTranslationTable{
 ["SE_Shuanglang$"] = "image=image/animate/SE_Shuanglang.png",
@@ -5740,7 +5740,7 @@ Ayase:addSkill(SE_Feiti)
 Ayase:addSkill(SE_Menghei)
 Ayase:addSkill(se_gaobai)
 Ayase:addSkill(se_gaobaiMark)
-extension:insertRelatedSkills("se_gaobai", "#se_gaobaiMark")
+Dongmanbao:insertRelatedSkills("se_gaobai", "#se_gaobaiMark")
 
 sgs.LoadTranslationTable{
 ["SE_Feiti"] = "飞踢「旋风飞踢」",
@@ -6115,7 +6115,7 @@ Chiyuri:addSkill(se_huanyuan_Pre)
 Chiyuri:addSkill(se_huanyuan)
 Chiyuri:addSkill(se_chengling)
 -- Chiyuri:addSkill(se_chenglingMark)
--- extension:insertRelatedSkills("se_chengling", "#se_chenglingMark")
+-- Dongmanbao:insertRelatedSkills("se_chengling", "#se_chenglingMark")
 --Chiyuri:addSkill(SE_Huwei)
 
 sgs.LoadTranslationTable{
@@ -6295,7 +6295,7 @@ AiAstin:addSkill(SE_Shouzang)
 AiAstin:addSkill(SE_Xiangren)
 AiAstin:addSkill(SE_Shenmin)
 AiAstin:addSkill(SE_ShenminKeep)
-extension:insertRelatedSkills("SE_Shenmin", "#SE_ShenminKeep")
+Dongmanbao:insertRelatedSkills("SE_Shenmin", "#SE_ShenminKeep")
 
 
 sgs.LoadTranslationTable{
@@ -6466,9 +6466,9 @@ SE_WufanMark = sgs.CreateTriggerSkill{
 
 Kotori:addSkill(SE_WufanMark)
 Kotori:addSkill(SE_Wufan)
-extension:insertRelatedSkills("SE_Wufan", "#SE_WufanMark")
-extension:addToSkills(SE_Niepan)
-extension:addToSkills(se_jiangui)
+Dongmanbao:insertRelatedSkills("SE_Wufan", "#SE_WufanMark")
+Dongmanbao:addToSkills(SE_Niepan)
+Dongmanbao:addToSkills(se_jiangui)
 Kotori:addWakeTypeSkillForAudio("SE_Niepan")
 Kotori:addWakeTypeSkillForAudio("se_jiangui")
 
@@ -6805,7 +6805,7 @@ SE_Zhiyuan = sgs.CreateTriggerSkill{
 
 Reki:addSkill(SE_Juji_Reki)
 Reki:addSkill(SE_Juji_RekiClear)
-extension:insertRelatedSkills("SE_Juji_Reki", "#SE_Juji_Reki-clear")
+Dongmanbao:insertRelatedSkills("SE_Juji_Reki", "#SE_Juji_Reki-clear")
 Reki:addSkill(SE_Zhiyuan)
 Reki:addSkill("#SE_Baskervilles_make")
 
@@ -7240,16 +7240,16 @@ Asmodeus = sgs.CreateTriggerSkill{
 
 Ange:addSkill(SE_Qizhuang)
 Ange:addSkill(SE_QizhuangCompulsory)
-extension:insertRelatedSkills("SE_Qizhuang", "#SE_QizhuangCompulsory")
+Dongmanbao:insertRelatedSkills("SE_Qizhuang", "#SE_QizhuangCompulsory")
 Ange:addSkill(SE_Fanhun)
 
-extension:addToSkills(Lucifer)
-extension:addToSkills(Leviathan)
-extension:addToSkills(Satan)
-extension:addToSkills(Belphegor)
-extension:addToSkills(Mammon)
-extension:addToSkills(Beelzebub)
-extension:addToSkills(Asmodeus)
+Dongmanbao:addToSkills(Lucifer)
+Dongmanbao:addToSkills(Leviathan)
+Dongmanbao:addToSkills(Satan)
+Dongmanbao:addToSkills(Belphegor)
+Dongmanbao:addToSkills(Mammon)
+Dongmanbao:addToSkills(Beelzebub)
+Dongmanbao:addToSkills(Asmodeus)
 
 
 
@@ -7738,7 +7738,7 @@ se_youhuocard = sgs.CreateSkillCard{
 
 Riko:addSkill(SE_Yirong)
 Riko:addSkill(SE_YirongClear)
-extension:insertRelatedSkills("SE_Yirong", "#SE_Yirong-clear")
+Dongmanbao:insertRelatedSkills("SE_Yirong", "#SE_Yirong-clear")
 Riko:addSkill(se_youhuo)
 Riko:addSkill("#SE_Baskervilles_make")
 
@@ -8226,9 +8226,9 @@ SE_Zhanfang = sgs.CreateTriggerSkill{
 
 -- Eugeo:addSkill(SE_Rennai)
 -- Eugeo:addSkill(SE_Huajian)
--- extension:addToSkills(se_qingqiangwei)
--- extension:addToSkills(SE_Zhanfang)
--- extension:addToSkills(SE_Huajian_ed)
+-- Dongmanbao:addToSkills(se_qingqiangwei)
+-- Dongmanbao:addToSkills(SE_Zhanfang)
+-- Dongmanbao:addToSkills(SE_Huajian_ed)
 
 --古手梨花
 
@@ -8448,11 +8448,11 @@ se_mipaClear = sgs.CreateDetachEffectSkill{
 Rika:addSkill(SE_Shenghua)
 Rika:addSkill(SE_Wumai)
 Rika:addSkill(SE_WumaiClear)
-extension:insertRelatedSkills("SE_Wumai", "#SE_Wumai-clear")
+Dongmanbao:insertRelatedSkills("SE_Wumai", "#SE_Wumai-clear")
 Rika:addSkill(SE_Poxiao)
-extension:addToSkills(se_mipa)
-extension:addToSkills(se_mipaClear)
-extension:insertRelatedSkills("se_mipa", "#se_mipa-clear")
+Dongmanbao:addToSkills(se_mipa)
+Dongmanbao:addToSkills(se_mipaClear)
+Dongmanbao:insertRelatedSkills("se_mipa", "#se_mipa-clear")
 Rika:addWakeTypeSkillForAudio("se_mipa")
 
 sgs.LoadTranslationTable{
@@ -9109,7 +9109,7 @@ SE_Shengmu = sgs.CreateTriggerSkill{
 
 Setsuna:addSkill(SE_Gaoling)
 Setsuna:addSkill(SE_Gaoling_tr)
-extension:insertRelatedSkills("SE_Gaoling", "#SE_Gaoling_tr")
+Dongmanbao:insertRelatedSkills("SE_Gaoling", "#SE_Gaoling_tr")
 Setsuna:addSkill(SE_Shengmu)
 
 sgs.LoadTranslationTable{
@@ -9315,9 +9315,9 @@ Yukina:addSkill(SE_JianshiTr)
 Yukina:addSkill(SE_JianshiTri)
 Yukina:addSkill(SE_JianshiTrAll)
 Yukina:addSkill(se_jianshi)
-extension:insertRelatedSkills("se_jianshi", "#SE_JianshiTrAll")
-extension:insertRelatedSkills("se_jianshi", "#SE_JianshiTri")
-extension:insertRelatedSkills("se_jianshi", "#SE_JianshiTr")
+Dongmanbao:insertRelatedSkills("se_jianshi", "#SE_JianshiTrAll")
+Dongmanbao:insertRelatedSkills("se_jianshi", "#SE_JianshiTri")
+Dongmanbao:insertRelatedSkills("se_jianshi", "#SE_JianshiTr")
 
 sgs.LoadTranslationTable{
 ["Schneewalzer$"] = "image=image/animate/Schneewalzer.png",
@@ -9464,7 +9464,7 @@ SE_GuiyinDis = sgs.CreateDistanceSkill{
 
 -- K1:addSkill(SE_Guiyin)
 -- K1:addSkill(SE_GuiyinDis)
--- extension:insertRelatedSkills("SE_Guiyin", "#SE_GuiyinDis")
+-- Dongmanbao:insertRelatedSkills("SE_Guiyin", "#SE_GuiyinDis")
 
 
 --江之岛盾子
@@ -9958,7 +9958,7 @@ SE_Guiling = sgs.CreateTriggerSkill{
 
 Saki:addSkill(SE_Lingshang)
 Saki:addSkill(SE_Lingshang_end)
-extension:insertRelatedSkills("SE_Lingshang", "#SE_Lingshang_end")
+Dongmanbao:insertRelatedSkills("SE_Lingshang", "#SE_Lingshang_end")
 Saki:addSkill(SE_Guiling)
 
 sgs.LoadTranslationTable{
@@ -10112,7 +10112,7 @@ SE_Wuwei_tmod = sgs.CreateTargetModSkill{
 
 Sayaka:addSkill(SE_Wuwei)
 Sayaka:addSkill(SE_Wuwei_tmod)
-extension:insertRelatedSkills("SE_Wuwei", "#SE_Wuwei_tmod")
+Dongmanbao:insertRelatedSkills("SE_Wuwei", "#SE_Wuwei_tmod")
 
 
 sgs.LoadTranslationTable{
@@ -10312,7 +10312,7 @@ SE_Tiansuo = sgs.CreateTriggerSkill{
 
 Kinpika:addSkill(se_gate)
 Kinpika:addSkill(se_gateClear)
-extension:insertRelatedSkills("se_gate", "#se_gate-clear")
+Dongmanbao:insertRelatedSkills("se_gate", "#se_gate-clear")
 Kinpika:addSkill(SE_Tiansuo)
 
 
@@ -10549,7 +10549,7 @@ se_jianqiao = sgs.CreateTriggerSkill{
 
 Kiritsugu:addSkill(se_origin_trigger)
 Kiritsugu:addSkill(se_origin_tmod)
-extension:insertRelatedSkills("se_origin", "#se_origin_tmod")
+Dongmanbao:insertRelatedSkills("se_origin", "#se_origin_tmod")
 Kiritsugu:addSkill(se_biling)
 Kiritsugu:addSkill(se_jianqiao)
 
@@ -10908,7 +10908,7 @@ se_yuanxin = sgs.CreateTriggerSkill{
 Yukino:addSkill(se_shifeng)
 Yukino:addSkill(se_zhiyan)
 Yukino:addSkill(se_zhiyanClear)
-extension:insertRelatedSkills("se_zhiyan", "#se_zhiyan-clear")
+Dongmanbao:insertRelatedSkills("se_zhiyan", "#se_zhiyan-clear")
 
 Yyui:addSkill(se_wenchang)
 Yyui:addSkill(se_yuanxin)
@@ -11191,10 +11191,10 @@ se_tuodui = sgs.CreateTriggerSkill{
 
 Chiyo:addSkill(se_linmo)
 Chiyo:addSkill(se_linmoClear)
-extension:insertRelatedSkills("se_linmo", "#se_linmo-clear")
+Dongmanbao:insertRelatedSkills("se_linmo", "#se_linmo-clear")
 Chiyo:addSkill(se_zhenfen)
 Chiyo:addSkill(se_zhenfenClear)
-extension:insertRelatedSkills("se_zhenfen", "#se_zhenfen-clear")
+Dongmanbao:insertRelatedSkills("se_zhenfen", "#se_zhenfen-clear")
 
 Eugen:addSkill(se_fupao)
 Eugen:addSkill(se_tuodui)
@@ -11250,3 +11250,5 @@ sgs.LoadTranslationTable{
 ["cv:Eugen"] = "小澤亞李",
 ["illustrator:Eugen"] = "Hiten◆三日目A08a",
 }
+
+return Dongmanbao

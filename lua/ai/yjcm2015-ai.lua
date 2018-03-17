@@ -241,51 +241,53 @@ sgs.ai_skill_invoke["taoxi"] = function(self, data)
             elseif ucard:isKindOf("Slash") then
                 my_slash = 1
             end
-            
+
+
             for _,c in ipairs(knowns) do
-                if isCard("Nullification", c, to) then
-                    my_trick = my_trick or ( self:getCardsNum("TrickCard") - self:getCardsNum("DelayedTrick") )
-                    if my_trick > 0 then
-                        to_can_use_count = to_can_use_count + 1
-                        continue
-                    end
-                end
-                if isCard("Jink", c, to) then
-                    my_slash = my_slash or self:getCardsNum("Slash")
-                    if my_slash > 0 then
-                        to_can_use_count = to_can_use_count + 1
-                        continue
-                    end
-                    my_aa = my_aa or self:getCardsNum("ArcheryAttack")
-                    if my_aa > 0 then
-                        to_can_use_count = to_can_use_count + 1
-                        continue
-                    end
-                end
-                if isCard("Peach", c, to) then
-                    if to_has_weak_friend then
-                        to_can_use_count = to_can_use_count + 1
-                        continue
-                    end
-                end
-                if isCard("Analeptic", c, to) then
-                    if to:getHp() <= 1 and to_is_weak then
-                        to_can_use_count = to_can_use_count + 1
-                        continue
-                    end
-                end
-                if isCard("Slash", c, to) then
-                    my_duel = my_duel or self:getCardsNum("Duel")
-                    if my_duel > 0 then
-                        to_can_use_count = to_can_use_count + 1
-                        continue
-                    end
-                    my_sa = my_sa or self:getCardsNum("SavageAssault")
-                    if my_sa > 0 then
-                        to_can_use_count = to_can_use_count + 1
-                        continue
-                    end
-                end
+              local c = false
+              if isCard("Nullification", c, to) then
+                  my_trick = my_trick or ( self:getCardsNum("TrickCard") - self:getCardsNum("DelayedTrick") )
+                  if my_trick > 0 then
+                      to_can_use_count = to_can_use_count + 1
+                      c = true
+                  end
+              end
+              if not c and isCard("Jink", c, to) then
+                  my_slash = my_slash or self:getCardsNum("Slash")
+                  if my_slash > 0 then
+                      to_can_use_count = to_can_use_count + 1
+                      c = true
+                  end
+                  my_aa = my_aa or self:getCardsNum("ArcheryAttack")
+                  if not c and my_aa > 0 then
+                      to_can_use_count = to_can_use_count + 1
+                      c = true
+                  end
+              end
+              if not c and isCard("Peach", c, to) then
+                  if to_has_weak_friend then
+                      to_can_use_count = to_can_use_count + 1
+                      c = true
+                  end
+              end
+              if not c and isCard("Analeptic", c, to) then
+                  if to:getHp() <= 1 and to_is_weak then
+                      to_can_use_count = to_can_use_count + 1
+                      c = true
+                  end
+              end
+              if not c and isCard("Slash", c, to) then
+                  my_duel = my_duel or self:getCardsNum("Duel")
+                  if my_duel > 0 then
+                      to_can_use_count = to_can_use_count + 1
+                      c = true
+                  end
+                  my_sa = my_sa or self:getCardsNum("SavageAssault")
+                  if not c and my_sa > 0 then
+                      to_can_use_count = to_can_use_count + 1
+                      c = true
+                  end
+              end
             end
 
             if can_use_count >= to_can_use_count + #unknowns then
@@ -356,13 +358,13 @@ sgs.ai_skill_use_func["HuaiyiCard"] = function(card, use, self)
             table.insert(blacks, c)
         end
     end
-    
+
     local targets = self:findPlayerToDiscard("he", false, false, nil, true)
     local n_reds, n_blacks, n_targets = #reds, #blacks, #targets
     if n_targets == 0 then
-        return 
+        return
     elseif n_reds - n_targets >= 2 and n_blacks - n_targets >= 2 and handcards:length() - n_targets >= 5 then
-        return 
+        return
     end
     --[[------------------
         Haven't finished.
@@ -416,18 +418,20 @@ sgs.ai_skill_use["@@huaiyi"] = function(self, prompt, method)
 end
 
 sgs.ai_skill_invoke.jigong = function(self)
-    if self.player:isKongcheng() then return true end
-    for _, c in sgs.qlist(self.player:getHandcards()) do
-        local x = nil
-        if isCard("ArcheryAttack", c, self.player) then
-            x = sgs.Sanguosha:cloneCard("ArcheryAttack")
-        elseif isCard("SavageAssault", c, self.player) then
-            x = sgs.Sanguosha:cloneCard("SavageAssault")
-        else continue end
-
+  if self.player:isKongcheng() then return true end
+  for _, c in sgs.qlist(self.player:getHandcards()) do
+    local c = false
+      local x = nil
+      if isCard("ArcheryAttack", c, self.player) then
+          x = sgs.Sanguosha:cloneCard("ArcheryAttack")
+      elseif isCard("SavageAssault", c, self.player) then
+          x = sgs.Sanguosha:cloneCard("SavageAssault")
+      else c = true end
+      if not c then
         local du = { isDummy = true }
         self:useTrickCard(x, du)
         if (du.card) then return true end
+      end
     end
 
     return false
@@ -444,16 +448,19 @@ sgs.ai_skill_invoke.shifei = function(self)
 
     local most = {}
     for k, t in pairs(l) do
-        if #most == 0 then
-            table.insert(most, k)
-            continue
-        end
+      local c = false
+      if #most == 0 then
+          table.insert(most, k)
+          c = true
+      end
 
+      if not c then
         if (t > l[most[1]]) then
             most = {}
         end
 
         table.insert(most, k)
+      end
     end
 
     if (table.contains(most, self.room:getCurrent():objectName())) then

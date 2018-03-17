@@ -1,9 +1,9 @@
 
--- module("extensions.lolihime",package.seeall)
-extension = sgs.Package("lolihime")
+-- module("Lolihimes.lolihime",package.seeall)
+Lolihime = sgs.Package("lolihime")
 
-jdd = sgs.General(extension, "jdd", "real", 3, false)
-acc = sgs.General(extension, "acc", "science", 3)
+jdd = sgs.General(Lolihime, "jdd", "real", 3, false)
+acc = sgs.General(Lolihime, "acc", "science", 3)
 --------------------------------------------------------------------------------------
 tuhao = sgs.CreateTriggerSkill{
 	name = "tuhao",
@@ -123,7 +123,7 @@ shoujicard = sgs.CreateSkillCard{
 
 --------------------------------------------------------
 
-kuro = sgs.General(extension, "kuro", "magic", 4, false, false, false)
+kuro = sgs.General(Lolihime, "kuro", "magic", 4, false, false, false)
 
 
 spreadillness = sgs.CreateTriggerSkill{
@@ -229,7 +229,7 @@ spring = sgs.CreateTriggerSkill{
 	end
 }
 ---------------------------
---qb = sgs.General(extension, "qb", "Erciyuan", 3, false, false, false)
+--qb = sgs.General(Lolihime, "qb", "Erciyuan", 3, false, false, false)
 
 youpian= sgs.CreateViewAsSkill{
 	name="youpian",
@@ -279,7 +279,7 @@ youpianCARD=sgs.CreateSkillCard{
 
 ----------------------------------
 
-mianma = sgs.General(extension, "mianma", "real", 10, false, false, false)
+mianma = sgs.General(Lolihime, "mianma", "real", 10, false, false, false)
 
 
 lingti = sgs.CreateTriggerSkill
@@ -321,7 +321,7 @@ xiaoshi = sgs.CreateTriggerSkill
 	priority = 7
 }
 ------------------------------------
--- cr = sgs.General(extension, "cr", "real", 4, false, false, false)
+-- cr = sgs.General(Lolihime, "cr", "real", 4, false, false, false)
 
 mengxian= sgs.CreateTriggerSkill
 {
@@ -488,11 +488,11 @@ LLJ_DN = sgs.CreateTriggerSkill{-----罪
 	end
 }
 
---killer = sgs.General(extension, "killer", "Erciyuan", 3, true, false, false)
+--killer = sgs.General(Lolihime, "killer", "Erciyuan", 3, true, false, false)
 
 ---------------------------------------------
 
-rika2 = sgs.General(extension, "rika2", "magic", 3, false, false, false)
+rika2 = sgs.General(Lolihime, "rika2", "magic", 3, false, false, false)
 
 
 LLJ_recycle = sgs.CreateTriggerSkill{
@@ -617,7 +617,7 @@ local function tabcontain(a,b)
 end
 
 
-ku = sgs.General(extension, "ku", "real", 4, false)
+ku = sgs.General(Lolihime, "ku", "real", 4, false)
 
 dandiao = sgs.CreateTriggerSkill{
     name = "dandiao",
@@ -781,7 +781,7 @@ sgs.LoadTranslationTable{
 ["illustrator:ku"] = "",
 }
 
-pyuki = sgs.General(extension, "pyuki", "real", 4, false)
+pyuki = sgs.General(Lolihime, "pyuki", "real", 4, false)
 eastfast = sgs.CreateTriggerSkill{
         name = "eastfast",
         frequency = sgs.Skill_Frequent,
@@ -871,7 +871,7 @@ sgs.LoadTranslationTable{
 
 rika2:addSkill(LLJ_recycle)
 rika2:addSkill(LLJ_recycleClear)
-extension:insertRelatedSkills("LLJ_recycle", "#LLJ_recycle-clear")
+Lolihime:insertRelatedSkills("LLJ_recycle", "#LLJ_recycle-clear")
 --killer:addSkill(LLJ_guilty)
 --killer:addSkill(LLJ_DN)
 -- cr:addSkill(mengxian)
@@ -1012,7 +1012,7 @@ sgs.LoadTranslationTable{
 
 --江之岛盾子
 
-Junko = sgs.General(extension, "Junko", "real", 3, false,false,false)
+Junko = sgs.General(Lolihime, "Junko", "real", 3, false,false,false)
 
 SE_Heimu = sgs.CreateTriggerSkill{
 	name = "SE_Heimu",
@@ -1126,7 +1126,7 @@ ruler = sgs.CreateTriggerSkill{
 		return target ~= nil
 	end
 }
-extension:addToSkills(ruler)
+Lolihime:addToSkills(ruler)
 Junko:addWakeTypeSkillForAudio("ruler")
 sgs.LoadTranslationTable{
 ["SE_Heimu$"] = "image=image/animate/SE_Heimu.png",
@@ -1154,3 +1154,5 @@ sgs.LoadTranslationTable{
 ["cv:Junko"] = "豊口めぐみ",
 ["illustrator:Junko"] = "",
 }
+
+return Lolihime

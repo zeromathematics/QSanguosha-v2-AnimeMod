@@ -57,36 +57,40 @@ local function GuanXing(self, cards)
 
 	if not self.player:containsTrick("YanxiaoCard") then
 		local lightning_index
+
 		for judge_count, need_judge in ipairs(judge) do
+			local c = false
 			judged_list[judge_count] = 0
 			if need_judge:isKindOf("Lightning") then
 				lightning_index = judge_count
 				has_lightning = need_judge
-				continue
+				c = true
 			elseif need_judge:isKindOf("Indulgence") then
 				willSkipPlayPhase = true
-				if self.player:isSkipped(sgs.Player_Play) then continue end
+				if self.player:isSkipped(sgs.Player_Play) then c = true end
 			elseif need_judge:isKindOf("SupplyShortage") then
 				willSkipDrawPhase = true
-				if self.player:isSkipped(sgs.Player_Draw) then continue end
+				if self.player:isSkipped(sgs.Player_Draw) then c = true end
 			end
-			local judge_str = sgs.ai_judgestring[need_judge:objectName()]
-			if not judge_str then
-				self.room:writeToConsole(debug.traceback())
-				judge_str = sgs.ai_judgestring[need_judge:getSuitString()]
-			end
-			for index, for_judge in ipairs(bottom) do
-				local suit = for_judge:getSuitString()
-				if self.player:hasSkill("hongyan") and suit == "spade" then suit = "heart" end
-				if judge_str == suit then
-					table.insert(up, for_judge)
-					table.remove(bottom, index)
-					judged_list[judge_count] = 1
-					self_has_judged = true
-					if need_judge:isKindOf("SupplyShortage") then willSkipDrawPhase = false
-					elseif need_judge:isKindOf("Indulgence") then willSkipPlayPhase = false
+			if not c then
+				local judge_str = sgs.ai_judgestring[need_judge:objectName()]
+				if not judge_str then
+					self.room:writeToConsole(debug.traceback())
+					judge_str = sgs.ai_judgestring[need_judge:getSuitString()]
+				end
+				for index, for_judge in ipairs(bottom) do
+					local suit = for_judge:getSuitString()
+					if self.player:hasSkill("hongyan") and suit == "spade" then suit = "heart" end
+					if judge_str == suit then
+						table.insert(up, for_judge)
+						table.remove(bottom, index)
+						judged_list[judge_count] = 1
+						self_has_judged = true
+						if need_judge:isKindOf("SupplyShortage") then willSkipDrawPhase = false
+						elseif need_judge:isKindOf("Indulgence") then willSkipPlayPhase = false
+						end
+						break
 					end
-					break
 				end
 			end
 		end
@@ -146,63 +150,66 @@ local function GuanXing(self, cards)
 	local conflict, AI_doNotInvoke_luoshen
 	for _, skill in sgs.qlist(self.player:getVisibleSkillList()) do
 		local sname = skill:objectName()
-		if sname == "guanxing" or sname == "super_guanxing" then conflict = true continue end
-		if conflict then
-			if sname == "tuqi" then
-				if self.player:getPile("retinue"):length() > 0 and self.player:getPile("retinue"):length() <= 2 then
-					if #bottom > 0 then
-						table.insert(up, 1, table.remove(bottom))
-					else
-						table.insert(up, 1, table.remove(up))
-					end
-				end
-			elseif sname == "luoshen" then
-				if #bottom == 0 then
-					self.player:setFlags("AI_doNotInvoke_luoshen")
-				else
-					local count = 0
-					if not self_has_judged then up = {} end
-					for i = 1, #bottom do
-						if bottom[i - count]:isBlack() then
-							table.insert(up, 1, table.remove(bottom, i - count))
-							count = count + 1
+		if sname ~= "guanxing" and sname ~= "super_guanxing" then
+			if conflict then
+				if sname == "tuqi" then
+					if self.player:getPile("retinue"):length() > 0 and self.player:getPile("retinue"):length() <= 2 then
+						if #bottom > 0 then
+							table.insert(up, 1, table.remove(bottom))
+						else
+							table.insert(up, 1, table.remove(up))
 						end
 					end
-					if count == 0 then
-						AI_doNotInvoke_luoshen = true
+				elseif sname == "luoshen" then
+					if #bottom == 0 then
+						self.player:setFlags("AI_doNotInvoke_luoshen")
 					else
-						self.player:setFlags("AI_Luoshen_Conflict_With_Guanxing")
-						self.player:setMark("AI_loushen_times", count)
+						local count = 0
+						if not self_has_judged then up = {} end
+						for i = 1, #bottom do
+							if bottom[i - count]:isBlack() then
+								table.insert(up, 1, table.remove(bottom, i - count))
+								count = count + 1
+							end
+						end
+						if count == 0 then
+							AI_doNotInvoke_luoshen = true
+						else
+							self.player:setFlags("AI_Luoshen_Conflict_With_Guanxing")
+							self.player:setMark("AI_loushen_times", count)
+						end
 					end
-				end
-			else
-				local x = 0
-				local reverse
-				if sname == "zuixiang" and self.player:getMark("@sleep") > 0 then
-					x = 3
-				elseif sname == "guixiu" and sgs.ai_skill_invoke.guixiu(self) then
-					x = 2
-				elseif sname == "qianxi" and sgs.ai_skill_invoke.qianxi(self) then
-					x = 1
-					reverse = true
-				elseif sname == "yinghun" then
-					sgs.ai_skill_playerchosen.yinghun(self)
-					if self.yinghunchoice == "dxt1" then x = self.player:getLostHp()
-					elseif self.yinghunchoice == "d1tx" then x = 1
+				else
+					local x = 0
+					local reverse
+					if sname == "zuixiang" and self.player:getMark("@sleep") > 0 then
+						x = 3
+					elseif sname == "guixiu" and sgs.ai_skill_invoke.guixiu(self) then
+						x = 2
+					elseif sname == "qianxi" and sgs.ai_skill_invoke.qianxi(self) then
+						x = 1
+						reverse = true
+					elseif sname == "yinghun" then
+						sgs.ai_skill_playerchosen.yinghun(self)
+						if self.yinghunchoice == "dxt1" then x = self.player:getLostHp()
+						elseif self.yinghunchoice == "d1tx" then x = 1
+						end
+						reverse = true
 					end
-					reverse = true
-				end
-				if x > 0 then
-					if #bottom < x then
-						self.player:setFlags("AI_doNotInvoke_" .. sname)
-					else
-						for i = 1, x do
-							local index = reverse and 1 or #bottom
-							table.insert(up, 1, table.remove(bottom, index))
+					if x > 0 then
+						if #bottom < x then
+							self.player:setFlags("AI_doNotInvoke_" .. sname)
+						else
+							for i = 1, x do
+								local index = reverse and 1 or #bottom
+								table.insert(up, 1, table.remove(bottom, index))
+							end
 						end
 					end
 				end
 			end
+		else
+			conflict = true
 		end
 	end
 

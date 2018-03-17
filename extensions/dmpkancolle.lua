@@ -1,7 +1,7 @@
 DMPKancolle=sgs.Package("dmpkancolle")--增加拓展包
 
 Akagi = sgs.General(DMPKancolle, "Akagi", "kancolle", 4, false,false,false)
-Kitagami = sgs.General(DMPKancolle, "Kitagami", "kancolle", 3, false,false,false)
+Kitagami = sgs.General(DMPKancolle, " vKitagami", "kancolle", 3, false,false,false)
 Yuudachi = sgs.General(DMPKancolle, "Yuudachi", "kancolle", 4, false,false,false)
 poi_kai2 = sgs.General(DMPKancolle, "poi_kai2", "kancolle", 3, false,true,true)
 Shimakaze = sgs.General(DMPKancolle, "Shimakaze", "kancolle", 3, false,false,false)

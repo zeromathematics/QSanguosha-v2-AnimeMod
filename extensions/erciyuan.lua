@@ -1,31 +1,31 @@
--- module("extensions.erciyuan", package.seeall)
-extension = sgs.Package("erciyuan")
+-- module("Erciyuans.erciyuan", package.seeall)
+Erciyuan = sgs.Package("erciyuan")
 ------------------------------------------------------------------------武将登陆区
-itomakoto=sgs.General(extension, "itomakoto", "real", 3, true,false) --伊藤誠
-ayanami=sgs.General(extension,"ayanami","science",3,false,false) --綾波レイ
-keima=sgs.General(extension,"keima","real",3,true,false) --桂馬
-SPkirito=sgs.General(extension,"SPkirito","science",4,true,false) --キリト
-odanobuna=sgs.General(extension,"odanobuna","magic",3,false,false) --織田信奈
-yuuta=sgs.General(extension,"yuuta","real",4,true,false) --勇太
--- tsukushi=sgs.General(extension,"tsukushi","real",3,false,false) --筑紫
-batora=sgs.General(extension,"batora","magic",3,true,true) --バトラ
-mao_maoyu=sgs.General(extension,"mao_maoyu","magic",4,false,false) --まお
--- sheryl=sgs.General(extension,"sheryl","diva",3,false,false) --シェリル
-aoitori=sgs.General(extension,"aoitori","magic",4,true,false) --葵‘トリ
-kyouko=sgs.General(extension,"kyouko","magic",4,false,false) --きょうこ
--- diarmuid=sgs.General(extension,"diarmuid","magic",4,true,false) --迪卢木多
-ikarishinji=sgs.General(extension,"ikarishinji","science",3,true,false) --碇シンジ
-runaria=sgs.General(extension,"runaria","magic",3,false,false) --ルナリア
-redarcher=sgs.General(extension,"redarcher","magic",4,true,false) --红Archer
-redo=sgs.General(extension,"redo","science",3,true,false) --レド
-fuwaaika=sgs.General(extension,"fuwaaika","magic",3,false,false) --不破愛花
-slsty=sgs.General(extension,"slsty","real",3,false,false) --塞蕾丝缇雅
-rokushikimei=sgs.General(extension,"rokushikimei","real",3,true,true) --六識命
-bernkastel=sgs.General(extension,"bernkastel","magic",3,false,true) --贝伦卡斯泰露
-hibiki=sgs.General(extension,"hibiki","magic",3,false,false) --立花響
-kntsubasa=sgs.General(extension,"kntsubasa","magic",4,false,false) --風鳴翼
-khntmiku=sgs.General(extension,"khntmiku","magic",3,false,false) --小日向未来
-yukinechris=sgs.General(extension,"yukinechris","magic",3,false,false) --雪音クリス
+itomakoto=sgs.General(Erciyuan, "itomakoto", "real", 3, true,false) --伊藤誠
+ayanami=sgs.General(Erciyuan,"ayanami","science",3,false,false) --綾波レイ
+keima=sgs.General(Erciyuan,"keima","real",3,true,false) --桂馬
+SPkirito=sgs.General(Erciyuan,"SPkirito","science",4,true,false) --キリト
+odanobuna=sgs.General(Erciyuan,"odanobuna","magic",3,false,false) --織田信奈
+yuuta=sgs.General(Erciyuan,"yuuta","real",4,true,false) --勇太
+-- tsukushi=sgs.General(Erciyuan,"tsukushi","real",3,false,false) --筑紫
+batora=sgs.General(Erciyuan,"batora","magic",3,true,true) --バトラ
+mao_maoyu=sgs.General(Erciyuan,"mao_maoyu","magic",4,false,false) --まお
+-- sheryl=sgs.General(Erciyuan,"sheryl","diva",3,false,false) --シェリル
+aoitori=sgs.General(Erciyuan,"aoitori","magic",4,true,false) --葵‘トリ
+kyouko=sgs.General(Erciyuan,"kyouko","magic",4,false,false) --きょうこ
+-- diarmuid=sgs.General(Erciyuan,"diarmuid","magic",4,true,false) --迪卢木多
+ikarishinji=sgs.General(Erciyuan,"ikarishinji","science",3,true,false) --碇シンジ
+runaria=sgs.General(Erciyuan,"runaria","magic",3,false,false) --ルナリア
+redarcher=sgs.General(Erciyuan,"redarcher","magic",4,true,false) --红Archer
+redo=sgs.General(Erciyuan,"redo","science",3,true,false) --レド
+fuwaaika=sgs.General(Erciyuan,"fuwaaika","magic",3,false,false) --不破愛花
+slsty=sgs.General(Erciyuan,"slsty","real",3,false,false) --塞蕾丝缇雅
+rokushikimei=sgs.General(Erciyuan,"rokushikimei","real",3,true,true) --六識命
+bernkastel=sgs.General(Erciyuan,"bernkastel","magic",3,false,true) --贝伦卡斯泰露
+hibiki=sgs.General(Erciyuan,"hibiki","magic",3,false,false) --立花響
+kntsubasa=sgs.General(Erciyuan,"kntsubasa","magic",4,false,false) --風鳴翼
+khntmiku=sgs.General(Erciyuan,"khntmiku","magic",3,false,false) --小日向未来
+yukinechris=sgs.General(Erciyuan,"yukinechris","magic",3,false,false) --雪音クリス
 ------------------------------------------------------------------------特殊代码区
 getmoesenlist = function(room, player, taipu) --OmnisReen --作用：萌战技通用、得出参战角色list
 	local ResPlayers = sgs.SPlayerList()
@@ -3105,40 +3105,40 @@ LuaDikai=sgs.CreateTriggerSkill{
 	end,
 }
 ------------------------------------------------------------------------翻译添加区
-extension:addToSkills(GuanchuanSkill)
-extension:addToSkills(ZhuishaSkill)
-extension:addToSkills(CixiongSkill)
-extension:addToSkills(HuoshanSkill)
-extension:addToSkills(BaojiSkill)
-extension:addToSkills(HanbingSkill)
-extension:addToSkills(ShemaSkill)
-extension:addToSkills(ZhangbaSkill)
-extension:addToSkills(HuajiSkill)
-extension:addToSkills(GreenRoseSkill)
-extension:addToSkills(ElucidatorSkill)
-extension:addToSkills(LuaChitian)
-extension:addToSkills(luajianyu)
+Erciyuan:addToSkills(GuanchuanSkill)
+Erciyuan:addToSkills(ZhuishaSkill)
+Erciyuan:addToSkills(CixiongSkill)
+Erciyuan:addToSkills(HuoshanSkill)
+Erciyuan:addToSkills(BaojiSkill)
+Erciyuan:addToSkills(HanbingSkill)
+Erciyuan:addToSkills(ShemaSkill)
+Erciyuan:addToSkills(ZhangbaSkill)
+Erciyuan:addToSkills(HuajiSkill)
+Erciyuan:addToSkills(GreenRoseSkill)
+Erciyuan:addToSkills(ElucidatorSkill)
+Erciyuan:addToSkills(LuaChitian)
+Erciyuan:addToSkills(luajianyu)
 redarcher:addWakeTypeSkillForAudio("LuaChitian")
 redarcher:addWakeTypeSkillForAudio("luajianyu")
-extension:addToSkills(LuaJiguangAsk)
--- extension:addToSkills(LuaGaokang)
-extension:addToSkills(LuaGaoxiao)
+Erciyuan:addToSkills(LuaJiguangAsk)
+-- Erciyuan:addToSkills(LuaGaokang)
+Erciyuan:addToSkills(LuaGaoxiao)
 redo:addWakeTypeSkillForAudio("LuaJiguangAsk")
 redo:addWakeTypeSkillForAudio("gaokang")
 redo:addWakeTypeSkillForAudio("LuaGaoxiao")
-extension:addToSkills(LuaYinbao)
-extension:addToSkills(LuaKuanggu)
-extension:addToSkills(LuaWushuang)
-extension:addToSkills(LuaPaoxiao)
-extension:addToSkills(LuaKuangshi)
-extension:addToSkills(LuaXiuluo)
+Erciyuan:addToSkills(LuaYinbao)
+Erciyuan:addToSkills(LuaKuanggu)
+Erciyuan:addToSkills(LuaWushuang)
+Erciyuan:addToSkills(LuaPaoxiao)
+Erciyuan:addToSkills(LuaKuangshi)
+Erciyuan:addToSkills(LuaXiuluo)
 
 itomakoto:addSkill(luarenzha)
 itomakoto:addSkill(renzha)
 itomakoto:addSkill(renzhaClear)
 itomakoto:addSkill(haochuantimes)
-extension:insertRelatedSkills("luarenzha", "#haochuantimes")
-extension:insertRelatedSkills("renzha", "#renzha-clear")
+Erciyuan:insertRelatedSkills("luarenzha", "#haochuantimes")
+Erciyuan:insertRelatedSkills("renzha", "#renzha-clear")
 ayanami:addSkill(weixiao)
 ayanami:addSkill(nvshen)
 keima:addSkill(LuaShenzhi)
@@ -3150,7 +3150,7 @@ odanobuna:addSkill(LuaChigui)
 odanobuna:addSkill(LuaBuwu)
 odanobuna:addSkill(LuaTianmo)
 odanobuna:addSkill(LuaTianmoDefense)
-extension:insertRelatedSkills("LuaTianmoDefense", "#LuaTianmo")
+Erciyuan:insertRelatedSkills("LuaTianmoDefense", "#LuaTianmo")
 yuuta:addSkill(LuaWangxiang)
 yuuta:addSkill(luablackflame)
 batora:addSkill(LuaBuqi)
@@ -3161,45 +3161,45 @@ ikarishinji:addSkill(LuaBaozou)
 ikarishinji:addSkill(LuaXinbi)
 ikarishinji:addSkill(LuaBaozouDying)
 ikarishinji:addSkill(LuaBaozouSound)
-extension:insertRelatedSkills("LuaBaozou", "#LuaBaozouDying")
-extension:insertRelatedSkills("LuaBaozou", "#LuaBaozouSound")
+Erciyuan:insertRelatedSkills("LuaBaozou", "#LuaBaozouDying")
+Erciyuan:insertRelatedSkills("LuaBaozou", "#LuaBaozouSound")
 redarcher:addSkill(luatouying)
 redarcher:addSkill(LuaGongqi)
 redarcher:addSkill(LuaGongqiTargetMod)
 redarcher:addSkill(luatouyingClear)
-extension:insertRelatedSkills("luatouying", "#luatouyingClear")
-extension:insertRelatedSkills("LuaGongqi", "#LuaGongqi-target")
+Erciyuan:insertRelatedSkills("luatouying", "#luatouyingClear")
+Erciyuan:insertRelatedSkills("LuaGongqi", "#LuaGongqi-target")
 redarcher:addSkill(LuaJianyong)
 redarcher:addSkill(LuaJianyongClear)
-extension:insertRelatedSkills("LuaJianyong", "#LuaJianyong-clear")
+Erciyuan:insertRelatedSkills("LuaJianyong", "#LuaJianyong-clear")
 redarcher:addSkill(LuaJianzhi)
 redo:addSkill(LuaRedoWake)
 redo:addSkill(LuaChamberStart)
 redo:addSkill(LuaChamberMove)
 redo:addSkill(LuaJiguangMod)
 redo:addSkill(LuaRedoNoSlash)
-extension:insertRelatedSkills("LuaChamberMove", "#LuaChamberStart")
-extension:insertRelatedSkills("LuaChamberMove", "#LuaRedoNoSlash")
-extension:insertRelatedSkills("LuaJiguangAsk", "#LuaJiguangMod")
+Erciyuan:insertRelatedSkills("LuaChamberMove", "#LuaChamberStart")
+Erciyuan:insertRelatedSkills("LuaChamberMove", "#LuaRedoNoSlash")
+Erciyuan:insertRelatedSkills("LuaJiguangAsk", "#LuaJiguangMod")
 runaria:addSkill(luayukongMod)
 runaria:addSkill(luayukong)
-extension:insertRelatedSkills("luayukong", "#luayukongMod")
+Erciyuan:insertRelatedSkills("luayukong", "#luayukongMod")
 runaria:addSkill(LuaWenle)
 runaria:addSkill(LuaWenleClear)
-extension:insertRelatedSkills("LuaWenle", "#LuaWenle-clear")
+Erciyuan:insertRelatedSkills("LuaWenle", "#LuaWenle-clear")
 runaria:addSkill(LuaQisi)
 fuwaaika:addSkill(luaposhi)
 fuwaaika:addSkill(luaposhiDistance)
 fuwaaika:addSkill(luaposhiTMS)
 fuwaaika:addSkill(luaposhiArmor)
-extension:insertRelatedSkills("luaposhi", "#luaposhiDistance")
-extension:insertRelatedSkills("luaposhi", "#luaposhiTMS")
-extension:insertRelatedSkills("luaposhi", "#luaposhiArmor")
+Erciyuan:insertRelatedSkills("luaposhi", "#luaposhiDistance")
+Erciyuan:insertRelatedSkills("luaposhi", "#luaposhiTMS")
+Erciyuan:insertRelatedSkills("luaposhi", "#luaposhiArmor")
 fuwaaika:addSkill(LuaLiansuo)
 fuwaaika:addSkill(LuaYinguo)
 slsty:addSkill(slyanhuo)
 slsty:addSkill(slyanhuoClear)
-extension:insertRelatedSkills("slyanhuo", "#slyanhuo-clear")
+Erciyuan:insertRelatedSkills("slyanhuo", "#slyanhuo-clear")
 slsty:addSkill(zhahu)
 rokushikimei:addSkill(LuaHeartlead)
 rokushikimei:addSkill(LuaPositionMove)
@@ -3212,13 +3212,13 @@ hibiki:addSkill(LuaGungnir)
 kntsubasa:addSkill(LuaCangshan)
 kntsubasa:addSkill(LuaCangshanTrig)
 kntsubasa:addSkill(LuaCangshanTMS)
-extension:insertRelatedSkills("LuaCangshan", "#LuaCangshanTrig")
-extension:insertRelatedSkills("LuaCangshan", "#LuaCangshanTMS")
+Erciyuan:insertRelatedSkills("LuaCangshan", "#LuaCangshanTrig")
+Erciyuan:insertRelatedSkills("LuaCangshan", "#LuaCangshanTMS")
 kntsubasa:addSkill(luayuehuang)
 kntsubasa:addSkill(luayuehuangSlash)
 kntsubasa:addSkill(luayuehuangClear)
-extension:insertRelatedSkills("luayuehuang", "#luayuehuangSlash")
-extension:insertRelatedSkills("luayuehuang", "#luayuehuangClear")
+Erciyuan:insertRelatedSkills("luayuehuang", "#luayuehuangSlash")
+Erciyuan:insertRelatedSkills("luayuehuang", "#luayuehuangClear")
 kntsubasa:addSkill(LuaZessho)
 khntmiku:addSkill(LuaZessho)
 khntmiku:addSkill(LuaJingming)
@@ -3686,3 +3686,4 @@ sgs.LoadTranslationTable{
 	["$LuaRedoWake"] = "anim=skill/LuaRedoWake",
 }
 ----------------------------------------------------------------------------------------------------------
+return Erciyuan

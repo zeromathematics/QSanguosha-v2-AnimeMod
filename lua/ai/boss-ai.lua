@@ -45,12 +45,13 @@ end
 sgs.ai_skill_invoke.bosslianyu = function(self, data)
 	local value, avail = 0, 0
 	for _, enemy in ipairs(self.enemies) do
-		if not self:damageIsEffective(enemy, sgs.DamageStruct_Fire, self.player) then continue end
-		avail = avail + 1
-		if self:canAttack(enemy, self.player, sgs.DamageStruct_Fire) then
-			value = value + 1
-			if enemy:hasArmorEffect("vine") or enemy:getMark("@gale") > 0 then
+		if self:damageIsEffective(enemy, sgs.DamageStruct_Fire, self.player) then
+			avail = avail + 1
+			if self:canAttack(enemy, self.player, sgs.DamageStruct_Fire) then
 				value = value + 1
+				if enemy:hasArmorEffect("vine") or enemy:getMark("@gale") > 0 then
+					value = value + 1
+				end
 			end
 		end
 	end

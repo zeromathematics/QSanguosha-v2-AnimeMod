@@ -1,6 +1,6 @@
--- module("extensions.animecard",package.seeall)--游戏包
+-- module("Animecards.animecard",package.seeall)--游戏包
 
-extension=sgs.Package("animecard", sgs.Package_CardPack)--增加拓展包
+Animecard=sgs.Package("animecard", sgs.Package_CardPack)--增加拓展包
 --要关闭的话把true改成false
 --青蔷薇之剑
 local GreenRoseUse = true
@@ -69,7 +69,7 @@ if GreenRoseUse then
 		end
 	}
 
-	GreenRose:setParent(extension)
+	GreenRose:setParent(Animecard)
 	local skills = sgs.SkillList()
 	if not sgs.Sanguosha:getSkill("GreenRose") then skills:append(GreenRose_skill) end
 	sgs.Sanguosha:addSkills(skills)
@@ -132,7 +132,7 @@ if ElucidatorUse then
 		end
 	}
 
-	Elucidator:setParent(extension)
+	Elucidator:setParent(Animecard)
 	local skills = sgs.SkillList()
 	if not sgs.Sanguosha:getSkill("Elucidator") then skills:append(Elucidator_skill) end
 	sgs.Sanguosha:addSkills(skills)
@@ -181,7 +181,7 @@ if reijyuuUse then
 	}
 
 	local rj = reijyuu:clone()
-	rj:setParent(extension)
+	rj:setParent(Animecard)
 end
 
 if SenjyutsuRinkUse then
@@ -227,11 +227,11 @@ if SenjyutsuRinkUse then
 	}
 
 	local sr = SenjyutsuRink:clone()
-	sr:setParent(extension)
+	sr:setParent(Animecard)
 	local sr2 = SenjyutsuRink:clone(1, 5)
-	sr2:setParent(extension)
+	sr2:setParent(Animecard)
 	local sr3 = SenjyutsuRink:clone(2, 11)
-	sr3:setParent(extension)
+	sr3:setParent(Animecard)
 
 	SenjyutsuRink_skill = sgs.CreateTriggerSkill{
 		name = "SenjyutsuRinkSkill",
@@ -351,10 +351,12 @@ tacos = sgs.CreateBasicCard{
 	end,
 }
 
-tacos:setParent(extension)
+tacos:setParent(Animecard)
 local new_taco2 = tacos:clone(1, 3)
-new_taco2:setParent(extension)
+new_taco2:setParent(Animecard)
 sgs.LoadTranslationTable{
 	["tacos"] = "饼",
 	[":tacos"] = "基本牌<br />出牌时机：出牌阶段<br />使用目标：自己<br />作用效果：你获得弃牌堆中的一张牌，然后将弃牌堆3/4的牌置于牌堆顶。<br />",
 }
+
+return Animecard

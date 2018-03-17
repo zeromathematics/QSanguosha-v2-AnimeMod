@@ -238,19 +238,20 @@ function sgs.printFEList(player)
 	global_room:writeToConsole("")
 	global_room:writeToConsole("gameProcess  -> " .. sgs.gameProcess())
 	for _, p in sgs.qlist(global_room:getAlivePlayers()) do
-		if player and p:objectName() ~= player:objectName() then continue end
-		global_room:writeToConsole("====  " .. p:getGeneralName() .. "  Role::" .. p:getRole() .. "  ====")
-		local sgsself = sgs.ais[p:objectName()]
-		sgsself:updatePlayers()
-		local msge = "enemies:"
-		for _, player in ipairs(sgsself.enemies) do
-			msge = msge .. player:getGeneralName() .. ", "
+		if not player or p:objectName() == player:objectName() then
+			global_room:writeToConsole("====  " .. p:getGeneralName() .. "  Role::" .. p:getRole() .. "  ====")
+			local sgsself = sgs.ais[p:objectName()]
+			sgsself:updatePlayers()
+			local msge = "enemies:"
+			for _, player in ipairs(sgsself.enemies) do
+				msge = msge .. player:getGeneralName() .. ", "
+			end
+			global_room:writeToConsole(msge)
+			local msgf = "friends:"
+			for _, player in ipairs(sgsself.friends) do
+				msgf = msgf .. player:getGeneralName() .. ", "
+			end
+			global_room:writeToConsole(msgf)
 		end
-		global_room:writeToConsole(msge)
-		local msgf = "friends:"
-		for _, player in ipairs(sgsself.friends) do
-			msgf = msgf .. player:getGeneralName() .. ", "
-		end
-		global_room:writeToConsole(msgf)
 	end
 end

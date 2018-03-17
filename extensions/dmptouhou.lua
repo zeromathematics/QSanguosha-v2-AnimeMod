@@ -1,5 +1,5 @@
--- module("extensions.dmptouhou",package.seeall)
-extension=sgs.Package("dmptouhou")
+-- module("DMPTouhous.dmptouhou",package.seeall)
+DMPTouhou=sgs.Package("dmptouhou")
 
 
 --[[
@@ -28,9 +28,9 @@ local function doLog(logtype,logfrom,logarg,logto,logarg2)
 	room:sendLog(alog)
 end
 
-Marisa = sgs.General(extension, "Marisa", "touhou", 4, false,false,false)
-Koishi = sgs.General(extension, "Koishi", "touhou", 8, false,false,false)
-Satori = sgs.General(extension, "Satori", "touhou", 4, false,false,false)
+Marisa = sgs.General(DMPTouhou, "Marisa", "touhou", 4, false,false,false)
+Koishi = sgs.General(DMPTouhou, "Koishi", "touhou", 8, false,false,false)
+Satori = sgs.General(DMPTouhou, "Satori", "touhou", 4, false,false,false)
 
 --明窃
 se_mingqie = sgs.CreateTriggerSkill{
@@ -396,10 +396,10 @@ Koishi:addSkill(se_wuyi)
 Satori:addSkill(se_kuixin)
 Satori:addSkill(se_huixiang)
 Satori:addSkill(se_huixiangClear)
-extension:insertRelatedSkills("se_huixiang", "#se_huixiang-clear")
+DMPTouhou:insertRelatedSkills("se_huixiang", "#se_huixiang-clear")
 Satori:addSkill(se_fuzhi)
 Satori:addSkill(se_fuzhi_give)
-extension:insertRelatedSkills("se_fuzhi$", "#se_fuzhi-give$")
+DMPTouhou:insertRelatedSkills("se_fuzhi$", "#se_fuzhi-give$")
 
 sgs.LoadTranslationTable{
 	["touhou"] = "东方",
@@ -474,3 +474,5 @@ sgs.LoadTranslationTable{
 	["cv:Satori"] = "",
 	["illustrator:Satori"] = "夜华提供",
 }
+
+return DMPTouhou
