@@ -1,4 +1,4 @@
-module("extensions.math",package.seeall)
+-- module("extensions.math",package.seeall)
 extension=sgs.Package("math")
 
 Seniorious=sgs.General(extension,"Seniorious","magic",4,false)

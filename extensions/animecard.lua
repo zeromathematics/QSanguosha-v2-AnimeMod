@@ -1,4 +1,5 @@
-module("extensions.animecard",package.seeall)--游戏包
+-- module("extensions.animecard",package.seeall)--游戏包
+
 extension=sgs.Package("animecard", sgs.Package_CardPack)--增加拓展包
 --要关闭的话把true改成false
 --青蔷薇之剑

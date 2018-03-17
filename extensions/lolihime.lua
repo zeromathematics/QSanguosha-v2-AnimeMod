@@ -1,5 +1,5 @@
 
-module("extensions.lolihime",package.seeall)
+-- module("extensions.lolihime",package.seeall)
 extension = sgs.Package("lolihime")
 
 jdd = sgs.General(extension, "jdd", "real", 3, false)

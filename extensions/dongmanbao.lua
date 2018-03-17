@@ -1,4 +1,4 @@
-module("extensions.dongmanbao",package.seeall)--游戏包
+-- module("extensions.dongmanbao",package.seeall)--游戏包
 extension=sgs.Package("dongmanbao")--增加拓展包
 
 --势力

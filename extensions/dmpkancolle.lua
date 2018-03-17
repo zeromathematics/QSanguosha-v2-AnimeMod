@@ -1,23 +1,11 @@
-module("extensions.dmpkancolle",package.seeall)--游戏包
-extension=sgs.Package("dmpkancolle")--增加拓展包
+DMPKancolle=sgs.Package("dmpkancolle")--增加拓展包
 
---势力
---[[
-do
-    require  "lua.config"
-	local config = config
-	local kingdoms = config.kingdoms
-            table.insert(kingdoms,"kancolle")
-	config.color_de = "#9AC0CD"
-end
-]]
-
-Akagi = sgs.General(extension, "Akagi", "kancolle", 4, false,false,false)
-Kitagami = sgs.General(extension, "Kitagami", "kancolle", 3, false,false,false)
-Yuudachi = sgs.General(extension, "Yuudachi", "kancolle", 4, false,false,false)
-poi_kai2 = sgs.General(extension, "poi_kai2", "kancolle", 3, false,true,true)
-Shimakaze = sgs.General(extension, "Shimakaze", "kancolle", 3, false,false,false)
-Fubuki = sgs.General(extension, "Fubuki", "kancolle", 3, false,false,false)
+Akagi = sgs.General(DMPKancolle, "Akagi", "kancolle", 4, false,false,false)
+Kitagami = sgs.General(DMPKancolle, "Kitagami", "kancolle", 3, false,false,false)
+Yuudachi = sgs.General(DMPKancolle, "Yuudachi", "kancolle", 4, false,false,false)
+poi_kai2 = sgs.General(DMPKancolle, "poi_kai2", "kancolle", 3, false,true,true)
+Shimakaze = sgs.General(DMPKancolle, "Shimakaze", "kancolle", 3, false,false,false)
+Fubuki = sgs.General(DMPKancolle, "Fubuki", "kancolle", 3, false,false,false)
 
 --吃撑
 se_chichengcard = sgs.CreateSkillCard{
@@ -505,7 +493,7 @@ se_shuacun = sgs.CreateTriggerSkill{
 
 Akagi:addSkill(se_chicheng)
 Akagi:addSkill(se_chichengClear)
-extension:insertRelatedSkills("se_chicheng", "#se_chicheng-clear")
+DMPKancolle:insertRelatedSkills("se_chicheng", "#se_chicheng-clear")
 Akagi:addSkill(se_zhikong)
 Kitagami:addSkill(se_leimu)
 Kitagami:addSkill(se_yezhan)
@@ -723,3 +711,5 @@ sgs.LoadTranslationTable{
 	["cv:Inazuma"] = "洲崎綾",
 	["illustrator:Inazuma"] = "",
 }
+
+return DMPKancolle

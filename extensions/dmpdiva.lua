@@ -1,4 +1,4 @@
-module("extensions.dmpdiva",package.seeall)--游戏包
+-- module("extensions.dmpdiva",package.seeall)--游戏包
 extension=sgs.Package("dmpdiva")--增加拓展包
 
 --势力

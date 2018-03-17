@@ -1,4 +1,4 @@
-module("extensions.dmptouhou",package.seeall)
+-- module("extensions.dmptouhou",package.seeall)
 extension=sgs.Package("dmptouhou")
 
 
@@ -131,7 +131,6 @@ se_mopaocard = sgs.CreateSkillCard{
 				damage.to = tos:at(j)
 				room:damage(damage)
 			end
-
 
 			damage.to = target
 			if target:getEquips():length() == 0 then

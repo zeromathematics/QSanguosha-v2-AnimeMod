@@ -1,4 +1,4 @@
-module("extensions.erciyuan", package.seeall)
+-- module("extensions.erciyuan", package.seeall)
 extension = sgs.Package("erciyuan")
 ------------------------------------------------------------------------武将登陆区
 itomakoto=sgs.General(extension, "itomakoto", "real", 3, true,false) --伊藤誠

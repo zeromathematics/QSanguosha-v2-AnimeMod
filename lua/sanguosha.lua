@@ -26,30 +26,46 @@ function load_translations()
 	end
 end
 
+global_packages = {}
+
 function load_extensions()
 	local scripts = sgs.GetFileNames("extensions")
 	local package_names = {}
 	for _, script in ipairs(scripts) do
 		if script:match(".+%.lua$") then
-			local name = script:sub(script:find("%w+"))
-			local module_name = "extensions." .. name
-			local loaded = require(module_name)
-			if loaded and type(loaded) == "table" and loaded.hidden ~= true then -- need to consider the compatibility of 'module'
-				if #loaded > 0 then
-					for _, extension in ipairs(loaded) do
-						if type(extension) == "userdata" and extension:inherits("Package") then
-							table.insert(package_names, extension:objectName())
-							sgs.Sanguosha:addPackage(extension)
-						end
-					end
-				else
-					table.insert(package_names, loaded.extension:objectName())
-					sgs.Sanguosha:addPackage(loaded.extension)
-				end
-			elseif type(loaded) == "userdata" and loaded:inherits("Package") then
-				table.insert(package_names, loaded:objectName())
-				sgs.Sanguosha:addPackage(loaded)
+			local extensions = dofile("./extensions/" .. script)
+			if type(extensions) ~= "table" then
+				extensions = {extensions}
 			end
+			for _, extension in ipairs(extensions) do
+				local name = extension:objectName()
+				table.insert(package_names, name)
+				if extension:inherits("LuaScenario") then
+					sgs.Sanguosha:addScenario(extension)
+				elseif extension:inherits("Package") then
+					sgs.Sanguosha:addPackage(extension)
+				end
+				table.insert(global_packages, extension)
+			end
+			-- local name = script:sub(script:find("%w+"))
+			-- local module_name = "extensions." .. name
+			-- local loaded = require(module_name)
+			-- if loaded and type(loaded) == "table" and loaded.hidden ~= true then -- need to consider the compatibility of 'module'
+			-- 	if #loaded > 0 then
+			-- 		for _, extension in ipairs(loaded) do
+			-- 			if type(extension) == "userdata" and extension:inherits("Package") then
+			-- 				table.insert(package_names, extension:objectName())
+			-- 				sgs.Sanguosha:addPackage(extension)
+			-- 			end
+			-- 		end
+			-- 	else
+			-- 		table.insert(package_names, loaded.extension:objectName())
+			-- 		sgs.Sanguosha:addPackage(loaded.extension)
+			-- 	end
+			-- elseif type(loaded) == "userdata" and loaded:inherits("Package") then
+			-- 	table.insert(package_names, loaded:objectName())
+			-- 	sgs.Sanguosha:addPackage(loaded)
+			-- end
 		end
 	end
 	local lua_packages = ""
