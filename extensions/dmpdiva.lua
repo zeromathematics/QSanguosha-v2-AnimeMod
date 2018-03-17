@@ -1,4 +1,3 @@
--- module("DMPDivas.dmpdiva",package.seeall)--游戏包
 DMPDiva=sgs.Package("dmpdiva")--增加拓展包
 
 --势力

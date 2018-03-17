@@ -1,4 +1,3 @@
--- module("Erciyuans.erciyuan", package.seeall)
 Erciyuan = sgs.Package("erciyuan")
 ------------------------------------------------------------------------武将登陆区
 itomakoto=sgs.General(Erciyuan, "itomakoto", "real", 3, true,false) --伊藤誠

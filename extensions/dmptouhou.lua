@@ -1,4 +1,3 @@
--- module("DMPTouhous.dmptouhou",package.seeall)
 DMPTouhou=sgs.Package("dmptouhou")
 
 

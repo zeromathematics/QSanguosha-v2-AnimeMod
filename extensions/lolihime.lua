@@ -1,5 +1,3 @@
-
--- module("Lolihimes.lolihime",package.seeall)
 Lolihime = sgs.Package("lolihime")
 
 jdd = sgs.General(Lolihime, "jdd", "real", 3, false)

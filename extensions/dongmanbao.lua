@@ -1,4 +1,3 @@
--- module("Dongmanbaos.dongmanbao",package.seeall)--游戏包
 Dongmanbao=sgs.Package("dongmanbao")--增加拓展包
 
 --势力
