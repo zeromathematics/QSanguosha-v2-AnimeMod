@@ -69,8 +69,6 @@ return {
 	["kuangbao"] = "狂暴",
 	[":kuangbao"] = "锁定技。游戏开始时，你获得两枚“暴怒”标记。每当你造成或受到1点伤害后，你获得一枚“暴怒”标记。",
 	["@wrath"] = "暴怒",
-	["wumou"] = "无谋",
-	[":wumou"] = "锁定技。每当你使用一张非延时锦囊牌时，你须选择一项：失去1点体力，或弃一枚“暴怒”标记。",
 	["wuqian"] = "无前",
 	[":wuqian"] = "出牌阶段，你可以弃两枚“暴怒”标记并选择一名其他角色：若如此做，你拥有“无双”且该角色防具无效，直到回合结束。",
 	["shenfen"] = "神愤",
@@ -78,9 +76,6 @@ return {
 	["$ShenfenAnimate"] = "image=image/animate/shenfen.png",
 	["#KuangbaoDamage"] = "%from 的“%arg2”被触发，造成 %arg 点伤害获得 %arg 枚“暴怒”标记",
 	["#KuangbaoDamaged"] = "%from 的“%arg2”被触发，受到 %arg 点伤害获得 %arg 枚“暴怒”标记",
-	["wumou:discard"] = "弃一枚“暴怒”标记",
-	["wumou:losehp"] = "失去1点体力",
-
 	["#shenzhaoyun"] = "神威如龙",
 	["shenzhaoyun"] = "神赵云",
 	["juejing"] = "绝境",

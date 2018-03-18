@@ -205,6 +205,57 @@ public:
     }
 };
 
+class Wansha : public TriggerSkill
+{
+public:
+    Wansha() : TriggerSkill("wansha")
+    {
+        // just to broadcast audio effects and to send log messages
+        // main part in the AskForPeaches trigger of Game Rule
+        events << AskForPeaches;
+        frequency = Compulsory;
+    }
+
+    bool triggerable(const ServerPlayer *target) const
+    {
+        return target != NULL;
+    }
+
+    int getPriority(TriggerEvent) const
+    {
+        return 7;
+    }
+
+    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (player == room->getAllPlayers().first()) {
+            DyingStruct dying = data.value<DyingStruct>();
+            ServerPlayer *jiaxu = room->getCurrent();
+            if (!jiaxu || !TriggerSkill::triggerable(jiaxu) || jiaxu->getPhase() == Player::NotActive)
+                return false;
+            if (jiaxu->hasInnateSkill("wansha") || !jiaxu->hasSkill("jilve"))
+                room->broadcastSkillInvoke(objectName());
+            else
+                room->broadcastSkillInvoke("jilve", 3);
+
+            room->notifySkillInvoked(jiaxu, objectName());
+
+            LogMessage log;
+            log.from = jiaxu;
+            log.arg = objectName();
+            if (jiaxu != dying.who) {
+                log.type = "#WanshaTwo";
+                log.to << dying.who;
+            }
+            else {
+                log.type = "#WanshaOne";
+            }
+            room->sendLog(log);
+        }
+        return false;
+    }
+};
+
 class Wumou : public TriggerSkill
 {
 public:
@@ -6488,7 +6539,7 @@ InovationPackage::InovationPackage()
     patterns["peach+analeptic"] = new ExpPattern("Peach,Analeptic");
 
 
-    skills << new Keji << new Yingzi << new Paoxiao << new Tiaoxin << new Fankui << new Longdan << new Guicai << new Wumou << new Benghuai << new Fengbi << new GeneralSkillInvalidity;
+    skills << new Keji << new Yingzi << new Paoxiao << new Tiaoxin << new Fankui << new Longdan << new Guicai << new Wumou << new Benghuai << new Fengbi << new GeneralSkillInvalidity << new Wansha;
     General *nagisa = new General(this, "Nagisa", "real", 3, false);
     nagisa->addSkill(new Guangyu);
     nagisa->addSkill(new GuangyuTrigger);
@@ -6706,6 +6757,11 @@ InovationPackage::InovationPackage()
     sakura2->addSkill(new ShengjianBlack);
 
     General *WalkerA = new General(this, "WalkerA", "real", 7, true, true);
+
+    new General(this, "sujiang", "real", 5, true, true);
+    new General(this, "sujiangf", "real", 5, false, true);
+
+    new General(this, "anjiang", "real", 4, true, true, true);
 
     QList<Card *> cards;
     cards << new KeyTrick(Card::Heart, 10)

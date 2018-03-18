@@ -4,6 +4,8 @@
 #include "package.h"
 #include "client.h"
 #include "clientstruct.h"
+#include "gamerule.h"
+#include "settings.h"
 
 General::General(Package *package, const QString &name, const QString &kingdom,
     int max_hp, bool male, bool hidden, bool never_shown)
@@ -29,6 +31,9 @@ int General::getMaxHp() const
 
 QString General::getKingdom() const
 {
+    if (Config.EnableHegemony){
+        return BasaraMode::getMappedAiKingdom(kingdom);
+    }
     return kingdom;
 }
 

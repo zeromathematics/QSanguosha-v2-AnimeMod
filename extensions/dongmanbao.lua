@@ -12,11 +12,6 @@ do
 	config.color_de = "#FF77FF"
 end
 ]]
-sgs.LoadTranslationTable{
-	["real"] = "现世",
-	["magic"] = "魔法",
-	["science"] = "科学",
-}
 
 --函数
 local function easyTalk(room, logtype)

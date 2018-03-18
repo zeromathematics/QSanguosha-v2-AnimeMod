@@ -512,7 +512,7 @@ Fubuki:addSkill(se_qianlei)
 Fubuki:addSkill(se_shuacun)
 
 sgs.LoadTranslationTable{
-	["kancolle"] = "舰娘",
+	
 	["dmpkancolle"] = "动漫包-舰娘",
 
 	["se_chichengcard"] = "吃撑「铝是用来吃的」",

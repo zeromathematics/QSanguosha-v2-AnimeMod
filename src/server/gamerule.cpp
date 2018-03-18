@@ -1404,8 +1404,32 @@ QString BasaraMode::getMappedRole(const QString &role)
         roles["shu"] = "loyalist";
         roles["wu"] = "rebel";
         roles["qun"] = "renegade";
+        roles["science"] = "lord";
+        roles["magic"] = "loyalist";
+        roles["real"] = "rebel";
+        roles["touhou"] = "renegade";
+        roles["kancolle"] = "renegade";
+        roles["diva"] = "renegade";
     }
     return roles[role];
+}
+
+QString BasaraMode::getMappedAiKingdom(const QString &kingdom)
+{
+    static QMap<QString, QString> kingdoms;
+    if (kingdoms.isEmpty()) {
+        kingdoms["wei"] = "wei";
+        kingdoms["shu"] = "shu";
+        kingdoms["wu"] = "wu";
+        kingdoms["qun"] = "qun";
+        kingdoms["science"] = "wei";
+        kingdoms["magic"] = "shu";
+        kingdoms["real"] = "wu";
+        kingdoms["touhou"] = "qun";
+        kingdoms["kancolle"] = "qun";
+        kingdoms["diva"] = "qun";
+    }
+    return kingdoms.contains(kingdom) ? kingdoms[kingdom] : "god";
 }
 
 int BasaraMode::getPriority(TriggerEvent) const

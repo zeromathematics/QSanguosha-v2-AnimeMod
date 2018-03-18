@@ -850,6 +850,15 @@ return {
 	["cv:WalkerA"] = "",
 	["illustrator:WalkerA"] = "",
 
+	["#sujiang"] = "路人",
+	["sujiang"] = "路人(男)",
+	["&sujiang"] = "路人",
+	["illustrator:sujiang"] = "",
+	["#sujiangf"] = "路人",
+	["sujiangf"] = "路人(女)",
+	["&sujiangf"] = "路人",
+	["illustrator:sujiangf"] = "",
+
 
 	["dianci"] = "电磁「电磁炮发动准备」",
 	["$dianci1"] = "别叫我嗶哩嗶哩，我可是好好地有着御坂美琴这个名字啊！",
@@ -930,4 +939,37 @@ return {
 	["zheyi$"] = "image=image/animate/zheyi.png",
 	["lunpo$"] = "image=image/animate/lunpo.png",
 	["zhinian$"] = "image=image/animate/zhinian.png",
+
+
+	["wansha"] = "完杀",
+	[":wansha"] = "锁定技。你的回合内，除濒死角色外的其他角色不能使用【桃】。",
+	["#WanshaOne"] = "%from 的“%arg”被触发，只能 %from 自救",
+	["#WanshaTwo"] = "%from 的“%arg”被触发，只有 %from 和 %to 才能救 %to",
+
+	["keji"] = "克己",
+	[":keji"] = "若你未于出牌阶段内使用或打出【杀】，你可以跳过弃牌阶段。",
+	["yingzi"] = "英姿",
+	[":yingzi"] = "锁定技。摸牌阶段，你额外摸一张牌。你的手牌上限等于你的体力上限。",
+	["paoxiao"] = "咆哮",
+	[":paoxiao"] = "出牌阶段，你使用【杀】无次数限制。",
+	["tiaoxin"] = "挑衅",
+	[":tiaoxin"] = "阶段技。你可以令攻击范围内包含你的一名角色对你使用一张【杀】，否则你弃置其一张牌。",
+	["@tiaoxin-slash"] = "%src 对你发动“挑衅”，请对其使用一张【杀】",
+	["fankui"] = "反馈",
+	[":fankui"] = "每当你受到1点伤害后，你可以获得伤害来源的一张牌。",
+	["longdan"] = "龙胆",
+	[":longdan"] = "你可以将一张【杀】当【闪】使用或打出，或将一张【闪】当普通【杀】使用或打出。",
+	["guicai"] = "鬼才",
+	[":guicai"] = "每当一名角色的判定牌生效前，你可以打出一张牌代替之。",
+	["@guicai-card"] = CommonTranslationTable["@askforretrial"],
+	["~guicai"] = "选择一张牌→点击确定",
+	["benghuai"] = "崩坏",
+	[":benghuai"] = "锁定技。结束阶段开始时，若你的体力值不为场上最少（或之一），你须选择一项：失去1点体力，或失去1点体力上限。",
+	["benghuai:hp"] = "体力",
+	["benghuai:maxhp"] = "体力上限",
+	["wumou"] = "无谋",
+	[":wumou"] = "锁定技。每当你使用一张非延时锦囊牌时，你须选择一项：失去1点体力，或弃一枚“暴怒”标记。",
+	["wumou:discard"] = "弃一枚“暴怒”标记",
+	["wumou:losehp"] = "失去1点体力",
+
 }

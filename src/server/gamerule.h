@@ -57,6 +57,7 @@ public:
     void playerShowed(ServerPlayer *player) const;
     void generalShowed(ServerPlayer *player, QString general_name) const;
     static QString getMappedRole(const QString &role);
+    static QString getMappedAiKingdom(const QString &kingdom);
 };
 
 #endif

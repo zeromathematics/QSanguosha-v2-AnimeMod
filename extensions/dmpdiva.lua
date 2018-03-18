@@ -383,7 +383,7 @@ Nico:addSkill(se_nike)
 Nico:addSkill(se_yanyi)
 
 sgs.LoadTranslationTable{
-	["diva"] = "歌姬",
+	
 	["dmpdiva"] = "动漫包-歌姬",
 
 	["se_nitian"] = "逆天「果皇之力」",

@@ -361,7 +361,7 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
         QTableWidgetItem *anime_item = new QTableWidgetItem(anime);
         if (!anime.startsWith("@"))
             anime_item = new QTableWidgetItem(anime);
-        if (general->getKingdom() == "wei" || general->getKingdom() == "shu" || general->getKingdom() == "wu" || general->getKingdom() == "qun" || general->getKingdom() == "god")
+        else if (general->getKingdom() == "wei" || general->getKingdom() == "shu" || general->getKingdom() == "wu" || general->getKingdom() == "qun" || general->getKingdom() == "god")
             anime_item = new QTableWidgetItem(Sanguosha->translate("@Sanguo"));
 
         anime_item->setData(Qt::UserRole, general_name);

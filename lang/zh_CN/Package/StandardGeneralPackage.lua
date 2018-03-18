@@ -18,12 +18,8 @@ return {
 	["#simayi"] = "狼顾之鬼",
 	["simayi"] = "司马懿",
 	["illustrator:simayi"] = "木美人",
-	["fankui"] = "反馈",
-	[":fankui"] = "每当你受到1点伤害后，你可以获得伤害来源的一张牌。",
-	["guicai"] = "鬼才",
-	[":guicai"] = "每当一名角色的判定牌生效前，你可以打出一张牌代替之。",
-	["@guicai-card"] = CommonTranslationTable["@askforretrial"],
-	["~guicai"] = "选择一张牌→点击确定",
+
+	
 
 	["#xiahoudun"] = "独眼的罗刹",
 	["xiahoudun"] = "夏侯惇",
@@ -99,8 +95,7 @@ return {
 	["#zhangfei"] = "万夫不当",
 	["zhangfei"] = "张飞",
 	["illustrator:zhangfei"] = "SONGQIJIN",
-	["paoxiao"] = "咆哮",
-	[":paoxiao"] = "出牌阶段，你使用【杀】无次数限制。",
+
 	["tishen"] = "替身",
 	[":tishen"] = "限定技。准备阶段开始时，若你的体力值小于上回合结束时的体力值，你可以回复至上回合结束时的体力值，然后你每以此法回复1点体力，你摸一张牌。",
 	["$TishenAnimate"] = "image=image/animate/tishen.png",
@@ -118,8 +113,7 @@ return {
 	["#zhaoyun"] = "虎威将军",
 	["zhaoyun"] = "赵云",
 	["illustrator:zhaoyun"] = "DH",
-	["longdan"] = "龙胆",
-	[":longdan"] = "你可以将一张【杀】当【闪】使用或打出，或将一张【闪】当普通【杀】使用或打出。",
+
 	["yajiao"] = "涯角",
 	[":yajiao"] = "每当你于回合外使用或打出手牌时，你可以展示牌堆顶的一张牌：若此牌与你使用或打出的手牌类别相同，你可以令一名角色获得之，否则你可以将之置入弃牌堆。",
 	["@yajiao-give"] = "你可以令一名角色获得 %arg[%arg2]",
@@ -181,8 +175,7 @@ return {
 	["#lvmeng"] = "士别三日",
 	["lvmeng"] = "吕蒙",
 	["illustrator:lvmeng"] = "樱花闪乱",
-	["keji"] = "克己",
-	[":keji"] = "若你未于出牌阶段内使用或打出【杀】，你可以跳过弃牌阶段。",
+
 	["qinxue"] = "勤学",
 	[":qinxue"] = "觉醒技。准备阶段开始时，若你的手牌数比体力值多3（七人及以上游戏为2）或更多，你失去1点体力上限，然后获得“攻心”。",
 	["$QinxueAnimate"] = "image=image/animate/qinxue.png",
@@ -190,8 +183,7 @@ return {
 
 	["#zhouyu"] = "大都督",
 	["zhouyu"] = "周瑜",
-	["yingzi"] = "英姿",
-	[":yingzi"] = "锁定技。摸牌阶段，你额外摸一张牌。你的手牌上限等于你的体力上限。",
+
 	["fanjian"] = "反间",
 	[":fanjian"] = "阶段技。你可以选择一种花色并交给一名其他角色一张该花色的手牌，然后该角色选择一项：展示所有手牌并弃置所有该花色的牌，或失去1点体力。",
 	["fanjian_discard:prompt"] = "你可以展示所有手牌并弃置所有 %arg 牌",
@@ -330,4 +322,3 @@ return {
 	["&sujiangf"] = "士兵",
 	["illustrator:sujiangf"] = "木美人",
 }
-

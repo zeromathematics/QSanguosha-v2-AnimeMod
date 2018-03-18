@@ -7,6 +7,7 @@
 #include "clientstruct.h"
 #include "exppattern.h"
 #include "wrapped-card.h"
+#include "gamerule.h"
 
 Player::Player(QObject *parent)
     : QObject(parent), owner(false), general(NULL), general2(NULL),
@@ -771,10 +772,12 @@ int Player::getMaxCards() const
 
 QString Player::getKingdom() const
 {
-    if (kingdom.isEmpty() && general)
+   
+    if (kingdom.isEmpty() && general){
         return general->getKingdom();
+    }
     else
-        return kingdom;
+        return BasaraMode::getMappedAiKingdom(kingdom);
 }
 
 void Player::setKingdom(const QString &kingdom)

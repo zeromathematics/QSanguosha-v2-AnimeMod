@@ -913,8 +913,14 @@ QStringList Engine::getExtensions() const
 QStringList Engine::getKingdoms() const
 {
     static QStringList kingdoms;
-    if (kingdoms.isEmpty())
-        kingdoms = GetConfigFromLuaState(lua, "kingdoms").toStringList();
+    if (kingdoms.isEmpty()){
+        if (Config.EnableHegemony){
+            kingdoms = GetConfigFromLuaState(lua, "hegemony_kingdoms").toStringList();
+        }
+        else{
+            kingdoms = GetConfigFromLuaState(lua, "kingdoms").toStringList();
+        }
+    }
 
     return kingdoms;
 }

@@ -632,56 +632,6 @@ public:
     }
 };
 
-class Wansha : public TriggerSkill
-{
-public:
-    Wansha() : TriggerSkill("wansha")
-    {
-        // just to broadcast audio effects and to send log messages
-        // main part in the AskForPeaches trigger of Game Rule
-        events << AskForPeaches;
-        frequency = Compulsory;
-    }
-
-    bool triggerable(const ServerPlayer *target) const
-    {
-        return target != NULL;
-    }
-
-    int getPriority(TriggerEvent) const
-    {
-        return 7;
-    }
-
-    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
-    {
-        if (player == room->getAllPlayers().first()) {
-            DyingStruct dying = data.value<DyingStruct>();
-            ServerPlayer *jiaxu = room->getCurrent();
-            if (!jiaxu || !TriggerSkill::triggerable(jiaxu) || jiaxu->getPhase() == Player::NotActive)
-                return false;
-            if (jiaxu->hasInnateSkill("wansha") || !jiaxu->hasSkill("jilve"))
-                room->broadcastSkillInvoke(objectName());
-            else
-                room->broadcastSkillInvoke("jilve", 3);
-
-            room->notifySkillInvoked(jiaxu, objectName());
-
-            LogMessage log;
-            log.from = jiaxu;
-            log.arg = objectName();
-            if (jiaxu != dying.who) {
-                log.type = "#WanshaTwo";
-                log.to << dying.who;
-            } else {
-                log.type = "#WanshaOne";
-            }
-            room->sendLog(log);
-        }
-        return false;
-    }
-};
-
 class Luanwu : public ZeroCardViewAsSkill
 {
 public:
@@ -992,7 +942,7 @@ ThicketPackage::ThicketPackage()
     dongzhuo->addSkill(new Baonue);
 
     General *jiaxu = new General(this, "jiaxu", "qun", 3); // QUN 007
-    jiaxu->addSkill(new Wansha);
+    jiaxu->addSkill("wansha");
     jiaxu->addSkill(new Luanwu);
     jiaxu->addSkill(new Weimu);
 

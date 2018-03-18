@@ -3189,11 +3189,6 @@ TestPackage::TestPackage()
     nobenghuai_dongzhuo->addSkill("roulin");
     nobenghuai_dongzhuo->addSkill("baonue");
 
-    new General(this, "sujiang", "god", 5, true, true);
-    new General(this, "sujiangf", "god", 5, false, true);
-
-    new General(this, "anjiang", "god", 4, true, true, true);
-
     skills << new SuperMaxCards << new SuperOffensiveDistance << new SuperDefensiveDistance;
     skills << new Gepi << new GepiReset << new GepiInv;
     related_skills.insertMulti("gepi", "#gepi");

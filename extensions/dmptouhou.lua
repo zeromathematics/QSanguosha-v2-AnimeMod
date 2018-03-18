@@ -401,7 +401,7 @@ Satori:addSkill(se_fuzhi_give)
 DMPTouhou:insertRelatedSkills("se_fuzhi$", "#se_fuzhi-give$")
 
 sgs.LoadTranslationTable{
-	["touhou"] = "东方",
+	
 	["dmptouhou"] = "动漫包-东方",
 
 	["se_mingqie"] = "明窃「魔理沙偷走了重要的东西」",
