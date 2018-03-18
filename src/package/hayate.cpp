@@ -2477,7 +2477,7 @@ void ZhufuCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &tar
     int i = 0;
     while (!source->isKongcheng()){
         room->obtainCard(targets.at(i), room->askForCardChosen(targets.at(i), source, "h", "zhufu", true));
-        i = i == targets.count() - 1 ? i + 1 : 0;
+        i = (i == targets.count() - 1) ? i + 1 : 0;
     }
 }
 
