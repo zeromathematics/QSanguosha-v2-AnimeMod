@@ -2440,7 +2440,7 @@ public:
             DyingStruct dying = data.value<DyingStruct>();
             ServerPlayer *iori = room->findPlayerBySkillName(objectName());
             if (!dying.who || dying.who->isDead() || !iori || room->getCurrent()->hasFlag("mishi_used") || !room->askForSkillInvoke(iori, objectName(), data))
-                return;
+                return false;
             room->setPlayerFlag(room->getCurrent(), "mishi_used");
             room->broadcastSkillInvoke(objectName());
             room->doLightbox(objectName() + "$", 800);
@@ -2473,8 +2473,49 @@ bool ZhufuCard::targetsFeasible(const QList<const Player *> &targets, const Play
 
 void ZhufuCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const
 {
-    
+    source->loseAllMarks("@zhufu");
+    int i = 0;
+    while (!source->isKongcheng()){
+        room->obtainCard(targets.at(i), room->askForCardChosen(targets.at(i), source, "h", "zhufu", true));
+        i = i == targets.count() - 1 ? i + 1 : 0;
+    }
 }
+
+class ZhufuVS : public ZeroCardViewAsSkill
+{
+public:
+    ZhufuVS() : ZeroCardViewAsSkill("zhufu")
+    {
+        response_pattern = "@@zhufu";
+    }
+
+    const Card *viewAs() const
+    {
+        return new ZhufuCard();
+    }
+};
+
+class Zhufu : public TriggerSkill
+{
+public:
+    Zhufu() : TriggerSkill("zhufu")
+    {
+        frequency = Limited;
+        limit_mark = "@zhufu";
+        events << EventPhaseStart;
+        view_as_skill = new ZhufuVS;
+    }
+
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::Draw && player->getMark("@zhufu") > 0){
+            room->askForUseCard(player, "@@zhufu", "@zhufu-use");
+        }
+
+        return false;
+    }
+};
 
 
 HayatePackage::HayatePackage()
@@ -2548,10 +2589,16 @@ HayatePackage::HayatePackage()
     hakaze->addSkill(new Moju);
     hakaze->addSkill(new Jiejie);
 
+    General *nagase = new General(this, "nagase", "real", 3, false);
+    nagase->addSkill(new Qifen);
+    nagase->addSkill(new Mishi);
+    nagase->addSkill(new Zhufu);
+
     addMetaObject<TiaojiaoCard>();
     addMetaObject<HaremuCard>();
     addMetaObject<YoushuiCard>();
     addMetaObject<MojuCard>();
+    addMetaObject<ZhufuCard>();
 }
 
 ADD_PACKAGE(Hayate)
