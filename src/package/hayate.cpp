@@ -377,7 +377,7 @@ public:
             foreach(ServerPlayer *p, use.to) {
                 if (!player->isAlive()) break;
                 p->addMark("pomo");
-                room->addPlayerMark(p, "@skill_invalidity");
+                room->addPlayerMark(p, "@all_skill_invalidity");
 
                 foreach(ServerPlayer *pl, room->getAllPlayers())
                     room->filterCards(pl, pl->getCards("he"), true);
@@ -393,7 +393,7 @@ public:
                 foreach(ServerPlayer *p, use.to){
                     room->setPlayerMark(p, "Armor_Nullified", 0);
                     if (p->getMark("pomo") == 0) continue;
-                    room->removePlayerMark(p, "@skill_invalidity", p->getMark("pomo"));
+                    room->removePlayerMark(p, "@all_skill_invalidity", p->getMark("pomo"));
                     p->setMark("pomo", 0);
                 }
             }

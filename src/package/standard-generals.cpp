@@ -935,19 +935,6 @@ public:
     }
 };
 
-class NonCompulsoryInvalidity : public InvaliditySkill
-{
-public:
-    NonCompulsoryInvalidity() : InvaliditySkill("#non-compulsory-invalidity")
-    {
-    }
-
-    bool isSkillValid(const Player *player, const Skill *skill) const
-    {
-        return player->getMark("@skill_invalidity") == 0 || skill->getFrequency(player) == Skill::Compulsory;
-    }
-};
-
 class Paoxiao : public TargetModSkill
 {
 public:
@@ -2835,7 +2822,7 @@ void StandardPackage::addGenerals()
     addMetaObject<JianyanCard>();
     addMetaObject<GuoseCard>();
 
-    skills << new Xiaoxi << new NonCompulsoryInvalidity << new Jianyan;
+    skills << new Xiaoxi << new Jianyan;
 }
 
 class SuperZhiheng : public Zhiheng

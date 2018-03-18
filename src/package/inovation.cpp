@@ -6444,6 +6444,19 @@ public:
     }
 };
 
+class GeneralSkillInvalidity : public InvaliditySkill
+{
+public:
+    GeneralSkillInvalidity() : InvaliditySkill("#general-skill-invalidity")
+    {
+    }
+
+    bool isSkillValid(const Player *player, const Skill *skill) const
+    {
+        return (player->getMark("@skill_invalidity") == 0 || skill->getFrequency(player) == Skill::Compulsory) && player->getMark("@all_skill_invalidity") == 0;
+    }
+};
+
 
 InovationPackage::InovationPackage()
     : Package("inovation")
@@ -6475,7 +6488,7 @@ InovationPackage::InovationPackage()
     patterns["peach+analeptic"] = new ExpPattern("Peach,Analeptic");
 
 
-    skills << new Keji << new Yingzi << new Paoxiao << new Tiaoxin << new Fankui << new Longdan << new Guicai << new Wumou << new Benghuai << new Fengbi;
+    skills << new Keji << new Yingzi << new Paoxiao << new Tiaoxin << new Fankui << new Longdan << new Guicai << new Wumou << new Benghuai << new Fengbi << new GeneralSkillInvalidity;
     General *nagisa = new General(this, "Nagisa", "real", 3, false);
     nagisa->addSkill(new Guangyu);
     nagisa->addSkill(new GuangyuTrigger);
