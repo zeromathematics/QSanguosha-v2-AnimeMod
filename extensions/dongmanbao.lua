@@ -5330,13 +5330,14 @@ SE_Mishi = sgs.CreateTriggerSkill{
 		local dying_data = data:toDying()
 		local source = dying_data.who
 		local mygod= room:findPlayerBySkillName("SE_Mishi")
-		if mygod then
-			if mygod:isAlive() and source and not mygod:hasFlag("SE_Mishi_used") then
+		local current = room:getCurrent()
+		if mygod and current then
+			if mygod:isAlive() and source and not current:hasFlag("SE_Mishi_used") then
 				local list = room:getAlivePlayers()
 				local targets = sgs.SPlayerList()
 				if room:askForSkillInvoke(mygod, "SE_Mishi", data) then
 					room:broadcastSkillInvoke("SE_Mishi")
-					room:setPlayerFlag(mygod,"SE_Mishi_used")
+					room:setPlayerFlag(current,"SE_Mishi_used")
 					local cardsid = sgs.IntList()
 					local cards = mygod:getHandcards()
 					if cards then
@@ -5411,7 +5412,7 @@ sgs.LoadTranslationTable{
 ["$SE_Mishi2"] = "大家都不明白...够了...受够了...",
 ["$SE_Mishi3"] = "饶不了...绝对！牵连我之外的人，不管怎么道歉也不原谅！",
 ["$SE_Mishi4"] = "要让他们哭天...还是喊地好呢...要让你们怎么偿还呢！...",
-[":SE_Mishi"] = "每当一名角色进入濒死状态时，你可以展示你的所有手牌，然后令你与其各失去1点体力。若如此做且该角色于濒死状态被救回，你获得其一张牌。每阶段限一次。",
+[":SE_Mishi"] = "每名角色的回合限制一次。每当一名角色进入濒死状态时，你可以展示你的所有手牌，然后令你与其各失去1点体力。若如此做且该角色于濒死状态被救回，你获得其一张牌。",
 ["SE_Zhufu"] = "祝福「最重要的伙伴们」",
 ["$SE_Zhufu1"] = "不对...这样说很奇怪。我永远都想做稻叶儿的朋友。拜托了，让我做你的朋友吧！",
 ["$SE_Zhufu2"] = "能和你恋爱过真是太好了。",

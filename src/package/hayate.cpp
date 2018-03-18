@@ -2394,10 +2394,6 @@ public:
 };
 
 
-// rena
-
-
-
 class Qifen : public TriggerSkill
 {
 public:
@@ -2429,6 +2425,56 @@ public:
     }
 };
 
+class Mishi : public TriggerSkill
+{
+public:
+    Mishi() : TriggerSkill("mishi")
+    {
+        frequency = NotFrequent;
+        events << Dying;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == Dying){
+            DyingStruct dying = data.value<DyingStruct>();
+            ServerPlayer *iori = room->findPlayerBySkillName(objectName());
+            if (!dying.who || dying.who->isDead() || !iori || room->getCurrent()->hasFlag("mishi_used") || !room->askForSkillInvoke(iori, objectName(), data))
+                return;
+            room->setPlayerFlag(room->getCurrent(), "mishi_used");
+            room->broadcastSkillInvoke(objectName());
+            room->doLightbox(objectName() + "$", 800);
+            room->showAllCards(iori);
+            room->loseHp(iori);
+            room->loseHp(dying.who);
+            if (dying.who->isAlive() && !dying.who->isNude()){
+                room->obtainCard(iori, room->askForCardChosen(iori, dying.who, "he", objectName()));
+            }
+
+        }
+        return false;
+    }
+};
+
+
+ZhufuCard::ZhufuCard()
+{
+}
+
+bool ZhufuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *) const
+{
+    return targets.length() < 4 && to_select != Self;
+}
+
+bool ZhufuCard::targetsFeasible(const QList<const Player *> &targets, const Player *) const
+{
+    return targets.length() > 1 && targets.length() < 5;
+}
+
+void ZhufuCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const
+{
+    
+}
 
 
 HayatePackage::HayatePackage()
