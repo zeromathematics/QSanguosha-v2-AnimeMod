@@ -301,10 +301,10 @@ xiaoshi = sgs.CreateTriggerSkill
 {
 	name = "xiaoshi",
 	frequency = sgs.Skill_Compulsory,
-	events = {sgs.GameStart, sgs.EventPhaseStart},
+	events = {sgs.GameStart, sgs.EventAcquireSkill, sgs.EventPhaseStart},
 	on_trigger = function(self,event,player,data)
 		local room = player:getRoom()
-		if event == sgs.GameStart then
+		if event == sgs.GameStart or (event == sgs.EventAcquireSkill and data:toString() == self:objectName()) then
 			room:setPlayerProperty(player, "maxhp", sgs.QVariant(0))
 			room:broadcastSkillInvoke("xiaoshi")
 			player:gainMark("@Menma_turn", room:getAlivePlayers():length() + 5)
