@@ -776,8 +776,14 @@ QString Player::getKingdom() const
     if (kingdom.isEmpty() && general){
         return general->getKingdom();
     }
-    else
-        return BasaraMode::getMappedAiKingdom(kingdom);
+    else{
+        if (ServerInfo.EnableHegemony){
+            return BasaraMode::getMappedAiKingdom(kingdom);
+        }
+        else{
+            return kingdom;
+        }
+    }
 }
 
 void Player::setKingdom(const QString &kingdom)

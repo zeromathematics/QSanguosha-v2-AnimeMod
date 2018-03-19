@@ -3938,11 +3938,29 @@ void RoomScene::changeBGM(const QString bgm)
 
 void RoomScene::adjustDefaultBgm()
 {
+
+    static QMap<QString, QString> kingdoms;
+    if (kingdoms.isEmpty()) {
+        kingdoms["wei"] = "science";
+        kingdoms["shu"] = "magic";
+        kingdoms["wu"] = "real";
+        kingdoms["qun"] = rand() % 3 == 0 ? "touhou" : (rand() % 2 == 0 ? "kancolle" : "diva");
+        kingdoms["science"] = "science";
+        kingdoms["magic"] = "magic";
+        kingdoms["real"] = "real";
+        kingdoms["touhou"] = "touhou";
+        kingdoms["kancolle"] = "kancolle";
+        kingdoms["diva"] = "diva";
+    }
+
     if (Config.EnableBgMusic) {
         // start playing background music
         _m_bgMusicPath = Config.value("BackgroundMusic", "audio/system/background.ogg").toString();
         if (_m_bgMusicPath == "audio/system/background.ogg"){
-            _m_bgMusicPath = "audio/kingdom/" + getLordKingdom() + ".ogg";
+            if (!ServerInfo.EnableHegemony){
+                _m_bgMusicPath = "audio/kingdom/" + (kingdoms.contains(getLordKingdom()) ? kingdoms[getLordKingdom()] : "") + ".ogg";
+            }
+            
             QFile *file = new QFile(_m_bgMusicPath);
             if (!file->exists()){
                 _m_bgMusicPath = "audio/system/background.ogg";
@@ -3983,7 +4001,7 @@ void RoomScene::adjustDefaultBg()
 {
     // for tablebg change
     QString kingdom = getLordKingdom();
-    if (Config.EnableAutoBackgroundChange && Self != NULL) {
+    if (Config.EnableAutoBackgroundChange && Self != NULL && !ServerInfo.EnableHegemony) {
         if (Sanguosha->getKingdoms().contains(kingdom)) {
             QPixmap pixmap = G_ROOM_SKIN.getPixmap("tableBg" + kingdom);
             if (pixmap.width() == 1 || pixmap.height() == 1) {

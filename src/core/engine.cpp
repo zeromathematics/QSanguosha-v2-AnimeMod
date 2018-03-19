@@ -565,6 +565,14 @@ int Engine::getRoleIndex() const
         return 1;
 }
 
+bool Engine::isHegemony() const
+{
+    if (qApp->arguments().contains("-server"))
+        return Config.EnableHegemony;
+    else
+        return ServerInfo.EnableHegemony;
+}
+
 const CardPattern *Engine::getPattern(const QString &name) const
 {
     const CardPattern *ptn = patterns.value(name, NULL);
@@ -913,15 +921,21 @@ QStringList Engine::getExtensions() const
 QStringList Engine::getKingdoms() const
 {
     static QStringList kingdoms;
-    if (kingdoms.isEmpty()){
+
+    if (qApp->arguments().contains("-server"))
         if (Config.EnableHegemony){
             kingdoms = GetConfigFromLuaState(lua, "hegemony_kingdoms").toStringList();
         }
         else{
             kingdoms = GetConfigFromLuaState(lua, "kingdoms").toStringList();
         }
-    }
-
+    else
+        if (ServerInfo.EnableHegemony){
+            kingdoms = GetConfigFromLuaState(lua, "hegemony_kingdoms").toStringList();
+        }
+        else{
+            kingdoms = GetConfigFromLuaState(lua, "kingdoms").toStringList();
+        }
     return kingdoms;
 }
 

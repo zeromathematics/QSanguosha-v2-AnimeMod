@@ -53,6 +53,7 @@ Room::Room(QObject *parent, const QString &mode)
 Room::~Room()
 {
     lua_close(L);
+    
 	if (thread != NULL)
 		delete thread;
 }

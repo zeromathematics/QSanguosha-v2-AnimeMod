@@ -43,6 +43,7 @@ public:
     QString getVersion() const;
     QString getVersionName() const;
     QString getMODName() const;
+    bool isHegemony() const;
     QStringList getExtensions() const;
     QStringList getKingdoms() const;
     QColor getKingdomColor(const QString &kingdom) const;

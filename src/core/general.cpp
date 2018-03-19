@@ -5,7 +5,6 @@
 #include "client.h"
 #include "clientstruct.h"
 #include "gamerule.h"
-#include "settings.h"
 
 General::General(Package *package, const QString &name, const QString &kingdom,
     int max_hp, bool male, bool hidden, bool never_shown)
@@ -31,7 +30,7 @@ int General::getMaxHp() const
 
 QString General::getKingdom() const
 {
-    if (Config.EnableHegemony){
+    if (ServerInfo.EnableHegemony){
         return BasaraMode::getMappedAiKingdom(kingdom);
     }
     return kingdom;
@@ -210,9 +209,9 @@ QString General::getSkillDescription(bool include_name) const
     }
 
     if (include_name) {
-        QString color_str = Sanguosha->getKingdomColor(kingdom).name();
+        QString color_str = Sanguosha->getKingdomColor(getKingdom()).name();
         QString name = QString("<font color=%1><b>%2</b></font>     ").arg(color_str).arg(Sanguosha->translate(objectName()));
-        name.prepend(QString("<img src='image/kingdom/icon/%1.png'/>    ").arg(kingdom));
+        name.prepend(QString("<img src='image/kingdom/icon/%1.png'/>    ").arg(getKingdom()));
         for (int i = 0; i < max_hp; i++)
             name.append("<img src='image/system/magatamas/5.png' height = 12/>");
 

@@ -1,7 +1,7 @@
 DMPKancolle=sgs.Package("dmpkancolle")--增加拓展包
 
 Akagi = sgs.General(DMPKancolle, "Akagi", "kancolle", 4, false,false,false)
-Kitagami = sgs.General(DMPKancolle, " Kitagami", "kancolle", 3, false,false,false)
+Kitagami = sgs.General(DMPKancolle, "Kitagami", "kancolle", 3, false,false,false)
 Yuudachi = sgs.General(DMPKancolle, "Yuudachi", "kancolle", 4, false,false,false)
 poi_kai2 = sgs.General(DMPKancolle, "poi_kai2", "kancolle", 3, false,true,true)
 Shimakaze = sgs.General(DMPKancolle, "Shimakaze", "kancolle", 3, false,false,false)
@@ -512,7 +512,7 @@ Fubuki:addSkill(se_qianlei)
 Fubuki:addSkill(se_shuacun)
 
 sgs.LoadTranslationTable{
-	
+
 	["dmpkancolle"] = "动漫包-舰娘",
 
 	["se_chichengcard"] = "吃撑「铝是用来吃的」",

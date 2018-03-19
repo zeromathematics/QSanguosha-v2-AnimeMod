@@ -6265,17 +6265,12 @@ SE_Wufan = sgs.CreateTriggerSkill{
 SE_WufanMark = sgs.CreateTriggerSkill{
 	name = "#SE_WufanMark",
 	frequency = sgs.Skill_Compulsory,
-	events = {sgs.GameStart,sgs.TurnStart,sgs.AskForPeachesDone},
+	events = {sgs.GameStart,sgs.TurnStart,sgs.AskForPeachesDone, sgs.EventAcquireSkill},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if event == sgs.GameStart then
+		if event == sgs.GameStart or (event == sgs.EventAcquireSkill and data:toString() == "SE_Wufan") then
 			player:loseAllMarks("@Efreet")
-			--KOF
-			if room:getAllPlayers(true):length() == 2 then
-				player:gainMark("@Efreet", 2)
-			else
-				player:gainMark("@Efreet", 3)
-			end
+			player:gainMark("@Efreet", 3)
 		elseif event == sgs.TurnStart then
 			if player:getMark("@Efreet") < 1 then
 				room:broadcastSkillInvoke("SE_Wufan", 4)

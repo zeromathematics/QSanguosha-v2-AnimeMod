@@ -1877,7 +1877,7 @@ public:
                 QList<ServerPlayer *> targets = room->getPlayersWithNoClub();
                 QList<ServerPlayer *> targets_copy = targets;
                 foreach(ServerPlayer *s, targets_copy){
-                    if (s->getKingdom() == "real"){
+                    if (s->getKingdom() == "real" || s->getKingdom() == "wu"){
                         targets.removeOne(s);
                     }
                 }
@@ -2477,6 +2477,7 @@ void ZhufuCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &tar
     int i = 0;
     while (!source->isKongcheng()){
         room->obtainCard(targets.at(i), room->askForCardChosen(targets.at(i), source, "h", "zhufu", true));
+        i = (i == targets.count() - 1) ? 0 : i + 1;
     }
 }
 
