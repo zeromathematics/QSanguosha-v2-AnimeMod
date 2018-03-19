@@ -2710,6 +2710,30 @@ public:
     }
 };
 
+class MaoqunHeg : public TriggerSkill
+{
+public:
+    MaoqunHeg() : TriggerSkill("SE_MaoqunHeg")
+    {
+        frequency = Compulsory;
+        events << GameStart << EventAcquireSkill;
+    }
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == GameStart || (triggerEvent == EventAcquireSkill && data.toString() == objectName())){
+            room->broadcastSkillInvoke(objectName());
+            for (int i = 0; i < room->getAlivePlayers().count(); i++){
+                if (room->getDrawPile().length() == 0)
+                    room->swapPile();
+                player->addToPile("Neko", room->getDrawPile().at(0));
+            }
+           
+        }
+        return false;
+    }
+};
+
 class Chengzhang : public TriggerSkill
 {
 public:
@@ -6566,7 +6590,7 @@ InovationPackage::InovationPackage()
     kyou->addSkill(new Touzhi);
     kyou->addSkill(new Youjiao);
 
-    General *Natsume_Rin = new General(this, "Natsume_Rin", "real", 99, false);
+    General *Natsume_Rin = new General(this, "Natsume_Rin", "real", 99, false, false, false, 3);
     Natsume_Rin->addSkill(new Pasheng);
     Natsume_Rin->addSkill(new Maoqun);
     Natsume_Rin->addSkill(new Chengzhang);
@@ -6575,6 +6599,16 @@ InovationPackage::InovationPackage()
     related_skills.insertMulti("zhiling", "#zhiling-max");
     Natsume_Rin->addWakeTypeSkillForAudio("zhiling");
     Natsume_Rin->addWakeTypeSkillForAudio("SE_Zhixing");
+
+    // for heg
+    Natsume_Rin->addHegSkill(new MaoqunHeg);
+    Natsume_Rin->addHegSkill("-SE_Pasheng");
+    Natsume_Rin->addHegSkill("-SE_Maoqun");
+    Natsume_Rin->addHegSkill("-SE_Chengzhang");
+    Natsume_Rin->addHegSkill("zhiling");
+    Natsume_Rin->addHegSkill("SE_Zhixing");
+    Natsume_Rin->addHegWakeTypeSkillForAudio("-zhiling");
+    Natsume_Rin->addHegWakeTypeSkillForAudio("-SE_Zhixing");
 
     General *KKotori = new General(this, "KKotori", "magic", 3, false);
     KKotori->addSkill(new Jianshi);

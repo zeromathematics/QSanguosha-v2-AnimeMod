@@ -33,7 +33,7 @@ public:
 
 class General: public QObject {
 public:
-    explicit General(Package *package, const char *name, const char *kingdom, int max_hp = 4, bool male = true, bool hidden = false, bool never_shown = false);
+    explicit General(Package *package, const char *name, const char *kingdom, int max_hp = 4, bool male = true, bool hidden = false, bool never_shown = false, int heg_max_hp = -1);
 
     // property getters/setters
     int getMaxHp() const;
@@ -52,6 +52,9 @@ public:
     void addSkill(Skill *skill);
     void addSkill(const char *skill_name);
     void addWakeTypeSkillForAudio(const char *skill_name);
+	void addHegSkill(Skill *skill);
+    void addHegSkill(const QString &skill_name);
+    void addHegWakeTypeSkillForAudio(const QString &skill_name);
     bool hasSkill(const char *skill_name) const;
     QList<const Skill *> getSkillList() const;
     QList<const Skill *> getVisibleSkillList() const;

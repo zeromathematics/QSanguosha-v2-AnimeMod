@@ -19,7 +19,7 @@ return {
 	["simayi"] = "司马懿",
 	["illustrator:simayi"] = "木美人",
 
-	
+
 
 	["#xiahoudun"] = "独眼的罗刹",
 	["xiahoudun"] = "夏侯惇",
@@ -312,13 +312,4 @@ return {
 	["nobenghuai_dongzhuo"] = "无崩董卓",
 	["&nobenghuai_dongzhuo"] = "董卓",
 	["illustrator:nobenghuai_dongzhuo"] = "小冷",
-
-	["#sujiang"] = "金童",
-	["sujiang"] = "士兵(男)",
-	["&sujiang"] = "士兵",
-	["illustrator:sujiang"] = "木美人",
-	["#sujiangf"] = "玉女",
-	["sujiangf"] = "士兵(女)",
-	["&sujiangf"] = "士兵",
-	["illustrator:sujiangf"] = "木美人",
 }
