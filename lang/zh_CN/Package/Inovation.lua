@@ -235,7 +235,6 @@ return {
 	["$SE_Maoqun3"] = "很好很好~喵~喵~",
 	["$SE_Maoqun4"] = "你...今天也没带信来吗？",
 	[":SE_Maoqun"] = "锁定技。每当一名角色造成一次伤害后，你失去1点体力并展示牌堆顶牌，然后将之置于你的武将牌上，称为“猫”。",
-	["SE_MaoqunHeg"] = "猫群「只和猫玩」",
 	["$SE_MaoqunHeg"] = "很好很好~喵~喵~",
 	[":SE_MaoqunHeg"] = "锁定技。游戏开始或你获得此技能时，将牌堆顶的X张牌置于你的武将牌上，称为“猫”。X为场上现存人数。",
 	["SE_Chengzhang"] = "成长「Refrain」",
@@ -846,7 +845,7 @@ return {
 
 	["WalkerA"] = "路人A",
 	["&WalkerA"] = "路人A",
-	["@WalkerA"] = "几乎所有作品",
+	["@WalkerA"] = "二次元居民",
 	["#WalkerA"] = "真·路人",
 	["~WalkerA"] = "",
 	["designer:WalkerA"] = "Sword Elucidator",
@@ -855,10 +854,12 @@ return {
 
 	["#sujiang"] = "路人",
 	["sujiang"] = "路人(男)",
+	["@sujiang"] = "二次元居民",
 	["&sujiang"] = "路人",
 	["illustrator:sujiang"] = "",
 	["#sujiangf"] = "路人",
 	["sujiangf"] = "路人(女)",
+	["@sujiangf"] = "二次元居民",
 	["&sujiangf"] = "路人",
 	["illustrator:sujiangf"] = "",
 
