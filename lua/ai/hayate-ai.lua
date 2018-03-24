@@ -448,7 +448,7 @@ end
 -- k1
 sgs.ai_skill_choice.guiyin = function(self, choices, data)
 	local k1 = self.room:findPlayerBySkillName("guiyin")
-	if self:isFriend(k1) then return "guiyin_give" end
+	if k1 and self:isFriend(k1) then return "guiyin_give" end
 	return "cancel"
 end
 

@@ -371,10 +371,10 @@ se_cairencard = sgs.CreateSkillCard{
 		room:doLightbox("se_cairen$", 2000)
 		--room:setPlayerMark(source,"se_cairen",source:getMaxHp())
 
-		if source:getGeneralName() == "Louise" then
-			room:changeHero(source,"Saito",true, false, false, true)
-		else
+		if source:getGeneral2Name() == "Louise" then
 			room:changeHero(source,"Saito",true, false, true, true)
+		else
+			room:changeHero(source,"Saito",true, false, false, true)
 		end
 		local num = source:getHandcardNum()
 		if num < 5 then
@@ -605,10 +605,10 @@ huanhui = sgs.CreateTriggerSkill{
 		local phase = change.to
 		if phase == sgs.Player_Finish then
 			local room = player:getRoom()
-			if player:getGeneralName() == "Saito" then
-				room:changeHero(player,"Louise",true, false, false, true)
-			else
+			if player:getGeneral2Name() == "Saito" then
 				room:changeHero(player,"Louise",true, false, true, true)
+			else
+				room:changeHero(player,"Louise",true, false, false, true)
 			end
 			--room:setPlayerProperty(player, "maxhp", player:getMark("se_cairen"))
 			--room:setPlayerProperty(player, "hp", player:getMark("se_cairen"))
@@ -979,9 +979,9 @@ se_shixian = sgs.CreateTriggerSkill{
 	name = "se_shixian",
 	view_as_skill = se_shixianVS,
 	frequency = sgs.Skill_NotFrequent,
-	events = {sgs.GameStart, sgs.EventPhaseStart},
+	events = {sgs.GameStart, sgs.EventAcquireSkill, sgs.EventPhaseStart},
 	on_trigger = function(self, event, player, data)
-		if event == sgs.GameStart and player:hasSkill(self:objectName()) then
+		if event == sgs.GameStart or (event == sgs.EventAcquireSkill and data:toString() == self:objectName()) then
 			player:loseAllMarks("Benhuihe")
 			player:loseAllMarks("@time")
 			player:gainMark("@time", 2)
@@ -2072,7 +2072,7 @@ sgs.LoadTranslationTable{
 ["$se_shunshan1"] = "我是「风机委员」，现在以损坏公物和抢劫现行犯的罪名逮捕你们！",
 ["$se_shunshan2"] = "哦呵呵呵呵，您要是忘了我的能力可是会让我很困扰的哦。",
 ["$se_shunshan3"] = "我是「风机委员」，我在这里的理由就没必要说明了吧。",
-[":se_shunshan"] = "出牌阶段限一次，你可以与一名角色交换位置，然后指定与你距离为1的一名角色，令其获得1枚“定身”标记。拥有“定身”标记的角色的手牌上限-X（X为其“定身”标记的数量且至多为3）；当其与除其外的角色计算距离时，始终+1。",
+[":se_shunshan"] = "出牌阶段限一次，你可以与一名角色交换位置，然后指定与你距离为1的一名角色，令其获得1枚“定身”标记。拥有“定身”标记的角色的手牌上限最多为其体力上限-X（X为其“定身”标记的数量且至多为3）；当其与除其外的角色计算距离时，始终+1。",
 ["se_chongjing"] = "憧憬「姐姐大人」",
 ["chongjing"] = "憧憬「姐姐大人」",
 ["se_chongjing$"] = "image=image/animate/se_chongjing.png",
@@ -2863,10 +2863,10 @@ ChaidaoChange = sgs.CreateTriggerSkill{
 			player:loseAllMarks("@Putong_Rena")
 			room:doLightbox("Chaidao$", 800)
 			player:gainMark("@Heihua_Rena")
-			if player:getGeneralName() == "Rena" then
-				room:changeHero(player, "Rena_black",false, false, false, false)
-			elseif player:getGeneral2Name() == "Rena" then
+			if player:getGeneral2Name() == "Rena" then
 				room:changeHero(player, "Rena_black",false, false, true, false)
+			elseif player:getGeneralName() == "Rena" then
+				room:changeHero(player, "Rena_black",false, false, false, false)
 			end
 		end
 	end
@@ -3154,28 +3154,28 @@ se_shengjiancard = sgs.CreateSkillCard{
 Jianqiao = sgs.CreateTriggerSkill{
 	name = "Jianqiao",
 	frequency = sgs.Skill_NotFrequent,
-	events = {sgs.DamageInflicted, sgs.AskForPeachesDone, sgs.EventPhaseEnd},
+	events = {sgs.AskForPeachesDone, sgs.EventPhaseEnd},  -- sgs.DamageInflicted,
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		if event == sgs.DamageInflicted then
-			local damage = data:toDamage()
-			if damage.to and damage.to:hasSkill(self:objectName()) then
-				local x = math.random(1,3)
-				if x == 1 then
-					room:broadcastSkillInvoke("Jianqiao", 1)
-					local msg = sgs.LogMessage()
-					msg.type = "#Jianqiao_stop"
-					msg.from = damage.to
-					room:sendLog(msg)
-					return true
-				end
-			end
-		elseif event == sgs.AskForPeachesDone then
+		-- if event == sgs.DamageInflicted then
+		-- 	local damage = data:toDamage()
+		-- 	if damage.to and damage.to:hasSkill(self:objectName()) then
+		-- 		local x = math.random(1,3)
+		-- 		if x == 1 then
+		-- 			room:broadcastSkillInvoke("Jianqiao", 1)
+		-- 			local msg = sgs.LogMessage()
+		-- 			msg.type = "#Jianqiao_stop"
+		-- 			msg.from = damage.to
+		-- 			room:sendLog(msg)
+		-- 			return true
+		-- 		end
+		-- 	end
+		if event == sgs.AskForPeachesDone then
 			local dying = data:toDying()
 			if not dying.who or dying.who:isDead() or not dying.who:hasSkill(self:objectName()) then return end
 			local theRecover = sgs.RecoverStruct()
 			theRecover.who =  dying.who
-			room:broadcastSkillInvoke("Jianqiao", 2)
+			room:broadcastSkillInvoke("Jianqiao", math.random(1, 2))
 			room:recover(dying.who,theRecover)
 		else
 			if player:isAlive() and player:hasSkill(self:objectName()) and player:getPhase() == sgs.Player_Finish then
@@ -3207,7 +3207,7 @@ sgs.LoadTranslationTable{
 ["Jianqiao"] = "剑鞘「远离尘世的理想乡」",
 ["$Jianqiao1"] = "不要紧...治疗已经派上用场了。",
 ["$Jianqiao2"] = "Avalon！！",
-[":Jianqiao"] = "回合结束时，你可以将这个技能转交给其他角色。锁定技。每当你受到一次伤害时，有1/3概率防止此伤害；你离开濒死阶段时回复一点体力。",
+[":Jianqiao"] = "回合结束时，你可以将这个技能转交给其他角色。锁定技。你濒死阶段结束时，回复一点体力。",
 ["@jianqiao-prompt"] = "选择一名角色并将「剑鞘」转交之，可以取消。",
 ["Saber"] = "Saber",
 ["&Saber"] = "Saber",
@@ -6265,12 +6265,19 @@ SE_Wufan = sgs.CreateTriggerSkill{
 SE_WufanMark = sgs.CreateTriggerSkill{
 	name = "#SE_WufanMark",
 	frequency = sgs.Skill_Compulsory,
-	events = {sgs.GameStart,sgs.TurnStart,sgs.AskForPeachesDone, sgs.EventAcquireSkill},
+	events = {sgs.GameStart,sgs.TurnStart,sgs.AskForPeachesDone, sgs.EventAcquireSkill, sgs.Death, sgs.EventLoseSkill},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.GameStart or (event == sgs.EventAcquireSkill and data:toString() == "SE_Wufan") then
 			player:loseAllMarks("@Efreet")
 			player:gainMark("@Efreet", 3)
+		elseif event == sgs.Death or (event == sgs.EventLoseSkill and data:toString() == "SE_Wufan") then
+			if player:hasSkill("SE_Niepan") then
+				room:detachSkillFromPlayer(player,"SE_Niepan")
+			end
+			if player:hasSkill("se_jiangui") then
+				room:detachSkillFromPlayer(player,"se_jiangui")
+			end
 		elseif event == sgs.TurnStart then
 			if player:getMark("@Efreet") < 1 then
 				room:broadcastSkillInvoke("SE_Wufan", 4)
@@ -6281,10 +6288,10 @@ SE_WufanMark = sgs.CreateTriggerSkill{
 				if player:hasSkill("se_jiangui") then
 					room:detachSkillFromPlayer(player,"se_jiangui")
 				end
-				if player:getGeneralName() == "Kotori" then
-					room:changeHero(player, "Kotori_white",false, false, false, true)
-				else
+				if player:getGeneral2Name() == "Kotori" then
 					room:changeHero(player, "Kotori_white",false, false, true, true)
+				else
+					room:changeHero(player, "Kotori_white",false, false, false, true)
 				end
 			end
 		elseif event == sgs.AskForPeachesDone then
@@ -6325,7 +6332,7 @@ sgs.LoadTranslationTable{
 ["$SE_Wufan2"] = "拿起枪来。战斗还没结束呢。战争还没结束呢。",
 ["$SE_Wufan3"] = "来吧，我们还能继续厮杀呢。这可是你期盼的战斗，是你希望的争斗啊！",
 ["$SE_Wufan4"] = "喜欢！我也最喜欢你了！最喜欢哥哥了！是世界上最爱的人！",
-[":SE_Wufan"] = "游戏开始时，你获得3枚 Efreet 标记；每当你处于濒死状态被救回，你获得一枚 Efreet 标记。回合开始前，若你没有 Efreet 标记，你失去所有技能。准备阶段，你可以弃置一个 Efreet 标记，并获得<font color=\"#bc64a4\"><b>「涅槃」</b></font>和<font color=\"#bc64a4\"><b>「灼烂歼鬼（Camael）」</b></font>",
+[":SE_Wufan"] = "游戏开始时，你获得3枚 Efreet 标记；每当你处于濒死状态被救回，你获得一枚 Efreet 标记。回合开始前，若你没有 Efreet 标记，你失去所有技能。准备阶段，你可以弃置一个 Efreet 标记，并获得<font color=\"#bc64a4\"><b>「涅槃」</b></font>和<font color=\"#bc64a4\"><b>「灼烂歼鬼（Camael）」</b></font>直到你的下个回合开始前。",
 ["Kotori"] = "五河琴里",
 ["&Kotori"] = "五河琴里",
 ["@Kotori"] = "Date A Live",
@@ -6995,7 +7002,7 @@ SE_Fanhun = sgs.CreateTriggerSkill{
 					for _,p in sgs.qlist(room:getAlivePlayers()) do
 						if p:getMark("@SE_Fanhun_ed") > 0 then
 							if player:getMark("@Mahou_ai") > 0 then
-								local choice = room:askForChoice(player,"Use_Mahou+Use_Mahou_Not", data)
+								local choice = room:askForChoice(player, self.objectName(), "Use_Mahou+Use_Mahou_Not", data)
 								if choice == "Use_Mahou" then
 									player:loseMark("@Mahou_ai")
 								else
@@ -9180,126 +9187,6 @@ sgs.LoadTranslationTable{
 --前原圭一
 
 
-SE_Guiyin = sgs.CreateTriggerSkill{
-	name = "SE_Guiyin",
-	frequency = sgs.Skill_Compulsory,
-	events = {sgs.Damaged, sgs.EventPhaseStart, sgs.EventPhaseEnd,sgs.TargetConfirmed},
-	on_trigger = function(self, event, player, data)
-		local room = player:getRoom()
-		if event == sgs.Damaged then
-			local damage = data:toDamage()
-			if damage.to:hasSkill(self:objectName()) then
-				if damage.from:objectName() ~= player:objectName() then
-					if not player:hasFlag("guiyin2_used") then
-						room:broadcastSkillInvoke("SE_Guiyin", 2)
-						player:setFlags("guiyin2_used")
-					end
-				end
-				damage.from:gainMark("@Oni")
-				damage.to:gainMark("OniLv")
-			end
-			return false
-		elseif event == sgs.EventPhaseStart then
-			if player:hasSkill(self:objectName()) and player:getPhase()==sgs.Player_Finish then
-				if player:getMark("OniLv") > 2 then
-					room:broadcastSkillInvoke("SE_Guiyin", 3)
-					for _,p in sgs.qlist(room:getAlivePlayers()) do
-						if p:inMyAttackRange(player) then
-						p:gainMark("@Oni")
-						player:gainMark("OniLv")
-						end
-					end
-				end
-			end
-		elseif event == sgs.EventPhaseEnd then
-			if player:hasSkill(self:objectName()) and player:getPhase()==sgs.Player_Play then
-				if player:getMark("OniLv") > 4 then
-					room:broadcastSkillInvoke("SE_Guiyin", 4)
-					room:doLightbox("SE_Guiyin$", 2000)
-					local da = sgs.DamageStruct()
-					for _,p in sgs.qlist(room:getAlivePlayers()) do
-						if p:getMark("@Oni") > 0 then
-							--da = sgs.DamageStruct()
-							da.from = player
-							da.to = p
-							if p:getMark("@Oni") > 2 then
-								da.damage = 2
-							else
-								da.damage = p:getMark("@Oni")
-							end
-							if p:objectName() == player:objectName() then
-								if p:getMark("@Oni") >= 2 then da.damage = 1 end
-							end
-							room:damage(da)
-							p:loseAllMarks("@Oni")
-						end
-					end
-					--if not room:askForSkillInvoke(player, self:objectName(), data) then return end
-					--local t = room:askForPlayerChosen(player, targets, self:objectName())
-					--targets:removeOne(t)
-					player:loseAllMarks("OniLv")
-				end
-			end
-		elseif event == sgs.TargetConfirmed then
-			local use = data:toCardUse()
-			 if use.to:contains(player) then
-				--if use.from:objectName() ~= player:objectName() then
-				if not use.from then return end
-				use.from:gainMark("@Oni")
-				player:gainMark("OniLv")
-				--end
-				if use.from:objectName() ~= player:objectName() then
-					if not player:hasFlag("guiyin1_used") then
-						room:broadcastSkillInvoke("SE_Guiyin", 1)
-						player:setFlags("guiyin1_used")
-					end
-				end
-			end
-		--[[elseif event == sgs.GameStart then
-			for _,p in sgs.qlist(room:getAlivePlayers()) do
-				if not p:hasSkill("#SE_GuiyinEx") then
-					room:acquireSkill(p, "#SE_GuiyinEx", false)
-				end
-			end]]
-		end
-		return false
-	end
-}
---[[
-SE_GuiyinEx = sgs.CreateTriggerSkill{
-	name = "#SE_GuiyinEx",
-	frequency = sgs.Skill_Compulsory,
-	events = {sgs.CardUsed},
-	on_trigger = function(self, event, player, data)
-		local room = player:getRoom()
-		if event == sgs.CardUsed then
-			local use = data:toCardUse()
-			local K = room:findPlayerBySkillName("SE_Guiyin")
-			if use.to and use.to:contains(K) then
-				player:gainMark("@Oni")
-				sgs.AllOni = sgs.AllOni + 1
-			end
-		end
-		return false
-	end,
-}
-]]
-
-SE_GuiyinDis = sgs.CreateDistanceSkill{
-	name = "#SE_GuiyinDis",
-	correct_func = function(self, from, to)
-		if from:hasSkill("#SE_GuiyinDis") then
-			if from:getMark("OniLv") > 0 then
-				return -2
-			end
-		end
-	end
-}
-
--- K1:addSkill(SE_Guiyin)
--- K1:addSkill(SE_GuiyinDis)
--- Dongmanbao:insertRelatedSkills("SE_Guiyin", "#SE_GuiyinDis")
-
 
 --江之岛盾子
 
@@ -9852,10 +9739,10 @@ SE_Wuwei = sgs.CreateTriggerSkill{
 				if player:getMark("@Wuwei") > room:getAlivePlayers():length() and player:getMark("@Wuwei") > 4 then
 					room:broadcastSkillInvoke(self:objectName(), 4)
 					room:doLightbox("SE_Wuwei_change$", 3000)
-					if player:getGeneralName() == "Sayaka" then
-						room:changeHero(player,"Majyo",true, false, false, true)
-					else
+					if player:getGeneral2Name() == "Sayaka" then
 						room:changeHero(player,"Majyo",true, false, true, true)
+					else
+						room:changeHero(player,"Majyo",true, false, false, true)
 					end
 					if not player:isLord() then
 						room:setPlayerProperty(player, "role", sgs.QVariant("renegade"))
@@ -10905,10 +10792,10 @@ se_zhenfen = sgs.CreateTriggerSkill{
 						if use.from:getMark("@zhenfen_carduse") == use.from:getHp() then
 							room:broadcastSkillInvoke("se_zhenfen")
 							room:doLightbox("se_zhenfen$", 800)
-							if use.from:getGeneralName() == "Chiyo" then
-								room:changeHero(use.from,"Eugen",false, false, false, true)
-							else
+							if use.from:getGeneral2Name() == "Chiyo" then
 								room:changeHero(use.from,"Eugen",false, false, true, true)
+							else
+								room:changeHero(use.from,"Eugen",false, false, false, true)
 							end
 							use.from:loseAllMarks("@zhenfen_carduse")
 							use.from:removePileByName("drawing")
@@ -10969,10 +10856,10 @@ se_fupao = sgs.CreateTriggerSkill{
 			local  eu = room:findPlayerBySkillName(self:objectName())
 			if not eu then return end
 			eu:drawCards(1)
-			if eu:getGeneralName() == "Eugen" then
-				room:changeHero(eu,"Chiyo",false, false, false, true)
-			else
+			if eu:getGeneral2Name() == "Eugen" then
 				room:changeHero(eu,"Chiyo",false, false, true, true)
+			else
+				room:changeHero(eu,"Chiyo",false, false, false, true)
 			end
 			if not damage.to:getWeapon() then return end
 			local to = room:getTag("se_fupao_tag"):toPlayer()
@@ -11009,10 +10896,10 @@ se_tuodui = sgs.CreateTriggerSkill{
 			if damage.to:hasSkill(self:objectName()) then
 				room:broadcastSkillInvoke("se_tuodui", 2)
 				room:doLightbox("se_tuodui$", 1200)
-				if damage.to:getGeneralName() == "Eugen" then
-					room:changeHero(damage.to,"Chiyo",false, false, false, true)
-				else
+				if damage.to:getGeneral2Name() == "Eugen" then
 					room:changeHero(damage.to,"Chiyo",false, false, true, true)
+				else
+					room:changeHero(damage.to,"Chiyo",false, false, false, true)
 				end
 				return true
 			end

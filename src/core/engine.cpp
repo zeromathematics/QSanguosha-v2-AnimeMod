@@ -1013,15 +1013,17 @@ QString Engine::getSetupString() const
     if (Config.DisableChat)
         flags.append("M");
 
-    if (Config.MaxHpScheme == 1)
-        flags.append("1");
+    if (Config.MaxHpScheme == 1){
+        
+        char c = Config.Scheme0Subtraction + 5 + 'a'; // from -5 to 12
+        flags.append(c);
+    }
     else if (Config.MaxHpScheme == 2)
         flags.append("2");
     else if (Config.MaxHpScheme == 3)
         flags.append("3");
     else if (Config.MaxHpScheme == 0) {
-        char c = Config.Scheme0Subtraction + 5 + 'a'; // from -5 to 12
-        flags.append(c);
+        flags.append("0");
     }
 
     QString server_name = Config.ServerName.toUtf8().toBase64();

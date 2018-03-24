@@ -844,10 +844,12 @@ sgs.ai_skill_use_func.JizhanCard = function(card,use,self)
 	if target then
 		use.card = card
 		self.room:writeToConsole("here???")
-		if use.to then
-			self.room:writeToConsole("target???? "..target:getGeneralName())
-			use.to:append(target)
-		end
+		use.to = sgs.SPlayerList()
+		use.to:append(target)
+		-- if use.to then
+		-- 	self.room:writeToConsole("target???? "..target:getGeneralName())
+		-- 	use.to:append(target)
+		-- end
 		return
 	end
 end

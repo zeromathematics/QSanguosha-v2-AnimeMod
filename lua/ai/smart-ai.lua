@@ -3195,7 +3195,9 @@ function SmartAI:askForCardChosen(who, flags, reason, method)
 					if peach and jink then break end
 				end
 				if peach or jink then return peach or jink end
-				self:sortByKeepValue(cards, true)
+				if who:objectName() == self.player:objectName() then
+					self:sortByKeepValue(cards, true)
+				end
 				return cards[1]:getEffectiveId()
 			else
 				return to_choose
@@ -6627,7 +6629,7 @@ function SmartAI:findPlayerToDraw(include_self, drawnum, count)
 	end
 
 	local AssistTarget = self:AssistTarget()
-	if AssistTarget and not self:willSkipPlayPhase(AssistTarget) and (AssistTarget:getHandcardNum() < AssistTarget:getMaxCard() * 2 or AssistTarget:getHandcardNum() < self.player:getHandcardNum())then
+	if AssistTarget and (AssistTarget:getHandcardNum() < 10 or self.player:getHandcardNum() > AssistTarget:getHandcardNum()) then
 		for _, friend in ipairs(friends) do
 			if friend:objectName() == AssistTarget:objectName() and not self:willSkipPlayPhase(friend) then
 				if count then

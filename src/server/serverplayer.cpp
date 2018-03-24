@@ -982,19 +982,63 @@ int ServerPlayer::getGeneralMaxHp() const
 {
     int max_hp = 0;
 
-    if (getGeneral2() == NULL)
-        max_hp = getGeneral()->getMaxHp();
+    if (getGeneral2() == NULL){
+
+        if (Config.EnableBasara && getGeneralName() == "anjiang"){
+            QString name = this->property("basara_generals").toString();
+            if (name.isEmpty()){
+                max_hp = getGeneral()->getMaxHp();
+            }
+            else{
+                // if there is name and could be calculated 
+                QStringList names = name.split("+");
+                QString general_name = names.first();
+                max_hp = Sanguosha->getGeneral(general_name)->getMaxHp();
+            }
+                
+        }
+        else{
+            max_hp = getGeneral()->getMaxHp();
+        }
+        
+    }
     else {
         int first = getGeneral()->getMaxHp();
         int second = getGeneral2()->getMaxHp();
 
+        if (Config.EnableBasara){
+            QString name = this->property("basara_generals").toString();
+
+            if (getGeneralName() == "anjiang"){
+                if (!name.isEmpty()){
+                    QStringList names = name.split("+");
+                    QString general_name = names.first();
+                    first = Sanguosha->getGeneral(general_name)->getMaxHp();
+                    
+                    if (getGeneral2Name() == "anjiang" && names.count() > 1){
+                        QString general2_name = names.last();
+                        second = Sanguosha->getGeneral(general2_name)->getMaxHp();
+                    }
+                }  
+            }
+            else if (getGeneral2Name() == "anjiang"){
+                if (!name.isEmpty()){
+                    QStringList names = name.split("+");
+                    QString general2_name = names.last();
+                    second = Sanguosha->getGeneral(general2_name)->getMaxHp();
+                }
+            }
+        }
+        
+
+
         int plan = Config.MaxHpScheme;
-        if (Config.GameMode.contains("_mini_") || Config.GameMode == "custom_scenario") plan = 1;
+        if (Config.GameMode.contains("_mini_") || Config.GameMode == "custom_scenario") plan = 2;
 
         switch (plan) {
-        case 3: max_hp = (first + second) / 2; break;
-        case 2: max_hp = qMax(first, second); break;
-        case 1: max_hp = qMin(first, second); break;
+        case 0: max_hp = (first + second) / 2; break;
+        case 3: max_hp = qMax(first, second); break;
+        case 2: max_hp = qMin(first, second); break;
         default:
             max_hp = first + second - Config.Scheme0Subtraction; break;
         }

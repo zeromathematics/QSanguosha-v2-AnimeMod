@@ -760,11 +760,13 @@ int Player::getMaxCards() const
     if (origin < 0)
         origin = qMax(hp, 0);
     int rule = 0, total = 0, extra = 0;
-    if (Config.MaxHpScheme == 3 && general2) {
+    /*
+    if (Config.MaxHpScheme == 0 && general2) {
         total = general->getMaxHp() + general2->getMaxHp();
         if (total % 2 != 0 && getMark("AwakenLostMaxHp") == 0)
             rule = 1;
     }
+    */
     extra += Sanguosha->correctMaxCards(this);
 
     return qMax(origin + rule + extra, 0);

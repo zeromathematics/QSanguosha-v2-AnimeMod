@@ -5,6 +5,7 @@ sgs.ai_judgestring = {
 	spade = "club",
 	club = "club",
 	lightning = "spade",
+	key_trick = ".",
 }
 
 local function getIdToCard(self, cards)

@@ -6792,8 +6792,8 @@ InovationPackage::InovationPackage()
 
     General *WalkerA = new General(this, "WalkerA", "real", 7, true, true);
 
-    new General(this, "sujiang", "real", 5, true, true);
-    new General(this, "sujiangf", "real", 5, false, true);
+    new General(this, "sujiang", "real", 4, true, true);
+    new General(this, "sujiangf", "real", 4, false, true);
 
     new General(this, "anjiang", "real", 4, true, true, true);
 

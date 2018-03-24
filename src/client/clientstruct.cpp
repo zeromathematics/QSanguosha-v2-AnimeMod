@@ -71,20 +71,21 @@ bool ServerInfoStruct::parse(const QString &_str)
         EnableAI = flags.contains("A");
         DisableChat = flags.contains("M");
 
-        if (flags.contains("1"))
+        if (flags.contains("1")){
             MaxHpScheme = 1;
-        else if (flags.contains("2"))
-            MaxHpScheme = 2;
-        else if (flags.contains("3"))
-            MaxHpScheme = 3;
-        else {
-            MaxHpScheme = 0;
             for (char c = 'a'; c <= 'r'; c++) {
                 if (flags.contains(c)) {
                     Scheme0Subtraction = int(c) - int('a') - 5;
                     break;
                 }
             }
+        }
+        else if (flags.contains("2"))
+            MaxHpScheme = 2;
+        else if (flags.contains("3"))
+            MaxHpScheme = 3;
+        else {
+            MaxHpScheme = 0;
         }
     }
 
@@ -155,10 +156,10 @@ void ServerInfoWidget::fill(const ServerInfoStruct &info, const QString &address
 
     if (info.Enable2ndGeneral) {
         switch (info.MaxHpScheme) {
-        case 0: max_hp_label->setText(QString(tr("Sum - %1")).arg(info.Scheme0Subtraction)); break;
-        case 1: max_hp_label->setText(tr("Minimum")); break;
-        case 2: max_hp_label->setText(tr("Maximum")); break;
-        case 3: max_hp_label->setText(tr("Average")); break;
+        case 1: max_hp_label->setText(QString(tr("Sum - %1")).arg(info.Scheme0Subtraction)); break;
+        case 2: max_hp_label->setText(tr("Minimum")); break;
+        case 3: max_hp_label->setText(tr("Maximum")); break;
+        case 0: max_hp_label->setText(tr("Average")); break;
         }
     } else {
         max_hp_label->setText(tr("2nd general is disabled"));

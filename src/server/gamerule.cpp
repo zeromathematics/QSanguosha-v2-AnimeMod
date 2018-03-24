@@ -1194,7 +1194,7 @@ QString GameRule::getWinner(ServerPlayer *victim) const
                 if (p->isAlive()) winners << p->objectName();
                 if (p->getKingdom() == aliveKingdom) {
                     QStringList generals = p->property("basara_generals").toString().split("+");
-                    if (generals.size() && !Config.Enable2ndGeneral) continue;
+                    if (generals.size() > 0 && generals.first().count() > 0 && !Config.Enable2ndGeneral) continue;
                     if (generals.size() > 1) continue;
 
                     //if someone showed his kingdom before death,
@@ -1404,12 +1404,6 @@ QString BasaraMode::getMappedRole(const QString &role)
         roles["shu"] = "loyalist";
         roles["wu"] = "rebel";
         roles["qun"] = "renegade";
-        roles["science"] = "lord";
-        roles["magic"] = "loyalist";
-        roles["real"] = "rebel";
-        roles["touhou"] = "renegade";
-        roles["kancolle"] = "renegade";
-        roles["diva"] = "renegade";
     }
     return roles[role];
 }
@@ -1499,6 +1493,12 @@ void BasaraMode::generalShowed(ServerPlayer *player, QString general_name) const
         log.arg2 = player->getGeneral2Name();
     }
     room->sendLog(log);
+
+    if (player->getGeneralName() != "anjiang" && player->getGeneral2Name() != "anjiang"){
+        if (Config.MaxHpScheme == 0 && player->getGeneral2() != NULL && player->getMaxHp() * 2 < Sanguosha->getGeneral(player->getGeneralName())->getMaxHp() + Sanguosha->getGeneral(player->getGeneralName())->getMaxHp()){
+            player->drawCards(2);
+        }
+    }
 }
 
 bool BasaraMode::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
@@ -1522,6 +1522,9 @@ bool BasaraMode::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *pl
                     log.type = "#BasaraGeneralChosenDual";
                     log.arg2 = sp->property("basara_generals").toString().split("+").last();
                 }
+
+                room->setPlayerProperty(sp, "maxhp", sp->getGeneralMaxHp());
+                room->setPlayerProperty(sp, "hp", sp->getGeneralMaxHp());
 
                 room->sendLog(log, sp);
             }

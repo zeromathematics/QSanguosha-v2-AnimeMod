@@ -3613,7 +3613,7 @@ bool Room::changeMaxHpForAwakenSkill(ServerPlayer *player, int magnitude)
     int n = player->getMark("@waked");
     if (magnitude < 0) {
         if (Config.Enable2ndGeneral && player->getGeneral() && player->getGeneral2()
-            && Config.MaxHpScheme > 0 && Config.PreventAwakenBelow3
+            && Config.MaxHpScheme != 1 && Config.PreventAwakenBelow3
             && player->getMaxHp() <= 3) {
             setPlayerMark(player, "AwakenLostMaxHp", 1);
         } else {

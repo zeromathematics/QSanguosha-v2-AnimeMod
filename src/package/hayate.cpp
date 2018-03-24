@@ -82,7 +82,7 @@ public:
     {
     }
 
-    void onSkillDetached(Room *room, ServerPlayer *player) const
+    void onSkillDetached(Room *room, ServerPlayer *) const
     {
         foreach(ServerPlayer *player, room->getAlivePlayers()){
             if (player->getMark("@real_hei") > 0){
@@ -290,7 +290,7 @@ public:
     {
     }
 
-    void onSkillDetached(Room *room, ServerPlayer *player) const
+    void onSkillDetached(Room *room, ServerPlayer *) const
     {
         foreach(ServerPlayer *player, room->getAlivePlayers()){
             if (player->getMark("@diansuo_target") > 0){
@@ -870,7 +870,7 @@ public:
     {
     }
 
-    void onSkillDetached(Room *room, ServerPlayer *player) const
+    void onSkillDetached(Room *room, ServerPlayer *) const
     {
         foreach(ServerPlayer *p, room->getAlivePlayers()){
             p->loseAllMarks("@mafuyu");
@@ -1157,7 +1157,7 @@ public:
     {
     }
 
-    void onSkillDetached(Room *room, ServerPlayer *player) const
+    void onSkillDetached(Room *room, ServerPlayer *) const
     {
         foreach(ServerPlayer *p, room->getAlivePlayers()){
             p->loseAllMarks("@Frozen_Eu");
@@ -1452,7 +1452,7 @@ public:
     {
     }
 
-    void onSkillDetached(Room *room, ServerPlayer *player) const
+    void onSkillDetached(Room *room, ServerPlayer *) const
     {
         foreach(ServerPlayer *p, room->getAlivePlayers()){
             p->loseAllMarks("@Oni");
@@ -2237,7 +2237,7 @@ MojuCard::MojuCard()
 {
 }
 
-bool MojuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *) const
+bool MojuCard::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
 {
     return targets.length() == 0;
 }

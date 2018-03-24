@@ -36,9 +36,11 @@ local function isEquip(name, player)
 end
 --渣
 sgs.ai_skill_cardchosen.renzha = function(self, who, flags)
-	local cards = who:getHandcards()
-	self:sortByUseValue(cards, true)
-	return cards:first():getEffectiveId()
+	if who:objectName() == self.player:objectName() then
+		local cards = who:getHandcards()
+		self:sortByUseValue(cards, true)
+		return cards:first():getEffectiveId()
+	end
 end
 
 sgs.ai_skill_invoke.renzha = function(self, data)

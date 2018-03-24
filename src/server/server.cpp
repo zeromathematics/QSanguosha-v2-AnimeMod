@@ -179,7 +179,7 @@ void ServerDialog::setMaxHpSchemeBox()
         return;
     }
     int index = max_hp_scheme_ComboBox->currentIndex();
-    if (index == 0) {
+    if (index == 1) {
         prevent_awaken_below3_checkbox->setVisible(false);
 
         scheme0_subtraction_label->setVisible(true);
@@ -265,22 +265,22 @@ QWidget *ServerDialog::createAdvancedTab()
 
     max_hp_label = new QLabel(tr("Max HP scheme"));
     max_hp_scheme_ComboBox = new QComboBox;
+    max_hp_scheme_ComboBox->addItem(tr("Average"));
     max_hp_scheme_ComboBox->addItem(tr("Sum - X"));
     max_hp_scheme_ComboBox->addItem(tr("Minimum"));
     max_hp_scheme_ComboBox->addItem(tr("Maximum"));
-    max_hp_scheme_ComboBox->addItem(tr("Average"));
     max_hp_scheme_ComboBox->setCurrentIndex(Config.MaxHpScheme);
 
     prevent_awaken_below3_checkbox = new QCheckBox(tr("Prevent maxhp being less than 3 for awaken skills"));
     prevent_awaken_below3_checkbox->setChecked(Config.PreventAwakenBelow3);
-    prevent_awaken_below3_checkbox->setEnabled(max_hp_scheme_ComboBox->currentIndex() != 0);
+    prevent_awaken_below3_checkbox->setEnabled(max_hp_scheme_ComboBox->currentIndex() != 1);
 
     scheme0_subtraction_label = new QLabel(tr("Subtraction for scheme 0"));
-    scheme0_subtraction_label->setVisible(max_hp_scheme_ComboBox->currentIndex() == 0);
+    scheme0_subtraction_label->setVisible(max_hp_scheme_ComboBox->currentIndex() == 1);
     scheme0_subtraction_spinbox = new QSpinBox;
     scheme0_subtraction_spinbox->setRange(-5, 12);
     scheme0_subtraction_spinbox->setValue(Config.Scheme0Subtraction);
-    scheme0_subtraction_spinbox->setVisible(max_hp_scheme_ComboBox->currentIndex() == 0);
+    scheme0_subtraction_spinbox->setVisible(max_hp_scheme_ComboBox->currentIndex() == 1);
 
     connect(max_hp_scheme_ComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setMaxHpSchemeBox()));
 
@@ -360,9 +360,9 @@ QWidget *ServerDialog::createAdvancedTab()
     connect(second_general_checkbox, SIGNAL(toggled(bool)), max_hp_scheme_ComboBox, SLOT(setVisible(bool)));
 
     if (Config.Enable2ndGeneral) {
-        prevent_awaken_below3_checkbox->setVisible(max_hp_scheme_ComboBox->currentIndex() != 0);
-        scheme0_subtraction_label->setVisible(max_hp_scheme_ComboBox->currentIndex() == 0);
-        scheme0_subtraction_spinbox->setVisible(max_hp_scheme_ComboBox->currentIndex() == 0);
+        prevent_awaken_below3_checkbox->setVisible(max_hp_scheme_ComboBox->currentIndex() != 1);
+        scheme0_subtraction_label->setVisible(max_hp_scheme_ComboBox->currentIndex() == 1);
+        scheme0_subtraction_spinbox->setVisible(max_hp_scheme_ComboBox->currentIndex() == 1);
     } else {
         prevent_awaken_below3_checkbox->setVisible(false);
         scheme0_subtraction_label->setVisible(false);
@@ -1250,7 +1250,7 @@ int ServerDialog::config()
     Config.EnableBasara = basara_checkbox->isChecked() && basara_checkbox->isEnabled();
     Config.EnableHegemony = hegemony_checkbox->isChecked() && hegemony_checkbox->isEnabled();
     Config.MaxHpScheme = max_hp_scheme_ComboBox->currentIndex();
-    if (Config.MaxHpScheme == 0) {
+    if (Config.MaxHpScheme == 1) {
         Config.Scheme0Subtraction = scheme0_subtraction_spinbox->value();
         Config.PreventAwakenBelow3 = false;
     } else {
