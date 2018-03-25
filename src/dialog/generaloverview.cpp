@@ -336,7 +336,12 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
         name = Sanguosha->translate(general_name);
         kingdom = Sanguosha->translate(general->getKingdom());
         gender = general->isMale() ? tr("Male") : (general->isFemale() ? tr("Female") : tr("NoGender"));
-        max_hp = QString::number(general->getMaxHp());
+        
+        if (ServerInfo.EnableHegemony){
+            max_hp = QString::number(float(general->getMaxHp()) / 2, 'g', (general->getMaxHp() == 1 || general->getMaxHp() / 2 * 2 == general->getMaxHp()) ? 1 : 2);
+        }else{
+            max_hp = QString::number(general->getMaxHp());
+        }
         package = Sanguosha->translate(general->getPackage());
 
         QString nickname = Sanguosha->translate("#" + general_name);
@@ -414,7 +419,7 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
     ui->tableWidget->setColumnWidth(2, 95);
     ui->tableWidget->setColumnWidth(3, 60);
     ui->tableWidget->setColumnWidth(4, 40);
-    ui->tableWidget->setColumnWidth(5, 30);
+    ui->tableWidget->setColumnWidth(5, 40);
     ui->tableWidget->setColumnWidth(6, 95);
 
     ui->tableWidget->setCurrentItem(ui->tableWidget->item(0, 0));

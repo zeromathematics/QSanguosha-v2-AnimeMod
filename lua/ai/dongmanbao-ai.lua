@@ -1550,8 +1550,8 @@ se_chouyuan_skill.getTurnUseCard=function(self,inclusive)
 		return sgs.Card_Parse("#se_chouyuancard:.:")
 	end
 	if	self.player:getRole() =="renegade" then
-		if #self.friends + 1 >= #self.enemies and (self.player:getHp() >= 3 or lord:getHp() >= 3) then return end
-		if #self.friends >= #self.enemies and (self.player:getHp() >= 2 or lord:getHp() >= 2) then return end
+		if #self.friends + 1 >= #self.enemies and (self.player:getHp() >= 3 or (lord and lord:getHp() >= 3)) then return end
+		if #self.friends >= #self.enemies and (self.player:getHp() >= 2 or (lord and lord:getHp() >= 2)) then return end
 		return sgs.Card_Parse("#se_chouyuancard:.:")
 	end
 end
@@ -1561,7 +1561,7 @@ sgs.ai_skill_use_func["#se_chouyuancard"] = function(card,use,self)
 	local target
 	self:sort(self.enemies, "defense")
 	local lord = self.room:getLord()
-	if self.player:getRole() =="rebel" then
+	if lord and self.player:getRole() =="rebel" then
 		target = lord
 	end
 	if self.player:getRole() =="loyalist" or self.player:getRole() =="lord" then
@@ -1586,7 +1586,7 @@ sgs.ai_skill_use_func["#se_chouyuancard"] = function(card,use,self)
 				end
 			end
 		end
-		if lord:getHp() <= 2 then
+		if lord and lord:getHp() <= 2 then
 			for _,enemy in ipairs(self.enemies) do
 				if enemy:getRole() == "rebel" and enemy then
 					target = enemy
@@ -1762,8 +1762,8 @@ se_chongjing_skill.getTurnUseCard=function(self,inclusive)
 		return sgs.Card_Parse("#se_chongjingcard:.:")
 	end
 	if	self.player:getRole() =="renegade" then
-		if #self.friends + 1 >= #self.enemies and (self.player:getHp() >= 3 or lord:getHp() >= 3) then return end
-		if #self.friends >= #self.enemies and (self.player:getHp() >= 2 or lord:getHp() >= 2) then return end
+		if #self.friends + 1 >= #self.enemies and (self.player:getHp() >= 3 or (lord and lord:getHp() >= 3)) then return end
+		if #self.friends >= #self.enemies and (self.player:getHp() >= 2 or (lord and lord:getHp() >= 2)) then return end
 		return sgs.Card_Parse("#se_chongjingcard:.:")
 	end
 end
@@ -1795,7 +1795,7 @@ sgs.ai_skill_use_func["#se_chongjingcard"] = function(card,use,self)
 				end
 			end
 		end
-		if lord:getHp() <= 2 then
+		if lord and lord:getHp() <= 2 then
 			for _,friend in ipairs(self.friends) do
 				if friend:getRole() == "lord" and not friend:isMale() and friend:objectName() ~= self.player:objectName() then
 					target = friend
@@ -1804,7 +1804,7 @@ sgs.ai_skill_use_func["#se_chongjingcard"] = function(card,use,self)
 		end
 	end
 	if self.player:getRole() =="loyalist" then
-		if not lord:isMale() then
+		if lord and not lord:isMale() then
 			target = lord
 		end
 	end
@@ -2961,7 +2961,7 @@ end
 sgs.ai_skill_playerchosen.SE_Yishi = function(self, targets)
 	local lord = self.room:getLord()
 	for _,p in ipairs(self.friends) do
-		if p:isMale() and p:objectName() == lord:objectName() then
+		if p:isMale() and lord and p:objectName() == lord:objectName() then
 			return p
 		end
 	end
@@ -4893,7 +4893,7 @@ end
 sgs.ai_skill_playerchosen["se_biling"] = function(self, targets)
 	if self.player:getRole() =="rebel" then
 		local lord = self.room:getLord()
-		if targets:contains(lord) then return lord end
+		if lord and targets:contains(lord) then return lord end
 	else
 		for _,p in sgs.qlist(targets) do
 			if self:isFriend(p) and self:hasSkills("SE_Juji|SE_Juji_Reki|LuaTianmo|LuaBimie|LuaGungnir|SE_Shuangqiang",p) then return p end

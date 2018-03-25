@@ -244,7 +244,7 @@ sgs.ai_skill_choice.Daolu = function(self, choices, data)
 		end
 		return "Nagisa_Protector"
 	elseif self.player:getRole() == "renegade" then
-		if lord:getHp() <= 2 then
+		if lord and lord:getHp() <= 2 then
 			return "Fuko_summoner"
 		end
 		return "Nagisa_Protector"
@@ -253,8 +253,8 @@ end
 
 sgs.ai_skill_playerchosen.Daolu = function(self, targets)
 	local lord = self.room:getLord()
-	if self.player:getRole() == "loyalist" then return lord end
-	if self.player:getRole() == "rebel" then
+	if lord and self.player:getRole() == "loyalist" then return lord end
+	if lord and self.player:getRole() == "rebel" then
 		for _,friend in ipairs(self.friends) do
 			if not friend:objectName()~=self.player:objectName() and self:isWeak(friend) and self.player:getHp() > 2 then
 				target = friend
@@ -410,7 +410,7 @@ sgs.ai_skill_use_func.ZhilingCard = function(card,use,self)
 		end
 	end
 	if self.player:getRole() =="rebel" then
-		if (lord:getMark("@Neko_S") == 0 or lord:getMark("@Neko_C") == 0 or (lord:getMark("@Neko_D") == 0 and not lord:hasSkill("Huansha")) or lord:getMark("@Neko_H") == 0) and not lord:hasFlag("Can_not") then
+		if (lord and (lord:getMark("@Neko_S") == 0 or lord:getMark("@Neko_C") == 0 or (lord:getMark("@Neko_D") == 0 and not lord:hasSkill("Huansha")) or lord:getMark("@Neko_H") == 0) and not lord:hasFlag("Can_not")) then
 			target = lord
 		end
 	end

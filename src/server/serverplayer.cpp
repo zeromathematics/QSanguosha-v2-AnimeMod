@@ -293,6 +293,33 @@ qint64 ServerPlayer::endNetworkDelayTest()
     return test_time.msecsTo(QDateTime::currentDateTime());
 }
 
+QString ServerPlayer::getHegemonyRole()
+{
+    if (!Config.EnableHegemony){
+        return getRole();
+    }
+    if (getGeneral() && getGeneral()->objectName() == "anjiang" && (!getGeneral2() || (getGeneral2() && getGeneral2()->objectName() == "anjiang"))){
+        // for thos not shown at all
+        // get basara general from tag
+        QStringList generals = property("basara_generals").toString().split("+");
+        return BasaraMode::getMappedRole(Sanguosha->getGeneral(generals.first())->getKingdom());
+    }
+    return getRole();
+}
+
+QString ServerPlayer::getHegemonyShownRole()
+{
+    if (!Config.EnableHegemony){
+        return getRole();
+    }
+    if (getGeneral() && getGeneral()->objectName() == "anjiang" && (!getGeneral2() || (getGeneral2() && getGeneral2()->objectName() == "anjiang"))){
+        // for thos not shown at all
+        // get basara general from tag
+        return "";
+    }
+    return getRole();
+}
+
 void ServerPlayer::startRecord()
 {
     recorder = new Recorder(this);
@@ -1048,6 +1075,8 @@ int ServerPlayer::getGeneralMaxHp() const
 
     if (room->hasWelfare(this))
         max_hp++;
+
+    
 
     return max_hp;
 }

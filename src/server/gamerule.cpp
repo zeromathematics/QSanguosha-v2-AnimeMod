@@ -1175,24 +1175,27 @@ QString GameRule::getWinner(ServerPlayer *victim) const
         else if (!alive_roles.contains("rebel"))
             winner = "loyalist";
     } else if (Config.EnableHegemony) {
-        bool has_anjiang = false, has_diff_kingdoms = false;
-        QString init_kingdom;
+        bool has_anjiang = false, has_diff_roles = false, has_ye=false;
+        QString init_role;
         foreach (ServerPlayer *p, room->getAlivePlayers()) {
             if (!p->property("basara_generals").toString().isEmpty())
                 has_anjiang = true;
 
-            if (init_kingdom.isEmpty())
-                init_kingdom = p->getKingdom();
-            else if (init_kingdom != p->getKingdom())
-                has_diff_kingdoms = true;
+            if (init_role.isEmpty())
+                init_role = p->getHegemonyShownRole();
+            else if (init_role != p->getHegemonyShownRole())
+                has_diff_roles = true;
+            if (p->getHegemonyShownRole() == "careerist"){
+                has_ye = true;
+            }
         }
 
-        if (!has_anjiang && !has_diff_kingdoms) {
+        if (!has_anjiang && !has_diff_roles && !(has_ye && room->getAlivePlayers().count() > 1)) {
             QStringList winners;
-            QString aliveKingdom = room->getAlivePlayers().first()->getKingdom();
+            QString aliveRole = room->getAlivePlayers().first()->getHegemonyShownRole();
             foreach (ServerPlayer *p, room->getPlayers()) {
                 if (p->isAlive()) winners << p->objectName();
-                if (p->getKingdom() == aliveKingdom) {
+                if (p->getHegemonyShownRole() == aliveRole) {
                     QStringList generals = p->property("basara_generals").toString().split("+");
                     if (generals.size() > 0 && generals.first().count() > 0 && !Config.Enable2ndGeneral) continue;
                     if (generals.size() > 1) continue;
@@ -1404,6 +1407,7 @@ QString BasaraMode::getMappedRole(const QString &role)
         roles["shu"] = "loyalist";
         roles["wu"] = "rebel";
         roles["qun"] = "renegade";
+        roles["god"] = "careerist";
     }
     return roles[role];
 }
@@ -1439,16 +1443,6 @@ void BasaraMode::playerShowed(ServerPlayer *player) const
         return;
     QStringList names = name.split("+");
 
-    if (Config.EnableHegemony) {
-        QMap<QString, int> kingdom_roles;
-        foreach(ServerPlayer *p, room->getOtherPlayers(player))
-            kingdom_roles[p->getKingdom()]++;
-
-        if (kingdom_roles[Sanguosha->getGeneral(names.first())->getKingdom()] >= Config.value("HegemonyMaxShown", 2).toInt()
-            && player->getGeneralName() == "anjiang")
-            return;
-    }
-
     QString answer = room->askForChoice(player, "RevealGeneral", "yes+no");
     if (answer == "yes") {
         QString general_name = room->askForGeneral(player, names);
@@ -1468,14 +1462,27 @@ void BasaraMode::generalShowed(ServerPlayer *player, QString general_name) const
     QStringList names = name.split("+");
 
     if (player->getGeneralName() == "anjiang") {
+        
+        QString rawRole = player->getHegemonyRole();
+
         room->changeHero(player, general_name, false, false, false, false);
+
         room->setPlayerProperty(player, "kingdom", player->getGeneral()->getKingdom());
 
         if (player->getGeneral()->getKingdom() == "god")
             room->setPlayerProperty(player, "kingdom", room->askForKingdom(player));
 
-        if (Config.EnableHegemony)
-            room->setPlayerProperty(player, "role", getMappedRole(player->getKingdom()));
+        if (Config.EnableHegemony){
+            bool is_ye = false;
+            QMap<QString, int> kingdom_roles;
+            foreach(ServerPlayer *p, room->getOtherPlayers(player))
+                kingdom_roles[p->getHegemonyShownRole()]++;
+
+            if (kingdom_roles[rawRole] >= room->getPlayers().count() / 2)
+                is_ye = true;
+            room->setPlayerProperty(player, "role", is_ye ? "careerist" : getMappedRole(player->getKingdom()));
+        }
+            
     } else {
         room->changeHero(player, general_name, false, false, true, false);
     }
@@ -1577,9 +1584,18 @@ bool BasaraMode::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *pl
             QStringList generals = player->property("basara_generals").toString().split("+");
             room->changePlayerGeneral(player, generals.at(0));
 
+            QString rawRole = player->getHegemonyRole();
             room->setPlayerProperty(player, "kingdom", player->getGeneral()->getKingdom());
-            if (Config.EnableHegemony)
-                room->setPlayerProperty(player, "role", getMappedRole(player->getKingdom()));
+            if (Config.EnableHegemony){
+                bool is_ye = false;
+                QMap<QString, int> kingdom_roles;
+                foreach(ServerPlayer *p, room->getOtherPlayers(player))
+                    kingdom_roles[p->getHegemonyShownRole()]++;
+
+                if (kingdom_roles[rawRole] >= room->getPlayers().count() / 2)
+                    is_ye = true;
+                room->setPlayerProperty(player, "role", is_ye ? "careerist" : getMappedRole(player->getKingdom()));
+            }
 
             generals.takeFirst();
             player->setProperty("basara_generals", generals.join("+"));
@@ -1599,10 +1615,22 @@ bool BasaraMode::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *pl
         if (Config.EnableHegemony) {
             ServerPlayer *killer = death.damage ? death.damage->from : NULL;
             if (killer && killer->getKingdom() != "god") {
-                if (killer->getKingdom() == player->getKingdom())
+                if (killer->getHegemonyShownRole() == player->getHegemonyShownRole())
                     killer->throwAllHandCardsAndEquips();
-                else if (killer->isAlive())
-                    killer->drawCards(3, "kill");
+                else if (killer->isAlive()){
+                    if (player->getHegemonyShownRole() == "careerist"){
+                        killer->drawCards(1, "kill");
+                        return true;
+                    }
+                    int to_draw = 1;
+                    foreach(ServerPlayer *p, room->getAlivePlayers()){
+                        if (p->getHegemonyShownRole() == player->getHegemonyShownRole()){
+                            to_draw += 1;
+                        }
+                    }
+                    killer->drawCards(to_draw, "kill");
+                }
+                    
             }
             return true;
         }

@@ -97,7 +97,7 @@ for i=sgs.NonTrigger, sgs.NumOfEvents, 1 do
 end
 
 function setInitialTables()
-	sgs.current_mode_players = { lord = 0, loyalist = 0, rebel = 0, renegade = 0 }
+	sgs.current_mode_players = { lord = 0, loyalist = 0, rebel = 0, renegade = 0, careerist=0 }
 	sgs.ai_type_name =          {"Skill", "Basic", "Trick", "Equip"}
 	sgs.lose_equip_skill = "kofxiaoji|xiaoji|xuanfeng|nosxuanfeng"
 	sgs.need_kongcheng = "lianying|noslianying|kongcheng|sijian|hengzheng"
@@ -1824,7 +1824,7 @@ function SmartAI:sortEnemies(players)
 end
 
 function sgs.updateAlivePlayerRoles()
-	for _, arole in ipairs({"lord", "loyalist", "rebel", "renegade"}) do
+	for _, arole in ipairs({"lord", "loyalist", "rebel", "renegade", "careerist"}) do
 		sgs.current_mode_players[arole] = 0
 	end
 	for _, aplayer in sgs.qlist(global_room:getAllPlayers()) do

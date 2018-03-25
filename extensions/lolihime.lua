@@ -277,7 +277,7 @@ youpianCARD=sgs.CreateSkillCard{
 
 ----------------------------------
 
-mianma = sgs.General(Lolihime, "mianma", "real", 10, false, false, false)
+mianma = sgs.General(Lolihime, "mianma", "real", 1, false, false, false)
 
 
 lingti = sgs.CreateTriggerSkill
@@ -958,6 +958,7 @@ sgs.LoadTranslationTable{
 ["xiaoshi"] = "消逝",
 [":xiaoshi"] = "游戏开始时，你的体力上限变为0，你获得X枚“灵体”标记。回合开始阶段开始时，你失去一个“灵体”标记；若你没有“灵体”标记，你立即死亡。X为游戏人数 + 5",
 ["$xiaoshi1"] = "面麻...对自己已经死了这件事，还是知道的...",
+["@Menma_turn"] = "灵体",
 ["SE_Xinyuan"] = "心愿",
 ["$SE_Xinyuan1"] = "这样子，真的好怀念，好开心。",
 ["$SE_Xinyuan2"] = "面麻的愿望...好像已经实现了...",

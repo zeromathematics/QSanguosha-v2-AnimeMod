@@ -2508,7 +2508,7 @@ public:
             DamageStruct damage = data.value<DamageStruct>();
 
             ServerPlayer *tomoya = room->findPlayerBySkillName(objectName());
-            if (damage.to == tomoya){
+            if (tomoya && damage.to == tomoya){
                 foreach(ServerPlayer *p, room->getAlivePlayers()){
                     if (p->getMark("@Tomo") > 0){
                         p->drawCards(2);
@@ -2961,7 +2961,7 @@ public:
             QVariant newData;
             newData.setValue(damage.to);
             ServerPlayer *rin = room->findPlayerBySkillName(objectName());
-            if (!rin->askForSkillInvoke(objectName(), newData))
+            if (!rin || !rin->askForSkillInvoke(objectName(), newData))
                 return false;
             room->broadcastSkillInvoke(objectName());
             room->doLightbox("SE_Zhixing$", 800);
@@ -4389,7 +4389,7 @@ public:
             }
             CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
             ServerPlayer *iroha = room->findPlayerBySkillName(objectName());
-            if (move.to != iroha || move.from == move.to || (move.to_place != Player::PlaceEquip && move.to_place != Player::PlaceHand)){
+            if (!iroha || move.to != iroha || move.from == move.to || (move.to_place != Player::PlaceEquip && move.to_place != Player::PlaceHand)){
                 return false;
             }
             ServerPlayer *current = room->getCurrent();
@@ -4778,7 +4778,7 @@ public:
             else if (player->getPhase() == Player::RoundStart && room->hasAura() && (room->getAura() == objectName() || room->getAura() == "MacrossF") && player->getEquips().length() > 0){
                 QString choice = room->askForChoice(player, objectName(), "xingjian_skip+xingjian_throw", data);
                 ServerPlayer * ranka = room->findPlayerBySkillName(objectName());
-                if (player == ranka){
+                if (!ranka || player == ranka){
                     return false;
                 }
                 room->broadcastSkillInvoke(objectName(), 2);
@@ -4849,7 +4849,7 @@ public:
 
             CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
             ServerPlayer *ranka = room->findPlayerBySkillName(objectName());
-            if ((move.to != ranka && move.from != ranka) || move.from == move.to || (!move.from_places.contains(Player::PlaceHand) && !move.from_places.contains(Player::PlaceEquip)) || (move.to_place != Player::PlaceEquip && move.to_place != Player::PlaceHand)){
+            if (!ranka || (move.to != ranka && move.from != ranka) || move.from == move.to || (!move.from_places.contains(Player::PlaceHand) && !move.from_places.contains(Player::PlaceEquip)) || (move.to_place != Player::PlaceEquip && move.to_place != Player::PlaceHand)){
                 return false;
             }
             ServerPlayer* from;
@@ -5201,6 +5201,9 @@ public:
             DeathStruct death = data.value<DeathStruct>();
             ServerPlayer *dead = death.who;
             ServerPlayer *makoto = room->findPlayerBySkillName(objectName());
+            if (!makoto){
+                return false;
+            }
             makoto->addMark("yandan_death");
             if (dead->isNude() || makoto == dead){
                 return false;
@@ -6171,7 +6174,7 @@ public:
         CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
         if (move.from && move.from->hasSkill(objectName()) && (!move.to || move.to != move.from) && move.from->getPhase() == Player::NotActive){
             ServerPlayer *mikoto = room->findPlayerBySkillName(objectName());
-            if (!mikoto->askForSkillInvoke(objectName(), data)){
+            if (!mikoto || !mikoto->askForSkillInvoke(objectName(), data)){
                 return false;
             }
             foreach(int id, move.card_ids){

@@ -2147,11 +2147,19 @@ void Room::changeHero(ServerPlayer *player, const QString &new_general, bool ful
     arg << sendLog;
     doBroadcastNotify(QSanProtocol::S_COMMAND_LOG_EVENT, arg);
 
+    if (Config.EnableBasara){
+        player->setMaxHp(player->getGeneralMaxHp());
+    }
+
     if (isSecondaryHero)
         changePlayerGeneral2(player, new_general);
     else
         changePlayerGeneral(player, new_general);
-    player->setMaxHp(player->getGeneralMaxHp());
+
+
+    if (!Config.EnableBasara){
+        player->setMaxHp(player->getGeneralMaxHp());
+    }
 
     if (full_state)
         player->setHp(player->getMaxHp());

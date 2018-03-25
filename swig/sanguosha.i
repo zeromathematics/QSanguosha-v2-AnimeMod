@@ -76,7 +76,7 @@ class Player: public QObject {
 public:
     enum Phase { RoundStart, Start, Judge, Draw, Play, Discard, Finish, NotActive, PhaseNone };
     enum Place { PlaceHand, PlaceEquip, PlaceDelayedTrick, PlaceJudge, PlaceSpecial, DiscardPile, DrawPile, PlaceTable, PlaceUnknown, DrawPileBottom };
-    enum Role { Lord, Loyalist, Rebel, Renegade };
+    enum Role { Lord, Loyalist, Rebel, Renegade, Careerist };
 
     explicit Player(QObject *parent);
 
@@ -367,6 +367,9 @@ public:
     void addToPile(const char *pile_name, QList<int> card_ids, bool open, QList<ServerPlayer *> open_players, CardMoveReason reason);
     void exchangeFreelyFromPrivatePile(const char *skill_name, const char *pile_name, int upperlimit = 1000, bool include_equip = false);
     void gainAnExtraTurn();
+
+	QString getHegemonyRole();
+	QString getHegemonyShownRole();
 };
 
 %extend ServerPlayer {

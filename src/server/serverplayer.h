@@ -124,6 +124,10 @@ public:
     void startNetworkDelayTest();
     qint64 endNetworkDelayTest();
 
+    // hegemony
+    QString getHegemonyRole();
+    QString getHegemonyShownRole();
+
     //Synchronization helpers
     enum SemaphoreType
     {

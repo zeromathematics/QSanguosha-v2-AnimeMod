@@ -38,7 +38,7 @@ end
 sgs.ai_skill_cardchosen.renzha = function(self, who, flags)
 	if who:objectName() == self.player:objectName() then
 		local cards = who:getHandcards()
-		self:sortByUseValue(cards, true)
+		self:sortByUseValue(sgs.QList2Table(cards), true)
 		return cards:first():getEffectiveId()
 	end
 end
@@ -258,7 +258,7 @@ sgs.ai_skill_use_func["#luagongluecard"] = function(card,use,self)
 	self:sort(self.enemies, "defense")
 	local lord = self.room:getLord()
 	if self.player:getRole() =="rebel" then
-		if not lord:isKongcheng() then
+		if lord and not lord:isKongcheng() then
 			target = lord
 		end
 	else
