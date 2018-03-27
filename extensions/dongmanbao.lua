@@ -3154,28 +3154,28 @@ se_shengjiancard = sgs.CreateSkillCard{
 Jianqiao = sgs.CreateTriggerSkill{
 	name = "Jianqiao",
 	frequency = sgs.Skill_NotFrequent,
-	events = {sgs.AskForPeachesDone, sgs.EventPhaseEnd},  -- sgs.DamageInflicted,
+	events = {sgs.DamageInflicted, sgs.AskForPeachesDone, sgs.EventPhaseEnd},  -- sgs.DamageInflicted,
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
-		-- if event == sgs.DamageInflicted then
-		-- 	local damage = data:toDamage()
-		-- 	if damage.to and damage.to:hasSkill(self:objectName()) then
-		-- 		local x = math.random(1,3)
-		-- 		if x == 1 then
-		-- 			room:broadcastSkillInvoke("Jianqiao", 1)
-		-- 			local msg = sgs.LogMessage()
-		-- 			msg.type = "#Jianqiao_stop"
-		-- 			msg.from = damage.to
-		-- 			room:sendLog(msg)
-		-- 			return true
-		-- 		end
-		-- 	end
-		if event == sgs.AskForPeachesDone then
+		if event == sgs.DamageInflicted then
+			local damage = data:toDamage()
+			if damage.to and damage.to:hasSkill(self:objectName()) then
+				local x = math.random(1,3)
+				if x == 1 then
+					room:broadcastSkillInvoke("Jianqiao", 1)
+					local msg = sgs.LogMessage()
+					msg.type = "#Jianqiao_stop"
+					msg.from = damage.to
+					room:sendLog(msg)
+					return true
+				end
+			end
+		elseif event == sgs.AskForPeachesDone then
 			local dying = data:toDying()
 			if not dying.who or dying.who:isDead() or not dying.who:hasSkill(self:objectName()) then return end
 			local theRecover = sgs.RecoverStruct()
 			theRecover.who =  dying.who
-			room:broadcastSkillInvoke("Jianqiao", math.random(1, 2))
+			room:broadcastSkillInvoke("Jianqiao", 2)
 			room:recover(dying.who,theRecover)
 		else
 			if player:isAlive() and player:hasSkill(self:objectName()) and player:getPhase() == sgs.Player_Finish then
@@ -3207,7 +3207,7 @@ sgs.LoadTranslationTable{
 ["Jianqiao"] = "剑鞘「远离尘世的理想乡」",
 ["$Jianqiao1"] = "不要紧...治疗已经派上用场了。",
 ["$Jianqiao2"] = "Avalon！！",
-[":Jianqiao"] = "回合结束时，你可以将这个技能转交给其他角色。锁定技。你濒死阶段结束时，回复一点体力。",
+[":Jianqiao"] = "回合结束时，你可以将这个技能转交给其他角色。锁定技。每当你受到伤害时，你有1/3的概率防止此伤害。你濒死阶段结束时，回复一点体力。",
 ["@jianqiao-prompt"] = "选择一名角色并将「剑鞘」转交之，可以取消。",
 ["Saber"] = "Saber",
 ["&Saber"] = "Saber",
@@ -6271,7 +6271,17 @@ SE_WufanMark = sgs.CreateTriggerSkill{
 		if event == sgs.GameStart or (event == sgs.EventAcquireSkill and data:toString() == "SE_Wufan") then
 			player:loseAllMarks("@Efreet")
 			player:gainMark("@Efreet", 3)
-		elseif event == sgs.Death or (event == sgs.EventLoseSkill and data:toString() == "SE_Wufan") then
+		elseif event == sgs.Death then
+			local death = data:toDeath()
+			if death.who:objectName() == player:objectName() then
+				if player:hasSkill("SE_Niepan") then
+					room:detachSkillFromPlayer(player,"SE_Niepan")
+				end
+				if player:hasSkill("se_jiangui") then
+					room:detachSkillFromPlayer(player,"se_jiangui")
+				end
+			end
+		elseif event == sgs.EventLoseSkill and data:toString() == "SE_Wufan" then
 			if player:hasSkill("SE_Niepan") then
 				room:detachSkillFromPlayer(player,"SE_Niepan")
 			end

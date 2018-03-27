@@ -2517,7 +2517,34 @@ public:
     }
 };
 
+class Vector : public TriggerSkill
+{
+public:
+    Vector() : TriggerSkill("vector")
+    {
+        frequency = NotFrequent;
+        events << CardEffect;
+    }
 
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        CardEffectStruct effect = data.value<CardEffectStruct>();
+        QList<ServerPlayer *> targets;
+        foreach(ServerPlayer *p, room->getOtherPlayers(player)){
+            if (!effect.from || !Sanguosha->isProhibited(effect.from, p, effect.card))
+                targets.append(p);
+        }
+        if (targets.count() == 0 || player->isKongcheng() || !effect.to || effect.to != player || !effect.card || !player->hasSkill(objectName()) || !room->askForCard(player, ".", QString("@vector-discard:%1::%2").arg(effect.from != NULL ? effect.from->objectName() : "No Source", effect.card->objectName()), data, objectName()))
+            return false;
+        effect.to = room->askForPlayerChosen(player, targets, objectName(), QString("@vector-select:%1::%2").arg(effect.from != NULL ? effect.from->objectName() : "No Source", effect.card->objectName()));
+        room->broadcastSkillInvoke(objectName());
+        room->doLightbox(objectName() + "$", 800);
+        data.setValue(effect);
+
+        return false;
+    }
+};
 
 
 HayatePackage::HayatePackage()
@@ -2595,6 +2622,9 @@ HayatePackage::HayatePackage()
     nagase->addSkill(new Qifen);
     nagase->addSkill(new Mishi);
     nagase->addSkill(new Zhufu);
+
+    General *acc = new General(this, "acc", "science", 3);
+    acc->addSkill(new Vector);
 
     addMetaObject<TiaojiaoCard>();
     addMetaObject<HaremuCard>();

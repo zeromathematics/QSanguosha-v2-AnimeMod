@@ -1,7 +1,7 @@
 Lolihime = sgs.Package("lolihime")
 
 jdd = sgs.General(Lolihime, "jdd", "real", 3, false)
-acc = sgs.General(Lolihime, "acc", "science", 3)
+-- acc = sgs.General(Lolihime, "acc", "science", 3)
 --------------------------------------------------------------------------------------
 tuhao = sgs.CreateTriggerSkill{
 	name = "tuhao",
@@ -48,34 +48,34 @@ yehuo = sgs.CreateTriggerSkill{
 }
 
 -----------------------------------------------
-vector = sgs.CreateTriggerSkill
-{
-	name = "vector",
-	frequency = sgs.Skill_NotFrequent,
-    events = {sgs.CardEffect},
-
-	on_trigger = function(self, event, player, data)
-        local room = player:getRoom()
-		if player:isKongcheng()then return end
-		local effect = data:toCardEffect()
-		if effect.to:objectName() ~= player:objectName() then return end
-		if player:getCards("he"):length() == 0 then return end
-		if room:askForSkillInvoke(player,self:objectName(),data) and room:askForCard(player, ".|.|.", "vector_Discard", sgs.QVariant(), self:objectName()) then
-			local list = room:getAlivePlayers()
-			for _,q in sgs.qlist(list) do
-				if sgs.Sanguosha:isProhibited(player, q, effect.card) then
-					list:removeOne(q)
-				end
-			end
-			local dest = room:askForPlayerChosen(player, list, "vector")
-			room:broadcastSkillInvoke(self:objectName())
-			room:doLightbox("vector$", 800)
-			effect.to = dest
-			data:setValue(effect)
-		end
-		return false
-	end,
-}
+-- vector = sgs.CreateTriggerSkill
+-- {
+-- 	name = "vector",
+-- 	frequency = sgs.Skill_NotFrequent,
+--     events = {sgs.CardEffect},
+--
+-- 	on_trigger = function(self, event, player, data)
+--         local room = player:getRoom()
+-- 		if player:isKongcheng()then return end
+-- 		local effect = data:toCardEffect()
+-- 		if effect.to:objectName() ~= player:objectName() then return end
+-- 		if player:getCards("he"):length() == 0 then return end
+-- 		if room:askForSkillInvoke(player,self:objectName(),data) and room:askForCard(player, ".|.|.", "vector_Discard", sgs.QVariant(), self:objectName()) then
+-- 			local list = room:getAlivePlayers()
+-- 			for _,q in sgs.qlist(list) do
+-- 				if sgs.Sanguosha:isProhibited(player, q, effect.card) then
+-- 					list:removeOne(q)
+-- 				end
+-- 			end
+-- 			local dest = room:askForPlayerChosen(player, list, "vector")
+-- 			room:broadcastSkillInvoke(self:objectName())
+-- 			room:doLightbox("vector$", 800)
+-- 			effect.to = dest
+-- 			data:setValue(effect)
+-- 		end
+-- 		return false
+-- 	end,
+-- }
 
 ------------------------------------------------------------------------------------------------
 shouji = sgs.CreateViewAsSkill{
@@ -882,13 +882,12 @@ kuro:addSkill(spreadillness)
 --qb:addSkill(LLJ_chihun)
 jdd:addSkill(tuhao)
 jdd:addSkill(shouji)
-acc:addSkill(vector)
+-- acc:addSkill(vector)
 
 
 
 sgs.LoadTranslationTable{
 ["shouji$"] = "image=image/animate/shouji.png",
-["vector$"] = "image=image/animate/vector.png",
 ["xiaoshi$"] = "image=image/animate/xiaoshi.png",
 ["eastfast$"] = "image=image/animate/eastfast.png",
 ["dandiao$"] = "image=image/animate/dandiao.png",
@@ -936,15 +935,6 @@ sgs.LoadTranslationTable{
 ["$tuhao2"] = "（里志）怎么样！够气派吧！（奉太郎）走吧，千反田她们还等着呢。",
 [":tuhao"] = "锁定技。出牌阶段，每当你使用一张红色的牌，你摸一张牌；每当你使用一张黑色的牌，你须弃置你的任意区域内的一张牌。",
 
-["vector"]="矢量操纵",
-["vector_Discard"]="你可以弃置一张手牌，令当前结算的效果转移为场上任意的角色。",
-[":vector"]="每当结算你为目标的锦囊或杀的效果时，你可以弃置一张手牌，令该效果转移为场上任意的角色。",
-
-["$vector1"] = "不好意思，这前面可是一方通行！",
-["$vector2"] = "就算如此，我也决定在那小鬼面前，一直自称为最强。",
-["$vector3"] = "（狂笑）演出辛苦了！",
-["$vector4"] = "（狂笑）原来是木原君啊！",
-
 ["yehuo"] = "夜祸",
 [":yehuo"] = "锁定技。你的回合开始阶段，如果处于背面朝上，你翻过来行动,并于回合结束阶段翻回背面。回合外，每次被翻回正面，你当收到一点无来源的无属性伤害。",
 ["spring"] = "源头",
@@ -972,14 +962,6 @@ sgs.LoadTranslationTable{
 ["~mianma"] = "（仁太）一，二，（大家）找到面麻了！ （面麻）被大家找到...了...",
 ["cv:mianma"] = "茅野爱衣",
 ["designer:mianma"] = "帕秋莉·萝莉姬 & Sword Elucidator",
-
-["acc"] = "原·一方通行",
-["&acc"] = "原·一方通行",
-["@acc"] = "魔法禁书目录",
-["~acc"] = "...",
-["#acc"] = "level 6",
-["cv:acc"] = "冈本信彦",
-["designer:acc"] = "帕秋莉·萝莉姬",
 
 ["qb"] = "QBキュゥべえ",
 ["&qb"] = "QB",
