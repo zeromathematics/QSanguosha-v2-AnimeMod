@@ -4718,7 +4718,7 @@ public:
         }
         else if (event == TargetConfirmed){
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.from && use.from->hasSkill(objectName())){
+            if (use.from && use.from->hasSkill(objectName()) && use.card && !(use.card->isKindOf("Slash") && use.card->isBlack())){
                 foreach(ServerPlayer *p, use.to){
                     if (p->getMark("@Buyu") > 0){
                         if (!use.from->hasFlag("Buyu_sdraw_played")){
@@ -6740,7 +6740,7 @@ InovationPackage::InovationPackage()
     Chiaki->addSkill(new Zhinian);
     skills << new Chengxu;
     Chiaki->addWakeTypeSkillForAudio("chengxu");
-    General *Shizuo = new General(this, "Shizuo", "real", 6);
+    General *Shizuo = new General(this, "Shizuo", "real", 7);
     Shizuo->addSkill(new Baonu);
     Shizuo->addSkill(new Jizhanshiz);
     General *Nagi = new General(this, "Nagi", "real", 3, false);

@@ -1,15 +1,15 @@
-#ifndef _ERCIYUAN_PACKAGE_H
-#define _ERCIYUAN_PACKAGE_H
+#ifndef _Nijigen_PACKAGE_H
+#define _Nijigen_PACKAGE_H
 
 #include "package.h"
 #include "card.h"
 
-class ERCIYUANPackage : public Package
+class NijigenPackage : public Package
 {
     Q_OBJECT
 
 public:
-    ERCIYUANPackage();
+    NijigenPackage();
 };
 
 class WuxinCard : public SkillCard

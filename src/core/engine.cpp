@@ -922,20 +922,13 @@ QStringList Engine::getKingdoms() const
 {
     static QStringList kingdoms;
 
-    if (qApp->arguments().contains("-server"))
-        if (Config.EnableHegemony){
-            kingdoms = GetConfigFromLuaState(lua, "hegemony_kingdoms").toStringList();
-        }
-        else{
-            kingdoms = GetConfigFromLuaState(lua, "kingdoms").toStringList();
-        }
-    else
-        if (ServerInfo.EnableHegemony){
-            kingdoms = GetConfigFromLuaState(lua, "hegemony_kingdoms").toStringList();
-        }
-        else{
-            kingdoms = GetConfigFromLuaState(lua, "kingdoms").toStringList();
-        }
+    if (ServerInfo.EnableHegemony){
+        kingdoms = GetConfigFromLuaState(lua, "hegemony_kingdoms").toStringList();
+    }
+    else{
+        kingdoms = GetConfigFromLuaState(lua, "kingdoms").toStringList();
+    }
+
     return kingdoms;
 }
 
@@ -1544,6 +1537,7 @@ void Engine::handleNetworkMessage(QString s)
 
 void Engine::godLottery(QStringList &list) const
 {
+    return;
 	qDebug("godLottery");
     if(!getBanPackages().contains("god"))
         return;

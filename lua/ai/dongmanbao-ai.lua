@@ -4973,3 +4973,4 @@ sgs.ai_skill_invoke["se_fupao"] = function(self, data)
 	if self:isFriend(use.from) then return true end
 	return false
 end
+

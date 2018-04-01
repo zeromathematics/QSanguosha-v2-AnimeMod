@@ -52,16 +52,21 @@ sgs.ai_skill_choice.RevealGeneral = function(self, choices)
 end
 
 if sgs.GetConfig("EnableHegemony", false) then
-	local init = SmartAI.initialize
-	function SmartAI:initialize(player)
-		if not sgs.initialized then
-			for _, aplayer in sgs.qlist(player:getRoom():getAllPlayers()) do
-				sgs.ai_explicit[aplayer:objectName()] = ""
-			end
-		end
-		init(self, player)
+
+	sgs.isRolePredictable = function(classical)
+		return false
 	end
-	sgs.ai_skill_choice.RevealGeneral = function(self, choices)
+
+	sgs.ai_loyalty = {
+		lord = {},
+		loyalist = {},
+		rebel = {},
+		renegade = {},
+		careerist = {},
+	}
+	sgs.ai_explicit = {}
+
+	sgs.ai_skill_choice.RevealGeneral = function(self, choices, data)
 		if askForShowGeneral(self, choices) == "yes" then return "yes" end
 
 		for _, player in sgs.qlist(self.room:getOtherPlayers(self.player)) do
@@ -84,52 +89,35 @@ if sgs.GetConfig("EnableHegemony", false) then
 		end
 	end
 
-	sgs.isRolePredictable = function()
-		return false
+
+	local init = SmartAI.initialize
+	function SmartAI:initialize(player)
+		if not sgs.initialized then
+			for _, aplayer in sgs.qlist(player:getRoom():getAllPlayers()) do
+				sgs.ai_explicit[aplayer:objectName()] = ""
+			end
+		end
+		init(self, player)
 	end
 
-	sgs.ai_loyalty = {
-		lord = {},
-		loyalist = {},
-		rebel = {},
-		renegade = {},
-		careerist = {},
-	}
-	sgs.ai_explicit = {}
-
-	SmartAI.hasHegSkills = function(self, skills, players)
+	function SmartAI:hasHegSkills(skills, players)
 		for _, player in ipairs(players) do
 			if player:hasSkills(skills) then return true end
 		end
 		return false
 	end
 
-	-- SmartAI.getHegKingdom = function(self)
-	-- 	local names = self.player:property("basara_generals"):toString():split("+")
-	-- 	if #names == 0 then return self.player:getKingdom() end
-	-- 	local kingdom = sgs.Sanguosha:getGeneral(names[1]):getKingdom()
-	-- 	return kingdom
-	-- end
-	--
-	-- SmartAI.getRoleByKingdom = function(self, kingdom)
-	-- 	if kingdom == "wei" then return "lord" end
-	-- 	if kingdom == "shu" then return "loyalist" end
-	-- 	if kingdom == "wu" then return "rebel" end
-	-- 	if kingdom == "qun" then return "renegade" end
-	-- 	return "careerist"
-	-- end
-
-	SmartAI.getHegRole = function(self)
+	function SmartAI:getHegRole()
 		return self.player:getHegemonyRole()
 	end
 
-	SmartAI.getHegGeneralName = function(self, player)
+	function SmartAI:getHegGeneralName(player)
 		player = player or self.player
 		local names = player:property("basara_generals"):toString():split("+")
 		if #names > 0 then return names[1] else return player:getGeneralName() end
 	end
 
-	SmartAI.objectiveLevel = function(self, player, recursive)
+	function SmartAI:objectiveLevel(player, recursive)
 		if not player then return 0 end
 		if self.player == player then return -5 end
 		local lieges = {}
@@ -190,20 +178,20 @@ if sgs.GetConfig("EnableHegemony", false) then
 		return 0
 	end
 
-	SmartAI.isFriend = function(self, player)
+	function SmartAI:isFriend(player)
 		return self:objectiveLevel(player) < 0
 	end
 
-	SmartAI.isEnemy = function(self, player)
+	function SmartAI:isEnemy(player)
 		return self:objectiveLevel(player) >= 0
 	end
 
-	sgs.ai_card_intention["general"] = function(to, level)
-		sgs.hegemony_to = to
+	sgs.ai_card_intention["general"] = function(from, to, level)
+		-- sgs.hegemony_to = to
 		return -level
 	end
 
-	sgs.updateIntention = function(player, to, intention)
+	sgs.updateIntention = function(player, to, intention, card)
 		intention = -intention
 		local roles = { "lord", "loyalist", "rebel", "renegade", "careerist"}
 		if player:getKingdom() ~= "god" then
@@ -258,7 +246,7 @@ if sgs.GetConfig("EnableHegemony", false) then
 		end
 	end
 
-	SmartAI.updatePlayers = function(self, inclusive)
+	function SmartAI:updatePlayers(clear_flags, update)
 		local flist = {}
 		local elist = {}
 		self.friends = flist
@@ -278,14 +266,14 @@ if sgs.GetConfig("EnableHegemony", false) then
 		end
 	end
 
-	SmartAI.printAll = function(self, player, intention)
-		local name = player:objectName()
-		self.room:writeToConsole(self:getHegGeneralName(player) .. math.floor(intention * 10) / 10
-								.. " R" .. math.floor((sgs.ai_loyalty["loyalist"][name] or 0) * 10) / 10
-								.. " G" .. math.floor((sgs.ai_loyalty["rebel"][name] or 0) * 10) / 10
-								.. " B" .. math.floor((sgs.ai_loyalty["lord"][name] or 0) * 10) / 10
-								.. " Q" .. math.floor((sgs.ai_loyalty["renegade"][name] or 0) * 10) / 10
-								.. " Y" .. math.floor((sgs.ai_loyalty["careerist"][name] or 0) * 10) / 10
-								.. " E" .. (sgs.ai_explicit[name] or "nil"))
-	end
+	-- function SmartAI:printAll(player, intention)
+	-- 	local name = player:objectName()
+	-- 	self.room:writeToConsole(self:getHegGeneralName(player) .. math.floor(intention * 10) / 10
+	-- 							.. " R" .. math.floor((sgs.ai_loyalty["loyalist"][name] or 0) * 10) / 10
+	-- 							.. " G" .. math.floor((sgs.ai_loyalty["rebel"][name] or 0) * 10) / 10
+	-- 							.. " B" .. math.floor((sgs.ai_loyalty["lord"][name] or 0) * 10) / 10
+	-- 							.. " Q" .. math.floor((sgs.ai_loyalty["renegade"][name] or 0) * 10) / 10
+	-- 							.. " Y" .. math.floor((sgs.ai_loyalty["careerist"][name] or 0) * 10) / 10
+	-- 							.. " E" .. (sgs.ai_explicit[name] or "nil"))
+	-- end
 end

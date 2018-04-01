@@ -294,3 +294,4 @@ sgs.ai_skill_choice.se_yanyi = function(self, choices, data)
 	end
 	return "se_yanyi"
 end
+

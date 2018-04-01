@@ -2547,6 +2547,44 @@ public:
 };
 
 
+class Juhe : public TriggerSkill
+{
+public:
+    Juhe() : TriggerSkill("juhe")
+    {
+        frequency = NotFrequent;
+        events << EventPhaseChanging << Damaged;
+    }
+
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseChanging){
+            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
+            if (change.to == Player::Play && player->hasSkill(objectName()) && room->askForSkillInvoke(player, objectName(), data)){
+                if (room->askForChoice(player, objectName(), player->getMark("@xuli") > 0 ? "juhe_skip+juhe_lose" : "juhe_skip", data) == "juhe_skip"){
+                    room->broadcastSkillInvoke(objectName());
+                    player->skip(Player::Play);
+                    player->gainMark("@xuli");
+                }
+                else{
+                    room->broadcastSkillInvoke(objectName());
+                    room->damage(DamageStruct(objectName(), player, room->askForPlayerChosen(player, room->getAlivePlayers(), objectName()), player->getMark("@xuli")));
+                    player->loseAllMarks("@xuli");
+                }
+            }
+        }
+        else if (triggerEvent == Damaged){
+            DamageStruct damage = data.value<DamageStruct>();
+            if (damage.to && damage.to->isAlive() && damage.to->hasSkill(objectName()) && damage.card && !damage.card->isVirtualCard() && damage.damage > 0){
+                damage.to->loseAllMarks("@xuli");
+            }
+        }
+
+        return false;
+    }
+};
+
 HayatePackage::HayatePackage()
     : Package("hayate")
 {
@@ -2625,6 +2663,7 @@ HayatePackage::HayatePackage()
 
     General *acc = new General(this, "acc", "science", 3);
     acc->addSkill(new Vector);
+    acc->addSkill(new Juhe);
 
     addMetaObject<TiaojiaoCard>();
     addMetaObject<HaremuCard>();

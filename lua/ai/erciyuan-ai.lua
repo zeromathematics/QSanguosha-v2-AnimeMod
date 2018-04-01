@@ -334,6 +334,7 @@ LuaWangxiang_skill.getTurnUseCard=function(self,inclusive)
 	local wxhcn = self.player:getHandcardNum()
 	local losehp = self.player:getMaxHp() - self.player:getHp()
 	if wxhcn > losehp then return end
+	if self.player:usedTimes("ExNihilo") >= self.room:getAlivePlayers():length() then return end
 	local cards = self.player:getCards("h")
 	cards=sgs.QList2Table(cards)
 	self:sortByUseValue(cards,true)

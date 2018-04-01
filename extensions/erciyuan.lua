@@ -914,7 +914,7 @@ LuaWangxiang = sgs.CreateViewAsSkill{
 		local wxhcn = player:getHandcardNum()
 		local hp = player:getHp()
 		local losehp = player:getMaxHp() - hp
-		return ( wxhcn <= losehp )
+		return ( wxhcn <= losehp ) and player:usedTimes("ExNihilo") <= player:getAliveSiblings():length()
 	end,
 }
 --------------------------------------------------------------黑焰@yuuta
@@ -2668,7 +2668,9 @@ suipian = sgs.CreateTriggerSkill
 		local room = player:getRoom()
 		local judge = data:toJudge()
 		local invoked = false
-		while room:askForSkillInvoke(player, self:objectName(), data) do
+		local i = room:getAllPlayers():length()
+		while room:askForSkillInvoke(player, self:objectName(), data) and i > 0 do
+			i = i - 1
 			room:broadcastSkillInvoke("suipian")
 			invoked = true
 			local card = sgs.Sanguosha:getCard(room:drawCard())
@@ -3443,7 +3445,7 @@ sgs.LoadTranslationTable{
 }
 ------------------------------------------------------------------------技能描述区
 sgs.LoadTranslationTable{
-	[":LuaWangxiang"]="当你的手牌数不多于你已损失的体力值时，你可以将一张手牌当【等价交换】使用。",
+	[":LuaWangxiang"]="当你的手牌数不多于你已损失的体力值时，你可以将一张手牌当【等价交换】使用。若你同一阶段使用了至少X张【等价交换】，你不能再发动该技能。X为场上存活的角色数。",
 	[":luablackflame"]="出牌阶段限一次，你可失去1点体力，然后对一名角色造成1点火焰伤害。",
 	[":LuaBuwu"]="每当你造成一次伤害后，你可令受到伤害的角色将其武将牌翻面，然后该角色摸等同于其体力值-1张牌。",
 	[":LuaChigui"]="结束阶段开始时，你可失去1点体力，获得1名角色装备区内的武器牌，然后再摸1张牌，直到场上没有武器牌。",
@@ -3486,7 +3488,7 @@ sgs.LoadTranslationTable{
 	[":LuaPositionMove"]="锁定技。你受到的伤害结算开始时，若你有两张或更多手牌且你的武将牌横置或背面朝上，你弃置两张牌并防止此伤害，然后将你的武将牌翻至正面并重置。",
 	[":LuaSpkprison"]="限定技。一名其他角色的准备阶段开始时，你可以令其摸三张牌，然后该角色须交给你四张牌。",
 	[":qiji"]="当一名角色受到其他角色伤害而进入濒死状态时，你可令该角色和伤害来源各进行一次判定；若判定点数相同，则该角色体力恢复至其体力上限，伤害来源失去全部体力。（该技能对一名角色一局游戏只能使用一次）",
-    [":suipian"]="在一名角色的判定牌生效前，你可用牌堆顶牌代替判定牌且你可重复此流程。",
+  [":suipian"]="在一名角色的判定牌生效前，你可用牌堆顶牌代替判定牌且你可至多重复此流程X次。X为游戏总人数。",
 	[":LuaGungnir"]="锁定技。若你装备有武器，你的【杀】不能被【闪】响应。你对体力值比你多的角色造成的伤害+1；你对体力值不多于你的角色造成伤害时，回复1点体力。回合内你每造成一次伤害，结束阶段开始时便须弃置一张牌。",
 	[":luasynchrogazer"]="<font color=\"Sky Blue\"><b>萌战技,绝唱,3,出牌阶段限一次;</b></font>令参战角色依次对一名其他角色使用一张【杀】，直到一名参战角色不如此做。每以此法使用一张【杀】，你可令一名参战角色摸一张牌。（不计入出牌阶段使用杀次数）",
 	[":LuaCangshan"]="你可将装备牌当【杀】或【闪】使用或打出。以此法使用的【杀】无视距离，每以此法使用或打出一张牌时，你摸一张牌。",

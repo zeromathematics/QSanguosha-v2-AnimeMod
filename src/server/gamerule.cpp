@@ -1502,7 +1502,7 @@ void BasaraMode::generalShowed(ServerPlayer *player, QString general_name) const
     room->sendLog(log);
 
     if (player->getGeneralName() != "anjiang" && player->getGeneral2Name() != "anjiang"){
-        if (Config.MaxHpScheme == 0 && player->getGeneral2() != NULL && player->getMaxHp() * 2 < Sanguosha->getGeneral(player->getGeneralName())->getMaxHp() + Sanguosha->getGeneral(player->getGeneralName())->getMaxHp()){
+        if (Config.MaxHpScheme == 0 && player->getGeneral2() != NULL && player->getMaxHp() * 2 < Sanguosha->getGeneral(player->getGeneralName())->getMaxHp() + Sanguosha->getGeneral(player->getGeneral2Name())->getMaxHp()){
             player->drawCards(2);
         }
     }

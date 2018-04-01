@@ -73,7 +73,7 @@ se_zhikong=sgs.CreateTriggerSkill{
 					room:throwCard(card, nil, nil)
 					room:broadcastSkillInvoke(self:objectName())
 					room:doLightbox("se_zhikong$", 800)
-					if player:getKingdom() == "kancolle" then
+					if player:getKingdom() == "kancolle" or player:getKingdom() == "qun" then
 						Akagi:drawCards(1)
 					end
 					player:setFlags("se_zhikong_on")
@@ -674,15 +674,6 @@ sgs.LoadTranslationTable{
 	["designer:Fubuki"] = "曦行;Sword Elucidator",
 	["cv:Fubuki"] = "上坂すみれ",
 	["illustrator:Fubuki"] = "",
-
-	["Kongou"] = "金剛",
-	["&Kongou"] = "金剛",
-	["#Kongou"] = "Burning Love!",
-	["@Kongou"] = "艦隊collection",
-	["~Kongou"] = "",
-	["designer:Kongou"] = "Sword Elucidator",
-	["cv:Kongou"] = "東山奈央",
-	["illustrator:Kongou"] = "",
 
 	["Naka"] = "那珂",
 	["&Naka"] = "那珂",

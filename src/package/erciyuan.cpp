@@ -216,7 +216,7 @@ public:
     }
 };
 
-ERCIYUANPackage::ERCIYUANPackage() : Package("ERCIYUAN")
+NijigenPackage::NijigenPackage() : Package("nijigen")
 {
     //General *itomakoto = new General(this, "itomakoto", "real", 3, true, false);
     //itomakoto->addSkill(new Haochuan);
@@ -229,4 +229,4 @@ ERCIYUANPackage::ERCIYUANPackage() : Package("ERCIYUAN")
     addMetaObject<WuxinCard>();
 }
 
-ADD_PACKAGE(ERCIYUAN)
+ADD_PACKAGE(Nijigen)

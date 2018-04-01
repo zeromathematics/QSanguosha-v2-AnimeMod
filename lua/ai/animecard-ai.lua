@@ -115,3 +115,4 @@ sgs.ai_use_value.Tacos = 8
 sgs.ai_use_priority.Tacos = 4
 
 sgs.dynamic_value.benefit.Tacos = true
+

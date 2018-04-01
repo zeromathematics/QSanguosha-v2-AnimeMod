@@ -573,3 +573,81 @@ sgs.ai_skill_invoke.jiejie = function(self, targets)
 	if not hakaze then return false end
 	return not self:isEnemy(hakaze)
 end
+
+
+
+
+sgs.ai_skill_cardask["@vector-discard"] = function(self, data)
+	if self.player:isKongcheng() then return "." end
+	local cards = sgs.QList2Table(self.player:getHandcards())
+	self:sortByUseValue(cards,true)
+	local toUse = "$" .. cards[1]:getEffectiveId()
+	local effect = data:toCardEffect()
+	local card = effect.card
+	local power = self.player:getHp() * 2 + self.player:getHandcardNum()
+	local cardN = self.player:getCards("he"):length()
+	local hp = self.player:getHp()
+	if card:isKindOf("AOE") then
+		if power > 9 or cardN > hp or power < 4 or hp == 1 then
+			return toUse
+		end
+		return "."
+	elseif card:isKindOf("Snatch") or card:isKindOf("Dismantlement") or card:isKindOf("Collateral") or card:isKindOf("Duel") then return toUse
+	elseif card:isKindOf("ex_nihilo") then
+		self.room:setPlayerFlag(self.player,"vecter_friend")
+		if power > 10 then return toUse end
+		return "."
+	elseif card:isKindOf("Slash") then
+		if self:isFriend(effect.from) then return "." end
+		if #self.enemies == 0 then return "." end
+		self.room:setPlayerFlag(self.player,"vecter_slash")
+		return toUse
+	end
+	return "."
+end
+
+local function doVector(who, self)
+	if not who then return false end
+	if who:objectName() == self.player:objectName() then return false end
+	if not self:isFriend(who) and who:hasSkill("leiji") and (self:hasSuit("spade", true, who) or who:getHandcardNum() >= 3) and (getKnownCard(who, "Jink", true) >= 1 or self:hasEightDiagramEffect(who)) then
+		return false
+	end
+
+	local cards = self.player:getCards("h")
+	cards = sgs.QList2Table(cards)
+	self:sortByKeepValue(cards)
+	for _, card in ipairs(cards) do
+		if not self.player:isCardLimited(card, method) then
+			if self:isFriend(who) then
+				return false
+			else
+				return true
+			end
+		end
+	end
+
+	local cards = self.player:getCards("e")
+	cards=sgs.QList2Table(cards)
+	self:sortByKeepValue(cards)
+	for _, card in ipairs(cards) do
+		if not self.player:isCardLimited(card, method) then
+			return true
+		end
+	end
+	return false
+end
+
+sgs.ai_skill_playerchosen.vector = function(self, targets)
+	if self.player:hasFlag("vecter_friend") then
+		return self:findPlayerToDraw(false, 2)
+	elseif self.player:hasFlag("vecter_slash") then
+		for _,ememy in ipairs(self.enemies) do
+			if doVector(enemy, self) then return enemy end
+		end
+		for _,ememy in ipairs(self.enemies) do
+			return enemy
+		end
+	else
+		return self:findPlayerToDiscard()
+	end
+end

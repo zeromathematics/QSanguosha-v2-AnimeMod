@@ -54,8 +54,6 @@ config = {
 
 		"Inovation",
 		"Hayate",
-
-        "ERCIYUAN",
 --[[
 		"Standard",
 		"Wind",
@@ -109,7 +107,6 @@ config = {
 		"-DarkSakura1",
 		"-DarkSakura2",
 		"-Saito",
-		"-Lelouch",
 		"-Lelouch",
 		"-Batora",
 		"-Yakumo",
@@ -189,12 +186,6 @@ config = {
 	},
 
 	basara_ban = {
-		"dongzhuo",
-		"zuoci",
-		"shenzhugeliang",
-		"shenlvbu",
-		"bgm_lvmeng",
-		"zhanggongqi",
 		"Nao",
 		"DarkSakura1",
 		"DarkSakura2",
@@ -211,7 +202,6 @@ config = {
 	},
 
 	hegemony_ban = {
-		"xiahoujuan"
 	},
 
 	pairs_ban = {

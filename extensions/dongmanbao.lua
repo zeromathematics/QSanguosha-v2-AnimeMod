@@ -148,7 +148,7 @@ Yukina = sgs.General(Dongmanbao, "Yukina", "magic", 3, false,false,false)
 --Junko = sgs.General(Dongmanbao, "Junko", "real", 3, false,false,false)
 Batora = sgs.General(Dongmanbao, "Batora", "magic", 4, true,true,false)
 Shirayuki = sgs.General(Dongmanbao, "Shirayuki", "science", 4, false,false,false)
-Saki = sgs.General(Dongmanbao, "Saki", "real", 4, false,false,false)
+Saki = sgs.General(Dongmanbao, "Saki", "real", 3, false,false,false)
 Sayaka = sgs.General(Dongmanbao, "Sayaka", "magic", 3, false,false,false)
 Majyo = sgs.General(Dongmanbao, "Majyo", "magic", 4, false,true,true)
 Kinpika = sgs.General(Dongmanbao, "Kinpika", "magic", 3, true,false,false)
@@ -6384,11 +6384,15 @@ end
 SE_Baskervilles_make = sgs.CreateTriggerSkill{
 	name = "#SE_Baskervilles_make",
 	frequency = sgs.Skill_Compulsory,
-	events = {sgs.GameStart},
+	events = {sgs.GameStart, sgs.EventAcquireSkill},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.GameStart then
 			player:gainMark("@Baskervilles", 1)
+		elseif event == sgs.EventAcquireSkill then
+			if player:getMark("@Baskervilles") < 1 then
+				player:gainMark("@Baskervilles", 1)
+			end
 		end
 	end
 }
@@ -9087,7 +9091,7 @@ SE_JianshiTrAll = sgs.CreateTriggerSkill{
 			local use=data:toCardResponse()
 			if not use.to then return end
 			if use.to:getMark("@surveillance") > 0 then
-				if math.random(1, 100) < 18 then--
+				if math.random(1, 100) < 21 then--
 					local Yukina = room:findPlayerBySkillName("se_jianshi")
 					if not Yukina then return end
 					if not room:askForSkillInvoke(Yukina,"se_jianshi",data) then return end
@@ -9182,7 +9186,7 @@ sgs.LoadTranslationTable{
 ["$se_jianshi1"] = "我作为剑巫接受了监视学长的任务才来到弦神岛。——等等，监视？",
 ["$se_jianshi2"] = "难道今后一直跟着？当然啦，我可是监视者啊。",
 ["$se_jianshi3"] = "前...前辈......",
-[":se_jianshi"] = "游戏开始时，你获得1枚“监视”标记；每当你受到1点伤害后，你获得1枚“监视”标记。\n出牌阶段，你可以指定一名没有“监视”标记的角色，若如此做，你令其获得你的1枚“监视”标记。\n每当拥有“监视”标记的角色使用一张牌后或成为一张牌的目标后，你有17%的概率可以指定一名角色，你对其造成1点雷电伤害。每当拥有“监视”标记的角色死亡时，所有其他角色各失去“监视”标记。",
+[":se_jianshi"] = "游戏开始时，你获得1枚“监视”标记；每当你受到1点伤害后，你获得1枚“监视”标记。\n出牌阶段，你可以指定一名没有“监视”标记的角色，若如此做，你令其获得你的1枚“监视”标记。\n每当拥有“监视”标记的角色使用一张牌后或成为一张牌的目标后，你有20%的概率可以指定一名角色，你对其造成1点雷电伤害。每当拥有“监视”标记的角色死亡时，所有其他角色各失去“监视”标记。",
 ["Yukina"] = "姫柊雪菜",
 ["&Yukina"] = "姫柊雪菜",
 ["@Yukina"] = "噬血狂袭",
