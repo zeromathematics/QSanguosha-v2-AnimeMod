@@ -3230,79 +3230,8 @@ sgs.ai_skill_choice.SE_Chaopin = function(self, choices, data)
 end
 
 
---永瀬伊織
-sgs.ai_need_damaged.SE_Qifen = function (self, attacker)
-	return self.player:getHp() < self.player:getMaxHp()
-end
 
-sgs.SE_Qifen_keep_value =
-{
-    Peach 		= 9,
-    Analeptic 	= 8,
-}
 
-sgs.ai_skill_invoke.SE_Qifen = function(self, data)
-	if self.player:getHp() < self.player:getMaxHp() then return true end
-	if self.player:getHp() == self.player:getMaxHp() then
-		if #self.friends >= #self.enemies then return true end
-	end
-	return false
-end
---sgs.ai_skillInvoke_intention.SE_Qifen = -5
-
-sgs.ai_skill_invoke.SE_Mishi = function(self, data)
-	local dying_data = data:toDying()
-	local source = dying_data.who
-	local mygod= self.room:findPlayerBySkillName("SE_Mishi")
-	local good
-	if (self:isFriend(source) and not self:isFriend(mygod)) or (not self:isFriend(source) and self:isFriend(mygod)) then
-		good = true
-	end
-	if not good then return false end
-	local peach_num = 0
-	local jink_num = 0
-	for _,card in sgs.qlist(mygod:getHandcards()) do
-		if card:isKindOf("Peach") or card:isKindOf("Analeptic") then
-			peach_num = peach_num + 1
-		end
-		if card:isKindOf("Jink") then
-			jink_num = jink_num + 1
-		end
-	end
-	if good then
-		if mygod:getHp() > 0 and peach_num > 2 then return true end
-		if mygod:getHp() > 0 and peach_num > 1 and jink_num > 0 then return true end
-		if mygod:getHp() > 1 and peach_num > 1 then return true end
-		if mygod:getHp() > 1 and peach_num > 0 and jink_num > 0 then return true end
-		if mygod:getHp() > 2 and peach_num > 0 then return true end
-		if mygod:getHp() > 2 and jink_num > 0 then return true end
-	end
-	return false
-end
---sgs.ai_skillInvoke_intention.SE_Mishi = 100
-
-sgs.ai_skill_invoke.SE_Zhufu = function(self, data)
-	if #self.friends <= 1 then return false end
-	return true
-end
-
-sgs.ai_skill_playerchosen.SE_Zhufu = function(self, targets)
-	local max_num = 0
-	local good_to
-	for _,friend in ipairs(self.friends) do
-		if self.player:getHandcardNum() - friend:getHandcardNum() > max_num and friend:objectName() ~= self.player:objectName() then
-			good_to = friend
-			max_num = self.player:getHandcardNum() - friend:getHandcardNum()
-		end
-	end
-	if good_to then return good_to end
-	for _,friend in ipairs(self.friends) do
-		if friend:objectName() ~= self.player:objectName() then
-			return friend
-		end
-	end
-	return self.friends[1]
-end
 
 --sgs.ai_skillInvoke_intention.SE_Zhufu = -100
 
@@ -3649,45 +3578,58 @@ se_huanyuan_skill={}
 se_huanyuan_skill.name="se_huanyuan"
 table.insert(sgs.ai_skills,se_huanyuan_skill)
 se_huanyuan_skill.getTurnUseCard=function(self,inclusive)
-	if self.player:hasFlag("se_huanyuan_used") then return end
-	if self.player:getMark("se_huanyuan_Pre_MaxHp") <= 0 then return end
+	if self.player:hasUsed("#se_huanyuancard") then return end
 	if #self.friends < 1 and #self.enemies < 1 then return end
 	for _,friend in ipairs(self.friends) do
-		if friend:getMark("se_huanyuan_Pre_Hp") - friend:getHp() + (friend:getMark("se_huanyuan_Pre_MaxHp") - friend:getMaxHp())*2 > 0 then
+		if friend:getTag("se_huanyuan_Pre_Hp"):toInt() - friend:getHp() + (friend:getTag("se_huanyuan_Pre_MaxHp"):toInt() - friend:getMaxHp())*2 > 0 then
 			return sgs.Card_Parse("#se_huanyuancard:.:")
 		end
-		if friend:getMark("se_huanyuan_Pre_Handcards") > friend:getHandcardNum() then
+		if friend:getTag("se_huanyuan_Pre_Handcards"):toInt() > friend:getHandcardNum() then
 			return sgs.Card_Parse("#se_huanyuancard:.:")
 		end
 	end
 	for _,enemy in ipairs(self.enemies) do
-		if enemy:getHp() - enemy:getMark("se_huanyuan_Pre_Hp") + (enemy:getMaxHp() - enemy:getMark("se_huanyuan_Pre_MaxHp"))*2>0 then
+		if enemy:getHp() - enemy:getTag("se_huanyuan_Pre_Hp"):toInt() + (enemy:getMaxHp() - enemy:getTag("se_huanyuan_Pre_MaxHp"):toInt())*2>0 then
+			return sgs.Card_Parse("#se_huanyuancard:.:")
+		end
+		if enemy:getTag("se_huanyuan_Pre_Handcards"):toInt() < enemy:getHandcardNum() then
 			return sgs.Card_Parse("#se_huanyuancard:.:")
 		end
 	end
 	return
 end
 
+sgs.chengling_type = "se_huanyuan_Draw"
 sgs.ai_skill_use_func["#se_huanyuancard"] = function(card,use,self)
 	local target
 	local value = 0
+
 	for _,p in sgs.qlist(self.room:getAlivePlayers()) do
 		local p_v = 0
+		local type = "se_huanyuan_Draw"
 		if self:isFriend(p) then
-			if p:getMark("se_huanyuan_Pre_Hp") - p:getHp() + (p:getMark("se_huanyuan_Pre_MaxHp") - p:getMaxHp())*2> p_v then
-				p_v = p:getMark("se_huanyuan_Pre_Hp") - p:getHp() + (p:getMark("se_huanyuan_Pre_MaxHp") - p:getMaxHp())*2
+			if p:getTag("se_huanyuan_Pre_Hp"):toInt() - p:getHp() + (p:getTag("se_huanyuan_Pre_MaxHp"):toInt() - p:getMaxHp())*2> p_v then
+				p_v = p:getTag("se_huanyuan_Pre_Hp"):toInt() - p:getHp() + (p:getTag("se_huanyuan_Pre_MaxHp"):toInt() - p:getMaxHp())*2
+				type = "se_huanyuan_Hp"
 			end
-			if p:getMark("se_huanyuan_Pre_Handcards") - p:getHandcardNum() > p_v*2 then
-				p_v = (p:getMark("se_huanyuan_Pre_Handcards") - p:getHandcardNum())/2
+			if p:getTag("se_huanyuan_Pre_Handcards"):toInt() - p:getHandcardNum() > p_v*2 then
+				p_v = (p:getTag("se_huanyuan_Pre_Handcards"):toInt() - p:getHandcardNum())/2
+				type = "se_huanyuan_Draw"
 			end
 		elseif self:isEnemy(p) then
-			if p:getHp() - p:getMark("se_huanyuan_Pre_Hp") + (p:getMaxHp() - p:getMark("se_huanyuan_Pre_MaxHp"))*2> p_v then
-				p_v = p:getHp() - p:getMark("se_huanyuan_Pre_Hp") + (p:getMaxHp() - p:getMark("se_huanyuan_Pre_MaxHp"))*2
+			if p:getHp() - p:getTag("se_huanyuan_Pre_Hp"):toInt() + (p:getMaxHp() - p:getTag("se_huanyuan_Pre_MaxHp"):toInt())*2> p_v then
+				p_v = p:getHp() - p:getTag("se_huanyuan_Pre_Hp"):toInt() + (p:getMaxHp() - p:getTag("se_huanyuan_Pre_MaxHp"):toInt())*2
+				type = "se_huanyuan_Hp"
+			end
+			if p:getHandcardNum() - p:getTag("se_huanyuan_Pre_Handcards"):toInt() > p_v*2 then
+				p_v = (p:getHandcardNum() - p:getTag("se_huanyuan_Pre_Handcards"):toInt())/2
+				type = "se_huanyuan_Draw"
 			end
 		end
 		if p_v > value then
 			value = p_v
 			target = p
+			sgs.chengling_type = type
 		end
 	end
 	if target then
@@ -3696,6 +3638,12 @@ sgs.ai_skill_use_func["#se_huanyuancard"] = function(card,use,self)
 		return
 	end
 end
+
+sgs.ai_skill_choice["se_huanyuan"] = function(self, choices, data)
+	return sgs.chengling_type
+end
+
+
 
 sgs.ai_use_value["se_huanyuancard"] = 10
 sgs.ai_use_priority["se_huanyuancard"]  = 2
@@ -4973,4 +4921,3 @@ sgs.ai_skill_invoke["se_fupao"] = function(self, data)
 	if self:isFriend(use.from) then return true end
 	return false
 end
-

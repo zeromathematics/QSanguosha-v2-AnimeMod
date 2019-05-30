@@ -34,7 +34,7 @@ sgs.ai_skill_invoke["Elucidator"] = function(self, data)
 	if not effect.to then return end
 	if self:isFriend(effect.to) then return false end
 	if self.player:hasSkill("LuaZhuan") then return true end
-	if self.player:getHandcardNum() >= 2 or self:getCardsNum("Slash") > self:getCardsNum("Slash", effect.to, self.player) then return true end
+	if self.player:getHandcardNum() >= 2 or self:getCardsNum("Slash") > 0 then return true end
 	return false
 end
 
@@ -115,4 +115,3 @@ sgs.ai_use_value.Tacos = 8
 sgs.ai_use_priority.Tacos = 4
 
 sgs.dynamic_value.benefit.Tacos = true
-

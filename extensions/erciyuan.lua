@@ -3084,7 +3084,7 @@ LuaDikai=sgs.CreateTriggerSkill{
 		if not room:askForSkillInvoke(player, self:objectName(), data) then return end
 		room:broadcastSkillInvoke("LuaJingming",math.random(1,2))
 		room:drawCards(yukine,1)
-		if not damage.from:isNude() then
+		if damage.from and not damage.from:isNude() then
 			local card_id = room:askForCardChosen(yukine,damage.from,"he",self:objectName())
 			room:throwCard(card_id,damage.from,yukine)
 			if yukine:objectName() ~= player:objectName() then

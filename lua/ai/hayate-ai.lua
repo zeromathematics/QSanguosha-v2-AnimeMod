@@ -1,3 +1,46 @@
+-- 黑
+sgs.ai_keep_value.DoubleSword = 8
+
+-- TODO 需要优化
+sgs.ai_skill_invoke.diansuo = function(self, data)
+	local damage = data:toDamage()
+	if damage.from:objectName() == self.player:objectName() then
+		if self:isFriend(damage.to) and self.player:getRole() ~= "renegade" then return false end
+		return true
+	else
+		if self:isFriend(damage.to) then return true end
+		return false
+	end
+end
+
+
+-- TODO 需求更高效率的做法
+sgs.ai_skill_playerchosen.diansuo = function(self, targets)
+	if self.player:isChained() then
+		if self.player:getRole() == "renegade" then
+			for _, target in sgs.qlist(targets) do
+				if self:isEnemy(target) then return target end
+			end
+		end
+		if self.player:getRole() == "loyalist" then
+			for _, target in sgs.qlist(targets) do
+				if target:isLord() then return target end
+			end
+		end
+		if self.player:getRole() == "rebel" then
+			for _, target in sgs.qlist(targets) do
+				if target:getRole() == "loyalist" then return target end
+			end
+		end
+		for _, target in sgs.qlist(targets) do
+			if self.player:objectName() ~= target:objectName() then return target end
+		end
+	else
+		return self:findPlayerToDamage(nil, nil, nil, targets)
+	end
+
+end
+
 --枪兵
 sgs.ai_skill_invoke.bimie = function(self, data)
 	local damage = data:toDamage()
@@ -452,10 +495,52 @@ sgs.ai_skill_choice.guiyin = function(self, choices, data)
 	return "cancel"
 end
 
-
 -- 球棒
+sgs.ai_skill_invoke.qiubang = function(self, data)
+	local use = data:toCardUse()
+	if self.player:getTag("QiubangUsed"):toInt() >= 4 then return true end
+	if use.card:isKindOf("Duel") then return true end
+	if use.from and self:isEnemy(use.from) then
+		if use.card:isKindOf("Slash") and self:getCardsNum("Jink") == 0 then return true end
+		if use.card:isKindOf("Dismantlement") or use.card:isKindOf("Snatch") and (self:getCardsNum("Peach") > 0 or self:getCardsNum("Analeptic") > 0) then return true end
+		if self:getCardsNum("Slash") + self.player:getHp() > 3 then
+			return true
+		end
+		if self:isWeak(use.from) and self:getCardsNum("Slash") > 0 then return true end
+	end
+	return false
+end
 
 -- 诱说
+sgs.ai_skill_use["@@youshui"] = function(self, prompt, method)
+	local cards = sgs.QList2Table(self.player:getHandcards())
+	self:sortByKeepValue(cards)
+	local target
+	for _,p in sgs.qlist(self.room:getAlivePlayers()) do
+		if p:hasFlag("youshui_target") then
+			target = p
+			break
+		end
+	end
+	if not target then return "." end
+	if self:isFriend(target) then
+		for _, card in ipairs(cards) do
+			if card:isKindOf("Analeptic") then
+				return ("@YoushuiCard[%s:%s]=%d"):format(suit, number, card_id) .. "->" .. target:objectName()
+			end
+		end
+	else
+		local needed = {}
+		for _,acard in ipairs(cards) do
+			if #needed < target:getHandcardNum() / 2 and not acard:isKindOf("Peach") and not acard:isKindOf("Analeptic") then
+				table.insert(needed, acard:getEffectiveId())
+			end
+		end
+		if #needed > 0 then
+			return "@YoushuiCard="..table.concat(needed,"+") .. "->" .. target:objectName()
+		end
+	end
+end
 
 
 
@@ -574,6 +659,8 @@ sgs.ai_skill_invoke.jiejie = function(self, targets)
 	return not self:isEnemy(hakaze)
 end
 
+-- moju
+
 
 
 
@@ -649,5 +736,85 @@ sgs.ai_skill_playerchosen.vector = function(self, targets)
 		end
 	else
 		return self:findPlayerToDiscard()
+	end
+end
+
+-- xuli
+sgs.ai_skill_invoke.juhe = function(self, data)
+	if self.player:getHandcardNum() <= self.player:getHp() then return true end
+	return false
+end
+
+sgs.ai_skill_choice.juhe = function(self, choices, data)
+	if #choices:split("+") == 1 then return "juhe_skip" end
+	local pe = self:findPlayerToDamage(self.player:getMark("@xuli"))
+	if pe and self:isEnemy(pe) and (pe:getHp() <= self.player:getMark("@xuli") or self:isWeak()) then return "juhe_lose" end
+	return "juhe_skip"
+end
+
+sgs.ai_skill_playerchosen.juhe = function(self, targets)
+	return self:findPlayerToDamage(self.player:getMark("@xuli"))
+end
+
+--永瀬伊織
+sgs.ai_need_damaged.qifen = function (self, attacker)
+	return self.player:getHp() < self.player:getMaxHp()
+end
+
+sgs.qifen_keep_value =
+{
+    Peach 		= 9,
+    Analeptic 	= 8,
+}
+
+sgs.ai_skill_invoke.qifen = function(self, data)
+	if self.player:getHp() < self.player:getMaxHp() then return true end
+	if self.player:getHp() == self.player:getMaxHp() then
+		if #self.friends >= #self.enemies then return true end
+	end
+	return false
+end
+
+sgs.ai_skill_invoke.mishi = function(self, data)
+	local dying_data = data:toDying()
+	local source = dying_data.who
+	local mygod= self.room:findPlayerBySkillName("mishi")
+	local good
+	if (self:isFriend(source) and not self:isFriend(mygod)) or (not self:isFriend(source) and self:isFriend(mygod)) then
+		good = true
+	end
+	if not good then return false end
+	local peach_num = 0
+	local jink_num = 0
+	for _,card in sgs.qlist(mygod:getHandcards()) do
+		if card:isKindOf("Peach") or card:isKindOf("Analeptic") then
+			peach_num = peach_num + 1
+		end
+		if card:isKindOf("Jink") then
+			jink_num = jink_num + 1
+		end
+	end
+	if good then
+		if mygod:getHp() > 0 and peach_num > 2 then return true end
+		if mygod:getHp() > 0 and peach_num > 1 and jink_num > 0 then return true end
+		if mygod:getHp() > 1 and peach_num > 1 then return true end
+		if mygod:getHp() > 1 and peach_num > 0 and jink_num > 0 then return true end
+		if mygod:getHp() > 2 and peach_num > 0 then return true end
+		if mygod:getHp() > 2 and jink_num > 0 then return true end
+	end
+	return false
+end
+
+-- zhufu
+sgs.ai_skill_use["@@zhufu"] = function(self)
+	if self.player:getHandcardNum() < 6 then return "." end
+	local targets = {}
+	for _,p in ipairs(self.friends_noself) do
+		if p:getHandcardNum() < 5 or targets:length() < 2 then
+			table.insert(targets, p:objectName())
+		end
+	end
+	if #targets > 1 then
+		return "@ZhufuCard=.->" ..  table.concat(targets, "+")
 	end
 end

@@ -26,7 +26,7 @@ public:
         if (triggerEvent == TargetConfirmed){
 
             CardUseStruct use = data.value<CardUseStruct>();
-            if (!use.card || (!use.card->isKindOf("Slash") && !use.card->isKindOf("Duel") && !use.card->isKindOf("FireAttack"))){
+            if (!use.card || (!use.card->isKindOf("Slash") && !use.card->isKindOf("Duel"))){
                 return false;
             }
             if (!use.from || use.from->getMark("@real_hei") > 0){
@@ -46,6 +46,7 @@ public:
                 }
                 use.nullified_list << to->objectName();
             }
+            room->broadcastSkillInvoke(objectName(), rand() % 3 + 1);
             data = QVariant::fromValue(use);
         }
         else if (triggerEvent == Damage){
@@ -54,6 +55,7 @@ public:
                 return false;
             }
             if (damage.to && damage.to->getMark("@real_hei") == 0){
+                room->broadcastSkillInvoke(objectName(), 4);
                 damage.to->gainMark("@real_hei");
             }
         }
@@ -66,8 +68,12 @@ public:
                     }
                 }
                 if (lst.length() <= 2){
+                    room->broadcastSkillInvoke(objectName(), 4);
                     room->detachSkillFromPlayer(player, objectName());
                     room->acquireSkill(player, "jiesha");
+                }
+                else{
+                    room->broadcastSkillInvoke(objectName(), rand() % 3 + 1);
                 }
             }
         }
@@ -99,7 +105,7 @@ public:
     Diansuo() : TriggerSkill("diansuo")
     {
         frequency = NotFrequent;
-        events << EventPhaseStart << DamageCaused << TargetConfirming;
+        events << DamageCaused;
     }
     bool triggerable(const ServerPlayer *target) const
     {
@@ -107,199 +113,49 @@ public:
     }
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (triggerEvent == EventPhaseStart) {
-            if (player && player->hasSkill(objectName()) && player->isAlive() && player->getPhase() == Player::Play){
-                if (room->askForSkillInvoke(player, objectName(), data)){
-                    foreach(ServerPlayer *player, room->getAlivePlayers()){
-                        if (player->getMark("@diansuo_target") > 0){
-                            player->loseAllMarks("@diansuo_target");
-                        }
-                    }
-                    room->askForPlayerChosen(player, room->getAlivePlayers(), objectName())->gainMark("@diansuo_target");
-                }
-            }
-        }
-        else if (triggerEvent == DamageCaused){
+        
+        if (triggerEvent == DamageCaused){
             DamageStruct damage = data.value<DamageStruct>();
-            if (damage.from && damage.from->isAlive() && damage.to && damage.to->isAlive() && damage.from->hasSkill(objectName())){
-                ServerPlayer *a;
-                bool hasA = false;
-                foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    if (p->getMark("@diansuo_target") > 0){
-                        a = p;
-                        hasA = true;
-                        break;
-                    }
+            ServerPlayer * hei = room->findPlayerBySkillName(objectName());
+            if (!hei)
+                return false;
+            QList<ServerPlayer *> other_chained;
+            QList<ServerPlayer *> other_not_chained;
+            foreach(ServerPlayer *p, room->getAlivePlayers()){
+                if (p != hei && p->isChained()){
+                    other_chained.append(p);
                 }
-                if (!hasA){
-                    return false;
-                }
-
-                if (a == damage.to){
-                    return false;
-                }
-
-                if (room->askForSkillInvoke(damage.from, objectName()+"_cause", data)){
-                    if (room->askForChoice(damage.from, objectName(), "diansuo_left+diansuo_right", data) == "diansuo_left"){
-                        while (damage.to != a->getNext()){
-                            room->getThread()->delay(150);
-                            room->swapSeat(a, a->getNext());
-                        }
-                    }
-                    else{
-                        while (damage.to != a->getNext()){
-                            room->getThread()->delay(150);
-                            room->swapSeat(a, a->getNext());
-                        }
-                        room->getThread()->delay(150);
-                        room->swapSeat(a, a->getNext());
-                    }
-                    a->loseAllMarks("@diansuo_target");
-                    damage.from = a;
-                    damage.nature = DamageStruct::Thunder;
-                    data.setValue(damage);
-
-                    LogMessage log;
-                    log.type = "$diansuo_source_change";
-                    log.from = a;
-                    room->sendLog(log);
+                if (p != hei && !p->isChained()){
+                    other_not_chained.append(p);
                 }
             }
-        }
-        else if (triggerEvent == TargetConfirming){
-            CardUseStruct use = data.value<CardUseStruct>();
-            if (use.to.length() == 1 && use.from && use.from->isAlive()){
-
-                ServerPlayer *hei = room->findPlayerBySkillName(objectName());
-                if (!hei || hei->isDead() || hei->getPhase() != Player::NotActive){
+            if (damage.from == hei){
+                if (damage.from->isChained() || other_not_chained.count() == 0 || !room->askForSkillInvoke(hei, objectName(), data)){
                     return false;
                 }
-
-                ServerPlayer *old = use.to.first();
-                if (!old || old->isDead()){
+                ServerPlayer *victim = room->askForPlayerChosen(hei, other_not_chained, objectName(), "@diansuo-prompt");
+                room->broadcastSkillInvoke(objectName(), rand() % 2 + 1);
+                room->setPlayerProperty(hei, "chained", QVariant(true));
+                room->setPlayerProperty(victim, "chained", QVariant(true));
+                damage.from = victim;
+                data.setValue(damage);
+            }
+            else{
+                if (!hei->isChained() || other_chained.count() == 0 || !room->askForSkillInvoke(hei, objectName(), data)){
                     return false;
                 }
-                ServerPlayer *a;
-                bool hasA = false;
-                foreach(ServerPlayer *p, room->getAlivePlayers()){
-                    if (p->getMark("@diansuo_target") > 0){
-                        a = p;
-                        printf("has_target");
-                        hasA = true;
-                        break;
-                    }
-                }
-                if (!hasA){
-                    return false;
-                }
-
-                if (a == old){
-                    return false;
-                }
-                if (a == use.from){
-                    return false;
-                }
-                if (old == use.from){
-                    return false;
-                }
-
-                int left_distance = 0;
-                int right_distance = 0;
-
-                ServerPlayer *s = old;
-                while (s != use.from){
-                    left_distance++;
-                    s = s->getNext();
-                }
-                s = use.from;
-                while (s != old){
-                    right_distance++;
-                    s = s->getNext();
-                }
-
-                bool can = false;
-
-                printf("left is" + left_distance);
-                printf("right is" + right_distance);
-
-                if (left_distance == right_distance){
-                    can = true;
-                }
-                else if (left_distance < right_distance){
-
-                    ServerPlayer *current = old->getNext();
-                    while (current != use.from){
-                        if (current == a){
-                            can = true;
-                            break;
-                        }
-                        else{
-                            current = current->getNext();
-                        }
-                    }
-                }
-                else{
-                    ServerPlayer *current = use.from->getNext();
-                    while (current != old){
-                        if (current == a){
-                            can = true;
-                            break;
-                        }
-                        else{
-                            current = current->getNext();
-                        }
-                    }
-                }
-
-                if (can && room->askForSkillInvoke(hei, objectName() + "_target", data)){
-                    if (left_distance < right_distance){
-
-                        while (old != a->getNext()){
-                            room->swapSeat(a, a->getNext());
-                        }
-                    }
-                    else{
-                        while (old != a->getNext()){
-                            room->swapSeat(a, a->getNext());
-                        }
-                    }
-
-                    use.to.removeOne(old);
-                    use.to.append(a);
-                    data.setValue(use);
-
-                    // need a broadcast
-                    LogMessage log;
-                    log.type = "$diansuo_effect";
-                    log.from = a;
-                    log.arg = old->getGeneralName();
-                    log.arg2 = use.card->objectName();
-                    room->sendLog(log);
-                }
-
+                ServerPlayer *victim = room->askForPlayerChosen(hei, other_chained, objectName(), "@diansuo-prompt-remove");
+                room->broadcastSkillInvoke(objectName());
+                room->setPlayerProperty(hei, "chained", QVariant(false));
+                room->setPlayerProperty(victim, "chained", QVariant(false));
+                damage.to = victim;
+                room->broadcastSkillInvoke(objectName(), 3);
+                data.setValue(damage);
             }
         }
         return false;
     }
 };
-
-class DiansuoClear : public DetachEffectSkill
-{
-public:
-    DiansuoClear() : DetachEffectSkill("diansuo")
-    {
-    }
-
-    void onSkillDetached(Room *room, ServerPlayer *) const
-    {
-        foreach(ServerPlayer *player, room->getAlivePlayers()){
-            if (player->getMark("@diansuo_target") > 0){
-                player->loseAllMarks("@diansuo_target");
-            }
-        }
-    }
-};
-
 
 class Jiesha : public TriggerSkill
 {
@@ -321,6 +177,7 @@ public:
                 log.arg = effect.slash->objectName();
                 room->sendLog(log);
                 room->slashResult(effect, NULL);
+                room->broadcastSkillInvoke(objectName());
                 return true;
             }
         }
@@ -2585,17 +2442,79 @@ public:
     }
 };
 
+
+class Qianggang : public TriggerSkill
+{
+public:
+    Qianggang() : TriggerSkill("qianggang")
+    {
+        frequency = NotFrequent;
+        events << CardsMoveOneTime;
+    }
+
+
+    bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == CardsMoveOneTime){
+            CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
+            if (move.from || !move.from_places.contains(Player::DrawPile) || !move.to || move.to == player || !player->hasSkill(objectName()) || player->isDead() || move.to_place != Player::PlaceHand || !room->askForSkillInvoke(player, objectName(), data)){
+                return false;
+            }
+            
+            QStringList choices;
+            for (int i = 0; i <= (player->getHandcardNum() > 2 ? 2 : player->getHandcardNum()); i++){
+                choices.append(QString::number(i));
+            }
+            int dis_num = room->askForChoice(player, objectName(), choices.join("+"), data).toInt();
+            
+            QList<Card::Color> colors;
+
+            QList<int> ids = room->getNCards(3 - dis_num, false);
+            if (dis_num > 0){
+                for (int i = 0; i < dis_num; i++){
+                    int id = room->askForCardChosen(player, player, "h", objectName());
+                    if (id == -1){
+                        return false;
+                    }
+                    ids.append(id);
+                    room->throwCard(id, player);
+                    Card::Color color = Sanguosha->getCard(id)->getColor();
+                    if (!colors.contains(color)){
+                        colors.append(color);
+                    }
+                }
+            }
+            
+            room->fillAG(ids);
+            room->getThread()->delay(1000);
+            room->clearAG();
+            foreach(int id, ids){
+                room->showCard(player, id);
+                Card::Color color = Sanguosha->getCard(id)->getColor();
+                if (!colors.contains(color)){
+                    colors.append(color);
+                }
+            }
+            if (colors.count() == 1){
+                room->broadcastSkillInvoke(objectName());
+                room->moveCardsAtomic(CardsMoveStruct(move.card_ids, player, Player::PlaceHand, CardMoveReason()), false);
+            }
+        }
+
+        return false;
+    }
+};
+
+
 HayatePackage::HayatePackage()
     : Package("hayate")
 {
-    General *hei = new General(this, "hei", "science", 4);
+    General *hei = new General(this, "hei", "science", 3);
     skills << new Jiesha << new Gaokang << new Qiubang << new QiubangDis << new Youshui << new LonelinessInvalidity;
     hei->addSkill(new Yingdi);
     hei->addSkill(new YingdiClear);
     related_skills.insertMulti("yingdi", "#yingdi-clear");
     hei->addSkill(new Diansuo);
-    hei->addSkill(new DiansuoClear);
-    related_skills.insertMulti("diansuo", "#diansuo-clear");
     hei->addWakeTypeSkillForAudio("jiesha");
 
     General * diarmuid = new General(this, "diarmuid", "magic", 4);
@@ -2664,6 +2583,9 @@ HayatePackage::HayatePackage()
     General *acc = new General(this, "acc", "science", 3);
     acc->addSkill(new Vector);
     acc->addSkill(new Juhe);
+
+    General *yumi = new General(this, "yumi", "real", 4, false, true);
+    yumi->addSkill(new Qianggang);
 
     addMetaObject<TiaojiaoCard>();
     addMetaObject<HaremuCard>();

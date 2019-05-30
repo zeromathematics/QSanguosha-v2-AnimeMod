@@ -218,6 +218,7 @@ se_emeng = sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		room:loseMaxHp(player)
 		room:broadcastSkillInvoke(self:objectName())
+		player:gainMark("@waked")
 		room:doLightbox("se_suo$", 500)
 		room:doLightbox("se_luo$", 500)
 		room:doLightbox("se_men$", 1000)

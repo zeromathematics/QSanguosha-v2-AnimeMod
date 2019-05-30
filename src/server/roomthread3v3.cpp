@@ -25,52 +25,30 @@ QStringList RoomThread3v3::getGeneralsWithoutExtension() const
     list_name << "Touma" << "jdd" << "odanobuna" << "HYui" << "kyouko" << "itomakoto" << "Reki"
         << "Akagi" << "runaria" << "khntmiku" << "Nanami" << "Louise" << "Okarin"
         << "hibiki" << "Marisa" << "slsty" << "Kitagami" << "Shino" << "Koishi" << "Yukino" << "yuuta"
-        << "kntsubasa" << "Shirayuki" << "Sugisaki"
+        << "kntsubasa" << "Shirayuki" << "sugisaki"
         << "SE_Kirito" << "Hikigaya" << "aoitori" << "Nagisa"
         << "mao_maoyu" << "ku" << "Eustia"
-        << "SE_Asuna" << "Yuri" << "Kazehaya" << "AiAstin" << "Kuroyukihime" << "Yyui" << "Tomoya"
+        << "SE_Asuna" << "yuri" << "Kazehaya" << "AiAstin" << "Kuroyukihime" << "Yyui" << "Tomoya"
         << "Misaka_Imouto" << "Rika" << "rika2" << "Yuudachi" << "Reimu" << "Aria" << "Kirei" << "Kinpika"
         << "Saki" << "tsukushi" << "Rivaille"
         << "Kotori" << "Chiyuri" << "Chiyo" << "Leafa"
         << "redo" << "Kuroko" << "Fubuki"
         << "Rena" << "sheryl" << "SE_Eren" << "fuwaaika" << "Saber" << "Mikoto" << "Sakura"
-        << "Sakamoto" << "Nagase" << "Honoka" << "Eugeo" << "Tukasa" << "Alice" << "Kanade" << "Taiga"
+        << "Sakamoto" << "nagase" << "Honoka" << "eugeo" << "Tukasa" << "Alice" << "Kanade" << "Taiga"
         << "Setsuna" << "Shana" << "acc"
-        << "Hakaze" << "Ayase" << "Yukina" << "keima"
+        << "hakaze" << "Ayase" << "Yukina" << "keima"
         << "redarcher" << "yukinechris" << "SPkirito"
         << "Kuroneko" << "Asagi" << "Nico"
-        << "cr" << "MKotori" << "Kurumi" << "diarmuid";
+        << "haruhi" << "MKotori" << "Kurumi" << "diarmuid";
     foreach(QString general_name, list_name)
         generals << Sanguosha->getGeneral(general_name);
 
-    QString rule = Config.value("3v3/OfficialRule", "2016").toString();
-    /*
-    if (rule == "2012") {
-        QStringList list_remove, list_add;
-        list_remove << "nos_zhangjiao" << "nos_caoren" << "nos_lvmeng" << "nos_xiahoudun" << "weiyan";
-        list_add << "sunjian" << "menghuo" << "xuhuang" << "pangde" << "zhugejin";
-        foreach(QString general_name, list_remove)
-            generals.removeOne(Sanguosha->getGeneral(general_name));
-        foreach(QString general_name, list_add)
-            generals << Sanguosha->getGeneral(general_name);
-    } else if (rule == "2013") {
-        QStringList list_remove, list_add;
-        list_remove << "nos_zhangjiao" << "nos_caoren" << "nos_lvmeng" << "nos_xiahoudun" << "weiyan"
-            << "nos_luxun" << "huangzhong" << "nos_xuchu" << "nos_zhoutai" << "nos_zhaoyun"
-            << "nos_guanyu" << "nos_lvbu" << "nos_diaochan";
-        list_add << "sunjian" << "xuhuang" << "pangde" << "jiaxu" << "sunce"
-            << "jiangwei" << "zhugejin" << "vs_nos_xiahoudun" << "vs_nos_guanyu" << "vs_nos_zhaoyun"
-            << "vs_nos_lvbu" << "wenpin" << "diaochan";
-        foreach(QString general_name, list_remove)
-            generals.removeOne(Sanguosha->getGeneral(general_name));
-        foreach(QString general_name, list_add)
-            generals << Sanguosha->getGeneral(general_name);
-    }
-    */
+    // QString rule = Config.value("3v3/OfficialRule", "2016").toString();
 
     QStringList general_names;
-    foreach(const General *general, generals)
+    foreach(const General *general, generals){
         general_names << general->objectName();
+    }
 
     return general_names;
 }

@@ -1006,6 +1006,8 @@ public:
     QString getDescription() const;
     bool isVisible() const;
 
+    QString getLimitMark() const;
+
     virtual int getEffectIndex(const ServerPlayer *player, const Card *card) const;
     virtual QDialog *getDialog() const;
 

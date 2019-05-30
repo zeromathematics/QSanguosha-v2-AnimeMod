@@ -161,6 +161,7 @@ spreadillness = sgs.CreateTriggerSkill{
 				end
 
 				if not player:hasSkill("spring") then
+					room:broadcastSkillInvoke("spreadillness", 6)
 					room:loseHp(player)
 				end
 			elseif player:getMark("@immune") > 0 then
@@ -942,6 +943,12 @@ sgs.LoadTranslationTable{
 ["spreadillness"] = "鼠疫",
 [":spreadillness"] = "回合结束的时候，失去1点体力，与你距离为1的角色将以80%获得“鼠疫”，距离为2的角色将以50%获得“鼠疫”，持有者将以50%的几率失去“鼠疫”获得免疫。获得免疫者以50%失去“抗体”",
 ["@spreadDiscard"] = "为新的病原体而弃置一张牌。",
+["$spreadillness1"] = "那么，比赛开始吧。",
+["$spreadillness2"] = "没有哦。",
+["$spreadillness3"] = "我的赐名是【黑死斑的魔王】，black parure哦。",
+["$spreadillness4"] = "但已经太晚了，我已经让病原菌侵入了一部分参赛者体内。",
+["$spring1"] = "很痛哦，不过 原谅你了。",
+["$spring2"] = "也就是说，你们的性命就掌握在我手中。",
 ["lingti"] = "灵体",
 [":lingti"] = "锁定技。你防止你的任何体力减少，每防止一次摸一张牌。",
 ["$lingti1"] = "大~丈~夫~",
@@ -971,12 +978,12 @@ sgs.LoadTranslationTable{
 ["designer:qb"] = "帕秋莉·萝莉姬",
 
 
-["kuro"] = "佩斯特",
-["$kuro"] = "佩斯特",
+["kuro"] = "佩丝特",
+["$kuro"] = "佩丝特",
 ["@kuro"] = "问题儿都来自新世界",
 ["#kuro"] = "黑死病魔王",
-["~kuro"] = "...",
-["cv:kuro"] = "",
+["~kuro"] = "怎么会...我还没...",
+["cv:kuro"] = "斋藤千和",
 ["designer:kuro"] = "帕秋莉·萝莉姬",
 
 

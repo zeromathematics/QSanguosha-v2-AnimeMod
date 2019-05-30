@@ -1496,7 +1496,7 @@ function SmartAI:objectiveLevel(player)
 			and player:getHp() <= 0 and player:hasFlag("Global_Dying") then return -2 end
 
 		if target_role == "rebel" and player:getHp() <= 1 and not hasBuquEffect(player) and not player:hasSkills("kongcheng|tianming") and player:isKongcheng()
-			and getCardsNum("Peach", player, self.player) == 0 and getCardsNum("Analepic", player, self.player) == 0 then return 5 end
+			and getCardsNum("Peach", player, self.player) == 0 and getCardsNum("Analeptic", player, self.player) == 0 then return 5 end
 
 		if rebel_num == 0 or loyal_num == 0 then
 			if rebel_num > 0 then
@@ -5566,7 +5566,7 @@ function SmartAI:aoeIsEffective(card, to, source)
 	if source:hasSkill("Xuwu") then
 		return true
 	end
-	if to:hasSkill("SE_Jiepi") and to:getHandcardNum() > source:getHandcardNum() then
+	if to:hasSkill("SE_Jiepi") and to:getHandcardNum() < source:getHandcardNum() then
 		return false
 	end
 	if to:hasSkill("SE_Touming") and not to:faceUp() then return false end
@@ -5959,7 +5959,10 @@ function SmartAI:hasTrickEffective(card, to, from)
 	if to:hasSkills("wuyan|hongyan") and card:isKindOf("Lightning") then return false end
 
 	--SE 锦囊有效
-	if to:hasSkill("SE_Jiepi") and to:getHandcardNum() > from:getHandcardNum() then
+	if card:isKindOf("DelayedTrick") and to:hasSkill("SE_Jiepi") and to:getHandcardNum() > from:getHandcardNum() then
+		return false
+	end
+	if not card:isKindOf("DelayedTrick") and to:hasSkill("SE_Jiepi") and to:getHandcardNum() < from:getHandcardNum() then
 		return false
 	end
 	if to:hasSkill("LuaGqset") and to:getPile("gang"):length() > 0 and sgs.Sanguosha:getCard(to:getPile("gang"):first()):isNDTrick() then

@@ -1105,7 +1105,6 @@ end
 
 sgs.ai_skill_cardchosen.ningju = function(self, who, flags)
 	local status = self.room:getTag("ningju_color"):toString()
-	self.room:writeToConsole("current status is "..status)
 	if not status then return nil end
 	local need = "Red"
 	if status == "None" or status == "Mix" then return nil end

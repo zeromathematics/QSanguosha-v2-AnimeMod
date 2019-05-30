@@ -743,7 +743,7 @@ void MainWindow::on_actionAbout_triggered()
         "My QQ: 457639904 <br/>"
         "My Weibo: http://weibo.com/seFight <br/>").arg(email));
 
-    content.append(tr("Programmer: SE, ACG-Killer, Lolihime<br/>UI:Alie, SE<br/>Card Maker: dingzi, Misaka, Programmers<br/>Sound: dingzi, clannadlove, wangjiu, SE, ACG-Killer<br/>moeKing: Hongbao<br\>Special Thanks: Fsu, Slob, Dancheo<br\>"));
+    content.append(tr("Programmer: SE, ACG-Killer, Lolihime, Guanglinchangye<br/>UI:Alie, SE<br/>Card Maker: dingzi, Misaka, Programmers<br/>Sound: dingzi, clannadlove, wangjiu, SE, ACG-Killer<br/>moeKing: Hongbao<br\>Special Thanks: Fsu, Slob, Dancheo<br\>"));
 
     QString config;
 

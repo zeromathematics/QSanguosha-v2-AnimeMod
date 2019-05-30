@@ -3172,7 +3172,7 @@ Jianqiao = sgs.CreateTriggerSkill{
 			end
 		elseif event == sgs.AskForPeachesDone then
 			local dying = data:toDying()
-			if not dying.who or dying.who:isDead() or not dying.who:hasSkill(self:objectName()) then return end
+			if not dying.who or dying.who:isDead() or dying.who:getHp() < 1 or not dying.who:hasSkill(self:objectName()) then return end
 			local theRecover = sgs.RecoverStruct()
 			theRecover.who =  dying.who
 			room:broadcastSkillInvoke("Jianqiao", 2)
@@ -3382,6 +3382,7 @@ Daolu = sgs.CreateTriggerSkill{
 		local dying_data = data:toDying()
 		local source = dying_data.who
 		if not source:hasSkill("Daolu") then return end
+		player:gainMark("@waked")
 		local choice = room:askForChoice(player, self:objectName(), "Nagisa_Protector+Tomoyo_Couple+Fuko_summoner")
 		room:loseMaxHp(player)
 		room:setPlayerProperty(player, "hp", sgs.QVariant(2))
@@ -3421,6 +3422,7 @@ Daolu = sgs.CreateTriggerSkill{
 			player:gainMark("@Fuko")
 			room:acquireSkill(player, "Haixing")
 		end
+
 		return false
 	end,
 	can_trigger = function(self, target)
@@ -5833,28 +5835,32 @@ sgs.LoadTranslationTable{
 }
 
 --仓嶋千百合
-
-se_huanyuan_Pre = sgs.CreateTriggerSkill{
-	name = "#se_huanyuan_Pre",
-	frequency = sgs.Skill_Frequent,
-	events = {sgs.EventPhaseEnd},
-	on_trigger = function(self, event, player, data)
-		if event == sgs.EventPhaseEnd then
-			if player:getPhase() == sgs.Player_Finish then
-				local room = player:getRoom()
-				for _,p in sgs.qlist(room:getAlivePlayers()) do
-					p:setMark("se_huanyuan_Pre_Hp",p:getHp())
-					p:setMark("se_huanyuan_Pre_MaxHp",p:getMaxHp())
-					p:setMark("se_huanyuan_Pre_Handcards",p:getHandcardNum())
-				end
+se_huanyuancard = sgs.CreateSkillCard{
+	name="se_huanyuancard",
+	will_throw = true,
+	filter = function(self, selected, to_select)
+		return #selected < 1
+	end,
+	on_use = function(self,room,source,targets)
+		local choice = room:askForChoice(source, "se_huanyuan", "se_huanyuan_Draw+se_huanyuan_Hp")
+		--room:broadcastSkillInvoke("se_huanyuan")
+		room:doLightbox("se_huanyuan$", 1000)
+		room:setEmotion(targets[1], "skills/huanyuan")
+		if choice == "se_huanyuan_Draw" then
+			local card_num = targets[1]:getTag("se_huanyuan_Pre_Handcards"):toInt()
+			if card_num - targets[1]:getHandcardNum() > 0 then
+				targets[1]:drawCards(card_num - targets[1]:getHandcardNum())
+			elseif card_num - targets[1]:getHandcardNum() < 0 then
+				room:askForDiscard(targets[1], self:objectName(), targets[1]:getHandcardNum() - card_num, targets[1]:getHandcardNum() - card_num, false, false)
 			end
+		else
+			room:setPlayerProperty(targets[1], "maxhp", targets[1]:getTag("se_huanyuan_Pre_MaxHp"))
+			room:setPlayerProperty(targets[1], "hp", targets[1]:getTag("se_huanyuan_Pre_Hp"))
 		end
-		return false
 	end
 }
 
-
-se_huanyuan = sgs.CreateViewAsSkill{
+se_huanyuanvs = sgs.CreateViewAsSkill{
 	name = "se_huanyuan",
 	n = 1,
 	view_filter = function(self, selected, to_select)
@@ -5869,33 +5875,70 @@ se_huanyuan = sgs.CreateViewAsSkill{
 		end
 	end,
 	enabled_at_play = function(self, player)
-		return not player:hasFlag("se_huanyuan_used") and not player:isKongcheng() and player:getMark("se_huanyuan_Pre_MaxHp") > 0
+		return not player:hasUsed("#se_huanyuancard") and not player:isKongcheng()
 	end,
 }
 
-se_huanyuancard = sgs.CreateSkillCard{
-	name="se_huanyuancard",
-	will_throw = true,
-	filter = function(self, selected, to_select)
-		return #selected < 1
-	end,
-	on_use = function(self,room,source,targets)
-		local choice = room:askForChoice(source, self:objectName(), "se_huanyuan_Draw+se_huanyuan_Hp")
-		--room:broadcastSkillInvoke("se_huanyuan")
-		room:doLightbox("se_huanyuan$", 1000)
-		room:setEmotion(targets[1], "skills/huanyuan")
-		if choice == "se_huanyuan_Draw" then
-			local card_num = targets[1]:getMark("se_huanyuan_Pre_Handcards")
-			if card_num - targets[1]:getHandcardNum() > 0 then
-				targets[1]:drawCards(card_num - targets[1]:getHandcardNum())
+se_huanyuan = sgs.CreateTriggerSkill{
+	name = "se_huanyuan",
+	view_as_skill = se_huanyuanvs,
+	frequency = sgs.Skill_NotFrequent,
+	events = {sgs.EventPhaseEnd, sgs.GameStart},
+	on_trigger = function(self, event, player, data)
+		if (event == sgs.EventPhaseEnd and player:getPhase() == sgs.Player_Finish) or event == sgs.GameStart then
+			local room = player:getRoom()
+			for _,p in sgs.qlist(room:getAlivePlayers()) do
+				p:setTag("se_huanyuan_Pre_Hp", sgs.QVariant(p:getHp()))
+				p:setTag("se_huanyuan_Pre_MaxHp", sgs.QVariant(p:getMaxHp()))
+				if event == sgs.GameStart then
+					p:setTag("se_huanyuan_Pre_Handcards", sgs.QVariant(4))
+				else
+					p:setTag("se_huanyuan_Pre_Handcards", sgs.QVariant(p:getHandcardNum()))
+				end
 			end
-		else
-			local Maxhp = targets[1]:getMark("se_huanyuan_Pre_MaxHp")
-			local hp = targets[1]:getMark("se_huanyuan_Pre_Hp")
-			room:setPlayerProperty(targets[1], "maxhp", sgs.QVariant(Maxhp))
-			room:setPlayerProperty(targets[1], "hp", sgs.QVariant(hp))
 		end
-		room:setPlayerFlag(source,"se_huanyuan_used")
+		return false
+	end
+}
+
+se_chenglingcard = sgs.CreateSkillCard{
+	name = "se_chenglingcard",
+	target_fixed = false,
+	will_throw = true,
+	filter = function(self, targets, to_select)
+		return #targets < 2 and to_select:objectName() ~= sgs.Self:objectName()
+	end,
+	feasible = function(self, targets)
+		return #targets > 0
+	end,
+	on_use = function(self, room, source, targets)
+		source:loseMark("@LimeBell")
+		room:doLightbox("se_chengling$", 3000)
+		room:setPlayerProperty(targets[1], "maxhp", sgs.QVariant(targets[1]:getGeneral():getMaxHp()))
+		room:setPlayerProperty(targets[1], "hp", sgs.QVariant(targets[1]:getGeneral():getMaxHp()))
+		for _,skill in sgs.qlist(targets[1]:getGeneral():getVisibleSkillList()) do
+			if not targets[1]:hasSkill(skill:objectName()) then room:acquireSkill(player, skill:objectName()) end
+			if skill:getLimitMark() and skill:getLimitMark() ~= "" then
+				if targets[1]:getMark(skill:getLimitMark()) == 0 then targets[1]:gainMark(skill:getLimitMark()) end
+			end
+		end
+		if targets[1]:getMark("@waked") > 0 then
+			targets[1]:loseAllMarks("@waked")
+		end
+
+		if #targets == 2 then
+			room:setPlayerProperty(targets[2], "maxhp", sgs.QVariant(targets[2]:getGeneral():getMaxHp()))
+			room:setPlayerProperty(targets[2], "hp", sgs.QVariant(targets[2]:getGeneral():getMaxHp()))
+			if targets[2]:getMark("@waked") > 0 then
+				targets[2]:loseAllMarks("@waked")
+			end
+			for _,skill in sgs.qlist(targets[2]:getGeneral():getVisibleSkillList()) do
+				if not targets[2]:hasSkill(skill:objectName()) then room:acquireSkill(player, skill:objectName()) end
+				if skill:getLimitMark() and skill:getLimitMark() ~= "" then
+					if targets[2]:getMark(skill:getLimitMark()) == 0 then targets[2]:gainMark(skill:getLimitMark()) end
+				end
+			end
+		end
 	end
 }
 
@@ -5911,46 +5954,6 @@ se_chengling=sgs.CreateViewAsSkill{
 	end,
 }
 
-se_chenglingcard = sgs.CreateSkillCard{
-	name = "se_chenglingcard",
-	target_fixed = false,
-	will_throw = true,
-	filter = function(self, targets, to_select)
-		return #targets < 2 and to_select:objectName() ~= sgs.Self:objectName()
-	end,
-	feasible = function(self, targets)
-		return #targets > 0
-	end,
-	on_use = function(self, room, source, targets)
-		source:loseMark("@LimeBell")
-		--room:broadcastSkillInvoke("se_chengling")
-		--KOF
-		if room:getAllPlayers(true):length() == 2 then
-			room:doLightbox("se_chengling$", 1500)
-			targets[1]:throwAllMarks(true)
-			targets[1]:clearPrivatePiles()
-			return
-		end
-		room:doLightbox("se_chengling$", 3000)
-		local general = targets[1]:getGeneralName()
-		room:changeHero(targets[1], general, true, true, false, false)
-		room:setPlayerProperty(targets[1], "hp", sgs.QVariant(targets[1]:getMaxHp()))
-		if targets[1]:getMark("@waked") > 0 then
-			targets[1]:loseAllMarks("@waked")
-		end
-		if #targets == 2 then
-			local general2 = targets[2]:getGeneralName()
-			room:changeHero(targets[2], general2, true, true, false, false)
-			room:setPlayerProperty(targets[2], "hp", sgs.QVariant(targets[2]:getMaxHp()))
-			if targets[2]:getMark("@waked") > 0 then
-				targets[2]:loseAllMarks("@waked")
-			end
-		end
-	end
-}
-
-
-Chiyuri:addSkill(se_huanyuan_Pre)
 Chiyuri:addSkill(se_huanyuan)
 Chiyuri:addSkill(se_chengling)
 -- Chiyuri:addSkill(se_chenglingMark)
@@ -5971,14 +5974,14 @@ sgs.LoadTranslationTable{
 ["se_huanyuan_Hp"] = "令其恢复至你上一回合结束时的体力和体力上限。",
 --[[["SE_Huwei_help"] = "失去一点体力，令其回复一点体力。",
 ["SE_Huwei_not"] = "不进行技能。",]]
-[":se_huanyuan"] = "出牌阶段限一次，你可以弃置一张手牌并指定一名角色，你选择一项：令其将手牌补至X（X为你上回合结束阶段结束时该角色的手牌数），或令其将体力和体力上限还原至你上回合结束阶段结束时该角色的体力和体力上限。你不能于你的第一回合使用此技能。 ",
+[":se_huanyuan"] = "出牌阶段限一次，你可以弃置一张手牌并指定一名角色，你选择一项：令其将手牌补至X（X为你上回合结束阶段结束时该角色的手牌数），或令其将体力和体力上限还原至你上回合结束阶段结束时该角色的体力和体力上限。若为第一回合，则X改为4，「你上回合结束阶段结束时」改为「游戏开始时」。 ",
 ["se_chengling"] = "橙铃「Lime Bell」",
 ["se_chengling"] = "橙铃「Lime Bell」",
 ["se_chengling$"] = "image=image/animate/se_chengling.png",
 ["@LimeBell"] = "橙铃",
 ["$se_chengling1"] = "我之所以对你言听计从，是为了提高必杀技的级别，扩展可以倒流的时间。然后，就是瞄准了今天这个唯一的机会。我从来都没有成为过你的伙伴！",
 ["$se_chengling2"] = "柠檬召唤！",
-[":se_chengling"] = "限定技。出牌阶段，你可以令至多两名其他角色将武将牌、体力和体力上限恢复至游戏开始时的状态，然后将觉醒复原。",
+[":se_chengling"] = "限定技。出牌阶段，你可以令至多两名其他角色将体力、体力上限恢复至其主将角色牌原本的状态，然后令其重新获得其失去的主将角色牌的技能并将觉醒技和限定技复原。",
 ["Chiyuri"] = "仓嶋千百合",
 ["&Chiyuri"] = "仓嶋千百合",
 ["@Chiyuri"] = "加速世界",
@@ -5998,30 +6001,27 @@ SE_Shouzang = sgs.CreateTriggerSkill{
 		local room = player:getRoom()
 		local dying_data = data:toDying()
 		local source = dying_data.who
-		local mygod= room:findPlayerBySkillName("SE_Shouzang")
-			if mygod then
-				if mygod:isAlive() and not mygod:hasFlag("SE_Shouzang_X") then
-					local orin_num = mygod:getHandcardNum()+mygod:getEquips():length()
-					local num = source:getMaxHp()
-					if orin_num >= num then
-						if room:askForSkillInvoke(mygod, "SE_Shouzang", data) then
-							if room:askForDiscard(mygod,self:objectName(),num,num,false,true) then
-								if mygod:getHandcardNum()+mygod:getEquips():length() <= orin_num - num then
-									room:broadcastSkillInvoke("SE_Shouzang")
-									room:doLightbox("SE_Shouzang$", 1500)
-									local killer = sgs.DamageStruct()
-									killer.from = mygod
-									room:killPlayer(source, killer)
-								end
+		if player:hasSkill(self:objectName()) then
+			mygod = player
+			if mygod:isAlive() then
+				local orin_num = mygod:getHandcardNum()+mygod:getEquips():length()
+				local num = source:getMaxHp()
+				if orin_num >= num then
+					if room:askForSkillInvoke(mygod, "SE_Shouzang", data) then
+						if room:askForDiscard(mygod,self:objectName(),num,num,false,true) then
+							if mygod:getHandcardNum()+mygod:getEquips():length() <= orin_num - num then
+								room:broadcastSkillInvoke("SE_Shouzang")
+								room:doLightbox("SE_Shouzang$", 1500)
+								local killer = sgs.DamageStruct()
+								killer.from = mygod
+								room:killPlayer(source, killer)
 							end
-						else
-							room:setPlayerFlag(mygod,"SE_Shouzang_X")
 						end
-					else
-						room:setPlayerFlag(mygod,"SE_Shouzang_X")
 					end
+				else
 				end
 			end
+		end
 		return false
 	end,
 	can_trigger = function(self, target)
@@ -6031,23 +6031,21 @@ SE_Shouzang = sgs.CreateTriggerSkill{
 
 SE_Xiangren = sgs.CreateTriggerSkill{
 	name = "SE_Xiangren",
-	frequency = sgs.Skill_NotFrequent,
+	frequency = sgs.Skill_Limited,
+	limit_mark = "@Father_daughter",
 	events = {sgs.Dying,sgs.Damaged, sgs.Death},
 	on_trigger = function(self, event, player, data)
 		local room = player:getRoom()
 		if event == sgs.Dying then
 			local dying_data = data:toDying()
 			local source = dying_data.who
-			local mygod= room:findPlayerBySkillName("SE_Xiangren")
-				if mygod and mygod:getMark("@Father_daughter") < 1 and mygod:getMark("faDaUsed") == 0 then
-					if mygod:isAlive() and source:getHp() < 1 and source:isMale() and source:isAlive() then
-						if room:askForSkillInvoke(mygod, "SE_Xiangren", data) then
+				if player:hasSkill(self:objectName()) and player:getMark("@Father_daughter") > 0 then
+					if player:isAlive() and source:getHp() < 1 and source:isMale() and source:isAlive() then
+						if room:askForSkillInvoke(player, "SE_Xiangren", data) then
 							room:broadcastSkillInvoke("SE_Xiangren")
 							room:doLightbox("SE_Xiangren$", 3000)
-							mygod:gainMark("@Father_daughter")
-							source:gainMark("@Father_daughter")
-							mygod:setMark("faDaUsed", 1)
-							room:acquireSkill(source, self:objectName())
+							player:loseMark("@Father_daughter")
+							source:gainMark("@Father_daughter_ee")
 							for _,p in sgs.qlist(room:getOtherPlayers(source)) do
 								for _,card in sgs.qlist(p:getHandcards()) do
 									if card:isRed() then
@@ -6062,18 +6060,36 @@ SE_Xiangren = sgs.CreateTriggerSkill{
 			return false
 		elseif event == sgs.Death then
 			local death = data:toDeath()
-			if death.who:objectName() == player:objectName() then
-				if player:getMark("@Father_daughter") == 1 then
-					for _,p in sgs.qlist(room:getOtherPlayers(player)) do
-						if p:getMark("@Father_daughter") == 1 then
-							room:broadcastSkillInvoke("SE_Xiangren_death")
-							p:gainAnExtraTurn()
-							p:gainAnExtraTurn()
-							p:gainAnExtraTurn()
-							player:loseAllMarks("@Father_daughter")
-							p:loseAllMarks("@Father_daughter")
-						end
+			local father = nil
+			local ai = nil
+			if death.who:getMark("@Father_daughter_ee") == 1 then
+				father = death.who
+			end
+			if death.who:getMark("@Father_daughter") == 0 and death.who:hasSkill(self:objectName()) then
+				ai = death.who
+			end
+			if father then ai = room:findPlayerBySkillName(self:objectName()) end
+			if ai then
+				for _,p in sgs.qlist(room:getOtherPlayers(player)) do
+					if p:getMark("@Father_daughter_ee") == 1 then
+						father = p
+						break
 					end
+				end
+			end
+			if father and ai then
+				local buffee = nil
+				if death.who:objectName() == father:objectName() then
+					buffee = ai
+				else
+					buffee = father
+				end
+				if buffee and buffee:isAlive() then
+					room:broadcastSkillInvoke("SE_Xiangren_death")
+					buffee:gainAnExtraTurn()
+					buffee:gainAnExtraTurn()
+					buffee:gainAnExtraTurn()
+					buffee:loseAllMarks("@Father_daughter_ee")
 				end
 			end
 		end
@@ -6138,7 +6154,8 @@ Dongmanbao:insertRelatedSkills("SE_Shenmin", "#SE_ShenminKeep")
 
 
 sgs.LoadTranslationTable{
-["@Father_daughter"] = "父女",
+["@Father_daughter"] = "相认",
+["@Father_daughter_ee"] = "相认",
 ["@shenmin"] = "神悯",
 ["SE_Shouzang"] = "收葬",
 ["SE_Shouzang$"] = "image=image/animate/SE_Shouzang.png",
@@ -6273,7 +6290,7 @@ SE_WufanMark = sgs.CreateTriggerSkill{
 			player:gainMark("@Efreet", 3)
 		elseif event == sgs.Death then
 			local death = data:toDeath()
-			if death.who:objectName() == player:objectName() then
+			if death.who:objectName() == player:objectName() and death.who:hasSkill("SE_Wufan") then
 				if player:hasSkill("SE_Niepan") then
 					room:detachSkillFromPlayer(player,"SE_Niepan")
 				end
@@ -7016,7 +7033,7 @@ SE_Fanhun = sgs.CreateTriggerSkill{
 					for _,p in sgs.qlist(room:getAlivePlayers()) do
 						if p:getMark("@SE_Fanhun_ed") > 0 then
 							if player:getMark("@Mahou_ai") > 0 then
-								local choice = room:askForChoice(player, self.objectName(), "Use_Mahou+Use_Mahou_Not", data)
+								local choice = room:askForChoice(player, self:objectName(), "Use_Mahou+Use_Mahou_Not", data)
 								if choice == "Use_Mahou" then
 									player:loseMark("@Mahou_ai")
 								else
@@ -8180,6 +8197,7 @@ SE_Poxiao = sgs.CreateTriggerSkill{
 						room:setPlayerProperty(player, "maxhp", sgs.QVariant(player:getMaxHp()+1))
 						room:broadcastSkillInvoke("SE_Poxiao")
 						room:doLightbox("SE_Poxiao$", 3000)
+						player:gainMark("@waked")
 						if player:hasSkill("suipian") then
 							room:detachSkillFromPlayer(player, "suipian")
 						end
