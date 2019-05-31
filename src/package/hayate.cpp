@@ -1937,7 +1937,7 @@ public:
                     marks_map[key] = marks_raw_map[key].toInt();
                 }
                 QMap<QString, QVariant> piles_raw_map = player->tag["sos_august_piles"].toMap();
-                QMap<QString, QList<int>> piles_map;
+                QMap<QString, QList<int> > piles_map;
                 foreach(QString key, piles_raw_map.keys()){
                     QList<int> temp;
                     foreach(QVariant v, piles_raw_map[key].toList()){
