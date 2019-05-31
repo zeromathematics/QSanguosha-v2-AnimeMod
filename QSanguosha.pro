@@ -57,6 +57,7 @@ SOURCES += \
     src/package/standard-generals.cpp \
     src/package/standard-skillcards.cpp \
     src/package/inovation.cpp \
+    src/package/hayate.cpp \
     src/package/erciyuan.cpp \
     src/package/thicket.cpp \
     src/package/wind.cpp \
@@ -81,6 +82,7 @@ SOURCES += \
     src/ui/cardcontainer.cpp \
     src/ui/carditem.cpp \
     src/ui/chatwidget.cpp \
+    src/ui/chooseoptionsbox.cpp \
     src/ui/clientlogbox.cpp \
     src/ui/dashboard.cpp \
     src/ui/indicatoritem.cpp \
@@ -88,11 +90,13 @@ SOURCES += \
     src/ui/photo.cpp \
     src/ui/super-button.cpp \
     src/ui/pixmapanimation.cpp \
+    src/ui/playercardbox.cpp \
     src/ui/qsanbutton.cpp \
     src/ui/rolecombobox.cpp \
     src/ui/roomscene.cpp \
     src/ui/sprite.cpp \
     src/ui/startscene.cpp \
+    src/ui/stylehelper.cpp \
     src/ui/window.cpp \
     src/util/detector.cpp \
     src/util/nativesocket.cpp \
@@ -104,6 +108,7 @@ SOURCES += \
     src/core/wrapped-card.cpp \
     src/ui/bubblechatbox.cpp \
     src/ui/generic-cardcontainer-ui.cpp \
+    src/ui/graphicsbox.cpp \
     src/ui/qsan-selectable-item.cpp \
     src/ui/skin-bank.cpp \
     src/ui/table-pile.cpp \
@@ -178,6 +183,7 @@ HEADERS += \
     src/package/standard-equips.h \
     src/package/standard-skillcards.h \
     src/package/inovation.h \
+    src/package/hayate.h \
     src/package/erciyuan.h \
     src/scenario/boss-mode-scenario.h \
     src/scenario/couple-scenario.h \
@@ -200,6 +206,7 @@ HEADERS += \
     src/ui/cardcontainer.h \
     src/ui/carditem.h \
     src/ui/chatwidget.h \
+    src/ui/chooseoptionsbox.h \
     src/ui/clientlogbox.h \
     src/ui/dashboard.h \
     src/ui/indicatoritem.h \
@@ -207,11 +214,13 @@ HEADERS += \
     src/ui/photo.h \
     src/ui/super-button.h \
     src/ui/pixmapanimation.h \
+    src/ui/playercardbox.h \
     src/ui/qsanbutton.h \
     src/ui/rolecombobox.h \
     src/ui/roomscene.h \
     src/ui/sprite.h \
     src/ui/startscene.h \
+    src/ui/stylehelper.h \
     src/ui/window.h \
     src/util/detector.h \
     src/util/nativesocket.h \
@@ -244,6 +253,7 @@ HEADERS += \
     src/core/wrapped-card.h \
     src/ui/bubblechatbox.h \
     src/ui/generic-cardcontainer-ui.h \
+    src/ui/graphicsbox.h \
     src/ui/qsan-selectable-item.h \
     src/ui/skin-bank.h \
     src/ui/table-pile.h \
